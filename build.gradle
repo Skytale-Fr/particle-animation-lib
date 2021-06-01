@@ -1,0 +1,63 @@
+plugins {
+    id "java"
+    //TODO delete
+    //id "com.github.johnrengelman.shadow" version "5.2.0"
+}
+
+group = 'fr.skytale'
+version = '1.0-SNAPSHOT'
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+
+        // As of Gradle 5.1, you can limit this to only those
+        // dependencies you expect from it
+        content {
+            includeGroup 'org.bukkit'
+            includeGroup 'org.spigotmc'
+        }
+    }
+    //TODO Could be useful for testing ? Or delete
+    /*maven {
+        url "https://plugins.gradle.org/m2/"
+    }*/
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+}
+
+dependencies {
+    implementation 'org.jetbrains:annotations:19.0.0'
+    compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
+    //TODO delete
+    //compileOnly 'commons-codec:commons-codec:1.13'
+    //compileOnly "com.github.jengelman.gradle.plugins:shadow:6.1.0"
+    //implementation "commons-io:commons-io:2.8.0"
+
+    //TODO Could be useful for testing ? Or delete
+    //testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.0'
+    //testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.0'
+    //testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+    //testImplementation 'org.spigotmc:spigot:1.16.3-R0.1-SNAPSHOT'
+}
+
+//TODO Could be useful for testing ? Or delete
+/*test {
+    useJUnitPlatform()
+    compileOnly "com.github.jengelman.gradle.plugins:shadow:6.1.0"
+}*/
+
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
