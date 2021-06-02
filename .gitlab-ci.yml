@@ -1,6 +1,3 @@
-# This is the Gradle build system for JVM applications
-# https://gradle.org/
-# https://github.com/gradle/gradle
 image: gradle:alpine
 
 stages:
@@ -18,9 +15,12 @@ variables:
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
-build:
+.build: &build
   stage: build
-  script: gradle --build-cache assemble
+  script:
+    - pwd
+    - gradle --build-cache jar
+    - ls ./build/libs
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
@@ -28,7 +28,7 @@ build:
       - build
       - .gradle
 
-test:
+Tests:
   stage: test
   script: gradle check
   cache:
@@ -38,22 +38,22 @@ test:
       - build
       - .gradle
 
-artifact:
-  extends: build
+Build:
+  << : *build
   only:
     - master
     - tags
   artifacts:
     paths:
-      - build/*.jar
+      - ./build/libs/*.jar
     expire_in: 30 days
 
-artifact-branches:
-  extends: build
+Build branch:
+  << : *build
   except:
     - master
     - tags
   artifacts:
     paths:
-      - build/*.jar
+      - ./build/libs/*.jar
     expire_in: 10 days
