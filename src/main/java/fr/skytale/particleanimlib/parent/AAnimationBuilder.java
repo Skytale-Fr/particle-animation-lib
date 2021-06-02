@@ -26,7 +26,7 @@ public abstract class AAnimationBuilder {
         animation.setLocation(location);
     }
 
-    public void setNpc(IMovingEntity movingEntity) {
+    public void setMovingEntity(IMovingEntity movingEntity) {
         animation.setMovingEntity(movingEntity);
     }
 

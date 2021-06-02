@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.wave;
 
 
+import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -9,6 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class Wave extends ARoundAnimation {
     private double maxRadius;
     private double step;
+    private AAnimation circleAnim;
 
     public Wave() {
     }
@@ -32,19 +34,17 @@ public class Wave extends ARoundAnimation {
                     this.cancel();
 
                 if (currentRadius % 2 != 0) {  //On affiche que les cercles de rayon impairs
-                    double theta = 0;
-                    int p = 0;
-                    while (theta < 2 * Math.PI) {
-                        theta = p * stepAngle;
+                    ARoundAnimation circle = (ARoundAnimation) circleAnim;
 
-                        double x = waveCenter.getX() + (currentRadius * Math.cos(theta));
-                        double y = waveCenter.getY() + (2 * Math.exp( (-0.1 * (maxRadius - radius))/39  * currentRadius) * Math.sin(currentRadius)) + 1;
-                        double z = waveCenter.getZ() + (currentRadius * Math.sin(theta));
+                    //On change le rayon
+                    circle.setRadius(currentRadius);
 
-                        Location particleLocation = new Location(waveCenter.getWorld(), x, y, z);
-                        waveCenter.getWorld().spawnParticle(mainParticle.getParticleType(), particleLocation, 1, 0, 0, 0, 0, mainParticle.getParticleData());
-                        p++;
-                    }
+                    //On calcule et on change la hauteur
+                    double y = waveCenter.getY() + (2 * Math.exp( (-0.1 * (maxRadius - radius))/39  * currentRadius) * Math.sin(currentRadius)) + 1;
+                    circle.setLocation(new Location(waveCenter.getWorld(),circle.getLocation().getX(),y,circle.getLocation().getZ()));
+
+                    circle.show(player);
+
                 }
 
                 currentRadius += step;
@@ -71,4 +71,11 @@ public class Wave extends ARoundAnimation {
         this.step = step;
     }
 
+    public AAnimation getCircleAnim() {
+        return circleAnim;
+    }
+
+    public void setCircleAnim(AAnimation circleAnim) {
+        this.circleAnim = circleAnim;
+    }
 }

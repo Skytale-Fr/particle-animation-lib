@@ -14,11 +14,11 @@ variables:
 
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
+  - cp gradle.properties.example gradle.properties
 
 .build: &build
   stage: build
   script:
-    - pwd
     - gradle --build-cache jar
     - ls ./build/libs
   cache:
@@ -57,3 +57,13 @@ Build branch:
     paths:
       - ./build/libs/*.jar
     expire_in: 10 days
+
+Artifactory distribution:
+  stage: deploy
+  only:
+    - master
+    - tags
+  script:
+    - 'sed -i '':a;N;$!ba;s/\(artifactory_user = \)[^\n]*/\1''"${ARTIFACTORY_USER}"''/g'' gradle.properties'
+    - 'sed -i '':a;N;$!ba;s/\(artifactory_password = \)[^\n]*/\1''"${ARTIFACTORY_PASSWORD}"''/g'' gradle.properties'
+    - gradle artifactoryPublish

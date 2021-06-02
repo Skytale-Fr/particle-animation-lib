@@ -19,13 +19,18 @@ public class WaveBuilder extends AAnimationBuilder {
         wave.setMaxRadius(r);
     }
 
-    public void setStepAngle(double n) {
-        wave.setStepAngle(n);
+    public void setNbPoints(int n) {
+        wave.setNbPoints(n);
     }
 
     public void setStep(double s) {
         wave.setStep(s);
     }
+
+    public void setCircle(AAnimation animation){
+        wave.setCircleAnim(animation);
+    }
+
 
     @Override
     public AAnimation getAnimation() {
