@@ -42,6 +42,7 @@ Build:
   << : *build
   only:
     - master
+    - 1.12.2
     - tags
   artifacts:
     paths:
@@ -52,6 +53,7 @@ Build branch:
   << : *build
   except:
     - master
+    - 1.12.2
     - tags
   artifacts:
     paths:
@@ -62,6 +64,7 @@ Artifactory distribution:
   stage: deploy
   only:
     - master
+    - 1.12.2
     - tags
   script:
     - 'sed -i '':a;N;$!ba;s/\(artifactory_user = \)[^\n]*/\1''"${ARTIFACTORY_USER}"''/g'' gradle.properties'
