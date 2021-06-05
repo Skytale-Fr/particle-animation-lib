@@ -3,19 +3,19 @@ package fr.skytale.particleanimlib.attributes;
 import org.bukkit.Particle;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.inventory.ItemStack;
-import xyz.xenondevs.particle.ParticleBuilder;
-import xyz.xenondevs.particle.data.ParticleData;
 
 public class ParticleTemplate {
+    private static final String NOT_IMPLEMENTED = "Error : particle not implemented";
     private Particle particleType;
-    private ParticleBuilder particleBuilder;
-    private ParticleData particleData;
-    /*private Particle.DustOptions particleOptions;
+    private Particle.DustOptions particleOptions;
     private ItemStack particleItemStack;
-    private BlockData particleBlockData;*/
+    private BlockData particleBlockData;
 
-    public ParticleTemplate(Particle particleType) {
+    public ParticleTemplate(Particle particleType, Particle.DustOptions particleOptions, ItemStack particleItemStack, BlockData particleBlockData) {
         this.particleType = particleType;
+        this.particleOptions = particleOptions;
+        this.particleItemStack = particleItemStack;
+        this.particleBlockData = particleBlockData;
     }
 
     /***********GETTERS & SETTERS***********/
@@ -24,23 +24,47 @@ public class ParticleTemplate {
         this.particleType = particleType;
     }
 
+    public void setParticleOptions(Particle.DustOptions particleOptions) {
+        this.particleOptions = particleOptions;
+    }
+
+    public void setParticleItemStack(ItemStack particleItemStack) {
+        this.particleItemStack = particleItemStack;
+    }
+
+    public void setParticleBlockData(BlockData particleBlockData) {
+        this.particleBlockData = particleBlockData;
+    }
+
     public Particle getParticleType() {
         return particleType;
     }
 
-    public ParticleData getParticleData() {
-        return particleData;
-    }
+    public Object getParticleData(){
+        Object data=null;
 
-    public void setParticleData(ParticleData particleData) {
-        this.particleData = particleData;
-    }
+        switch(particleType){
+            case REDSTONE:
+                 data = particleOptions;
+                break;
 
-    public ParticleBuilder getParticleBuilder() {
-        return particleBuilder;
-    }
+            case ITEM_CRACK:
+                data = particleItemStack;
+                break;
 
-    public void setParticleBuilder(ParticleBuilder particleBuilder) {
-        this.particleBuilder = particleBuilder;
+            case BLOCK_CRACK:
+            case BLOCK_DUST:
+            case FALLING_DUST:
+                data = particleBlockData;
+                break;
+
+            case LEGACY_BLOCK_CRACK:
+            case LEGACY_BLOCK_DUST:
+            case LEGACY_FALLING_DUST:
+                System.out.println(NOT_IMPLEMENTED);
+                break;
+        }
+
+        return data;
     }
 }

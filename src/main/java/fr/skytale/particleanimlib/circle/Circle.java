@@ -46,9 +46,8 @@ public class Circle extends ARoundAnimation {
             if (axis == null) {
                 ParticleEffect particleEffect = ParticleEffect.valueOf(mainParticleName);
                 ParticleBuilder particleBuilder = new ParticleBuilder(particleEffect,particleLocation);
-                ParticleData particleData;
-
-                System.out.println(particleEffect.hasProperty(PropertyType.DIRECTIONAL));
+                //TODO gérer les particuleData
+                particleBuilder.display();
                 //circleCenter.getWorld().spawnParticle(mainParticle.getParticleType(), particleLocation, 1, 0, 0, 0, 0, mainParticle.getParticleData());
             } else {
                 if (stepAngleAlpha == 0) {
