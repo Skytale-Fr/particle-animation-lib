@@ -11,8 +11,6 @@ buildscript {
 
 plugins {
     id "java"
-    //TODO delete
-    //id "com.github.johnrengelman.shadow" version "5.2.0"
 }
 
 group = 'fr.skytale'
@@ -48,6 +46,7 @@ repositories {
 dependencies {
     implementation 'org.jetbrains:annotations:19.0.0'
     compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
+    implementation 'xyz.xenondevs:particle:1.5.1'
     //TODO delete
     //compileOnly 'commons-codec:commons-codec:1.13'
     //compileOnly "com.github.jengelman.gradle.plugins:shadow:6.1.0"
@@ -82,7 +81,7 @@ allprojects {
     }
 }
 
-version = '1.0.0'
+version = '1.0.1'
 
 apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'java'

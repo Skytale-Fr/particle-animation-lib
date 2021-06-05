@@ -13,6 +13,7 @@ public abstract class AAnimation {
     protected IMovingEntity movingEntity;
     protected Vector relativeLocation;
     protected ParticleTemplate mainParticle;
+    protected String mainParticleName;
     protected JavaPlugin plugin;
 
     public abstract void show(Player player);

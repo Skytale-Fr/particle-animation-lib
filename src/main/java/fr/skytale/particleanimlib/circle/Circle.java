@@ -6,6 +6,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import xyz.xenondevs.particle.ParticleBuilder;
+import xyz.xenondevs.particle.ParticleEffect;
+import xyz.xenondevs.particle.PropertyType;
+import xyz.xenondevs.particle.data.ParticleData;
 
 public class Circle extends ARoundAnimation {
     private static final String STEP_ANGLE_ALPHA_0 = "If axis defined, stepAngleAlpha must not be equal to 0.";
@@ -40,7 +44,12 @@ public class Circle extends ARoundAnimation {
             Location particleLocation = new Location(player.getWorld(), x, y, z);
 
             if (axis == null) {
-                circleCenter.getWorld().spawnParticle(mainParticle.getParticleType(), particleLocation, 1, 0, 0, 0, 0, mainParticle.getParticleData());
+                ParticleEffect particleEffect = ParticleEffect.valueOf(mainParticleName);
+                ParticleBuilder particleBuilder = new ParticleBuilder(particleEffect,particleLocation);
+                ParticleData particleData;
+
+                System.out.println(particleEffect.hasProperty(PropertyType.DIRECTIONAL));
+                //circleCenter.getWorld().spawnParticle(mainParticle.getParticleType(), particleLocation, 1, 0, 0, 0, 0, mainParticle.getParticleData());
             } else {
                 if (stepAngleAlpha == 0) {
                     player.sendMessage(STEP_ANGLE_ALPHA_0);
