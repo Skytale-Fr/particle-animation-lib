@@ -33,10 +33,7 @@ repositories {
             includeGroup 'org.spigotmc'
         }
     }
-    //TODO Could be useful for testing ? Or delete
-    /*maven {
-        url "https://plugins.gradle.org/m2/"
-    }*/
+
     maven {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
@@ -81,7 +78,7 @@ allprojects {
     }
 }
 
-version = '1.0.2'
+version = '1.0.3'
 
 apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'java'
