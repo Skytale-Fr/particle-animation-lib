@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.parent;
 
 import fr.skytale.particleanimlib.attributes.AnimationType;
+import fr.skytale.particleanimlib.attributes.CustomVector;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -13,7 +14,6 @@ public abstract class AAnimation {
     protected IMovingEntity movingEntity;
     protected Vector relativeLocation;
     protected ParticleTemplate mainParticle;
-    protected String mainParticleName;
     protected JavaPlugin plugin;
 
     public abstract void show(Player player);
@@ -33,7 +33,8 @@ public abstract class AAnimation {
 
     public Location rotateAroundAxis(Location point, Vector axis, Location pointAxis, double angle) {
         Vector v = point.clone().subtract(pointAxis).toVector(); //Vecteur de axis au point à translater
-        v = v.rotateAroundAxis(axis, angle);
+        CustomVector customVector = new CustomVector(v.getX(),v.getY(),v.getZ());
+        v = customVector.rotateAroundAxis(axis, angle);
         v = v.add(pointAxis.toVector()); //Translation vers le point d'origine (La rotiation a été faite à l'origine du repère)
         return v.toLocation(point.getWorld());
     }

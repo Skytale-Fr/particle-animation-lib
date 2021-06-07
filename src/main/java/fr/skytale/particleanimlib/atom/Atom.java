@@ -4,10 +4,8 @@ package fr.skytale.particleanimlib.atom;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 public class Atom extends ARoundAnimation {
     private AAnimation sphere;
@@ -17,17 +15,6 @@ public class Atom extends ARoundAnimation {
     private ParticleTemplate secondParticle;
 
     public Atom() {
-    }
-
-    public void displayElectron(Location nucleusCenter, Vector a, Vector b, double radiusElectrons, double theta) {
-
-        double x = nucleusCenter.getX() + (a.getX() * radiusElectrons * Math.cos(theta)) + (b.getX() * radiusElectrons * Math.sin(theta));
-        double y = nucleusCenter.getY() + (a.getY() * radiusElectrons * Math.cos(theta)) + (b.getY() * radiusElectrons * Math.sin(theta));
-        double z = nucleusCenter.getZ() + (a.getZ() * radiusElectrons * Math.cos(theta)) + (b.getZ() * radiusElectrons * Math.sin(theta));
-
-        Location particleLocation = new Location(nucleusCenter.getWorld(), x, y, z);
-
-        nucleusCenter.getWorld().spawnParticle(secondParticle.getParticleType(), particleLocation, 1, 0, 0, 0, 0,secondParticle.getParticleData());
     }
 
     @Override

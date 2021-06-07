@@ -40,7 +40,7 @@ public class Wave extends ARoundAnimation {
                     circle.setRadius(currentRadius);
 
                     //On calcule et on change la hauteur
-                    double y = waveCenter.getY() + (2 * Math.exp( (-0.1 * (maxRadius - radius))/39  * currentRadius) * Math.sin(currentRadius)) + 1;
+                    double y = waveCenter.getY() + (2 * Math.exp(-0.1* (39/( maxRadius - radius ) * currentRadius)) * Math.sin(currentRadius)) + 1;
                     circle.setLocation(new Location(waveCenter.getWorld(),circle.getLocation().getX(),y,circle.getLocation().getZ()));
 
                     circle.show(player);

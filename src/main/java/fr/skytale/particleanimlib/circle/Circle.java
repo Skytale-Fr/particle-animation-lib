@@ -6,10 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleBuilder;
-import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.PropertyType;
-import xyz.xenondevs.particle.data.ParticleData;
 
 public class Circle extends ARoundAnimation {
     private static final String STEP_ANGLE_ALPHA_0 = "If axis defined, stepAngleAlpha must not be equal to 0.";
@@ -44,11 +40,8 @@ public class Circle extends ARoundAnimation {
             Location particleLocation = new Location(player.getWorld(), x, y, z);
 
             if (axis == null) {
-                ParticleEffect particleEffect = ParticleEffect.valueOf(mainParticleName);
-                ParticleBuilder particleBuilder = new ParticleBuilder(particleEffect,particleLocation);
-                //TODO gérer les particuleData
-                particleBuilder.display();
-                //circleCenter.getWorld().spawnParticle(mainParticle.getParticleType(), particleLocation, 1, 0, 0, 0, 0, mainParticle.getParticleData());
+                mainParticle.setLocation(particleLocation);
+                mainParticle.getParticleBuilder().display();
             } else {
                 if (stepAngleAlpha == 0) {
                     player.sendMessage(STEP_ANGLE_ALPHA_0);
@@ -71,17 +64,19 @@ public class Circle extends ARoundAnimation {
                     if (Math.abs(alpha) >= Math.PI * 2) {
                         this.cancel();
                     }
-                    Location currentLocation = movingEntity.getLocation();
 
                     for (int p = 0; p < nbPoints; p++) {
 
                         if (!isFixedLocation()) {
+                            Location currentLocation = movingEntity.getLocation();
                             particleCircle[p].setX(particleCircle[p].getX() + currentLocation.getX());
                             particleCircle[p].setY(particleCircle[p].getY() + currentLocation.getY());
                             particleCircle[p].setZ(particleCircle[p].getZ() + currentLocation.getZ());
                         }
                         Location particleLocation = rotateAroundAxis(particleCircle[p], axis, location, alpha);
-                        circleCenter.getWorld().spawnParticle(mainParticle.getParticleType(), particleLocation, 1, 0, 0, 0, 0, mainParticle.getParticleData());
+
+                        mainParticle.setLocation(particleLocation);
+                        mainParticle.getParticleBuilder().display();
                     }
                     alpha += stepAngleAlpha;
                 }
