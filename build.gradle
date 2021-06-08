@@ -74,7 +74,7 @@ allprojects {
     }
 }
 
-version = '1.0.6'
+version = '1.0.7'
 
 apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'java'
