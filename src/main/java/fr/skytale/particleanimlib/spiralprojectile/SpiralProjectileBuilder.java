@@ -12,6 +12,8 @@ public class SpiralProjectileBuilder extends AAnimationBuilder<SpiralProjectile>
     }
 
     public void setTarget(Location location) {
+        if(location==null)
+            throw new IllegalArgumentException("Target has to be initialized.");
         animation.setTarget(location);
     }
 
@@ -22,19 +24,17 @@ public class SpiralProjectileBuilder extends AAnimationBuilder<SpiralProjectile>
     }
 
     public void setSpiral1(AAnimation spiral){
-        if(spiral==null)
-            throw new IllegalArgumentException("First spiral has to be initialized");
         animation.setSpiral1(spiral);
     }
 
     public void setSpiral2(AAnimation spiral){
-        if(spiral==null)
-            throw new IllegalArgumentException("Second spiral has to be initialized");
         animation.setSpiral2(spiral);
     }
 
     @Override
     public SpiralProjectile getAnimation() {
+        if(animation.getSpiral1()==null || animation.getSpiral2()==null)
+            throw new IllegalArgumentException("Both spirals has to be initialized.");
         return animation;
     }
 }
