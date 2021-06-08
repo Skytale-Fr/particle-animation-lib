@@ -13,7 +13,7 @@ public class ExplodingSphereBuilder extends AAnimationBuilder<ExplodingSphere> {
         animation.setExplosionLimit(6);
         animation.setNbCircles(10);
         animation.setRadius(1.0);
-        animation.setStepAngle(30);
+        animation.setStepAngle(Math.toRadians(30));
     }
 
     /*********SETTERS des éléments spécifiques a la sphere explosante ***********/

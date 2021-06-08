@@ -8,8 +8,9 @@ public class AtomBuilder extends AAnimationBuilder<Atom> {
     private Atom atom;
 
     public AtomBuilder(){
-        atom = new Atom();
-        atom.setStepAngle(15);
+        super();
+        animation = new Atom();
+        animation.setStepAngle(Math.toRadians(15));
     }
 
     /*********SETTERS des éléments spécifiques de l'atome ***********/

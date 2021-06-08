@@ -10,7 +10,7 @@ public class SpiralBuilder extends AAnimationBuilder<Spiral> {
         animation = new Spiral();
         animation.setStep(0.1);
         animation.setRadius(1);
-        animation.setStepAngle(30);
+        animation.setStepAngle(Math.toRadians(30));
         animation.setGrowthSpeed(0);
     }
 

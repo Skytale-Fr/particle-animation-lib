@@ -8,7 +8,7 @@ public class SphereBuilder extends AAnimationBuilder<Sphere> {
         animation = new Sphere();
         animation.setNbCircles(10);
         animation.setRadius(1.0);
-        animation.setStepAngle(30);
+        animation.setStepAngle(Math.toRadians(30));
     }
 
     /*********SETTERS des éléments spécifiques a la sphere ***********/
