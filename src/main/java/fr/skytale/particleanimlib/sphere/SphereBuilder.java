@@ -1,6 +1,5 @@
 package fr.skytale.particleanimlib.sphere;
 
-import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 
 public class SphereBuilder extends AAnimationBuilder<Sphere> {

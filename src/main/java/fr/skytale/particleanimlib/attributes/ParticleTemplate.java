@@ -11,7 +11,6 @@ import xyz.xenondevs.particle.data.texture.BlockTexture;
 import xyz.xenondevs.particle.data.texture.ItemTexture;
 
 import java.awt.*;
-import java.lang.reflect.Field;
 
 public class ParticleTemplate {
 
