@@ -55,6 +55,6 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
         if(animation.getCircleAnim()==null)
             throw new IllegalArgumentException("Circle animation has to be defined.");
 
-        return animation;
+        return super.getAnimation();
     }
 }

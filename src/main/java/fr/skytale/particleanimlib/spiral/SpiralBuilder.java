@@ -29,8 +29,6 @@ public class SpiralBuilder extends AAnimationBuilder<Spiral> {
     }
 
     public void setTarget(Location target) {
-        if(target==null)
-            throw new IllegalArgumentException("A target has to be defined.");
         animation.setTarget(target);
     }
 
@@ -46,6 +44,8 @@ public class SpiralBuilder extends AAnimationBuilder<Spiral> {
 
     @Override
     public Spiral getAnimation() {
-        return animation;
+        if(animation.getTarget()==null)
+            throw new IllegalArgumentException("A target has to be defined.");
+        return super.getAnimation();
     }
 }
