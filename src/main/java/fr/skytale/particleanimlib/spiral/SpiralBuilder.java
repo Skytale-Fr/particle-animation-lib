@@ -1,9 +1,7 @@
 package fr.skytale.particleanimlib.spiral;
 
-import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 import org.bukkit.Location;
-import sun.security.provider.ConfigFile;
 
 public class SpiralBuilder extends AAnimationBuilder<Spiral> {
 
