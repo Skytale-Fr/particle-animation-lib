@@ -11,24 +11,24 @@ import xyz.xenondevs.particle.data.texture.BlockTexture;
 import xyz.xenondevs.particle.data.texture.ItemTexture;
 
 import java.awt.*;
+import java.lang.reflect.Field;
 
 public class ParticleTemplate {
 
-    private ParticleBuilder particleBuilder;
     private ParticleEffect particleEffect;
     private ParticleData particleData;
     private Color color;
     private String material;
+    private int amount;
+    private float speed;
 
-    public ParticleTemplate(String particleType, Color color, String material) {
+    public ParticleTemplate(String particleType, Color color, String material, int amount, float speed) {
         this.color = color;
         this.material = material;
+        this.amount = amount;
+        this.speed = speed;
 
         particleEffect = ParticleEffect.valueOf(particleType);
-
-        particleBuilder = new ParticleBuilder(particleEffect, null);
-        particleBuilder.setAmount(1);
-        particleBuilder.setSpeed(0);
 
         switch (particleEffect) {
             case REDSTONE:
@@ -45,25 +45,15 @@ public class ParticleTemplate {
                 particleData = new ItemTexture(new ItemStack(Material.valueOf(material)));
                 break;
         }
-
-        particleBuilder.setParticleData(particleData);
     }
 
     /***********GETTERS & SETTERS***********/
-    //TODO à supprimer quand setLocation() sera implémenté dans ParticleLib
-    public void setLocation(Location location) {
-        particleBuilder = new ParticleBuilder(particleEffect, location);
-        particleBuilder.setAmount(1);
-        particleBuilder.setSpeed(0);
-        particleBuilder.setParticleData(particleData);
-    }
-
-    public ParticleBuilder getParticleBuilder() {
-        return particleBuilder;
-    }
-
-    public void setParticleBuilder(ParticleBuilder particleBuilder) {
-        this.particleBuilder = particleBuilder;
+    public ParticleBuilder getParticleBuilder(Location location) {
+        ParticleBuilder newParticleBuilder = new ParticleBuilder(particleEffect, location);
+        newParticleBuilder.setAmount(amount);
+        newParticleBuilder.setSpeed(speed);
+        newParticleBuilder.setParticleData(particleData);
+        return newParticleBuilder;
     }
 
     public ParticleEffect getParticleEffect() {
@@ -96,5 +86,21 @@ public class ParticleTemplate {
 
     public void setMaterial(String material) {
         this.material = material;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 }
