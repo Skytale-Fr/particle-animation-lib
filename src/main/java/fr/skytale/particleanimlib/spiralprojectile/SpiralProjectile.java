@@ -40,8 +40,7 @@ public class SpiralProjectile extends ARoundAnimation {
 
                 //Axe central
                 Location particleLocation = new Location(location.getWorld(), start.getX(), start.getY(), start.getZ());
-                mainParticle.setLocation(particleLocation);
-                mainParticle.getParticleBuilder().display();
+                mainParticle.getParticleBuilder(particleLocation).display();
                 length += step;
 
                 start.add(stepVector);

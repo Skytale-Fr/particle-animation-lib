@@ -40,8 +40,7 @@ public class Circle extends ARoundAnimation {
             Location particleLocation = new Location(player.getWorld(), x, y, z);
 
             if (axis == null) {
-                mainParticle.setLocation(particleLocation);
-                mainParticle.getParticleBuilder().display();
+                mainParticle.getParticleBuilder(particleLocation).display();
             } else {
                 if (stepAngleAlpha == 0) {
                     player.sendMessage(STEP_ANGLE_ALPHA_0);
@@ -75,8 +74,7 @@ public class Circle extends ARoundAnimation {
                         }
                         Location particleLocation = rotateAroundAxis(particleCircle[p], axis, location, alpha);
 
-                        mainParticle.setLocation(particleLocation);
-                        mainParticle.getParticleBuilder().display();
+                        mainParticle.getParticleBuilder(particleLocation).display();
                     }
                     alpha += stepAngleAlpha;
                 }

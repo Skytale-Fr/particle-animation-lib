@@ -77,8 +77,7 @@ public class Spiral extends ARoundAnimation {
 
                 particleSpiral1Location = rotateAroundAxis(particleSpiral1Location, directorVector, particleLocation, theta);
 
-                mainParticle.setLocation(particleSpiral1Location);
-                mainParticle.getParticleBuilder().display();
+                mainParticle.getParticleBuilder(particleSpiral1Location).display();
 
                 theta += stepAngle;
                 start.add(stepVector);

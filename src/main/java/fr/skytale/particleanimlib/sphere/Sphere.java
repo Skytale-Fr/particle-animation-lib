@@ -27,8 +27,7 @@ public class Sphere extends ARoundAnimation {
                 double x = sphereCenter.getX() + Math.cos(j) * currentRadius;
                 double z = sphereCenter.getZ() + Math.sin(j) * currentRadius;
 
-                mainParticle.setLocation(new Location(location.getWorld(), x, y, z));
-                mainParticle.getParticleBuilder().display();
+                mainParticle.getParticleBuilder(new Location(location.getWorld(), x, y, z)).display();
             }
         }
     }
