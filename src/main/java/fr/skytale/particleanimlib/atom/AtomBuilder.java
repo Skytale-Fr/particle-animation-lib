@@ -22,23 +22,23 @@ public class AtomBuilder extends AAnimationBuilder<Atom> {
     }
 
     public void setSecondParticle(ParticleTemplate particle){
-        atom.setSecondParticle(particle);
+        animation.setSecondParticle(particle);
     }
 
     public void setSphere(AAnimation sphere) {
-        atom.setSphere(sphere);
+        animation.setSphere(sphere);
     }
 
     public void setCircle1(AAnimation circle1) {
-        atom.setCircle1(circle1);
+        animation.setCircle1(circle1);
     }
 
     public void setCircle2(AAnimation circle2) {
-        atom.setCircle2(circle2);
+        animation.setCircle2(circle2);
     }
 
     public void setCircle3(AAnimation circle3) {
-        atom.setCircle3(circle3);
+        animation.setCircle3(circle3);
     }
 
     @Override
@@ -53,6 +53,6 @@ public class AtomBuilder extends AAnimationBuilder<Atom> {
         if(animation.getCircle1()==null ||animation.getCircle2()==null || animation.getCircle3()==null)
             throw  new IllegalArgumentException("All three circle animations of Atom animation has to be initialized.");
 
-        return atom;
+        return super.getAnimation();
     }
 }
