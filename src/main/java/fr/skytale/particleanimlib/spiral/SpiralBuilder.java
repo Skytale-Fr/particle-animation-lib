@@ -3,44 +3,50 @@ package fr.skytale.particleanimlib.spiral;
 import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 import org.bukkit.Location;
+import sun.security.provider.ConfigFile;
 
-public class SpiralBuilder extends AAnimationBuilder {
-    private Spiral spiral;
+public class SpiralBuilder extends AAnimationBuilder<Spiral> {
 
     public SpiralBuilder() {
         super();
-        spiral = new Spiral();
+        animation = new Spiral();
+        animation.setStep(0.1);
+        animation.setStepAngle(30);
+        animation.setGrowthSpeed(0);
     }
 
     /*********SETTERS des éléments spécifiques a la spirale ***********/
     public void setStep(double s) {
         if (s == 0)
-            s = 0.1;
-
-        if (s < 0)
-            s = -s;
-
-        spiral.setStep(s);
+            throw new IllegalArgumentException("Step must not be equal to zero.");
+        animation.setStep(s);
     }
 
-    public void setRadius(double r) {
-        spiral.setRadius(r);
+    public void setRadius(double radius) {
+        if (animation.getRadius() <= 0) {
+            throw new IllegalArgumentException("Radius should be positive.");
+        }
+        animation.setRadius(radius);
     }
 
-    public void setTarget(Location location) {
-        spiral.setTarget(location);
+    public void setTarget(Location target) {
+        if(target==null)
+            throw new IllegalArgumentException("A target has to be defined.");
+        animation.setTarget(target);
     }
 
-    public void setStepAngle(double s) {
-        spiral.setStepAngle(s);
+    public void setStepAngle(double a){
+        if(a==0)
+            throw new IllegalArgumentException("Step angle should not be equal to zero.");
+        animation.setStepAngle(a);
     }
 
     public void setGrowthSpeed(double g){
-        spiral.setGrowthSpeed(g);
+        animation.setGrowthSpeed(g);
     }
 
     @Override
-    public AAnimation getAnimation() {
-        return spiral;
+    public Spiral getAnimation() {
+        return animation;
     }
 }
