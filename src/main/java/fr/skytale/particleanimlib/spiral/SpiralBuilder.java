@@ -9,13 +9,14 @@ public class SpiralBuilder extends AAnimationBuilder<Spiral> {
         super();
         animation = new Spiral();
         animation.setStep(0.1);
+        animation.setRadius(1);
         animation.setStepAngle(30);
         animation.setGrowthSpeed(0);
     }
 
     /*********SETTERS des éléments spécifiques a la spirale ***********/
     public void setStep(double s) {
-        if (s == 0)
+        if (s <= 0)
             throw new IllegalArgumentException("Step must not be equal to zero.");
         animation.setStep(s);
     }
