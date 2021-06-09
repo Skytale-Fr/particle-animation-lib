@@ -44,20 +44,7 @@ dependencies {
     implementation 'org.jetbrains:annotations:19.0.0'
     compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
     implementation 'xyz.xenondevs:particle:1.5.1'
-
-    //TODO Could be useful for testing ? Or delete
-    //testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.0'
-    //testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.0'
-    //testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
-    //testImplementation 'org.spigotmc:spigot:1.16.3-R0.1-SNAPSHOT'
 }
-
-//TODO Could be useful for testing ? Or delete
-/*test {
-    useJUnitPlatform()
-    compileOnly "com.github.jengelman.gradle.plugins:shadow:6.1.0"
-}*/
-
 
 tasks.withType(Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet')
@@ -102,10 +89,6 @@ artifactory {
             // published to Artifactory.
             publications('mavenJava')
             publishArtifacts = true
-            // Properties to be attached to the published artifacts.
-            //properties = ['qa.level': 'basic', 'dev.team' : 'core']
-            // Publish generated POM files to Artifactory (true by default)
-            //publishPom = true
         }
     }
 }
