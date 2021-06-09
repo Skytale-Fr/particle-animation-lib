@@ -38,7 +38,7 @@ public class ExplodingSphere extends ARoundAnimation {
 
                         Location particleLocation = new Location(sphereCenter.getWorld(), x, y, z);
 
-                        sphereCenter.getWorld().spawnParticle(mainParticle.getParticleType(), particleLocation, 1, 0, 0, 0, 0,mainParticle.getParticleData());
+                        mainParticle.getParticleBuilder(particleLocation).display();
                     }
                 }
 

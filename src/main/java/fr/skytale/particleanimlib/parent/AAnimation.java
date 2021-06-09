@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.parent;
 
-import fr.skytale.particleanimlib.attributes.AnimationType;
+import fr.skytale.particleanimlib.attributes.CustomVector;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -8,7 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 public abstract class AAnimation {
-    protected AnimationType animationType;
     protected Location location;
     protected IMovingEntity movingEntity;
     protected Vector relativeLocation;
@@ -32,16 +31,13 @@ public abstract class AAnimation {
 
     public Location rotateAroundAxis(Location point, Vector axis, Location pointAxis, double angle) {
         Vector v = point.clone().subtract(pointAxis).toVector(); //Vecteur de axis au point à translater
-        v = v.rotateAroundAxis(axis, angle);
+        CustomVector customVector = new CustomVector(v.getX(),v.getY(),v.getZ());
+        v = customVector.rotateAroundAxis(axis, angle);
         v = v.add(pointAxis.toVector()); //Translation vers le point d'origine (La rotiation a été faite à l'origine du repère)
         return v.toLocation(point.getWorld());
     }
 
     /***********GETTERS & SETTERS***********/
-
-    public AnimationType getAnimationType() {
-        return animationType;
-    }
 
     public Location getLocation() {
         return location;
@@ -59,9 +55,6 @@ public abstract class AAnimation {
         return mainParticle;
     }
 
-    public void setAnimationType(AnimationType animationType) {
-        this.animationType = animationType;
-    }
 
     public void setLocation(Location location) {
         this.location = location;

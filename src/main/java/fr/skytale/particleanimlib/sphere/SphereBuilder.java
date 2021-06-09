@@ -1,33 +1,39 @@
 package fr.skytale.particleanimlib.sphere;
 
-import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 
-public class SphereBuilder extends AAnimationBuilder {
-    private Sphere sphere;
+public class SphereBuilder extends AAnimationBuilder<Sphere> {
 
     public SphereBuilder(){
-        sphere = new Sphere();
+        animation = new Sphere();
+        animation.setNbCircles(10);
+        animation.setRadius(1.0);
+        animation.setStepAngle(Math.toRadians(30));
     }
 
     /*********SETTERS des éléments spécifiques a la sphere ***********/
 
     public void setNbCircles(int nbCircles){
         if(nbCircles<=0)
-            nbCircles=10;
-        sphere.setNbCircles(nbCircles);
+            throw new IllegalArgumentException("Number of circles must be positive.");
+        animation.setNbCircles(nbCircles);
     }
 
     public void setRadius(double radius) {
-        sphere.setRadius(radius);
+        if (animation.getRadius() <= 0) {
+            throw new IllegalArgumentException("Radius should be positive.");
+        }
+        animation.setRadius(radius);
     }
 
     public void setStepAngle(double a){
-        sphere.setStepAngle(a);
+        if(a==0)
+            throw new IllegalArgumentException("Step angle should not be equal to zero.");
+        animation.setStepAngle(a);
     }
 
     @Override
-    public AAnimation getAnimation() {
-        return sphere;
+    public Sphere getAnimation() {
+        return super.getAnimation();
     }
 }

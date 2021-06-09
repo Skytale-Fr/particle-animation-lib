@@ -1,53 +1,58 @@
 package fr.skytale.particleanimlib.circle;
 
-import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 import org.bukkit.util.Vector;
 
-public class CircleBuilder extends AAnimationBuilder {
-    private Circle circle;
+public class CircleBuilder extends AAnimationBuilder<Circle> {
 
     public CircleBuilder() {
         super();
-        circle = new Circle(); //TODO Ajouter les valeurs par défaut dans le constructeur
+        animation = new Circle();
+        animation.setU(new Vector(1, 0, 0));
+        animation.setV(new Vector(0, 1, 0));
+        animation.setRadius(1.0);
+        animation.setNbPoints((int) animation.getRadius() * 20);
+        animation.setStepAngle(2 * Math.PI / animation.getNbPoints());
     }
 
     /*********SETTERS des éléments spécifiques au cercle ***********/
     public void setDirectorVectors(Vector u, Vector v) {
-        //Valeurs par défaut
-        //TODO N'exécuter que si pas null (les valeurs par défaut sont déjà gérées)
-        if(u==null)
-            u=new Vector(1, 0, 0);
-        if(v==null)
-            v=new Vector(0, 1, 0);
-
-        //TODO On rend les vecteurs unitaires => déplacer dans les setters du circle ?
+        if (u == null || v == null) {
+            throw new IllegalArgumentException("Director vectors should not be null");
+        }
         u.normalize();
         v.normalize();
 
-        circle.setU(u);
-        circle.setV(v);
+        animation.setU(u);
+        animation.setV(v);
     }
 
     public void setRadius(double r) {
-        //TODO Ajouter un max possible (c'est une idée c'est pas obligé) (throw IllegalArgumentException)
-        circle.setRadius(r);
+        if (animation.getRadius() <= 0) {
+            throw new IllegalArgumentException("Radius should be positive");
+        }
+        animation.setRadius(r);
     }
 
-    public void setNbPoints(int n) {
-        circle.setNbPoints(n);
+    public void setNbPoints(int nbPoints) {
+        if (nbPoints <= 0) {
+            throw new IllegalArgumentException("The number of point should be positive");
+        }
+        animation.setNbPoints(nbPoints);
+        animation.setStepAngle(2 * Math.PI / nbPoints);
     }
 
     public void setAxis(Vector axis) {
-        circle.setAxis(axis);
+        animation.setAxis(axis);
     }
 
-    public void setStepAngleAlpha(double s){ circle.setStepAngleAlpha(s);}
+    public void setStepAngleAlpha(double s){ animation.setStepAngleAlpha(s);}
 
     @Override
-    public AAnimation getAnimation() {
-        //TODO Si on doit faire des check de plusieurs attributs à la fois, on les fait ici
-        //     (par exemple, pour une sphère, nbPointPerCircle x nbCircle)
-        return circle;
+    public Circle getAnimation() {
+        if (animation.getAxis() != null && animation.getStepAngleAlpha() == 0) {
+            throw new IllegalArgumentException("The rotation animation should have a stepAngleAlpha");
+        }
+        return super.getAnimation();
     }
 }

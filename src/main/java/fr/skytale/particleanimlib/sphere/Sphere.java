@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.sphere;
 
+
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -26,7 +27,7 @@ public class Sphere extends ARoundAnimation {
                 double x = sphereCenter.getX() + Math.cos(j) * currentRadius;
                 double z = sphereCenter.getZ() + Math.sin(j) * currentRadius;
 
-                sphereCenter.getWorld().spawnParticle(mainParticle.getParticleType(), new Location(location.getWorld(), x, y, z), 1, 0, 0, 0, 0,mainParticle.getParticleData());
+                mainParticle.getParticleBuilder(new Location(location.getWorld(), x, y, z)).display();
             }
         }
     }

@@ -1,70 +1,109 @@
 package fr.skytale.particleanimlib.attributes;
 
-import org.bukkit.Particle;
-import org.bukkit.block.data.BlockData;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import xyz.xenondevs.particle.ParticleBuilder;
+import xyz.xenondevs.particle.ParticleEffect;
+import xyz.xenondevs.particle.data.ParticleData;
+import xyz.xenondevs.particle.data.color.RegularColor;
+import xyz.xenondevs.particle.data.texture.BlockTexture;
+import xyz.xenondevs.particle.data.texture.ItemTexture;
+
+import java.awt.*;
 
 public class ParticleTemplate {
-    private static final String NOT_IMPLEMENTED = "Error : particle not implemented";
-    private Particle particleType;
-    private Particle.DustOptions particleOptions;
-    private ItemStack particleItemStack;
-    private BlockData particleBlockData;
 
-    public ParticleTemplate(Particle particleType, Particle.DustOptions particleOptions, ItemStack particleItemStack, BlockData particleBlockData) {
-        this.particleType = particleType;
-        this.particleOptions = particleOptions;
-        this.particleItemStack = particleItemStack;
-        this.particleBlockData = particleBlockData;
+    private ParticleEffect particleEffect;
+    private ParticleData particleData;
+    private Color color;
+    private String material;
+    private int amount;
+    private float speed;
+
+    public ParticleTemplate(String particleType, Color color, String material) {
+        new ParticleTemplate(particleType, color, material,1,0);
     }
 
-    /***********GETTERS & SETTERS***********/
+    public ParticleTemplate(String particleType, Color color, String material, int amount, float speed) {
+        this.color = color;
+        this.material = material;
+        this.amount = amount;
+        this.speed = speed;
 
-    public void setParticleType(Particle particleType) {
-        this.particleType = particleType;
-    }
+        particleEffect = ParticleEffect.valueOf(particleType);
 
-    public void setParticleOptions(Particle.DustOptions particleOptions) {
-        this.particleOptions = particleOptions;
-    }
-
-    public void setParticleItemStack(ItemStack particleItemStack) {
-        this.particleItemStack = particleItemStack;
-    }
-
-    public void setParticleBlockData(BlockData particleBlockData) {
-        this.particleBlockData = particleBlockData;
-    }
-
-    public Particle getParticleType() {
-        return particleType;
-    }
-
-    public Object getParticleData(){
-        Object data=null;
-
-        switch(particleType){
+        switch (particleEffect) {
             case REDSTONE:
-                 data = particleOptions;
-                break;
-
-            case ITEM_CRACK:
-                data = particleItemStack;
+                particleData = new RegularColor(color);
                 break;
 
             case BLOCK_CRACK:
             case BLOCK_DUST:
             case FALLING_DUST:
-                data = particleBlockData;
+                particleData = new BlockTexture(Material.valueOf(material));
                 break;
 
-            case LEGACY_BLOCK_CRACK:
-            case LEGACY_BLOCK_DUST:
-            case LEGACY_FALLING_DUST:
-                System.out.println(NOT_IMPLEMENTED);
+            case ITEM_CRACK:
+                particleData = new ItemTexture(new ItemStack(Material.valueOf(material)));
                 break;
         }
+    }
 
-        return data;
+    /***********GETTERS & SETTERS***********/
+    public ParticleBuilder getParticleBuilder(Location location) {
+        ParticleBuilder newParticleBuilder = new ParticleBuilder(particleEffect, location);
+        newParticleBuilder.setAmount(amount);
+        newParticleBuilder.setSpeed(speed);
+        newParticleBuilder.setParticleData(particleData);
+        return newParticleBuilder;
+    }
+
+    public ParticleEffect getParticleEffect() {
+        return particleEffect;
+    }
+
+    public void setParticleEffect(ParticleEffect particleEffect) {
+        this.particleEffect = particleEffect;
+    }
+
+    public ParticleData getParticleData() {
+        return particleData;
+    }
+
+    public void setParticleData(ParticleData particleData) {
+        this.particleData = particleData;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 }

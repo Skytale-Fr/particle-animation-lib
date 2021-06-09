@@ -12,8 +12,6 @@ public abstract class ARoundAnimation extends AAnimation {
     }
 
     public void setRadius(double radius) {
-        if(radius<=0)
-            radius = 1.0;
         this.radius = radius;
     }
 
@@ -22,10 +20,7 @@ public abstract class ARoundAnimation extends AAnimation {
     }
 
     public void setNbPoints(int nbPoints) {
-        if(nbPoints<=0)
-            nbPoints = (int)radius * 20;
         this.nbPoints = nbPoints;
-        setStepAngle(2 * Math.PI / nbPoints);
     }
 
     public double getStepAngle() {

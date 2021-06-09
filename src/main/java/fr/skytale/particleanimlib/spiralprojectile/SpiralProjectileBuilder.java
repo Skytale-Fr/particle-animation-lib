@@ -4,36 +4,38 @@ import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 import org.bukkit.Location;
 
-public class SpiralProjectileBuilder extends AAnimationBuilder {
-    private SpiralProjectile spiralProjectile;
+public class SpiralProjectileBuilder extends AAnimationBuilder<SpiralProjectile> {
 
     public SpiralProjectileBuilder() {
-        spiralProjectile = new SpiralProjectile();
+        animation = new SpiralProjectile();
+        animation.setStep(0.1);
     }
 
     public void setTarget(Location location) {
-        spiralProjectile.setTarget(location);
+        animation.setTarget(location);
     }
 
     public void setStep(double s) {
         if (s == 0)
-            s = 0.1;
-
-        if (s < 0)
-            s = -s;
-        spiralProjectile.setStep(s);
+            throw new IllegalArgumentException("Step must not be equal to zero.");
+        animation.setStep(s);
     }
 
     public void setSpiral1(AAnimation spiral){
-        spiralProjectile.setSpiral1(spiral);
+        animation.setSpiral1(spiral);
     }
 
     public void setSpiral2(AAnimation spiral){
-        spiralProjectile.setSpiral2(spiral);
+        animation.setSpiral2(spiral);
     }
 
     @Override
-    public AAnimation getAnimation() {
-        return spiralProjectile;
+    public SpiralProjectile getAnimation() {
+        if(animation.getSpiral1()==null || animation.getSpiral2()==null)
+            throw new IllegalArgumentException("Both spirals has to be initialized.");
+
+        if(animation.getTarget()==null)
+            throw new IllegalArgumentException("Target has to be initialized.");
+        return super.getAnimation();
     }
 }

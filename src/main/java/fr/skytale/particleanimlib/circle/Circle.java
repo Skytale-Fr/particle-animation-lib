@@ -40,7 +40,7 @@ public class Circle extends ARoundAnimation {
             Location particleLocation = new Location(player.getWorld(), x, y, z);
 
             if (axis == null) {
-                circleCenter.getWorld().spawnParticle(mainParticle.getParticleType(), particleLocation, 1, 0, 0, 0, 0, mainParticle.getParticleData());
+                mainParticle.getParticleBuilder(particleLocation).display();
             } else {
                 if (stepAngleAlpha == 0) {
                     player.sendMessage(STEP_ANGLE_ALPHA_0);
@@ -63,17 +63,18 @@ public class Circle extends ARoundAnimation {
                     if (Math.abs(alpha) >= Math.PI * 2) {
                         this.cancel();
                     }
-                    Location currentLocation = movingEntity.getLocation();
 
                     for (int p = 0; p < nbPoints; p++) {
 
                         if (!isFixedLocation()) {
+                            Location currentLocation = movingEntity.getLocation();
                             particleCircle[p].setX(particleCircle[p].getX() + currentLocation.getX());
                             particleCircle[p].setY(particleCircle[p].getY() + currentLocation.getY());
                             particleCircle[p].setZ(particleCircle[p].getZ() + currentLocation.getZ());
                         }
                         Location particleLocation = rotateAroundAxis(particleCircle[p], axis, location, alpha);
-                        circleCenter.getWorld().spawnParticle(mainParticle.getParticleType(), particleLocation, 1, 0, 0, 0, 0, mainParticle.getParticleData());
+
+                        mainParticle.getParticleBuilder(particleLocation).display();
                     }
                     alpha += stepAngleAlpha;
                 }
