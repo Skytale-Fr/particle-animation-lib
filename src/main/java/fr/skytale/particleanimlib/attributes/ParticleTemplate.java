@@ -21,6 +21,10 @@ public class ParticleTemplate {
     private int amount;
     private float speed;
 
+    public ParticleTemplate(String particleType, Color color, String material) {
+        new ParticleTemplate(particleType, color, material,1,0);
+    }
+
     public ParticleTemplate(String particleType, Color color, String material, int amount, float speed) {
         this.color = color;
         this.material = material;
