@@ -1,6 +1,5 @@
 package fr.skytale.particleanimlib.parent;
 
-import fr.skytale.particleanimlib.attributes.AnimationType;
 import fr.skytale.particleanimlib.attributes.CustomVector;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import org.bukkit.Location;
@@ -9,7 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 public abstract class AAnimation {
-    protected AnimationType animationType;
     protected Location location;
     protected IMovingEntity movingEntity;
     protected Vector relativeLocation;
@@ -41,10 +39,6 @@ public abstract class AAnimation {
 
     /***********GETTERS & SETTERS***********/
 
-    public AnimationType getAnimationType() {
-        return animationType;
-    }
-
     public Location getLocation() {
         return location;
     }
@@ -61,9 +55,6 @@ public abstract class AAnimation {
         return mainParticle;
     }
 
-    public void setAnimationType(AnimationType animationType) {
-        this.animationType = animationType;
-    }
 
     public void setLocation(Location location) {
         this.location = location;

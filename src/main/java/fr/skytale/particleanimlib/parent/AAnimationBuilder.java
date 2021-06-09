@@ -1,6 +1,5 @@
 package fr.skytale.particleanimlib.parent;
 
-import fr.skytale.particleanimlib.attributes.AnimationType;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,10 +12,6 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
     }
 
     /*********SETTERS des éléments généraux d'une animation ***********/
-
-    public void setAnimationType(AnimationType animationType) {
-        animation.setAnimationType(animationType);
-    }
 
     public void setLocation(Location location) {
         animation.setLocation(location);
