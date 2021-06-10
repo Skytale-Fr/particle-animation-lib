@@ -12,7 +12,7 @@ public class ExplodingSphere extends ARoundAnimation {
     private double explosionLimit;
 
     @Override
-    public void show(Player player) {
+    public void show() {
         Location sphereCenter;
 
         if(isFixedLocation())

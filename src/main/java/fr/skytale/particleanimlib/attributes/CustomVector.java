@@ -9,6 +9,10 @@ public class CustomVector extends Vector {
         super(x, y, z);
     }
 
+    public CustomVector(Vector v) {
+        super(v.getX(), v.getY(), v.getZ());
+    }
+
     public CustomVector(double x, double y, double z) {
         super(x, y, z);
     }

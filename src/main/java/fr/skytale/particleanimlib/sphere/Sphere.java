@@ -11,7 +11,7 @@ public class Sphere extends ARoundAnimation {
     public Sphere(){}
 
     @Override
-    public void show(Player player) {
+    public void show() {
         Location sphereCenter;
 
         if(isFixedLocation())

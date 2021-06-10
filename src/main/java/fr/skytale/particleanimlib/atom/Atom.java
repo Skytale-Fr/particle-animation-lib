@@ -18,11 +18,11 @@ public class Atom extends ARoundAnimation {
     }
 
     @Override
-    public void show(Player player) {               //TODO a refaire quand le temps d'affichage et la fréquence seront implémenté
+    public void show() {               //TODO a refaire quand le temps d'affichage et la fréquence seront implémenté
 
-        circle1.show(player);
-        circle2.show(player);
-        circle3.show(player);
+        circle1.show();
+        circle2.show();
+        circle3.show();
 
         new BukkitRunnable() {
             double tps = 0;
@@ -33,7 +33,7 @@ public class Atom extends ARoundAnimation {
                 if (tps >= 20) {
                     this.cancel();
                 }
-                sphere.show(player);
+                sphere.show();
 
                 tps++;
             }
