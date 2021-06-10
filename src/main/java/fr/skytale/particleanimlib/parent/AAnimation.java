@@ -14,7 +14,7 @@ public abstract class AAnimation {
     protected ParticleTemplate mainParticle;
     protected JavaPlugin plugin;
 
-    public abstract void show(Player player);
+    public abstract void show();
 
     public boolean isRunning() {
         //Check si l'animation tourne
@@ -35,6 +35,10 @@ public abstract class AAnimation {
         v = customVector.rotateAroundAxis(axis, angle);
         v = v.add(pointAxis.toVector()); //Translation vers le point d'origine (La rotiation a été faite à l'origine du repère)
         return v.toLocation(point.getWorld());
+    }
+
+    public Location getBaseLocation() {
+        return isFixedLocation() ? location.clone() : movingEntity.getLocation().clone().add(relativeLocation);
     }
 
     /***********GETTERS & SETTERS***********/

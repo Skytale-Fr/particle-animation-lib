@@ -18,15 +18,15 @@ public class SpiralProjectile extends ARoundAnimation {
     }
 
     @Override
-    public void show(Player player) {
+    public void show() {
         double distance = target.distance(location);
 
         Vector start = location.toVector();
         Vector end = target.toVector();
         Vector stepVector = end.clone().subtract(start).normalize().multiply(step); //Le step mais version vector
 
-        spiral1.show(player);
-        spiral2.show(player);
+        spiral1.show();
+        spiral2.show();
 
         new BukkitRunnable() {
             double length = 0;

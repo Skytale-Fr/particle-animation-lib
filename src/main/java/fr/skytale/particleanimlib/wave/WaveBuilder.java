@@ -53,7 +53,7 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
             throw new IllegalArgumentException("MaxRadius must be greater than radius.");
 
         if(animation.getCircleAnim()==null)
-            throw new IllegalArgumentException("Circle animation has to be defined.");
+            throw new IllegalArgumentException("Image animation has to be defined.");
 
         return super.getAnimation();
     }
