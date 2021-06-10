@@ -20,7 +20,7 @@ public class Circle extends ARoundAnimation {
     }
 
     @Override
-    public void show(Player player) {
+    public void show() {
         Location circleCenter;
 
         if (isFixedLocation())
@@ -37,13 +37,12 @@ public class Circle extends ARoundAnimation {
             double y = circleCenter.getY() + (u.getY() * radius * Math.cos(theta)) + (v.getY() * radius * Math.sin(theta));
             double z = circleCenter.getZ() + (u.getZ() * radius * Math.cos(theta)) + (v.getZ() * radius * Math.sin(theta));
 
-            Location particleLocation = new Location(player.getWorld(), x, y, z);
+            Location particleLocation = new Location(circleCenter.getWorld(), x, y, z);
 
             if (axis == null) {
                 mainParticle.getParticleBuilder(particleLocation).display();
             } else {
                 if (stepAngleAlpha == 0) {
-                    player.sendMessage(STEP_ANGLE_ALPHA_0);
                     throw new IllegalArgumentException(STEP_ANGLE_ALPHA_0);
                 } else
                     particleCircle[p] = particleLocation;

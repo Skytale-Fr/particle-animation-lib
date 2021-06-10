@@ -16,7 +16,7 @@ public class Spiral extends ARoundAnimation {
     }
 
     @Override
-    public void show(Player player) {
+    public void show() {
         double distance = target.distance(location);
 
         Vector start = location.toVector();

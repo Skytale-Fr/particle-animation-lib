@@ -16,7 +16,7 @@ public class Wave extends ARoundAnimation {
     }
 
     @Override
-    public void show(Player player) {
+    public void show() {
         Location waveCenter;
         if (isFixedLocation())
             waveCenter = location.clone();
@@ -43,7 +43,7 @@ public class Wave extends ARoundAnimation {
                     double y = waveCenter.getY() + (2 * Math.exp(-0.1* (39/( maxRadius - radius ) * currentRadius)) * Math.sin(currentRadius)) + 1;
                     circle.setLocation(new Location(waveCenter.getWorld(),circle.getLocation().getX(),y,circle.getLocation().getZ()));
 
-                    circle.show(player);
+                    circle.show();
 
                 }
 
