@@ -22,7 +22,7 @@ public class ParticleTemplate {
     private float speed;
 
     public ParticleTemplate(String particleType, Color color, String material) {
-        new ParticleTemplate(particleType, color, material,1,0);
+        this(particleType, color, material,1,0);
     }
 
     public ParticleTemplate(String particleType, Color color, String material, int amount, float speed) {

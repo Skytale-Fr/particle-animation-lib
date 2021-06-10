@@ -1,8 +1,6 @@
 package fr.skytale.particleanimlib.explodingsphere;
 
-import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
-import org.bukkit.util.Vector;
 
 public class ExplodingSphereBuilder extends AAnimationBuilder<ExplodingSphere> {
 
