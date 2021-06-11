@@ -83,9 +83,6 @@ public class Image extends AAnimation {
     private HashMap<Vector, Color> imagePixels;
     private ImageTaskData taskData;
     private boolean resetBeforeShow;
-    //General data
-    private int ticksDuration;
-    private int showFrequency;
     //Randomness generator
     private Random random;
     //Does particle type support color
@@ -113,7 +110,7 @@ public class Image extends AAnimation {
             //Stop if required
             if (taskData.iterationCounter > ticksDuration) {
                 taskData.taskId = null;
-                cancel();
+                return; //TODO export to task
             }
 
             //Do nothing if not shown
@@ -292,19 +289,4 @@ public class Image extends AAnimation {
         this.resetBeforeShow = resetBeforeShow;
     }
 
-    public int getTicksDuration() {
-        return ticksDuration;
-    }
-
-    public void setTicksDuration(int ticksDuration) {
-        this.ticksDuration = ticksDuration;
-    }
-
-    public int getShowFrequency() {
-        return showFrequency;
-    }
-
-    public void setShowFrequency(int showFrequency) {
-        this.showFrequency = showFrequency;
-    }
 }

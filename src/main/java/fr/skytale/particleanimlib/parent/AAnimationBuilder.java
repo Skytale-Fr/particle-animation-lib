@@ -33,6 +33,18 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation.setPlugin(javaPlugin);
     }
 
+    public void setTicksDuration(int ticksDuration) {
+        if (ticksDuration <= 0)
+            throw new IllegalArgumentException("ticks duration should be positive");
+        animation.setTicksDuration(ticksDuration);
+    }
+
+    public void setShowFrequency(int showFrequency) {
+        if (showFrequency < 0)
+            throw new IllegalArgumentException("showFrequency should be positive or equal to 0");
+        animation.setShowFrequency(showFrequency);
+    }
+
     public T getAnimation() {
         boolean hasMovingEntity = animation.getMovingEntity() != null;
         if (animation.getLocation() != null && hasMovingEntity) {

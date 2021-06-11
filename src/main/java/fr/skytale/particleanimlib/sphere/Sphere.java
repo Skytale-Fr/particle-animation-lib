@@ -1,35 +1,24 @@
 package fr.skytale.particleanimlib.sphere;
 
 
+import fr.skytale.particleanimlib.attributes.PropagationType;
+import fr.skytale.particleanimlib.attributes.SphereType;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 public class Sphere extends ARoundAnimation {
-    int nbCircles;
+    private int nbCircles;
+    private PropagationType propagationType;
+    private int simultaneousCircles;
+    private SphereType sphereType;
 
-    public Sphere(){}
+    public Sphere() {
+    }
 
     @Override
     public void show() {
-        Location sphereCenter;
-
-        if(isFixedLocation())
-            sphereCenter = location.clone();
-        else
-            sphereCenter = movingEntity.getLocation().clone().add(relativeLocation);
-
-        for (double i = 0; i < Math.PI; i += Math.PI / nbCircles) {
-            double currentRadius = Math.sin(i) * radius;
-            double y = sphereCenter.getY() + Math.cos(i) * radius;
-
-            for (double j = 0; j < Math.PI * 2; j += stepAngle) {
-                double x = sphereCenter.getX() + Math.cos(j) * currentRadius;
-                double z = sphereCenter.getZ() + Math.sin(j) * currentRadius;
-
-                mainParticle.getParticleBuilder(new Location(location.getWorld(), x, y, z)).display();
-            }
-        }
+        new SphereTask(this);
     }
 
     /***********GETTERS & SETTERS***********/
@@ -39,5 +28,29 @@ public class Sphere extends ARoundAnimation {
 
     public void setNbCircles(int nbCircles) {
         this.nbCircles = nbCircles;
+    }
+
+    public PropagationType getPropagationType() {
+        return propagationType;
+    }
+
+    public void setPropagationType(PropagationType propagationType) {
+        this.propagationType = propagationType;
+    }
+
+    public int getSimultaneousCircles() {
+        return simultaneousCircles;
+    }
+
+    public void setSimultaneousCircles(int simultaneousCircles) {
+        this.simultaneousCircles = simultaneousCircles;
+    }
+
+    public SphereType getSphereType() {
+        return sphereType;
+    }
+
+    public void setSphereType(SphereType sphereType) {
+        this.sphereType = sphereType;
     }
 }

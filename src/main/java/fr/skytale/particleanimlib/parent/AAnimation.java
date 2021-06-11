@@ -13,17 +13,10 @@ public abstract class AAnimation {
     protected Vector relativeLocation;
     protected ParticleTemplate mainParticle;
     protected JavaPlugin plugin;
+    protected int ticksDuration;
+    protected int showFrequency;
 
     public abstract void show();
-
-    public boolean isRunning() {
-        //Check si l'animation tourne
-        return false;
-    }
-
-    public void cancel() {
-        //Stop l'action
-    }
 
     public boolean isFixedLocation() {
         return movingEntity == null;
@@ -31,7 +24,7 @@ public abstract class AAnimation {
 
     public Location rotateAroundAxis(Location point, Vector axis, Location pointAxis, double angle) {
         Vector v = point.clone().subtract(pointAxis).toVector(); //Vecteur de axis au point à translater
-        CustomVector customVector = new CustomVector(v.getX(),v.getY(),v.getZ());
+        CustomVector customVector = new CustomVector(v.getX(), v.getY(), v.getZ());
         v = customVector.rotateAroundAxis(axis, angle);
         v = v.add(pointAxis.toVector()); //Translation vers le point d'origine (La rotiation a été faite à l'origine du repère)
         return v.toLocation(point.getWorld());
@@ -59,6 +52,13 @@ public abstract class AAnimation {
         return mainParticle;
     }
 
+    public int getTicksDuration() {
+        return ticksDuration;
+    }
+
+    public int getShowFrequency() {
+        return showFrequency;
+    }
 
     public void setLocation(Location location) {
         this.location = location;
@@ -74,6 +74,14 @@ public abstract class AAnimation {
 
     public void setMainParticle(ParticleTemplate mainParticle) {
         this.mainParticle = mainParticle;
+    }
+
+    public void setTicksDuration(int ticksDuration) {
+        this.ticksDuration = ticksDuration;
+    }
+
+    public void setShowFrequency(int showFrequency) {
+        this.showFrequency = showFrequency;
     }
 
     public JavaPlugin getPlugin() {

@@ -39,16 +39,8 @@ public class ImageBuilder extends AAnimationBuilder<Image> {
         animation.setStepAngleAlpha(s);
     }
 
-    public void setTickDuration(int tickDuration) {
-        animation.setTicksDuration(tickDuration);
-    }
-
     public void setResetBeforeShow(boolean resetBeforeShow) {
         animation.setResetBeforeShow(resetBeforeShow);
-    }
-
-    public void setShowFrequency(int showFrequency) {
-        animation.setShowFrequency(showFrequency);
     }
 
     public void setImageFileName(String imageFileName) {
