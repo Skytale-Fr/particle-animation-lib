@@ -23,27 +23,19 @@ import java.util.stream.Collectors;
 
 public class Image extends AAnimation {
 
-
-    /******** Inner class ********/
-
-    private static class ImageTaskData {
-        //If rotation is required
-        public Vector currentAxis;
-        public double currentStepAngleAlpha;
-        public int iterationCounter;
-        public int changeRotationCounter;
-        public HashMap<Vector, Color> currentImagePixels;
-        public Integer taskId;
-    }
-
     /******** Static Attributes ********/
-
-    private static final String STEP_ANGLE_ALPHA_0 = "If axis defined, stepAngleAlpha must not be equal to 0.";
 
     /******** Static Methods ********/
 
     public static File getImagesDirectory(JavaPlugin plugin) {
-        File imagesDir = new File(plugin.getDataFolder(), "images");
+        File pluginDir = plugin.getDataFolder();
+        if (!pluginDir.exists()) {
+            boolean result = pluginDir.mkdir();
+            if (!result) {
+                throw new IllegalStateException("The plugin directory could not be created. It is probably a permission issue.");
+            }
+        }
+        File imagesDir = new File(pluginDir, "images");
         if (!imagesDir.exists()) {
             boolean result = imagesDir.mkdir();
             if (!result) {
@@ -81,11 +73,6 @@ public class Image extends AAnimation {
     private double stepAngleAlphaChangeFactor;
     private Integer stepAngleAlphaChangeFrequency = null;
     private HashMap<Vector, Color> imagePixels;
-    private ImageTaskData taskData;
-    private boolean resetBeforeShow;
-    //Randomness generator
-    private Random random;
-    //Does particle type support color
     private boolean hasColor;
 
     /******** Constructor ********/
@@ -97,75 +84,8 @@ public class Image extends AAnimation {
 
     @Override
     public void show() {
-        if ((taskData != null) && taskData.taskId != null) {
-            throw new IllegalStateException("Could not show this animation twice. Please create another animation.");
-        }
         init();
-        reset(taskData);
-        taskData.taskId = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
-            //increment counters
-            taskData.iterationCounter++;
-            taskData.changeRotationCounter++;
-
-            //Stop if required
-            if (taskData.iterationCounter > ticksDuration) {
-                taskData.taskId = null;
-                return; //TODO export to task
-            }
-
-            //Do nothing if not shown
-            if (taskData.iterationCounter % showFrequency != 0) {
-                return;
-            }
-
-            boolean changeRotation = hasRotation();
-
-            //Modify axis if required
-            if (hasChangingRotationAxis() && taskData.changeRotationCounter % axisChangeFrequency == 0) {
-                changeRotation = true;
-                taskData.currentAxis = new Vector(random.nextDouble(),random.nextDouble(), random.nextDouble()).normalize().add(taskData.currentAxis.multiply(3)).normalize();
-            }
-
-            //Modify stepAngle if required
-            if (hasChangingRotationStepAngle() && taskData.changeRotationCounter % stepAngleAlphaChangeFrequency == 0) {
-                changeRotation = true;
-                taskData.currentStepAngleAlpha += Math.PI / 20 * this.stepAngleAlphaChangeFactor * (random.nextInt(20) - 11);
-            }
-
-            //Compute rotation
-            if (taskData.currentStepAngleAlpha != 0 && changeRotation) {
-                taskData.currentImagePixels = (HashMap<Vector, Color>) taskData.currentImagePixels.entrySet()
-                        .stream()
-                        .collect(Collectors.toMap(e -> new CustomVector(e.getKey()).rotateAroundAxis(taskData.currentAxis, taskData.currentStepAngleAlpha), Map.Entry::getValue));
-            }
-
-            //show the result
-            Location currentLocation = getBaseLocation();
-            taskData.currentImagePixels.forEach(((vector, color) -> {
-                ParticleBuilder particleBuilder = mainParticle.getParticleBuilder(currentLocation.clone().add(vector));
-                if (hasColor) {
-                    particleBuilder.setColor(color);
-                }
-                particleBuilder.display();
-            }));
-
-        },1L, 1L).getTaskId();
-    }
-
-    private ImageTaskData reset(ImageTaskData taskData) {
-        if (resetBeforeShow || taskData == null) {
-            if (taskData == null) {
-                taskData = new ImageTaskData();
-                random = new Random();
-            }
-            taskData.currentImagePixels = (HashMap<Vector, Color>) imagePixels.entrySet().stream()
-                    .collect(Collectors.toMap(e -> e.getKey().clone(), Map.Entry::getValue));
-            taskData.currentAxis = axis.clone();
-            taskData.currentStepAngleAlpha = stepAngleAlpha;
-        }
-        taskData.iterationCounter = 0;
-        taskData.changeRotationCounter = 0;
-        return taskData;
+        new ImageTask(this);
     }
 
     private void init() {
@@ -204,17 +124,6 @@ public class Image extends AAnimation {
             throw new IllegalArgumentException("The image could not be read", e);
         }
     }
-
-    public boolean hasRotation() {
-        return this.axis != null;
-    }
-    public boolean hasChangingRotationAxis() {
-        return hasRotation() && this.axisChangeFrequency != null;
-    }
-    public boolean hasChangingRotationStepAngle() {
-        return hasRotation() && this.stepAngleAlphaChangeFrequency != null;
-    }
-
     /******** Getters & Setters ********/
 
     public void setU(Vector u) {
@@ -281,12 +190,11 @@ public class Image extends AAnimation {
         this.imageFileName = imageFileName;
     }
 
-    public boolean isResetBeforeShow() {
-        return resetBeforeShow;
+    public HashMap<Vector, Color> getImagePixels() {
+        return imagePixels;
     }
 
-    public void setResetBeforeShow(boolean resetBeforeShow) {
-        this.resetBeforeShow = resetBeforeShow;
+    public boolean isHasColor() {
+        return hasColor;
     }
-
 }

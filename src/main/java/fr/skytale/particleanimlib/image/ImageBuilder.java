@@ -12,7 +12,6 @@ public class ImageBuilder extends AAnimationBuilder<Image> {
         animation.setV(new Vector(0, 1, 0));
         animation.setTicksDuration(60);
         animation.setShowFrequency(2);
-        animation.setResetBeforeShow(true);
         animation.setStepAngleAlpha(0);
         animation.setAxisChangeFrequency(3);
         animation.setStepAngleAlphaChangeFactor(1);
@@ -24,11 +23,9 @@ public class ImageBuilder extends AAnimationBuilder<Image> {
         if (u == null || v == null) {
             throw new IllegalArgumentException("Director vectors should not be null");
         }
-        u.normalize();
-        v.normalize();
 
         animation.setU(u);
-        animation.setV(v);
+        animation.setV(v.clone().multiply(-1));
     }
 
     public void setAxis(Vector axis) {
@@ -37,10 +34,6 @@ public class ImageBuilder extends AAnimationBuilder<Image> {
 
     public void setStepAngleAlpha(double s) {
         animation.setStepAngleAlpha(s);
-    }
-
-    public void setResetBeforeShow(boolean resetBeforeShow) {
-        animation.setResetBeforeShow(resetBeforeShow);
     }
 
     public void setImageFileName(String imageFileName) {
