@@ -28,7 +28,7 @@ public class ImageTask extends AAnimationTask<Image> {
     public int iterationCounter;
     public int changeRotationCounter;
     public HashMap<Vector, Color> currentImagePixels;
-    public Integer taskId;
+    public int taskId;
 
     public ImageTask(Image image) {
         super(image);
@@ -58,7 +58,10 @@ public class ImageTask extends AAnimationTask<Image> {
 
         //Stop if required
         if (iterationCounter > ticksDuration) {
-            taskId = null;
+            Bukkit.getScheduler().cancelTask(taskId);
+            if (animation.getCallback() != null) {
+                animation.getCallback().run(animation);
+            }
             return;
         }
 

@@ -1,11 +1,14 @@
 package fr.skytale.particleanimlib.parent;
 
+import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
 import fr.skytale.particleanimlib.attributes.CustomVector;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
+
+import java.util.Objects;
 
 public abstract class AAnimation {
     protected Location location;
@@ -15,6 +18,7 @@ public abstract class AAnimation {
     protected JavaPlugin plugin;
     protected int ticksDuration;
     protected int showFrequency;
+    protected AnimationEndedCallback callback;
 
     public abstract void show();
 
@@ -27,7 +31,7 @@ public abstract class AAnimation {
         CustomVector customVector = new CustomVector(v.getX(), v.getY(), v.getZ());
         v = customVector.rotateAroundAxis(axis, angle);
         v = v.add(pointAxis.toVector()); //Translation vers le point d'origine (La rotiation a été faite à l'origine du repère)
-        return v.toLocation(point.getWorld());
+        return v.toLocation(Objects.requireNonNull(point.getWorld()));
     }
 
     public Location getBaseLocation() {
@@ -60,6 +64,10 @@ public abstract class AAnimation {
         return showFrequency;
     }
 
+    public AnimationEndedCallback getCallback() {
+        return callback;
+    }
+
     public void setLocation(Location location) {
         this.location = location;
     }
@@ -90,5 +98,9 @@ public abstract class AAnimation {
 
     public void setPlugin(JavaPlugin plugin) {
         this.plugin = plugin;
+    }
+
+    public void setCallback(AnimationEndedCallback callback) {
+        this.callback = callback;
     }
 }

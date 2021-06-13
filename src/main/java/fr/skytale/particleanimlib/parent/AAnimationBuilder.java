@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.parent;
 
+import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -43,6 +44,10 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         if (showFrequency < 0)
             throw new IllegalArgumentException("showFrequency should be positive or equal to 0");
         animation.setShowFrequency(showFrequency);
+    }
+
+    public void setCallback(AnimationEndedCallback callback) {
+        animation.callback = callback;
     }
 
     public T getAnimation() {

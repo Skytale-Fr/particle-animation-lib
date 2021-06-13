@@ -64,6 +64,9 @@ public class SphereTask extends ARoundAnimationTask<Sphere> {
         //Stop
         if (iterationCount >= ticksDuration) {
             Bukkit.getScheduler().cancelTask(taskId);
+            if (animation.getCallback() != null) {
+                animation.getCallback().run(animation);
+            }
             return;
         }
 

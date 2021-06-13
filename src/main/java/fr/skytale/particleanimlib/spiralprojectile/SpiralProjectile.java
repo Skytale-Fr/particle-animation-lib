@@ -28,6 +28,8 @@ public class SpiralProjectile extends ARoundAnimation {
         spiral1.show();
         spiral2.show();
 
+        final AAnimation finalThis = this;
+
         new BukkitRunnable() {
             double length = 0;
 
@@ -36,6 +38,9 @@ public class SpiralProjectile extends ARoundAnimation {
 
                 if (length >= distance) {
                     this.cancel();
+                    if (getCallback() != null) {
+                        getCallback().run(finalThis);
+                    }
                 }
 
                 //Axe central
