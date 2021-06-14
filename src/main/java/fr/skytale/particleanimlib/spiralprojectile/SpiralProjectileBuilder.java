@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.spiralprojectile;
 
+import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
 import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 import org.bukkit.Location;
@@ -9,6 +10,8 @@ public class SpiralProjectileBuilder extends AAnimationBuilder<SpiralProjectile>
     public SpiralProjectileBuilder() {
         animation = new SpiralProjectile();
         animation.setStep(0.1);
+        animation.setShowFrequency(0);
+        animation.setTicksDuration(60);
     }
 
     public void setTarget(Location location) {
@@ -27,7 +30,10 @@ public class SpiralProjectileBuilder extends AAnimationBuilder<SpiralProjectile>
 
     public void setSpiral2(AAnimation spiral){
         animation.setSpiral2(spiral);
+    }    public void setCallback(AnimationEndedCallback callback) {
+        throw new IllegalArgumentException("Only primitive animations have callback functions.");
     }
+
 
     @Override
     public SpiralProjectile getAnimation() {

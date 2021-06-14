@@ -4,8 +4,6 @@ package fr.skytale.particleanimlib.atom;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class Atom extends ARoundAnimation {
     private AAnimation sphere;
@@ -18,27 +16,11 @@ public class Atom extends ARoundAnimation {
     }
 
     @Override
-    public void show() {               //TODO a refaire quand le temps d'affichage et la fréquence seront implémenté
-
+    public void show() {
+        sphere.show();
         circle1.show();
         circle2.show();
         circle3.show();
-
-        new BukkitRunnable() {
-            double tps = 0;
-
-            @Override
-            public void run() {
-
-                if (tps >= 20) {
-                    this.cancel();
-                }
-                sphere.show();
-
-                tps++;
-            }
-
-        }.runTaskTimer(plugin, 0L, 2L);
     }
 
     /***********GETTERS & SETTERS***********/

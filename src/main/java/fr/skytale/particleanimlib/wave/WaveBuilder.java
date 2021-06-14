@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.wave;
 
+import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
 import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 
@@ -12,6 +13,8 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
         animation.setNbPoints((int) animation.getRadius() * 20);
         animation.setStep(0.3);
         animation.setStepAngle(2 * Math.PI / animation.getNbPoints());
+        animation.setShowFrequency(0);
+        animation.setTicksDuration(60);
     }
 
     /*********SETTERS des éléments spécifiques a la vague ***********/
@@ -46,6 +49,9 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
         animation.setCircleAnim(subAnimation);
     }
 
+    public void setCallback(AnimationEndedCallback callback) {
+        throw new IllegalArgumentException("Only primitive animations have callback functions.");
+    }
 
     @Override
     public Wave getAnimation() {

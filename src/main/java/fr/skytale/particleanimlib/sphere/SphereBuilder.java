@@ -12,7 +12,7 @@ public class SphereBuilder extends AAnimationBuilder<Sphere> {
         animation.setRadius(1.0);
         animation.setStepAngle(Math.toRadians(30));
         animation.setSphereType(SphereType.FULL);
-        animation.setShowFrequency(1);
+        animation.setShowFrequency(0);
         animation.setPropagationType(null);
         animation.setTicksDuration(60);
     }

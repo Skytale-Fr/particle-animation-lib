@@ -91,7 +91,7 @@ public class SphereTask extends ARoundAnimationTask<Sphere> {
         }
 
 
-        for (double i = currentMin; propagationType == PropagationType.TOP_TO_BOTTOM ? i <= currentMax : i >= currentMax; i += step) {
+        for (double i = currentMin; propagationType == PropagationType.BOTTOM_TO_TOP ? i >= currentMax : i <= currentMax ; i += step) {
             double currentRadius = Math.sin(i) * radius;
             double y = sphereCenter.getY() + Math.cos(i) * radius;
 

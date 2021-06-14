@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.atom;
 
+import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
@@ -11,6 +12,8 @@ public class AtomBuilder extends AAnimationBuilder<Atom> {
         super();
         animation = new Atom();
         animation.setStepAngle(Math.toRadians(15));
+        animation.setShowFrequency(0);
+        animation.setTicksDuration(60);
     }
 
     /*********SETTERS des éléments spécifiques de l'atome ***********/
@@ -39,6 +42,10 @@ public class AtomBuilder extends AAnimationBuilder<Atom> {
 
     public void setCircle3(AAnimation circle3) {
         animation.setCircle3(circle3);
+    }
+
+    public void setCallback(AnimationEndedCallback callback) {
+        throw new IllegalArgumentException("Only primitive animations have callback functions.");
     }
 
     @Override

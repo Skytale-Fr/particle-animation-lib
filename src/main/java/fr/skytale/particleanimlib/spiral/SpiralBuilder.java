@@ -12,6 +12,8 @@ public class SpiralBuilder extends AAnimationBuilder<Spiral> {
         animation.setRadius(1);
         animation.setStepAngle(Math.toRadians(30));
         animation.setGrowthSpeed(0);
+        animation.setShowFrequency(0);
+        animation.setTicksDuration(60);
     }
 
     /*********SETTERS des éléments spécifiques a la spirale ***********/

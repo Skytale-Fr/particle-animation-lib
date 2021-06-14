@@ -4,9 +4,6 @@ package fr.skytale.particleanimlib.spiralprojectile;
 import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 public class SpiralProjectile extends ARoundAnimation {
     private Location target;
@@ -19,38 +16,9 @@ public class SpiralProjectile extends ARoundAnimation {
 
     @Override
     public void show() {
-        double distance = target.distance(location);
-
-        Vector start = location.toVector();
-        Vector end = target.toVector();
-        Vector stepVector = end.clone().subtract(start).normalize().multiply(step); //Le step mais version vector
-
         spiral1.show();
         spiral2.show();
-
-        final AAnimation finalThis = this;
-
-        new BukkitRunnable() {
-            double length = 0;
-
-            @Override
-            public void run() {
-
-                if (length >= distance) {
-                    this.cancel();
-                    if (getCallback() != null) {
-                        getCallback().run(finalThis);
-                    }
-                }
-
-                //Axe central
-                Location particleLocation = new Location(location.getWorld(), start.getX(), start.getY(), start.getZ());
-                mainParticle.getParticleBuilder(particleLocation).display();
-                length += step;
-
-                start.add(stepVector);
-            }
-        }.runTaskTimer(plugin, 0L, 1L);
+        new SpiralProjectileTask(this);
     }
 
     /***********GETTERS & SETTERS***********/

@@ -13,6 +13,8 @@ public class CircleBuilder extends AAnimationBuilder<Circle> {
         animation.setRadius(1.0);
         animation.setNbPoints((int) animation.getRadius() * 20);
         animation.setStepAngle(2 * Math.PI / animation.getNbPoints());
+        animation.setShowFrequency(0);
+        animation.setTicksDuration(60);
     }
 
     /*********SETTERS des éléments spécifiques au cercle ***********/
