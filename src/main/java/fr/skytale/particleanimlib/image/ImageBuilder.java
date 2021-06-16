@@ -13,9 +13,9 @@ public class ImageBuilder extends AAnimationBuilder<Image> {
         animation.setTicksDuration(60);
         animation.setShowFrequency(2);
         animation.setStepAngleAlpha(0);
-        animation.setAxisChangeFrequency(3);
+        animation.setAxisChangeFrequency(null);
         animation.setStepAngleAlphaChangeFactor(1);
-        animation.setStepAngleAlphaChangeFrequency(3);
+        animation.setStepAngleAlphaChangeFrequency(null);
     }
 
     /*********SETTERS des éléments spécifiques au cercle ***********/
@@ -40,7 +40,7 @@ public class ImageBuilder extends AAnimationBuilder<Image> {
         animation.setImageFileName(imageFileName);
     }
 
-    public void setStepAngleAlphaChangeFrequency(int stepAngleAlphaChangeFrequency) {
+    public void setStepAngleAlphaChangeFrequency(Integer stepAngleAlphaChangeFrequency) {
         animation.setStepAngleAlphaChangeFrequency(stepAngleAlphaChangeFrequency);
     }
 
@@ -48,7 +48,7 @@ public class ImageBuilder extends AAnimationBuilder<Image> {
         animation.setStepAngleAlphaChangeFactor(stepAngleAlphaChangeFactor);
     }
 
-    public void setAxisChangeFrequency(int axisChangeFrequency) {
+    public void setAxisChangeFrequency(Integer axisChangeFrequency) {
         animation.setAxisChangeFrequency(axisChangeFrequency);
     }
 

@@ -158,11 +158,11 @@ public class Image extends AAnimation {
         this.stepAngleAlpha = stepAngleAlpha;
     }
 
-    public int getAxisChangeFrequency() {
+    public Integer getAxisChangeFrequency() {
         return axisChangeFrequency;
     }
 
-    public void setAxisChangeFrequency(int axisChangeFrequency) {
+    public void setAxisChangeFrequency(Integer axisChangeFrequency) {
         this.axisChangeFrequency = axisChangeFrequency;
     }
 
@@ -174,11 +174,11 @@ public class Image extends AAnimation {
         this.stepAngleAlphaChangeFactor = stepAngleAlphaChangeFactor;
     }
 
-    public int getStepAngleAlphaChangeFrequency() {
+    public Integer getStepAngleAlphaChangeFrequency() {
         return stepAngleAlphaChangeFrequency;
     }
 
-    public void setStepAngleAlphaChangeFrequency(int stepAngleAlphaChangeFrequency) {
+    public void setStepAngleAlphaChangeFrequency(Integer stepAngleAlphaChangeFrequency) {
         this.stepAngleAlphaChangeFrequency = stepAngleAlphaChangeFrequency;
     }
 
