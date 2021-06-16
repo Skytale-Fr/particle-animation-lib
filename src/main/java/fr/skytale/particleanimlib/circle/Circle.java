@@ -12,6 +12,9 @@ public class Circle extends ARoundAnimation {
     private Vector axis;
     private double stepAngleAlpha;
 
+    //Attributs pour agrandissement de rayon
+    private double stepRadius;
+
     public Circle() {
     }
 
@@ -53,4 +56,15 @@ public class Circle extends ARoundAnimation {
     public void setStepAngleAlpha(double stepAngleAlpha) {
         this.stepAngleAlpha = stepAngleAlpha;
     }
+
+    public double getStepRadius() {
+        return stepRadius;
+    }
+
+    public void setStepRadius(double stepRadius) {
+        this.stepRadius = stepRadius;
+    }
+
+    //Step radius
+    //avec bukkit runnable rappel le show - clone sur location
 }

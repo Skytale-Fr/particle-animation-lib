@@ -11,12 +11,14 @@ public class CircleTask extends ARoundAnimationTask<Circle> {
     private Vector v;
     private Vector axis;
     private double stepAngleAlpha;
+    private double stepRadius;
     private int taskId;
 
     //Evolving variables
     double alpha;
     int iterationCount;
     Location[] particleCircle = new Location[nbPoints];
+    double currentRadius;
 
     public CircleTask(Circle circle) {
         super(circle);
@@ -24,6 +26,7 @@ public class CircleTask extends ARoundAnimationTask<Circle> {
         this.v = circle.getV();
         this.axis = circle.getAxis();
         this.stepAngleAlpha = circle.getStepAngleAlpha();
+        this.stepRadius = circle.getStepRadius();
         this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
 
         init();
@@ -32,22 +35,7 @@ public class CircleTask extends ARoundAnimationTask<Circle> {
     private void init() {
         alpha = 0;
         iterationCount = 0;
-
-        Location circleCenter = animation.getBaseLocation();
-
-        //Saving position of the circle's particules
-        for (int p = 0; p < nbPoints; p++) {
-            double theta = p * stepAngle;
-
-            double x = circleCenter.getX() + (u.getX() * radius * Math.cos(theta)) + (v.getX() * radius * Math.sin(theta));
-            double y = circleCenter.getY() + (u.getY() * radius * Math.cos(theta)) + (v.getY() * radius * Math.sin(theta));
-            double z = circleCenter.getZ() + (u.getZ() * radius * Math.cos(theta)) + (v.getZ() * radius * Math.sin(theta));
-
-            Location particleLocation = new Location(circleCenter.getWorld(), x, y, z);
-
-            particleCircle[p] = particleLocation;
-
-        }
+        currentRadius = radius;
     }
 
     @Override
@@ -67,26 +55,25 @@ public class CircleTask extends ARoundAnimationTask<Circle> {
             return;
         }
 
+        Location circleCenter = animation.getBaseLocation();
 
         for (int p = 0; p < nbPoints; p++) {
+            double theta = p * stepAngle;
 
-            if (!animation.isFixedLocation()) {
-                Location currentLocation = movingEntity.getLocation();
-                particleCircle[p].setX(particleCircle[p].getX() + currentLocation.getX());
-                particleCircle[p].setY(particleCircle[p].getY() + currentLocation.getY());
-                particleCircle[p].setZ(particleCircle[p].getZ() + currentLocation.getZ());
-            }
+            double x = circleCenter.getX() + (u.getX() * currentRadius * Math.cos(theta)) + (v.getX() * currentRadius * Math.sin(theta));
+            double y = circleCenter.getY() + (u.getY() * currentRadius * Math.cos(theta)) + (v.getY() * currentRadius * Math.sin(theta));
+            double z = circleCenter.getZ() + (u.getZ() * currentRadius * Math.cos(theta)) + (v.getZ() * currentRadius * Math.sin(theta));
 
-            Location particleLocation = particleCircle[p];
+            Location particleLocation = new Location(circleCenter.getWorld(), x, y, z);
 
             if (axis != null)
-                particleLocation = animation.rotateAroundAxis(particleCircle[p], axis, location, alpha);
+                particleLocation = animation.rotateAroundAxis(particleLocation, axis, location, alpha);
 
             mainParticle.getParticleBuilder(particleLocation).display();
         }
 
         alpha += stepAngleAlpha;
-
         iterationCount++;
+        currentRadius+=stepRadius;
     }
 }
