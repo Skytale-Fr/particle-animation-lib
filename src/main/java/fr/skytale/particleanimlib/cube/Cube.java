@@ -14,6 +14,8 @@ public class Cube extends AAnimation {
         new CubeTask(this);
     }
 
+    /***********GETTERS & SETTERS***********/
+
     public double getSideLength() {
         return sideLength;
     }

@@ -10,6 +10,7 @@ public class CubeBuilder extends AAnimationBuilder<Cube> {
         animation = new Cube();
         animation.setSideLength(2);
         animation.setStep(0.5);
+        animation.setShowFrequency(0);
         animation.setTicksDuration(60);
     }
 
