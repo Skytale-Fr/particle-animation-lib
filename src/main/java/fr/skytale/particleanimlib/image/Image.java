@@ -1,14 +1,9 @@
 package fr.skytale.particleanimlib.image;
 
 
-import fr.skytale.particleanimlib.attributes.CustomVector;
 import fr.skytale.particleanimlib.parent.AAnimation;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
 
 import javax.imageio.ImageIO;
@@ -17,9 +12,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 public class Image extends AAnimation {
 

@@ -40,7 +40,8 @@ public class ImageTask extends AAnimationTask<Image> {
         this.random = new Random();
         this.currentImagePixels = (HashMap<Vector, Color>) animation.getImagePixels().entrySet().stream()
                 .collect(Collectors.toMap(e -> e.getKey().clone(), Map.Entry::getValue));
-        this.currentAxis = animation.getAxis().clone();
+        if(animation.getAxis()!=null)
+            this.currentAxis = animation.getAxis().clone();
         this.currentStepAngleAlpha = animation.getStepAngleAlpha();
         this.axisChangeFrequency = animation.getAxisChangeFrequency();
         this.stepAngleAlphaChangeFrequency = animation.getStepAngleAlphaChangeFrequency();
@@ -66,7 +67,7 @@ public class ImageTask extends AAnimationTask<Image> {
         }
 
         //Do nothing if not shown
-        if (iterationCounter % showFrequency != 0) {
+        if (showFrequency!=0 && (iterationCounter % showFrequency != 0)) {
             return;
         }
 
