@@ -29,6 +29,9 @@ public class ImageTask extends AAnimationTask<Image> {
     public int changeRotationCounter;
     public HashMap<Vector, Color> currentImagePixels;
     public int taskId;
+    private Vector moveVector;
+    private Integer moveFrequency;
+    private Vector moveStepVector;
 
     public ImageTask(Image image) {
         super(image);
@@ -40,7 +43,7 @@ public class ImageTask extends AAnimationTask<Image> {
         this.random = new Random();
         this.currentImagePixels = (HashMap<Vector, Color>) animation.getImagePixels().entrySet().stream()
                 .collect(Collectors.toMap(e -> e.getKey().clone(), Map.Entry::getValue));
-        if(animation.getAxis()!=null)
+        if (animation.getAxis() != null)
             this.currentAxis = animation.getAxis().clone();
         this.currentStepAngleAlpha = animation.getStepAngleAlpha();
         this.axisChangeFrequency = animation.getAxisChangeFrequency();
@@ -49,6 +52,11 @@ public class ImageTask extends AAnimationTask<Image> {
         this.hasColor = this.mainParticle.getParticleEffect() == ParticleEffect.REDSTONE;
         this.iterationCounter = 0;
         this.changeRotationCounter = 0;
+        if (animation.getMoveVector() != null) {
+            this.moveFrequency = animation.getMoveFrequency();
+            this.moveVector = animation.getMoveVector();
+            moveStepVector = moveVector.normalize().multiply(animation.getMoveStep());
+        }
     }
 
     @Override
@@ -67,7 +75,7 @@ public class ImageTask extends AAnimationTask<Image> {
         }
 
         //Do nothing if not shown
-        if (showFrequency!=0 && (iterationCounter % showFrequency != 0)) {
+        if (showFrequency != 0 && (iterationCounter % showFrequency != 0)) {
             return;
         }
 
@@ -94,6 +102,10 @@ public class ImageTask extends AAnimationTask<Image> {
 
         //show the result
         Location currentLocation = animation.getBaseLocation();
+
+        if (moveVector != null && moveFrequency != 0 && (iterationCounter % moveFrequency == 0))
+            currentLocation.add(moveStepVector);
+
         currentImagePixels.forEach(((vector, color) -> {
             ParticleBuilder particleBuilder = mainParticle.getParticleBuilder(currentLocation.clone().add(vector));
             if (hasColor) {
@@ -101,6 +113,8 @@ public class ImageTask extends AAnimationTask<Image> {
             }
             particleBuilder.display();
         }));
+
+        animation.setLocation(currentLocation);
 
     }
 

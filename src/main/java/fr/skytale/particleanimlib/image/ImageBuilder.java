@@ -16,6 +16,7 @@ public class ImageBuilder extends AAnimationBuilder<Image> {
         animation.setAxisChangeFrequency(null);
         animation.setStepAngleAlphaChangeFactor(1);
         animation.setStepAngleAlphaChangeFrequency(null);
+        animation.setMoveVector(null);
     }
 
     /*********SETTERS des éléments spécifiques au cercle ***********/
@@ -52,12 +53,31 @@ public class ImageBuilder extends AAnimationBuilder<Image> {
         animation.setAxisChangeFrequency(axisChangeFrequency);
     }
 
+    public void setMoveVector(Vector moveVector) {
+        animation.setMoveVector(moveVector);
+    }
+
+    public void setMoveFrequency(Integer moveFrequency) {
+        animation.setMoveFrequency(moveFrequency);
+    }
+
+    public void setMoveStep(Double moveStep) {
+        animation.setMoveStep(moveStep);
+    }
+
 
     @Override
     public Image getAnimation() {
         if (animation.getAxis() != null && animation.getStepAngleAlpha() == 0) {
             throw new IllegalArgumentException("The rotation animation should have a stepAngleAlpha");
         }
+
+        if (animation.getMoveVector() != null && animation.getMoveFrequency() == null)
+            throw new IllegalArgumentException("If move vector is defined then move frequency must be strictly positive.");
+
+        if (animation.getMoveVector() != null && animation.getMoveStep() <= 0)
+            throw new IllegalArgumentException("If move vector is defined then move step must be strictly positive.");
+
         return super.getAnimation();
     }
 }

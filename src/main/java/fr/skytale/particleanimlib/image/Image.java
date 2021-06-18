@@ -66,6 +66,9 @@ public class Image extends AAnimation {
     private Integer stepAngleAlphaChangeFrequency = null;
     private HashMap<Vector, Color> imagePixels;
     private boolean hasColor;
+    private Vector moveVector;
+    private Integer moveFrequency;
+    private double moveStep;
 
     /******** Constructor ********/
 
@@ -96,7 +99,7 @@ public class Image extends AAnimation {
             int width = bufferedImage.getWidth();
 
             //We compute the center of the figure in order for each pixel's vector to start from the center.
-            Vector center = u.clone().multiply(width - 1).add(v.clone().multiply(height -1)).divide(new Vector(2,2,2));
+            Vector center = u.clone().multiply(width - 1).add(v.clone().multiply(height - 1)).divide(new Vector(2, 2, 2));
 
             for (int x = 0; x < width; ++x) {
                 for (int y = 0; y < height; ++y) {
@@ -116,6 +119,7 @@ public class Image extends AAnimation {
             throw new IllegalArgumentException("The image could not be read", e);
         }
     }
+
     /******** Getters & Setters ********/
 
     public void setU(Vector u) {
@@ -188,5 +192,29 @@ public class Image extends AAnimation {
 
     public boolean isHasColor() {
         return hasColor;
+    }
+
+    public Vector getMoveVector() {
+        return moveVector;
+    }
+
+    public void setMoveVector(Vector moveVector) {
+        this.moveVector = moveVector;
+    }
+
+    public Integer getMoveFrequency() {
+        return moveFrequency;
+    }
+
+    public void setMoveFrequency(Integer moveFrequency) {
+        this.moveFrequency = moveFrequency;
+    }
+
+    public double getMoveStep() {
+        return moveStep;
+    }
+
+    public void setMoveStep(double moveStep) {
+        this.moveStep = moveStep;
     }
 }
