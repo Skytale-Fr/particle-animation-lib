@@ -3,6 +3,7 @@ package fr.skytale.particleanimlib.parent;
 import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
@@ -18,7 +19,7 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation.setLocation(location);
     }
 
-    public void setMovingEntity(IMovingEntity movingEntity) {
+    public void setMovingEntity(Entity movingEntity) {
         animation.setMovingEntity(movingEntity);
     }
 
@@ -50,6 +51,18 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation.callback = callback;
     }
 
+    public void setMoveVector(Vector moveVector) {
+        animation.setMoveVector(moveVector);
+    }
+
+    public void setMoveFrequency(Integer moveFrequency) {
+        animation.setMoveFrequency(moveFrequency);
+    }
+
+    public void setMoveStep(Double moveStep) {
+        animation.setMoveStep(moveStep);
+    }
+
     public T getAnimation() {
         boolean hasMovingEntity = animation.getMovingEntity() != null;
         if (animation.getLocation() != null && hasMovingEntity) {
@@ -64,6 +77,13 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         if (animation.getPlugin() == null) {
             throw new IllegalArgumentException("The plugin should be defined");
         }
+
+        if (animation.getMoveVector() != null && animation.getMoveFrequency() == null)
+            throw new IllegalArgumentException("If move vector is defined then move frequency must be strictly positive.");
+
+        if (animation.getMoveVector() != null && animation.getMoveStep() <= 0)
+            throw new IllegalArgumentException("If move vector is defined then move step must be strictly positive.");
+
         return animation;
     };
 }

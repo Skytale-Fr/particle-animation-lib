@@ -4,6 +4,7 @@ import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
 import fr.skytale.particleanimlib.attributes.CustomVector;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
@@ -12,19 +13,18 @@ import java.util.Objects;
 
 public abstract class AAnimation {
     protected Location location;
-    protected IMovingEntity movingEntity;
+    protected Entity movingEntity;
     protected Vector relativeLocation;
     protected ParticleTemplate mainParticle;
     protected JavaPlugin plugin;
     protected int ticksDuration;
     protected int showFrequency;
     protected AnimationEndedCallback callback;
+    protected Vector moveVector;
+    protected Integer moveFrequency;
+    protected double moveStep;
 
     public abstract void show();
-
-    public boolean isFixedLocation() {
-        return movingEntity == null;
-    }
 
     public Location rotateAroundAxis(Location point, Vector axis, Location pointAxis, double angle) {
         Vector v = point.clone().subtract(pointAxis).toVector(); //Vecteur de axis au point à translater
@@ -34,17 +34,13 @@ public abstract class AAnimation {
         return v.toLocation(Objects.requireNonNull(point.getWorld()));
     }
 
-    public Location getBaseLocation() {
-        return isFixedLocation() ? location.clone() : movingEntity.getLocation().clone().add(relativeLocation);
-    }
-
     /***********GETTERS & SETTERS***********/
 
     public Location getLocation() {
         return location;
     }
 
-    public IMovingEntity getMovingEntity() {
+    public Entity getMovingEntity() {
         return movingEntity;
     }
 
@@ -72,7 +68,7 @@ public abstract class AAnimation {
         this.location = location;
     }
 
-    public void setMovingEntity(IMovingEntity movingEntity) {
+    public void setMovingEntity(Entity movingEntity) {
         this.movingEntity = movingEntity;
     }
 
@@ -102,5 +98,29 @@ public abstract class AAnimation {
 
     public void setCallback(AnimationEndedCallback callback) {
         this.callback = callback;
+    }
+
+    public Vector getMoveVector() {
+        return moveVector;
+    }
+
+    public void setMoveVector(Vector moveVector) {
+        this.moveVector = moveVector;
+    }
+
+    public Integer getMoveFrequency() {
+        return moveFrequency;
+    }
+
+    public void setMoveFrequency(Integer moveFrequency) {
+        this.moveFrequency = moveFrequency;
+    }
+
+    public double getMoveStep() {
+        return moveStep;
+    }
+
+    public void setMoveStep(double moveStep) {
+        this.moveStep = moveStep;
     }
 }

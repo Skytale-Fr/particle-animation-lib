@@ -1,0 +1,104 @@
+package fr.skytale.particleanimlib.animation.circle;
+
+import fr.skytale.particleanimlib.parent.ARoundAnimationTask;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.util.Vector;
+
+public class CircleTask extends ARoundAnimationTask<Circle> {
+
+    private Vector u;
+    private Vector v;
+    private Vector axis;
+    private double stepAngleAlpha;
+    private double stepRadius;
+    private int taskId;
+
+    //Evolving variables
+    double alpha;
+    double currentRadius;
+
+    public CircleTask(Circle circle) {
+        super(circle);
+        this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
+
+        init();
+    }
+
+    protected void init() {
+        super.init();
+        this.u = animation.getU();
+        this.v = animation.getV();
+        this.axis = animation.getAxis();
+        this.stepAngleAlpha = animation.getStepAngleAlpha();
+        this.stepRadius = animation.getStepRadius();
+
+        alpha = 0;
+        currentRadius = radius;
+    }
+
+    @Override
+    public void show(Location iterationBaseLocation) {
+        if (hasDurationEnded()) {
+stopAnimation(taskId);
+            return;
+        }
+
+        Location circleCenter = iterationBaseLocation;
+
+        for (int p = 0; p < nbPoints; p++) {
+            double theta = p * stepAngle;
+
+            double x = circleCenter.getX() + (u.getX() * currentRadius * Math.cos(theta)) + (v.getX() * currentRadius * Math.sin(theta));
+            double y = circleCenter.getY() + (u.getY() * currentRadius * Math.cos(theta)) + (v.getY() * currentRadius * Math.sin(theta));
+            double z = circleCenter.getZ() + (u.getZ() * currentRadius * Math.cos(theta)) + (v.getZ() * currentRadius * Math.sin(theta));
+
+            Location particleLocation = new Location(circleCenter.getWorld(), x, y, z);
+
+            if (axis != null)
+                particleLocation = animation.rotateAroundAxis(particleLocation, axis, location, alpha);
+
+            mainParticle.getParticleBuilder(particleLocation).display();
+        }
+
+        alpha += stepAngleAlpha;
+        currentRadius+=stepRadius;
+    }
+    /*@Override
+    public void run() {
+
+        if (hasDurationEnded()) {
+stopAnimation(taskId);
+            return;
+        }
+
+        //We only show at the specified frequency
+        if (showFrequency != 0 && (iterationCount % showFrequency != 0)) {
+            iterationCount++;
+            return;
+        }
+
+        Location circleCenter = animation.getBaseLocation();
+
+        for (int p = 0; p < nbPoints; p++) {
+            double theta = p * stepAngle;
+
+            double x = circleCenter.getX() + (u.getX() * currentRadius * Math.cos(theta)) + (v.getX() * currentRadius * Math.sin(theta));
+            double y = circleCenter.getY() + (u.getY() * currentRadius * Math.cos(theta)) + (v.getY() * currentRadius * Math.sin(theta));
+            double z = circleCenter.getZ() + (u.getZ() * currentRadius * Math.cos(theta)) + (v.getZ() * currentRadius * Math.sin(theta));
+
+            Location particleLocation = new Location(circleCenter.getWorld(), x, y, z);
+
+            if (axis != null)
+                particleLocation = animation.rotateAroundAxis(particleLocation, axis, location, alpha);
+
+            mainParticle.getParticleBuilder(particleLocation).display();
+        }
+
+        alpha += stepAngleAlpha;
+        iterationCount++;
+        currentRadius+=stepRadius;
+    }*/
+
+
+}
