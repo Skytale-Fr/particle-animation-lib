@@ -7,7 +7,6 @@ import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 public class SphereBuilder extends AAnimationBuilder<Sphere> {
 
     public SphereBuilder(){
-        animation = new Sphere();
         animation.setNbCircles(10);
         animation.setRadius(1.0);
         animation.setStepAngle(Math.toRadians(30));
@@ -15,6 +14,11 @@ public class SphereBuilder extends AAnimationBuilder<Sphere> {
         animation.setShowFrequency(0);
         animation.setPropagationType(null);
         animation.setTicksDuration(60);
+    }
+
+    @Override
+    protected Sphere initAnimation() {
+        return new Sphere();
     }
 
     /*********SETTERS des éléments spécifiques a la sphere ***********/

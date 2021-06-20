@@ -3,11 +3,11 @@ package fr.skytale.particleanimlib.animation.wave;
 import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
 import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
+import fr.skytale.particleanimlib.parent.ARoundAnimation;
 
 public class WaveBuilder extends AAnimationBuilder<Wave> {
 
     public WaveBuilder() {
-        animation = new Wave();
         animation.setRadius(1.0);
         animation.setMaxRadius(20);
         animation.setNbPoints((int) animation.getRadius() * 20);
@@ -15,6 +15,11 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
         animation.setStepAngle(2 * Math.PI / animation.getNbPoints());
         animation.setShowFrequency(0);
         animation.setTicksDuration(60);
+    }
+
+    @Override
+    protected Wave initAnimation() {
+        return new Wave();
     }
 
     /*********SETTERS des éléments spécifiques a la vague ***********/
@@ -45,7 +50,7 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
         animation.setStep(s);
     }
 
-    public void setCircle(AAnimation subAnimation){
+    public void setAnim(ARoundAnimation subAnimation){
         animation.setCircleAnim(subAnimation);
     }
 

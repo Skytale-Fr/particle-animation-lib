@@ -4,9 +4,10 @@ package fr.skytale.particleanimlib.animation.spiralprojectile;
 import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 public class SpiralProjectile extends ARoundAnimation {
-    private Location target;
+    private Vector target;
     private AAnimation spiral1;
     private AAnimation spiral2;
     private double step;
@@ -22,11 +23,11 @@ public class SpiralProjectile extends ARoundAnimation {
     }
 
     /***********GETTERS & SETTERS***********/
-    public Location getTarget() {
+    public Vector getTarget() {
         return target;
     }
 
-    public void setTarget(Location target) {
+    public void setTarget(Vector target) {
         this.target = target;
     }
 
@@ -52,5 +53,14 @@ public class SpiralProjectile extends ARoundAnimation {
 
     public void setSpiral2(AAnimation spiral2) {
         this.spiral2 = spiral2;
+    }
+
+    @Override
+    public Object clone() {
+        SpiralProjectile obj = (SpiralProjectile) super.clone();
+        obj.target = target.clone();
+        obj.spiral1 = (AAnimation) spiral1.clone();
+        obj.spiral2 = (AAnimation) spiral2.clone();
+        return obj;
     }
 }

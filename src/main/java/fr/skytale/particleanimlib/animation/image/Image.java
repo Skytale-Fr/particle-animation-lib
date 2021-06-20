@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.image;
 
 
+import fr.skytale.particleanimlib.animation.explodingsphere.ExplodingSphere;
 import fr.skytale.particleanimlib.parent.AAnimation;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
@@ -12,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public class Image extends AAnimation {
 
@@ -188,5 +190,18 @@ public class Image extends AAnimation {
 
     public boolean isHasColor() {
         return hasColor;
+    }
+
+    @Override
+    public Object clone() {
+        Image obj = (Image) super.clone();
+        obj.u = u.clone();
+        obj.v = v.clone();
+        obj.axis = axis == null ? null : axis.clone();
+        obj.axisChangeFrequency = axisChangeFrequency == null ? null : new Integer(axisChangeFrequency);
+        obj.stepAngleAlphaChangeFrequency = stepAngleAlphaChangeFrequency == null ? null : new Integer(stepAngleAlphaChangeFrequency);
+        obj.imagePixels = imagePixels==null ? null : (HashMap<Vector, Color>) imagePixels.entrySet().stream()
+                        .collect(Collectors.toMap(e -> e.getKey().clone(), e -> new Color(e.getValue().getRGB())));;
+        return obj;
     }
 }

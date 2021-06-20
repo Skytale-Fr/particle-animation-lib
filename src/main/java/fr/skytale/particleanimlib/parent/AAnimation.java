@@ -11,7 +11,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Objects;
 
-public abstract class AAnimation {
+public abstract class AAnimation implements Cloneable {
     protected Location location;
     protected Entity movingEntity;
     protected Vector relativeLocation;
@@ -20,9 +20,8 @@ public abstract class AAnimation {
     protected int ticksDuration;
     protected int showFrequency;
     protected AnimationEndedCallback callback;
-    protected Vector moveVector;
+    protected Vector moveStepVector;
     protected Integer moveFrequency;
-    protected double moveStep;
 
     public abstract void show();
 
@@ -100,12 +99,12 @@ public abstract class AAnimation {
         this.callback = callback;
     }
 
-    public Vector getMoveVector() {
-        return moveVector;
+    public Vector getMoveStepVector() {
+        return moveStepVector;
     }
 
-    public void setMoveVector(Vector moveVector) {
-        this.moveVector = moveVector;
+    public void setMoveStepVector(Vector moveVector) {
+        this.moveStepVector = moveVector;
     }
 
     public Integer getMoveFrequency() {
@@ -116,11 +115,20 @@ public abstract class AAnimation {
         this.moveFrequency = moveFrequency;
     }
 
-    public double getMoveStep() {
-        return moveStep;
+    @Override
+    public Object clone() {
+        AAnimation obj = null;
+        try {
+            obj = (AAnimation) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        obj.location = this.location.clone();
+        obj.relativeLocation = this.getRelativeLocation() == null ? null : this.getRelativeLocation().clone();
+        obj.mainParticle = new ParticleTemplate(this.getMainParticle());
+        obj.moveStepVector = this.getMoveStepVector() == null ? null : this.getMoveStepVector();
+        obj.moveFrequency = this.getMoveFrequency() == null ? null : this.getMoveFrequency();
+        return obj;
     }
 
-    public void setMoveStep(double moveStep) {
-        this.moveStep = moveStep;
-    }
 }

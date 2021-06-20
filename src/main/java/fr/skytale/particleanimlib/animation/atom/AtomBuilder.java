@@ -10,10 +10,14 @@ public class AtomBuilder extends AAnimationBuilder<Atom> {
 
     public AtomBuilder(){
         super();
-        animation = new Atom();
         animation.setStepAngle(Math.toRadians(15));
         animation.setShowFrequency(0);
         animation.setTicksDuration(60);
+    }
+
+    @Override
+    protected Atom initAnimation() {
+        return new Atom();
     }
 
     /*********SETTERS des éléments spécifiques de l'atome ***********/

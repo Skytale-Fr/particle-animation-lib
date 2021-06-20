@@ -17,33 +17,27 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     protected JavaPlugin plugin;
     protected int ticksDuration;
     protected int showFrequency;
-    protected Vector moveVector;
     protected Integer moveFrequency;
     protected Vector moveStepVector;
+    protected int taskId;
 
     //Evolving variables
     protected int iterationCount;
 
     public AAnimationTask(T animation) {
         this.animation = animation;
-        this.location = animation.getLocation();
+        this.iterationCount = 0;
+        this.location = animation.getLocation() == null ? null : animation.getLocation().clone();
         this.movingEntity = animation.getMovingEntity();
-        this.relativeLocation = animation.getRelativeLocation();
-        this.mainParticle = animation.getMainParticle();
+        this.relativeLocation = animation.getRelativeLocation() == null ? null : animation.getRelativeLocation().clone();
+        this.mainParticle = new ParticleTemplate(animation.getMainParticle());
         this.plugin = animation.getPlugin();
         this.ticksDuration = animation.getTicksDuration();
         this.showFrequency = animation.getShowFrequency();
-        if (animation.getMoveVector() != null) {
-            this.moveFrequency = animation.getMoveFrequency();
-            this.moveVector = animation.getMoveVector();
-            moveStepVector = moveVector.normalize().multiply(animation.getMoveStep());
+        if (animation.getMoveStepVector() != null) {
+            this.moveFrequency = (animation.getMoveFrequency() == null ? null : animation.getMoveFrequency());
+            this.moveStepVector = animation.getMoveStepVector().clone();
         }
-
-        init();
-    }
-
-    protected void init(){
-        iterationCount = 0;
     }
 
     public final void run() {
@@ -56,7 +50,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
                 relativeLocation.add(moveStepVector);
             }
         }
-        Location iterationBaseLocation = movingEntity == null ? location : movingEntity.getLocation().clone().add(relativeLocation);
+        Location iterationBaseLocation = movingEntity == null ? location.clone() : movingEntity.getLocation().clone().add(relativeLocation);
 
         //We only show at the specified frequency
         if (showFrequency != 0 && (iterationCount % showFrequency != 0)) {
@@ -83,15 +77,41 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     public void drawLine(Location point1, Location point2, double step) {
         double distance = point1.distance(point2);
-        Vector p1 = point1.toVector();
-        Vector p2 = point2.toVector();
-        Vector vector = p2.clone().subtract(p1).normalize().multiply(step);
-
-        for (double length = 0; length < distance; p1.add(vector)) {
-
-            Location particleLocation = new Location(point1.getWorld(), p1.getX(), p1.getY(), p1.getZ());
-            mainParticle.getParticleBuilder(particleLocation).display();
+        Vector stepVector = point2.toVector().subtract(point1.toVector()).normalize().multiply(step);
+        Location currentLoc = point1.clone();
+        for (double length = 0; length < distance; currentLoc.add(stepVector)) {
+            mainParticle.getParticleBuilder(currentLoc).display();
             length += step;
         }
+    }
+
+    protected Vector computeRadiusVector(Vector normalVector, double radius) {
+        /*Let directorVector=(a,b,c).
+        Then the equation of the plane containing the point (0,0,0) with directorVector as normal vector is ax + by + cz = 0.
+        We want to find the vector radiusVector belonging to the plane*/
+        double a = normalVector.getX();
+        double b = normalVector.getY();
+        double c = normalVector.getZ();
+
+        Vector radiusVector;
+
+        if (a == 0) {
+            if (b == 0)
+                radiusVector = new Vector(1, 1, 0);
+            else if (c == 0)
+                radiusVector = new Vector(1, 0, 1);
+            else
+                radiusVector = new Vector(1, 1, -b / c);
+        } else if (b == 0) {
+            if (c == 0)
+                radiusVector = new Vector(0, 1, 1);
+            else
+                radiusVector = new Vector(1, 1, -a / c);
+        } else if (c == 0)
+            radiusVector = new Vector(1, -b / a, 1);
+        else
+            radiusVector = new Vector(1, 1, (-a - b) / c);
+
+        return radiusVector.normalize().multiply(radius);
     }
 }

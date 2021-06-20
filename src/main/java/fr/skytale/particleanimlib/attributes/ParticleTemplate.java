@@ -25,6 +25,10 @@ public class ParticleTemplate {
         this(particleType, color, material,1,0);
     }
 
+    public ParticleTemplate(ParticleTemplate other) {
+        this(other.getParticleEffect().name(), other.getColor(), other.getMaterial(), other.getAmount(), other.getSpeed());
+    }
+
     public ParticleTemplate(String particleType, Color color, String material, int amount, float speed) {
         this.color = color;
         this.material = material;
@@ -52,7 +56,7 @@ public class ParticleTemplate {
 
     /***********GETTERS & SETTERS***********/
     public ParticleBuilder getParticleBuilder(Location location) {
-        ParticleBuilder newParticleBuilder = new ParticleBuilder(particleEffect, location);
+        ParticleBuilder newParticleBuilder = new ParticleBuilder(particleEffect, location.clone());
         newParticleBuilder.setAmount(amount);
         newParticleBuilder.setSpeed(speed);
         newParticleBuilder.setParticleData(particleData);

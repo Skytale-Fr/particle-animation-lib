@@ -1,6 +1,9 @@
 package fr.skytale.particleanimlib.animation.circle;
 
 
+import fr.skytale.particleanimlib.animation.atom.Atom;
+import fr.skytale.particleanimlib.attributes.ParticleTemplate;
+import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
 import org.bukkit.util.Vector;
 
@@ -65,6 +68,12 @@ public class Circle extends ARoundAnimation {
         this.stepRadius = stepRadius;
     }
 
-    //Step radius
-    //avec bukkit runnable rappel le show - clone sur location
+    @Override
+    public Object clone() {
+        Circle obj = (Circle) super.clone();
+        obj.u = u.clone();
+        obj.v = v.clone();
+        obj.axis = this.getAxis() == null ? null : this.getAxis().clone();
+        return obj;
+    }
 }

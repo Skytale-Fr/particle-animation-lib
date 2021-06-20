@@ -7,11 +7,10 @@ import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 public class SpiralProjectileTask extends ARoundAnimationTask<SpiralProjectile> {
-    private Location target;
+    private Vector target;
     private AAnimation spiral1;
     private AAnimation spiral2;
     private double step;
-    private int taskId;
 
     //Evolving variables
     Vector start, end, stepVector;
@@ -19,23 +18,18 @@ public class SpiralProjectileTask extends ARoundAnimationTask<SpiralProjectile> 
 
     public SpiralProjectileTask(SpiralProjectile spiralProjectile) {
         super(spiralProjectile);
-        this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
 
-        init();
-    }
-
-    protected void init() {
-        super.init();
-
-        this.target = animation.getTarget();
-        this.spiral1 = animation.getSpiral1();
-        this.spiral2 = animation.getSpiral2();
+        this.target = animation.getTarget().clone();
+        this.spiral1 = (AAnimation) animation.getSpiral1().clone();
+        this.spiral2 = (AAnimation) animation.getSpiral2().clone();
         this.step = animation.getStep();
 
-        start = location.toVector();
-        end = target.toVector();
+        start = new Vector(0, 0, 0);//location.toVector();
+        end = target;
         stepVector = end.clone().subtract(start).normalize().multiply(step);
-        distance = target.distance(location);
+        distance = target.length();
+
+        this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
     }
 
     @Override
@@ -46,31 +40,11 @@ public class SpiralProjectileTask extends ARoundAnimationTask<SpiralProjectile> 
         }
 
         //Axe central
-        Location particleLocation = new Location(location.getWorld(), start.getX(), start.getY(), start.getZ());
-        mainParticle.getParticleBuilder(particleLocation).display();
+        Location circleCenter = iterationBaseLocation.add(start.getX(), start.getY(), start.getZ());
+        //Location particleLocation = new Location(location.getWorld(), start.getX(), start.getY(), start.getZ());
+        mainParticle.getParticleBuilder(circleCenter).display();
         distance -= step;
 
         start.add(stepVector);
     }
-
-    /*@Override
-    public void run() {
-        if (length >= distance) {
-            Bukkit.getScheduler().cancelTask(taskId);
-            return;
-        }
-
-        //We only show at the specified frequency
-        if (showFrequency != 0 && (iterationCount % showFrequency != 0)) {
-            iterationCount++;
-            return;
-        }
-
-        //Axe central
-        Location particleLocation = new Location(location.getWorld(), start.getX(), start.getY(), start.getZ());
-        mainParticle.getParticleBuilder(particleLocation).display();
-        length += step;
-
-        start.add(stepVector);
-    }*/
 }

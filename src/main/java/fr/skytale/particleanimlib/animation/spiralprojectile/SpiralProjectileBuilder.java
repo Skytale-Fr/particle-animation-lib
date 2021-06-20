@@ -3,18 +3,20 @@ package fr.skytale.particleanimlib.animation.spiralprojectile;
 import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
 import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
-import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 public class SpiralProjectileBuilder extends AAnimationBuilder<SpiralProjectile> {
 
     public SpiralProjectileBuilder() {
-        animation = new SpiralProjectile();
-        animation.setStep(0.1);
-        animation.setShowFrequency(0);
-        animation.setTicksDuration(60);
+        animation.setStep(0.2);
     }
 
-    public void setTarget(Location location) {
+    @Override
+    protected SpiralProjectile initAnimation() {
+        return new SpiralProjectile();
+    }
+
+    public void setTarget(Vector location) {
         animation.setTarget(location);
     }
 

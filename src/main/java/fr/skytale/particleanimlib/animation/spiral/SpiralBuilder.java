@@ -2,18 +2,21 @@ package fr.skytale.particleanimlib.animation.spiral;
 
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 public class SpiralBuilder extends AAnimationBuilder<Spiral> {
 
     public SpiralBuilder() {
         super();
-        animation = new Spiral();
         animation.setStep(0.1);
         animation.setRadius(1);
         animation.setStepAngle(Math.toRadians(30));
         animation.setGrowthSpeed(0);
-        animation.setShowFrequency(0);
-        animation.setTicksDuration(60);
+    }
+
+    @Override
+    protected Spiral initAnimation() {
+        return new Spiral();
     }
 
     /*********SETTERS des éléments spécifiques a la spirale ***********/
@@ -30,7 +33,7 @@ public class SpiralBuilder extends AAnimationBuilder<Spiral> {
         animation.setRadius(radius);
     }
 
-    public void setTarget(Location target) {
+    public void setTarget(Vector target) {
         animation.setTarget(target);
     }
 

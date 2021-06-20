@@ -2,51 +2,49 @@ package fr.skytale.particleanimlib.animation.pyramid;
 
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 public class PyramidBuilder extends AAnimationBuilder<Pyramid> {
 
     public PyramidBuilder() {
         super();
-        animation = new Pyramid();
-        animation.setStep(0.3);
+        animation.setDistanceBetweenParticles(0.3);
         animation.setShowFrequency(0);
         animation.setTicksDuration(60);
+        animation.setNbBaseApex(3);
+        animation.setFromCenterToApex(new Vector(0,5,0));
+        animation.setDistanceToAnyBaseApex(3);
+    }
+
+    @Override
+    protected Pyramid initAnimation() {
+        return new Pyramid();
     }
 
     /*********SETTERS des éléments spécifiques a la pyramide ***********/
 
-    public void setApexPoint(Location apex) {
-        if (apex == null)
+    public void setFromCenterToApex(Vector centerToapex) {
+        if (centerToapex == null)
             throw new IllegalArgumentException("Apex point of pyramid has to be defined.");
-        animation.setApexPoint(apex);
+        animation.setFromCenterToApex(centerToapex);
     }
 
-    public void setBasePointA(Location baseA) {
-        if (baseA == null)
-            throw new IllegalArgumentException("Point A of the pyramid's base has to be defined.");
-        animation.setBasePointA(baseA);
+    public void setNbBaseApex(int nbBaseApex) {
+        if (nbBaseApex <= 2)
+            throw new IllegalArgumentException("A pyramid should have at least 3 base apex.");
+        animation.setNbBaseApex(nbBaseApex);
     }
 
-    public void setBasePointB(Location baseB) {
-        if (baseB == null)
-            throw new IllegalArgumentException("Point B of the pyramid's base has to be defined.");
-        animation.setBasePointB(baseB);
-    }
-
-    public void setBasePointC(Location baseC) {
-        if (baseC == null)
-            throw new IllegalArgumentException("Point C of the pyramid's base has to be defined.");
-        animation.setBasePointC(baseC);
-    }
-
-    public void setStep(double step) {
-        if (step <= 0)
+    public void setDistanceBetweenParticles(double stepBetweenParticle) {
+        if (stepBetweenParticle <= 0)
             throw new IllegalArgumentException("The step value has to be strictly positive.");
+        animation.setDistanceBetweenParticles(stepBetweenParticle);
     }
 
-    @Override
-    public void setLocation(Location location){
-        throw new IllegalArgumentException("Location parameter is not needed as the pyramid is defined by its 4 vertices ");
+    public void setDistanceToAnyBaseApex(double distanceToAnyBaseApex) {
+        if (distanceToAnyBaseApex <= 0.5)
+            throw new IllegalArgumentException("The distance between the pyramid center and its base apex should be greater than 0.5.");
+        animation.setDistanceToAnyBaseApex(distanceToAnyBaseApex);
     }
 
     @Override

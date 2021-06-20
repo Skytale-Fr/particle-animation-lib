@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.explodingsphere;
 
+import fr.skytale.particleanimlib.animation.cube.Cube;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
 
 public class ExplodingSphere extends ARoundAnimation {
@@ -36,5 +37,11 @@ public class ExplodingSphere extends ARoundAnimation {
 
     public void setExplosionLimit(double explosionLimit) {
         this.explosionLimit = explosionLimit;
+    }
+
+    @Override
+    public Object clone() {
+        ExplodingSphere obj = (ExplodingSphere) super.clone();
+        return obj;
     }
 }

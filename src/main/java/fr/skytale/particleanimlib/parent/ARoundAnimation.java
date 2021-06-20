@@ -1,5 +1,7 @@
 package fr.skytale.particleanimlib.parent;
 
+import fr.skytale.particleanimlib.attributes.ParticleTemplate;
+
 public abstract class ARoundAnimation extends AAnimation {
     protected double radius;
     protected int nbPoints;
@@ -29,5 +31,13 @@ public abstract class ARoundAnimation extends AAnimation {
 
     public void setStepAngle(double stepAngle) {
         this.stepAngle = stepAngle;
+    }
+
+
+    @Override
+    public Object clone() {
+        ARoundAnimation obj = null;
+        obj = (ARoundAnimation) super.clone();
+        return obj;
     }
 }

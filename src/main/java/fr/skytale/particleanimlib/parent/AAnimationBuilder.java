@@ -11,7 +11,13 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
     protected T animation;
 
     public AAnimationBuilder() {
+        animation = initAnimation();
+        animation.setMoveStepVector(null);
+        animation.setShowFrequency(0);
+        animation.setTicksDuration(60);
     }
+
+    protected abstract T initAnimation();
 
     /*********SETTERS des éléments généraux d'une animation ***********/
 
@@ -51,16 +57,12 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation.callback = callback;
     }
 
-    public void setMoveVector(Vector moveVector) {
-        animation.setMoveVector(moveVector);
+    public void setMoveStepVector(Vector moveStepVector) {
+        animation.setMoveStepVector(moveStepVector);
     }
 
     public void setMoveFrequency(Integer moveFrequency) {
         animation.setMoveFrequency(moveFrequency);
-    }
-
-    public void setMoveStep(Double moveStep) {
-        animation.setMoveStep(moveStep);
     }
 
     public T getAnimation() {
@@ -78,12 +80,9 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
             throw new IllegalArgumentException("The plugin should be defined");
         }
 
-        if (animation.getMoveVector() != null && animation.getMoveFrequency() == null)
+        if (animation.getMoveStepVector() != null && animation.getMoveFrequency() == null)
             throw new IllegalArgumentException("If move vector is defined then move frequency must be strictly positive.");
 
-        if (animation.getMoveVector() != null && animation.getMoveStep() <= 0)
-            throw new IllegalArgumentException("If move vector is defined then move step must be strictly positive.");
-
-        return animation;
+        return (T)animation.clone();
     };
 }

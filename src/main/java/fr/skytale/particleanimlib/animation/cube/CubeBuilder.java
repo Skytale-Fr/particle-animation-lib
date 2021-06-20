@@ -7,11 +7,15 @@ public class CubeBuilder extends AAnimationBuilder<Cube> {
 
     public CubeBuilder() {
         super();
-        animation = new Cube();
         animation.setSideLength(2);
         animation.setStep(0.5);
         animation.setShowFrequency(0);
         animation.setTicksDuration(60);
+    }
+
+    @Override
+    protected Cube initAnimation() {
+        return new Cube();
     }
 
     /*********SETTERS des éléments spécifiques au cube ***********/

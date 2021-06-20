@@ -26,26 +26,22 @@ public class ImageTask extends AAnimationTask<Image> {
     public Vector currentAxis;
     public double currentStepAngleAlpha;
     public HashMap<Vector, Color> currentImagePixels;
-    public int taskId;
 
     public ImageTask(Image image) {
         super(image);
-        init();
-        this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
-    }
 
-    protected void init() {
-        super.init();
         this.random = new Random();
         this.currentImagePixels = (HashMap<Vector, Color>) animation.getImagePixels().entrySet().stream()
-                .collect(Collectors.toMap(e -> e.getKey().clone(), Map.Entry::getValue));
+                .collect(Collectors.toMap(e -> e.getKey().clone(), e -> new Color(e.getValue().getRGB())));
         if (animation.getAxis() != null)
             this.currentAxis = animation.getAxis().clone();
         this.currentStepAngleAlpha = animation.getStepAngleAlpha();
-        this.axisChangeFrequency = animation.getAxisChangeFrequency();
-        this.stepAngleAlphaChangeFrequency = animation.getStepAngleAlphaChangeFrequency();
+        this.axisChangeFrequency = (animation.getAxisChangeFrequency() == null ? null : new Integer(animation.getAxisChangeFrequency()));
+        this.stepAngleAlphaChangeFrequency = (animation.getStepAngleAlphaChangeFrequency() == null ? null : new Integer(animation.getStepAngleAlphaChangeFrequency()));
         this.stepAngleAlphaChangeFactor = animation.getStepAngleAlphaChangeFactor();
         this.hasColor = this.mainParticle.getParticleEffect() == ParticleEffect.REDSTONE;
+
+        this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
     }
 
     @Override
@@ -53,7 +49,7 @@ public class ImageTask extends AAnimationTask<Image> {
 
         //Stop if required
         if (iterationCount > ticksDuration) {
-stopAnimation(taskId);
+            stopAnimation(taskId);
             return;
         }
 
@@ -89,61 +85,6 @@ stopAnimation(taskId);
             particleBuilder.display();
         }));
     }
-
-    /*public void run() {
-        //increment counters
-        iterationCounter++;
-        changeRotationCounter++;
-
-        //Stop if required
-        if (iterationCounter > ticksDuration) {
-stopAnimation(taskId);
-            return;
-        }
-
-        //Do nothing if not shown
-        if (showFrequency != 0 && (iterationCounter % showFrequency != 0)) {
-            return;
-        }
-
-        boolean changeRotation = hasRotation();
-
-        //Modify axis if required
-        if (hasChangingRotationAxis() && (axisChangeFrequency == 0 || changeRotationCounter % axisChangeFrequency == 0)) {
-            changeRotation = true;
-            currentAxis = new Vector(random.nextDouble(), random.nextDouble(), random.nextDouble()).normalize().add(currentAxis.multiply(3)).normalize();
-        }
-
-        //Modify stepAngle if required
-        if (hasChangingRotationStepAngle() && (stepAngleAlphaChangeFrequency == 0 || changeRotationCounter % stepAngleAlphaChangeFrequency == 0)) {
-            changeRotation = true;
-            currentStepAngleAlpha += Math.PI / 20 * this.stepAngleAlphaChangeFactor * (random.nextInt(20) - 11);
-        }
-
-        //Compute rotation
-        if (currentStepAngleAlpha != 0 && changeRotation) {
-            currentImagePixels = (HashMap<Vector, Color>) currentImagePixels.entrySet()
-                    .stream()
-                    .collect(Collectors.toMap(e -> new CustomVector(e.getKey()).rotateAroundAxis(currentAxis, currentStepAngleAlpha), Map.Entry::getValue));
-        }
-
-        //show the result
-        Location currentLocation = animation.getBaseLocation();
-
-        if (moveVector != null && moveFrequency != 0 && (iterationCounter % moveFrequency == 0))
-            currentLocation.add(moveStepVector);
-
-        currentImagePixels.forEach(((vector, color) -> {
-            ParticleBuilder particleBuilder = mainParticle.getParticleBuilder(currentLocation.clone().add(vector));
-            if (hasColor) {
-                particleBuilder.setColor(color);
-            }
-            particleBuilder.display();
-        }));
-
-        animation.setLocation(currentLocation);
-
-    }*/
 
     public boolean hasRotation() {
         return this.currentAxis != null;

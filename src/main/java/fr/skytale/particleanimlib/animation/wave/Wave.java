@@ -7,7 +7,7 @@ import fr.skytale.particleanimlib.parent.ARoundAnimation;
 public class Wave extends ARoundAnimation {
     private double maxRadius;
     private double step;
-    private AAnimation circleAnim;
+    private ARoundAnimation anim;
 
     public Wave() {
     }
@@ -34,11 +34,11 @@ public class Wave extends ARoundAnimation {
         this.step = step;
     }
 
-    public AAnimation getCircleAnim() {
-        return circleAnim;
+    public ARoundAnimation getCircleAnim() {
+        return anim;
     }
 
-    public void setCircleAnim(AAnimation circleAnim) {
-        this.circleAnim = circleAnim;
+    public void setCircleAnim(ARoundAnimation anim) {
+        this.anim = anim;
     }
 }

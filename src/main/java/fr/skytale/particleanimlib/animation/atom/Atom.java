@@ -64,4 +64,16 @@ public class Atom extends ARoundAnimation {
     public void setCircle3(AAnimation circle3) {
         this.circle3 = circle3;
     }
+
+
+    @Override
+    public Object clone() {
+        Atom obj = (Atom) super.clone();
+        obj.circle1 = (AAnimation) circle1.clone();
+        obj.circle2 = (AAnimation) circle2.clone();
+        obj.circle3 = (AAnimation) circle3.clone();
+        obj.sphere = (AAnimation) sphere.clone();
+        obj.secondParticle = new ParticleTemplate(secondParticle);
+        return obj;
+    }
 }

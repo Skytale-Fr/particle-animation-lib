@@ -7,16 +7,17 @@ public class ImageBuilder extends AAnimationBuilder<Image> {
 
     public ImageBuilder() {
         super();
-        animation = new Image();
         animation.setU(new Vector(1, 0, 0));
         animation.setV(new Vector(0, 1, 0));
-        animation.setTicksDuration(60);
-        animation.setShowFrequency(2);
         animation.setStepAngleAlpha(0);
         animation.setAxisChangeFrequency(null);
         animation.setStepAngleAlphaChangeFactor(1);
         animation.setStepAngleAlphaChangeFrequency(null);
-        animation.setMoveVector(null);
+    }
+
+    @Override
+    protected Image initAnimation() {
+        return new Image();
     }
 
     /*********SETTERS des éléments spécifiques au cercle ***********/

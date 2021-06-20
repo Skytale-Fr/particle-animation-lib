@@ -1,5 +1,7 @@
 package fr.skytale.particleanimlib.animation.cube;
 
+import fr.skytale.particleanimlib.animation.atom.Atom;
+import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import fr.skytale.particleanimlib.parent.AAnimation;
 
 public class Cube extends AAnimation {
@@ -30,5 +32,11 @@ public class Cube extends AAnimation {
 
     public void setStep(double step) {
         this.step = step;
+    }
+
+    @Override
+    public Object clone() {
+        Cube obj = (Cube) super.clone();
+        return obj;
     }
 }

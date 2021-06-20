@@ -3,7 +3,6 @@ package fr.skytale.particleanimlib.animation.cube;
 import fr.skytale.particleanimlib.parent.AAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.util.Vector;
 
 public class CubeTask extends AAnimationTask<Cube> {
 
@@ -17,19 +16,13 @@ public class CubeTask extends AAnimationTask<Cube> {
 
     public CubeTask(Cube cube) {
         super(cube);
-        this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
-
-        init();
-    }
-
-    protected void init() {
-        super.init();
         this.sideLength = animation.getSideLength();
         this.step = animation.getStep();
         halfSide = sideLength / 2;
+        this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
     }
 
-    private void initVertices(Location center){
+    private void initVertices(Location center) {
         upperFrontRight = center.clone().add(halfSide, halfSide, halfSide);
         upperFrontLeft = center.clone().add(-halfSide, halfSide, halfSide);
         upperBackLeft = center.clone().add(-halfSide, halfSide, -halfSide);
@@ -62,35 +55,5 @@ public class CubeTask extends AAnimationTask<Cube> {
         drawLine(lowerBackRight, lowerBackLeft, step);
         drawLine(lowerBackRight, upperBackRight, step);
     }
-
-    /*@Override
-    public void run() {
-        if (hasDurationEnded()) {
-stopAnimation(taskId);
-            return;
-        }
-
-        //We only show at the specified frequency
-        if (showFrequency != 0 && (iterationCount % showFrequency != 0)) {
-            iterationCount++;
-            return;
-        }
-
-        drawLine(upperFrontRight, upperFrontLeft);
-        drawLine(upperFrontRight, upperBackRight);
-        drawLine(upperFrontRight, lowerFrontRight);
-        drawLine(lowerFrontRight, lowerFrontLeft);
-        drawLine(lowerFrontRight, lowerBackRight);
-        drawLine(lowerFrontLeft, upperFrontLeft);
-        drawLine(lowerFrontLeft, lowerBackLeft);
-        drawLine(upperBackLeft, upperFrontLeft);
-        drawLine(upperBackLeft, lowerBackLeft);
-        drawLine(upperBackLeft, upperBackRight);
-        drawLine(lowerBackRight, lowerBackLeft);
-        drawLine(lowerBackRight, upperBackRight);
-
-        iterationCount++;
-    }*/
-
 
 }

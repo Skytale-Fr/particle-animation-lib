@@ -7,7 +7,6 @@ public class CircleBuilder extends AAnimationBuilder<Circle> {
 
     public CircleBuilder() {
         super();
-        animation = new Circle();
         animation.setU(new Vector(1, 0, 0));
         animation.setV(new Vector(0, 1, 0));
         animation.setRadius(1.0);
@@ -16,6 +15,11 @@ public class CircleBuilder extends AAnimationBuilder<Circle> {
         animation.setStepRadius(0);
         animation.setShowFrequency(0);
         animation.setTicksDuration(60);
+    }
+
+    @Override
+    protected Circle initAnimation() {
+        return new Circle();
     }
 
     /*********SETTERS des éléments spécifiques au cercle ***********/

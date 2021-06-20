@@ -6,7 +6,6 @@ public class ExplodingSphereBuilder extends AAnimationBuilder<ExplodingSphere> {
 
     public ExplodingSphereBuilder(){
         super();
-        animation = new ExplodingSphere();
         animation.setGrowthSpeed(0.3);
         animation.setExplosionLimit(6);
         animation.setNbCircles(10);
@@ -14,6 +13,11 @@ public class ExplodingSphereBuilder extends AAnimationBuilder<ExplodingSphere> {
         animation.setStepAngle(Math.toRadians(30));
         animation.setShowFrequency(0);
         animation.setTicksDuration(60);
+    }
+
+    @Override
+    protected ExplodingSphere initAnimation() {
+        return new ExplodingSphere();
     }
 
     /*********SETTERS des éléments spécifiques a la sphere explosante ***********/

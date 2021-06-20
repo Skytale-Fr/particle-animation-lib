@@ -51,4 +51,10 @@ public class Sphere extends ARoundAnimation {
     public void setSphereType(SphereType sphereType) {
         this.sphereType = sphereType;
     }
+
+    @Override
+    public Object clone() {
+        Sphere obj = (Sphere) super.clone();
+        return obj;
+    }
 }

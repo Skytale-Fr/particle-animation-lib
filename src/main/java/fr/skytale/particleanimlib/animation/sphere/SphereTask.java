@@ -11,7 +11,6 @@ public class SphereTask extends ARoundAnimationTask<Sphere> {
     PropagationType propagationType;
     int simultaneousCircles;
     SphereType sphereType;
-    int taskId;
 
     //Evolving variables
     double max;
@@ -21,12 +20,7 @@ public class SphereTask extends ARoundAnimationTask<Sphere> {
 
     public SphereTask(Sphere sphere) {
         super(sphere);
-        init();
-        this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
-    }
 
-    protected void init() {
-        super.init();
         this.nbCircles = animation.getNbCircles();
         this.propagationType = animation.getPropagationType();
         this.simultaneousCircles = animation.getSimultaneousCircles();
@@ -53,6 +47,8 @@ public class SphereTask extends ARoundAnimationTask<Sphere> {
         step = (max - min) / nbCircles;
 
         currentMin = min;
+
+        this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
     }
 
     @Override
@@ -80,7 +76,7 @@ public class SphereTask extends ARoundAnimationTask<Sphere> {
         }
 
 
-        for (double i = currentMin; propagationType == PropagationType.BOTTOM_TO_TOP ? i >= currentMax : i <= currentMax ; i += step) {
+        for (double i = currentMin; propagationType == PropagationType.BOTTOM_TO_TOP ? i >= currentMax : i <= currentMax; i += step) {
             double currentRadius = Math.sin(i) * radius;
             double y = sphereCenter.getY() + Math.cos(i) * radius;
 
@@ -93,50 +89,4 @@ public class SphereTask extends ARoundAnimationTask<Sphere> {
         }
         currentMin += step;
     }
-
-    /*@Override
-    public void run() {
-        Location sphereCenter = animation.getBaseLocation();
-
-        //Stop
-        if (hasDurationEnded()) {
-stopAnimation(taskId);
-            return;
-        }
-
-        //We only show at the specified frequency
-        if (showFrequency != 0 && (iterationCount % showFrequency != 0)) {
-            iterationCount++;
-            return;
-        }
-
-        //Define the vertical limits of the sphere that will be shown
-        double currentMax;
-
-        if (propagationType != null) {
-            currentMax = currentMin + step * simultaneousCircles;
-            if (propagationType == PropagationType.BOTTOM_TO_TOP && currentMax < max) {
-                currentMax = max;
-            } else if (propagationType == PropagationType.TOP_TO_BOTTOM && currentMax > max) {
-                currentMax = max;
-            }
-        } else {
-            currentMax = max;
-        }
-
-
-        for (double i = currentMin; propagationType == PropagationType.BOTTOM_TO_TOP ? i >= currentMax : i <= currentMax ; i += step) {
-            double currentRadius = Math.sin(i) * radius;
-            double y = sphereCenter.getY() + Math.cos(i) * radius;
-
-            for (double j = 0; j < Math.PI * 2; j += stepAngle) {
-                double x = sphereCenter.getX() + Math.cos(j) * currentRadius;
-                double z = sphereCenter.getZ() + Math.sin(j) * currentRadius;
-
-                mainParticle.getParticleBuilder(new Location(location.getWorld(), x, y, z)).display();
-            }
-        }
-        currentMin += step;
-        iterationCount++;
-    }*/
 }
