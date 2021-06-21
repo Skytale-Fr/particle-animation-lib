@@ -123,7 +123,8 @@ public abstract class AAnimation implements Cloneable {
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
-        obj.location = this.location.clone();
+        assert obj != null;
+        obj.location = this.location == null ? null : location.clone();
         obj.relativeLocation = this.getRelativeLocation() == null ? null : this.getRelativeLocation().clone();
         obj.mainParticle = new ParticleTemplate(this.getMainParticle());
         obj.moveStepVector = this.getMoveStepVector() == null ? null : this.getMoveStepVector();
