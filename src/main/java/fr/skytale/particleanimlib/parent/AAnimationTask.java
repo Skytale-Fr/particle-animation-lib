@@ -42,15 +42,17 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     public final void run() {
 
+        boolean hasMovingEntity = movingEntity == null;
         //if move specified
         if (moveFrequency != null && (moveFrequency == 0 || iterationCount % moveFrequency == 0)) {
-            if (movingEntity == null) {
+            if (hasMovingEntity) {
                 location.add(moveStepVector);
             } else {
                 relativeLocation.add(moveStepVector);
             }
         }
-        Location iterationBaseLocation = movingEntity == null ? location.clone() : movingEntity.getLocation().clone().add(relativeLocation);
+        Location iterationBaseLocation = hasMovingEntity ? location.clone() :
+                (relativeLocation != null ? movingEntity.getLocation().clone().add(relativeLocation) : movingEntity.getLocation().clone());
 
         //We only show at the specified frequency
         if (showFrequency != 0 && (iterationCount % showFrequency != 0)) {
