@@ -57,7 +57,7 @@ public class SphereTask extends ARoundAnimationTask<Sphere> {
 
         //Stop
         if (hasDurationEnded()) {
-            stopAnimation(taskId);
+            stopAnimation();
             return;
         }
 

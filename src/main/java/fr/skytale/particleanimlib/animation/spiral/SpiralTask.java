@@ -39,7 +39,7 @@ public class SpiralTask extends ARoundAnimationTask<Spiral> {
 
         //Stop
         if (distance <= 0) {
-            stopAnimation(taskId);
+            stopAnimation();
             return;
         }
 

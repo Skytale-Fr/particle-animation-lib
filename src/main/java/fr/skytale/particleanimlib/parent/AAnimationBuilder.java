@@ -83,6 +83,6 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         if (animation.getMoveStepVector() != null && animation.getMoveFrequency() == null)
             throw new IllegalArgumentException("If move vector is defined then move frequency must be strictly positive.");
 
-        return (T)animation.clone();
+        return (T) animation.clone();
     };
 }

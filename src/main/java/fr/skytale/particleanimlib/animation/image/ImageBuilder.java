@@ -13,6 +13,7 @@ public class ImageBuilder extends AAnimationBuilder<Image> {
         animation.setAxisChangeFrequency(null);
         animation.setStepAngleAlphaChangeFactor(1);
         animation.setStepAngleAlphaChangeFrequency(null);
+        animation.setStepAngleAlphaMax(Math.toRadians(30));
     }
 
     @Override
@@ -43,6 +44,8 @@ public class ImageBuilder extends AAnimationBuilder<Image> {
     }
 
     public void setStepAngleAlphaChangeFrequency(Integer stepAngleAlphaChangeFrequency) {
+        if (stepAngleAlphaChangeFrequency != null && stepAngleAlphaChangeFrequency < 0)
+            throw new IllegalArgumentException("StepAngleAlphaChangeFrequency can not be negative");
         animation.setStepAngleAlphaChangeFrequency(stepAngleAlphaChangeFrequency);
     }
 
@@ -50,7 +53,13 @@ public class ImageBuilder extends AAnimationBuilder<Image> {
         animation.setStepAngleAlphaChangeFactor(stepAngleAlphaChangeFactor);
     }
 
+    public void setStepAngleAlphaMax(double stepAngleAlphaMax) {
+        animation.setStepAngleAlphaMax(stepAngleAlphaMax);
+    }
+
     public void setAxisChangeFrequency(Integer axisChangeFrequency) {
+        if (axisChangeFrequency != null && axisChangeFrequency < 0)
+            throw new IllegalArgumentException("AxisChangeFrequency can not be negative");
         animation.setAxisChangeFrequency(axisChangeFrequency);
     }
 

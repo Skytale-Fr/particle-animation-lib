@@ -5,13 +5,13 @@ import fr.skytale.particleanimlib.attributes.CustomVector;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import java.util.Objects;
 
 public abstract class AAnimation implements Cloneable {
+
     protected Location location;
     protected Entity movingEntity;
     protected Vector relativeLocation;
@@ -24,14 +24,6 @@ public abstract class AAnimation implements Cloneable {
     protected Integer moveFrequency;
 
     public abstract void show();
-
-    public Location rotateAroundAxis(Location point, Vector axis, Location pointAxis, double angle) {
-        Vector v = point.clone().subtract(pointAxis).toVector(); //Vecteur de axis au point à translater
-        CustomVector customVector = new CustomVector(v.getX(), v.getY(), v.getZ());
-        v = customVector.rotateAroundAxis(axis, angle);
-        v = v.add(pointAxis.toVector()); //Translation vers le point d'origine (La rotiation a été faite à l'origine du repère)
-        return v.toLocation(Objects.requireNonNull(point.getWorld()));
-    }
 
     /***********GETTERS & SETTERS***********/
 
@@ -130,6 +122,14 @@ public abstract class AAnimation implements Cloneable {
         obj.moveStepVector = this.getMoveStepVector() == null ? null : this.getMoveStepVector();
         obj.moveFrequency = this.getMoveFrequency() == null ? null : this.getMoveFrequency();
         return obj;
+    }
+
+    public Location rotateAroundAxis(Location point, Vector axis, Location pointAxis, double angle) {
+        Vector v = point.clone().subtract(pointAxis).toVector(); //Vecteur de axis au point à translater
+        CustomVector customVector = new CustomVector(v.getX(), v.getY(), v.getZ());
+        v = customVector.rotateAroundAxis(axis, angle);
+        v = v.add(pointAxis.toVector()); //Translation vers le point d'origine (La rotiation a été faite à l'origine du repère)
+        return v.toLocation(Objects.requireNonNull(point.getWorld()));
     }
 
 }

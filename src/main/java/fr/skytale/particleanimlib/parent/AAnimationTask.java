@@ -19,7 +19,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     protected int showFrequency;
     protected Integer moveFrequency;
     protected Vector moveStepVector;
-    protected int taskId;
+    protected Integer taskId;
 
     //Evolving variables
     protected int iterationCount;
@@ -70,8 +70,11 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         return iterationCount>=ticksDuration;
     }
 
-    public void stopAnimation(int taskId){
-        Bukkit.getScheduler().cancelTask(taskId);
+    protected void stopAnimation(){
+        if (taskId != null) {
+            Bukkit.getScheduler().cancelTask(taskId);
+            taskId = null;
+        }
         if (animation.getCallback() != null) {
             animation.getCallback().run(animation);
         }

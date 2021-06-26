@@ -2,6 +2,7 @@ package fr.skytale.particleanimlib.animation.image;
 
 import fr.skytale.particleanimlib.attributes.CustomVector;
 import fr.skytale.particleanimlib.parent.AAnimationTask;
+import fr.skytale.particleanimlib.parent.ARotatingAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
@@ -14,67 +15,23 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class ImageTask extends AAnimationTask<Image> {
-    //If rotation changes
-    private Integer axisChangeFrequency = null;
-    private double stepAngleAlphaChangeFactor;
-    private Integer stepAngleAlphaChangeFrequency = null;
-    //Randomness generator
-    private Random random;
+public class ImageTask extends ARotatingAnimationTask<Image> {
     //Does particle type support color
     private boolean hasColor;
-    public Vector currentAxis;
-    public double currentStepAngleAlpha;
     public HashMap<Vector, Color> currentImagePixels;
 
     public ImageTask(Image image) {
         super(image);
 
-        this.random = new Random();
         this.currentImagePixels = (HashMap<Vector, Color>) animation.getImagePixels().entrySet().stream()
                 .collect(Collectors.toMap(e -> e.getKey().clone(), e -> new Color(e.getValue().getRGB())));
-        if (animation.getAxis() != null)
-            this.currentAxis = animation.getAxis().clone();
-        this.currentStepAngleAlpha = animation.getStepAngleAlpha();
-        this.axisChangeFrequency = (animation.getAxisChangeFrequency() == null ? null : new Integer(animation.getAxisChangeFrequency()));
-        this.stepAngleAlphaChangeFrequency = (animation.getStepAngleAlphaChangeFrequency() == null ? null : new Integer(animation.getStepAngleAlphaChangeFrequency()));
-        this.stepAngleAlphaChangeFactor = animation.getStepAngleAlphaChangeFactor();
         this.hasColor = this.mainParticle.getParticleEffect() == ParticleEffect.REDSTONE;
 
         this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
     }
 
     @Override
-    public void show(Location iterationBaseLocation) {
-
-        //Stop if required
-        if (iterationCount > ticksDuration) {
-            stopAnimation(taskId);
-            return;
-        }
-
-        boolean changeRotation = hasRotation();
-
-        //Modify axis if required
-        if (hasChangingRotationAxis() && (axisChangeFrequency == 0 || iterationCount % axisChangeFrequency == 0)) {
-            changeRotation = true;
-            currentAxis = new Vector(random.nextDouble(), random.nextDouble(), random.nextDouble()).normalize().add(currentAxis.multiply(3)).normalize();
-        }
-
-        //Modify stepAngle if required
-        if (hasChangingRotationStepAngle() && (stepAngleAlphaChangeFrequency == 0 || iterationCount % stepAngleAlphaChangeFrequency == 0)) {
-            changeRotation = true;
-            currentStepAngleAlpha += Math.PI / 20 * this.stepAngleAlphaChangeFactor * (random.nextInt(20) - 11);
-        }
-
-        //Compute rotation
-        if (currentStepAngleAlpha != 0 && changeRotation) {
-            currentImagePixels = (HashMap<Vector, Color>) currentImagePixels.entrySet()
-                    .stream()
-                    .collect(Collectors.toMap(e -> new CustomVector(e.getKey()).rotateAroundAxis(currentAxis, currentStepAngleAlpha), Map.Entry::getValue));
-        }
-
-        //show the result
+    public void showRotated(Location iterationBaseLocation) {
         Location currentLocation = iterationBaseLocation;
 
         currentImagePixels.forEach(((vector, color) -> {
@@ -86,16 +43,11 @@ public class ImageTask extends AAnimationTask<Image> {
         }));
     }
 
-    public boolean hasRotation() {
-        return this.currentAxis != null;
-    }
-
-    public boolean hasChangingRotationAxis() {
-        return hasRotation() && this.axisChangeFrequency != null;
-    }
-
-    public boolean hasChangingRotationStepAngle() {
-        return hasRotation() && this.stepAngleAlphaChangeFrequency != null;
+    @Override
+    protected void computeRotation(Vector currentAxis, double currentStepAngleAlpha) {
+        currentImagePixels = (HashMap<Vector, Color>) currentImagePixels.entrySet()
+                .stream()
+                .collect(Collectors.toMap(e -> new CustomVector(e.getKey()).rotateAroundAxis(currentAxis, currentStepAngleAlpha), Map.Entry::getValue));
     }
 
 }

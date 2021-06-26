@@ -30,7 +30,7 @@ public class WaveTask extends ARoundAnimationTask<Wave> {
         Location waveCenter = iterationBaseLocation;
 
         if (currentRadius >= maxRadius) {
-            Bukkit.getScheduler().cancelTask(taskId);
+            stopAnimation();
             return;
         }
 

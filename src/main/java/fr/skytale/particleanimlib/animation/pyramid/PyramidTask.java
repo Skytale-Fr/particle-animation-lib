@@ -62,7 +62,7 @@ public class PyramidTask extends AAnimationTask<Pyramid> {
     public void show(Location iterationBaseLocation) {
 
         if (hasDurationEnded()) {
-            stopAnimation(taskId);
+            stopAnimation();
             return;
         }
 

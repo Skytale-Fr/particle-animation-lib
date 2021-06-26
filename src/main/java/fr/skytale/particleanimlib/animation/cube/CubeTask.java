@@ -36,7 +36,7 @@ public class CubeTask extends AAnimationTask<Cube> {
     @Override
     public void show(Location iterationBaseLocation) {
         if (hasDurationEnded()) {
-            stopAnimation(taskId);
+            stopAnimation();
             return;
         }
 

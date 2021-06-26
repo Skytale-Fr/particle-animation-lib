@@ -38,7 +38,7 @@ public class CircleTask extends ARoundAnimationTask<Circle> {
     @Override
     public void show(Location iterationBaseLocation) {
         if (hasDurationEnded()) {
-            stopAnimation(taskId);
+            stopAnimation();
             return;
         }
 

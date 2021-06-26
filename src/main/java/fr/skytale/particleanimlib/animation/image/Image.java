@@ -3,6 +3,7 @@ package fr.skytale.particleanimlib.animation.image;
 
 import fr.skytale.particleanimlib.animation.explodingsphere.ExplodingSphere;
 import fr.skytale.particleanimlib.parent.AAnimation;
+import fr.skytale.particleanimlib.parent.ARotatingAnimation;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
@@ -15,7 +16,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
-public class Image extends AAnimation {
+public class Image extends ARotatingAnimation {
 
     /******** Static Attributes ********/
 
@@ -59,13 +60,6 @@ public class Image extends AAnimation {
     private Vector v;
     //Image file name
     private String imageFileName;
-    //If rotation is required
-    private Vector axis;
-    private double stepAngleAlpha;
-    //If rotation changes
-    private Integer axisChangeFrequency = null;
-    private double stepAngleAlphaChangeFactor;
-    private Integer stepAngleAlphaChangeFrequency = null;
     private HashMap<Vector, Color> imagePixels;
     private boolean hasColor;
     /******** Constructor ********/
@@ -136,46 +130,6 @@ public class Image extends AAnimation {
         return u;
     }
 
-    public Vector getAxis() {
-        return axis;
-    }
-
-    public void setAxis(Vector axis) {
-        this.axis = axis;
-    }
-
-    public double getStepAngleAlpha() {
-        return stepAngleAlpha;
-    }
-
-    public void setStepAngleAlpha(double stepAngleAlpha) {
-        this.stepAngleAlpha = stepAngleAlpha;
-    }
-
-    public Integer getAxisChangeFrequency() {
-        return axisChangeFrequency;
-    }
-
-    public void setAxisChangeFrequency(Integer axisChangeFrequency) {
-        this.axisChangeFrequency = axisChangeFrequency;
-    }
-
-    public double getStepAngleAlphaChangeFactor() {
-        return stepAngleAlphaChangeFactor;
-    }
-
-    public void setStepAngleAlphaChangeFactor(double stepAngleAlphaChangeFactor) {
-        this.stepAngleAlphaChangeFactor = stepAngleAlphaChangeFactor;
-    }
-
-    public Integer getStepAngleAlphaChangeFrequency() {
-        return stepAngleAlphaChangeFrequency;
-    }
-
-    public void setStepAngleAlphaChangeFrequency(Integer stepAngleAlphaChangeFrequency) {
-        this.stepAngleAlphaChangeFrequency = stepAngleAlphaChangeFrequency;
-    }
-
     public String getImageFileName() {
         return imageFileName;
     }
@@ -197,9 +151,6 @@ public class Image extends AAnimation {
         Image obj = (Image) super.clone();
         obj.u = u.clone();
         obj.v = v.clone();
-        obj.axis = axis == null ? null : axis.clone();
-        obj.axisChangeFrequency = axisChangeFrequency == null ? null : new Integer(axisChangeFrequency);
-        obj.stepAngleAlphaChangeFrequency = stepAngleAlphaChangeFrequency == null ? null : new Integer(stepAngleAlphaChangeFrequency);
         obj.imagePixels = imagePixels==null ? null : (HashMap<Vector, Color>) imagePixels.entrySet().stream()
                         .collect(Collectors.toMap(e -> e.getKey().clone(), e -> new Color(e.getValue().getRGB())));;
         return obj;

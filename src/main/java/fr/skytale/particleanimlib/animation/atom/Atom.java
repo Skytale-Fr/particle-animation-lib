@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.atom;
 
 
+import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
@@ -63,6 +64,11 @@ public class Atom extends ARoundAnimation {
 
     public void setCircle3(AAnimation circle3) {
         this.circle3 = circle3;
+    }
+
+    @Override
+    public void setCallback(AnimationEndedCallback callback) {
+        this.sphere.setCallback(callback);
     }
 
 

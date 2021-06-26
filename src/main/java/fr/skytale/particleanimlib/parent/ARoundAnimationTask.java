@@ -11,7 +11,4 @@ public abstract class ARoundAnimationTask<T extends ARoundAnimation> extends AAn
         this.nbPoints = animation.getNbPoints();
         this.stepAngle = animation.getStepAngle();
     }
-
-    protected void init(){
-    }
 }

@@ -29,7 +29,7 @@ public class ExplodingSphereTask extends ARoundAnimationTask<ExplodingSphere> {
         Location sphereCenter = iterationBaseLocation;
 
         if (growth >= explosionLimit) {
-            stopAnimation(taskId);
+            stopAnimation();
             return;
         }
 
