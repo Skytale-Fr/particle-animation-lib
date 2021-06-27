@@ -63,7 +63,7 @@ public class ImageSample implements IParticleAnimSample {
 
     private File createImagesFolder() {
         File pluginDataFolder = ParticleAnimLibTest.getInstance().getPlugin().getDataFolder();
-        if (!pluginDataFolder.exists() && !pluginDataFolder.isDirectory()) {
+        if (!pluginDataFolder.exists() || !pluginDataFolder.isDirectory()) {
             try {
                 if (!pluginDataFolder.mkdir()) {
                     Bukkit.getLogger().log(Level.SEVERE, IMAGES_FOLDER_CREATION_ERROR);
