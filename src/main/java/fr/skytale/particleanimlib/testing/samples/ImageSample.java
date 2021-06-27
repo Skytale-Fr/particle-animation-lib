@@ -76,7 +76,7 @@ public class ImageSample implements IParticleAnimSample {
         }
 
         File imagesFolder = new File(pluginDataFolder, IMAGES_FOLDER_NAME);
-        if (!imagesFolder.exists() && !imagesFolder.isDirectory()) {
+        if (!imagesFolder.exists() || !imagesFolder.isDirectory()) {
             try {
                 if (imagesFolder.mkdir()) {
                     return imagesFolder;
@@ -114,7 +114,7 @@ public class ImageSample implements IParticleAnimSample {
                 Bukkit.getLogger().log(Level.SEVERE, IMAGES_EXTRACTION_ERROR, ex);
             }
         } else {
-
+            Bukkit.getLogger().log(Level.SEVERE, IMAGES_EXTRACTION_ERROR, ex);
         }
     }
 }
