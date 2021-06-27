@@ -1,6 +1,5 @@
 package fr.skytale.particleanimlib.animation.explodingsphere;
 
-import fr.skytale.particleanimlib.animation.cube.Cube;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
 
 public class ExplodingSphere extends ARoundAnimation {

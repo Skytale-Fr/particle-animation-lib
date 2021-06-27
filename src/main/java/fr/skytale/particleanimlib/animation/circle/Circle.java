@@ -1,9 +1,6 @@
 package fr.skytale.particleanimlib.animation.circle;
 
 
-import fr.skytale.particleanimlib.animation.atom.Atom;
-import fr.skytale.particleanimlib.attributes.ParticleTemplate;
-import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
 import org.bukkit.util.Vector;
 

@@ -84,5 +84,7 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
             throw new IllegalArgumentException("If move vector is defined then move frequency must be strictly positive.");
 
         return (T) animation.clone();
-    };
+    }
+
+    ;
 }

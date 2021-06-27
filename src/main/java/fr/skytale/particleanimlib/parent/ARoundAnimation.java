@@ -1,7 +1,5 @@
 package fr.skytale.particleanimlib.parent;
 
-import fr.skytale.particleanimlib.attributes.ParticleTemplate;
-
 public abstract class ARoundAnimation extends AAnimation {
     protected double radius;
     protected int nbPoints;

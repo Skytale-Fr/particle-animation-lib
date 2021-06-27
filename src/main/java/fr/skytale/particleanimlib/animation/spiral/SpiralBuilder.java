@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.animation.spiral;
 
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
-import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 public class SpiralBuilder extends AAnimationBuilder<Spiral> {
@@ -37,19 +36,19 @@ public class SpiralBuilder extends AAnimationBuilder<Spiral> {
         animation.setTarget(target);
     }
 
-    public void setStepAngle(double a){
-        if(a==0)
+    public void setStepAngle(double a) {
+        if (a == 0)
             throw new IllegalArgumentException("Step angle should not be equal to zero.");
         animation.setStepAngle(a);
     }
 
-    public void setGrowthSpeed(double g){
+    public void setGrowthSpeed(double g) {
         animation.setGrowthSpeed(g);
     }
 
     @Override
     public Spiral getAnimation() {
-        if(animation.getTarget()==null)
+        if (animation.getTarget() == null)
             throw new IllegalArgumentException("A target has to be defined.");
         return super.getAnimation();
     }

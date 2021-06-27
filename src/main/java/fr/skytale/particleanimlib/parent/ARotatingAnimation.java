@@ -63,7 +63,6 @@ public abstract class ARotatingAnimation extends AAnimation {
     }
 
 
-
     @Override
     public Object clone() {
         ARotatingAnimation obj = null;

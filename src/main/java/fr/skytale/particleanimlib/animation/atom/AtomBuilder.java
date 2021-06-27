@@ -8,7 +8,7 @@ import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 public class AtomBuilder extends AAnimationBuilder<Atom> {
     private Atom atom;
 
-    public AtomBuilder(){
+    public AtomBuilder() {
         super();
         animation.setStepAngle(Math.toRadians(15));
         animation.setShowFrequency(0);
@@ -22,13 +22,13 @@ public class AtomBuilder extends AAnimationBuilder<Atom> {
 
     /*********SETTERS des éléments spécifiques de l'atome ***********/
 
-    public void setStepAngle(double a){
-        if(a==0)
+    public void setStepAngle(double a) {
+        if (a == 0)
             throw new IllegalArgumentException("Step angle should not be equal to zero.");
         animation.setStepAngle(a);
     }
 
-    public void setSecondParticle(ParticleTemplate particle){
+    public void setSecondParticle(ParticleTemplate particle) {
         animation.setSecondParticle(particle);
     }
 
@@ -58,11 +58,11 @@ public class AtomBuilder extends AAnimationBuilder<Atom> {
             throw new IllegalArgumentException("Second particle should not be null.");
         }
 
-        if(animation.getSphere()==null)
-            throw  new IllegalArgumentException("Sphere animation of Atom animation has to be initialized.");
+        if (animation.getSphere() == null)
+            throw new IllegalArgumentException("Sphere animation of Atom animation has to be initialized.");
 
-        if(animation.getCircle1()==null ||animation.getCircle2()==null || animation.getCircle3()==null)
-            throw  new IllegalArgumentException("All three circle animations of Atom animation has to be initialized.");
+        if (animation.getCircle1() == null || animation.getCircle2() == null || animation.getCircle3() == null)
+            throw new IllegalArgumentException("All three circle animations of Atom animation has to be initialized.");
 
         return super.getAnimation();
     }

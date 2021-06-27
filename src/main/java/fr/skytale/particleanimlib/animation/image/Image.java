@@ -1,8 +1,6 @@
 package fr.skytale.particleanimlib.animation.image;
 
 
-import fr.skytale.particleanimlib.animation.explodingsphere.ExplodingSphere;
-import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.ARotatingAnimation;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
@@ -62,6 +60,7 @@ public class Image extends ARotatingAnimation {
     private String imageFileName;
     private HashMap<Vector, Color> imagePixels;
     private boolean hasColor;
+
     /******** Constructor ********/
 
     public Image() {
@@ -151,8 +150,9 @@ public class Image extends ARotatingAnimation {
         Image obj = (Image) super.clone();
         obj.u = u.clone();
         obj.v = v.clone();
-        obj.imagePixels = imagePixels==null ? null : (HashMap<Vector, Color>) imagePixels.entrySet().stream()
-                        .collect(Collectors.toMap(e -> e.getKey().clone(), e -> new Color(e.getValue().getRGB())));;
+        obj.imagePixels = imagePixels == null ? null : (HashMap<Vector, Color>) imagePixels.entrySet().stream()
+                .collect(Collectors.toMap(e -> e.getKey().clone(), e -> new Color(e.getValue().getRGB())));
+        ;
         return obj;
     }
 }

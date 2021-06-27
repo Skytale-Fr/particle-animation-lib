@@ -1,7 +1,5 @@
 package fr.skytale.particleanimlib.animation.cube;
 
-import fr.skytale.particleanimlib.animation.atom.Atom;
-import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import fr.skytale.particleanimlib.parent.AAnimation;
 
 public class Cube extends AAnimation {

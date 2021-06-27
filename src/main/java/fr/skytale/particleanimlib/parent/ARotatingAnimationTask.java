@@ -1,15 +1,9 @@
 package fr.skytale.particleanimlib.parent;
 
-import fr.skytale.particleanimlib.attributes.CustomVector;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleBuilder;
 
-import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public abstract class ARotatingAnimationTask<T extends ARotatingAnimation> extends AAnimationTask<T> {
 

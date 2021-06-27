@@ -6,7 +6,7 @@ import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 
 public class SphereBuilder extends AAnimationBuilder<Sphere> {
 
-    public SphereBuilder(){
+    public SphereBuilder() {
         animation.setNbCircles(10);
         animation.setRadius(1.0);
         animation.setStepAngle(Math.toRadians(30));
@@ -23,8 +23,8 @@ public class SphereBuilder extends AAnimationBuilder<Sphere> {
 
     /*********SETTERS des éléments spécifiques a la sphere ***********/
 
-    public void setNbCircles(int nbCircles){
-        if(nbCircles<=0)
+    public void setNbCircles(int nbCircles) {
+        if (nbCircles <= 0)
             throw new IllegalArgumentException("Number of circles must be positive.");
         animation.setNbCircles(nbCircles);
     }
@@ -36,8 +36,8 @@ public class SphereBuilder extends AAnimationBuilder<Sphere> {
         animation.setRadius(radius);
     }
 
-    public void setStepAngle(double a){
-        if(a==0)
+    public void setStepAngle(double a) {
+        if (a == 0)
             throw new IllegalArgumentException("Step angle should not be equal to zero.");
         animation.setStepAngle(a);
     }

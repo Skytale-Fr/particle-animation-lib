@@ -34,7 +34,7 @@ public class SpiralProjectileTask extends ARoundAnimationTask<SpiralProjectile> 
 
     @Override
     public void show(Location iterationBaseLocation) {
-        if (distance<=0) {
+        if (distance <= 0) {
             Bukkit.getScheduler().cancelTask(taskId);
             return;
         }

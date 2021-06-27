@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.animation.wave;
 
 import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
-import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
 
@@ -50,7 +49,7 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
         animation.setStep(s);
     }
 
-    public void setAnim(ARoundAnimation subAnimation){
+    public void setAnim(ARoundAnimation subAnimation) {
         animation.setCircleAnim(subAnimation);
     }
 
@@ -60,10 +59,10 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
 
     @Override
     public Wave getAnimation() {
-        if(animation.getRadius()>=animation.getMaxRadius())
+        if (animation.getRadius() >= animation.getMaxRadius())
             throw new IllegalArgumentException("MaxRadius must be greater than radius.");
 
-        if(animation.getCircleAnim()==null)
+        if (animation.getCircleAnim() == null)
             throw new IllegalArgumentException("Image animation has to be defined.");
 
         return super.getAnimation();

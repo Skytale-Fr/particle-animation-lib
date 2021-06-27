@@ -26,23 +26,25 @@ public class SpiralProjectileBuilder extends AAnimationBuilder<SpiralProjectile>
         animation.setStep(s);
     }
 
-    public void setSpiral1(AAnimation spiral){
+    public void setSpiral1(AAnimation spiral) {
         animation.setSpiral1(spiral);
     }
 
-    public void setSpiral2(AAnimation spiral){
+    public void setSpiral2(AAnimation spiral) {
         animation.setSpiral2(spiral);
-    }    public void setCallback(AnimationEndedCallback callback) {
+    }
+
+    public void setCallback(AnimationEndedCallback callback) {
         throw new IllegalArgumentException("Only primitive animations have callback functions.");
     }
 
 
     @Override
     public SpiralProjectile getAnimation() {
-        if(animation.getSpiral1()==null || animation.getSpiral2()==null)
+        if (animation.getSpiral1() == null || animation.getSpiral2() == null)
             throw new IllegalArgumentException("Both spirals has to be initialized.");
 
-        if(animation.getTarget()==null)
+        if (animation.getTarget() == null)
             throw new IllegalArgumentException("Target has to be initialized.");
         return super.getAnimation();
     }

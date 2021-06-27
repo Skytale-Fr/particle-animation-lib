@@ -1,7 +1,5 @@
 package fr.skytale.particleanimlib.animation.wave;
 
-import fr.skytale.particleanimlib.animation.circle.Circle;
-import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
 import fr.skytale.particleanimlib.parent.ARoundAnimationTask;
 import org.bukkit.Bukkit;

@@ -1,6 +1,5 @@
 package fr.skytale.particleanimlib.animation.cuboid;
 
-import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.ARotatingAnimation;
 import org.bukkit.util.Vector;
 

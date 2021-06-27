@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.animation.image;
 
 import fr.skytale.particleanimlib.attributes.CustomVector;
-import fr.skytale.particleanimlib.parent.AAnimationTask;
 import fr.skytale.particleanimlib.parent.ARotatingAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -12,7 +11,6 @@ import xyz.xenondevs.particle.ParticleEffect;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 public class ImageTask extends ARotatingAnimationTask<Image> {

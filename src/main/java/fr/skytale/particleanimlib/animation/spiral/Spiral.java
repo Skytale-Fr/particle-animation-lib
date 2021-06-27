@@ -1,8 +1,6 @@
 package fr.skytale.particleanimlib.animation.spiral;
 
-import fr.skytale.particleanimlib.animation.pyramid.Pyramid;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
-import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 public class Spiral extends ARoundAnimation {
@@ -17,6 +15,7 @@ public class Spiral extends ARoundAnimation {
     public void show() {
         new SpiralTask(this);
     }
+
     /***********GETTERS & SETTERS***********/
 
     public double getStep() {

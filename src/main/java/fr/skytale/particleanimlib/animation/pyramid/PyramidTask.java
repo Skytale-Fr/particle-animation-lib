@@ -1,13 +1,10 @@
 package fr.skytale.particleanimlib.animation.pyramid;
 
-import fr.skytale.particleanimlib.animation.explodingsphere.ExplodingSphere;
 import fr.skytale.particleanimlib.attributes.CustomVector;
-import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import fr.skytale.particleanimlib.parent.AAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +33,7 @@ public class PyramidTask extends AAnimationTask<Pyramid> {
          */
         Vector normalVector = fromCenterToApex.clone().normalize();
 
-        Vector radiusVector = computeRadiusVector(normalVector,distanceToAnyBaseApex);
+        Vector radiusVector = computeRadiusVector(normalVector, distanceToAnyBaseApex);
 
         /*
         Compute each point of the pyramid's base with :
@@ -44,14 +41,14 @@ public class PyramidTask extends AAnimationTask<Pyramid> {
         - the number of points : nbBaseApex
         */
 
-        double theta = 2*Math.PI/nbBaseApex;
+        double theta = 2 * Math.PI / nbBaseApex;
 
         fromCenterToBaseApexList = new ArrayList<>();
         fromCenterToBaseApexList.add(radiusVector);
 
-        for(int i=1 ; i<nbBaseApex ; i++){
+        for (int i = 1; i < nbBaseApex; i++) {
             CustomVector customVector = new CustomVector(radiusVector);
-            customVector.rotateAroundAxis(normalVector,theta*i);
+            customVector.rotateAroundAxis(normalVector, theta * i);
             fromCenterToBaseApexList.add(customVector);
         }
 
@@ -84,10 +81,10 @@ public class PyramidTask extends AAnimationTask<Pyramid> {
 
     private void drawLines(List<Location> baseApexList, Location apex) {
 
-        drawLine(baseApexList.get(0),baseApexList.get(baseApexList.size() -1), distanceBetweenParticles);
+        drawLine(baseApexList.get(0), baseApexList.get(baseApexList.size() - 1), distanceBetweenParticles);
 
         for (int i = 0; i < baseApexList.size() - 1; i++) {
-            drawLine(baseApexList.get(i), baseApexList.get(i+1), distanceBetweenParticles);
+            drawLine(baseApexList.get(i), baseApexList.get(i + 1), distanceBetweenParticles);
         }
 
         //Link each base apex with the main apex.

@@ -1,13 +1,15 @@
 package fr.skytale.particleanimlib.animation.cuboid;
 
 import fr.skytale.particleanimlib.attributes.CustomVector;
-import fr.skytale.particleanimlib.parent.AAnimationTask;
 import fr.skytale.particleanimlib.parent.ARotatingAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CuboidTask extends ARotatingAnimationTask<Cuboid> {

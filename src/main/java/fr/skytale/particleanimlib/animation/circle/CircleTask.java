@@ -23,7 +23,7 @@ public class CircleTask extends ARoundAnimationTask<Circle> {
 
         this.u = animation.getU().clone();
         this.v = animation.getV().clone();
-        if(animation.getAxis()!=null) {
+        if (animation.getAxis() != null) {
             this.axis = animation.getAxis().clone();
             this.stepAngleAlpha = animation.getStepAngleAlpha();
         }

@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.testing.listener;
 
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;

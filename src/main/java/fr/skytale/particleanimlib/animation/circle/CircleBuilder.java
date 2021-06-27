@@ -53,10 +53,12 @@ public class CircleBuilder extends AAnimationBuilder<Circle> {
         animation.setAxis(axis);
     }
 
-    public void setStepAngleAlpha(double s){ animation.setStepAngleAlpha(s);}
+    public void setStepAngleAlpha(double s) {
+        animation.setStepAngleAlpha(s);
+    }
 
-    public void setStepRadius(double stepRadius){
-        if(stepRadius<0)
+    public void setStepRadius(double stepRadius) {
+        if (stepRadius < 0)
             throw new IllegalArgumentException("Step radius must be positive");
         animation.setStepRadius(stepRadius);
     }

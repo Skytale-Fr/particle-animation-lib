@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.animation.pyramid;
 
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
-import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 public class PyramidBuilder extends AAnimationBuilder<Pyramid> {
@@ -12,7 +11,7 @@ public class PyramidBuilder extends AAnimationBuilder<Pyramid> {
         animation.setShowFrequency(0);
         animation.setTicksDuration(60);
         animation.setNbBaseApex(3);
-        animation.setFromCenterToApex(new Vector(0,5,0));
+        animation.setFromCenterToApex(new Vector(0, 5, 0));
         animation.setDistanceToAnyBaseApex(3);
     }
 

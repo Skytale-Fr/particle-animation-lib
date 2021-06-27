@@ -3,7 +3,6 @@ package fr.skytale.particleanimlib.animation.spiralprojectile;
 
 import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
-import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 public class SpiralProjectile extends ARoundAnimation {

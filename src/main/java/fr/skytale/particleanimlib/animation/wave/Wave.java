@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.animation.wave;
 
 
-import fr.skytale.particleanimlib.parent.AAnimation;
 import fr.skytale.particleanimlib.parent.ARoundAnimation;
 
 public class Wave extends ARoundAnimation {

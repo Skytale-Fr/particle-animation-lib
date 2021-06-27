@@ -66,11 +66,11 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     public abstract void show(Location iterationBaseLocation);
 
     /***Methods used in subclasses***/
-    public boolean hasDurationEnded(){
-        return iterationCount>=ticksDuration;
+    public boolean hasDurationEnded() {
+        return iterationCount >= ticksDuration;
     }
 
-    protected void stopAnimation(){
+    protected void stopAnimation() {
         if (taskId != null) {
             Bukkit.getScheduler().cancelTask(taskId);
             taskId = null;
