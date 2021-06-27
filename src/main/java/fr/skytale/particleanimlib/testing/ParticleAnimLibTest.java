@@ -15,6 +15,11 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ParticleAnimLibTest {
+
+    public static AnimationType DEFAULT_ANIMATION_TYPE = AnimationType.CUBOID;
+
+    public static boolean DEFAULT_SHOW_ON_CLICK = true;
+
     private static ParticleAnimLibTest instance;
 
     private final JavaPlugin plugin;

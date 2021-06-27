@@ -1,5 +1,7 @@
 package fr.skytale.particleanimlib.testing.attributes;
 
+import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
+
 public class AnimationLibPlayerData {
     private boolean showAnimationOnClick;
     private AnimationType animationType;
@@ -10,8 +12,8 @@ public class AnimationLibPlayerData {
     }
 
     public AnimationLibPlayerData() {
-        this.showAnimationOnClick = true;
-        this.animationType = AnimationType.CUBOID;
+        this.showAnimationOnClick = ParticleAnimLibTest.DEFAULT_SHOW_ON_CLICK;
+        this.animationType = ParticleAnimLibTest.DEFAULT_ANIMATION_TYPE;
     }
 
     public boolean isShowAnimationOnClick() {
