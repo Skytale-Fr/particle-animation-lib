@@ -4,16 +4,16 @@ import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
 
 public class AnimationLibPlayerData {
     private boolean showAnimationOnClick;
-    private AnimationType animationType;
+    private AnimationSample animationSample;
 
-    public AnimationLibPlayerData(boolean showAnimationOnClick, AnimationType animationType) {
+    public AnimationLibPlayerData(boolean showAnimationOnClick, AnimationSample animationSample) {
         this.showAnimationOnClick = showAnimationOnClick;
-        this.animationType = animationType;
+        this.animationSample = animationSample;
     }
 
     public AnimationLibPlayerData() {
         this.showAnimationOnClick = ParticleAnimLibTest.DEFAULT_SHOW_ON_CLICK;
-        this.animationType = ParticleAnimLibTest.DEFAULT_ANIMATION_TYPE;
+        this.animationSample = ParticleAnimLibTest.DEFAULT_ANIMATION_TYPE;
     }
 
     public boolean isShowAnimationOnClick() {
@@ -24,11 +24,11 @@ public class AnimationLibPlayerData {
         this.showAnimationOnClick = showAnimationOnClick;
     }
 
-    public AnimationType getAnimationType() {
-        return animationType;
+    public AnimationSample getAnimationType() {
+        return animationSample;
     }
 
-    public void setAnimationType(AnimationType animationType) {
-        this.animationType = animationType;
+    public void setAnimationType(AnimationSample animationSample) {
+        this.animationSample = animationSample;
     }
 }

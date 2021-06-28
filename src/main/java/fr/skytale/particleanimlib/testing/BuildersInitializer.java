@@ -1,8 +1,8 @@
 package fr.skytale.particleanimlib.testing;
 
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
-import fr.skytale.particleanimlib.testing.attributes.AnimationType;
-import fr.skytale.particleanimlib.testing.samples.IParticleAnimSample;
+import fr.skytale.particleanimlib.testing.attributes.AnimationSample;
+import fr.skytale.particleanimlib.testing.samples.IPAnimSample;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfoList;
 import io.github.classgraph.ScanResult;
@@ -28,14 +28,14 @@ public class BuildersInitializer {
         return instance;
     }
 
-    private final Map<AnimationType, IParticleAnimSample> samples;
+    private final Map<AnimationSample, IPAnimSample> samples;
 
     private BuildersInitializer() {
         samples = getSamples();
     }
 
-    public AAnimationBuilder<?> initBuilder(Player player, JavaPlugin plugin, AnimationType animationType) {
-        IParticleAnimSample sample = samples.get(animationType);
+    public AAnimationBuilder<?> initBuilder(Player player, JavaPlugin plugin, AnimationSample animationSample) {
+        IPAnimSample sample = samples.get(animationSample);
         if (sample == null) {
             player.sendMessage("Please implement the required code in ParticleAnimLibTest class");
             throw new NotImplementedException("Please implement the required code in ParticleAnimLibTest class");
@@ -66,15 +66,15 @@ public class BuildersInitializer {
     }
 
     @NotNull
-    private Map<AnimationType, IParticleAnimSample> getSamples() {
-        final Map<AnimationType, IParticleAnimSample> samples;
+    private Map<AnimationSample, IPAnimSample> getSamples() {
+        final Map<AnimationSample, IPAnimSample> samples;
         samples = new HashMap<>();
         try (ScanResult scanResult = new ClassGraph().enableAllInfo().acceptPackages(PACKAGE).scan()) {
-            ClassInfoList widgetClasses = scanResult.getClassesImplementing(IParticleAnimSample.class.getCanonicalName());
+            ClassInfoList widgetClasses = scanResult.getClassesImplementing(IPAnimSample.class.getCanonicalName());
             widgetClasses.forEach(classInfo -> {
-                Class<? extends IParticleAnimSample> clazz = classInfo.loadClass().asSubclass(IParticleAnimSample.class);
+                Class<? extends IPAnimSample> clazz = classInfo.loadClass().asSubclass(IPAnimSample.class);
                 try {
-                    IParticleAnimSample particleAnimSample = clazz.newInstance();
+                    IPAnimSample particleAnimSample = clazz.newInstance();
                     samples.put(particleAnimSample.getType(), particleAnimSample);
                 } catch (InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();

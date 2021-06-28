@@ -3,14 +3,14 @@ package fr.skytale.particleanimlib.testing.samples;
 import fr.skytale.particleanimlib.animation.cuboid.CuboidBuilder;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
-import fr.skytale.particleanimlib.testing.attributes.AnimationType;
+import fr.skytale.particleanimlib.testing.attributes.AnimationSample;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import java.awt.*;
 
-public class CuboidSample implements IParticleAnimSample {
+public class CuboidSample implements IPAnimSample {
 
     @Override
     public AAnimationBuilder<?> getInitializedBuilder(Player player, JavaPlugin plugin) {
@@ -36,7 +36,7 @@ public class CuboidSample implements IParticleAnimSample {
     }
 
     @Override
-    public AnimationType getType() {
-        return AnimationType.CUBOID;
+    public AnimationSample getType() {
+        return AnimationSample.CUBOID;
     }
 }

@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.testing;
 
 import fr.skytale.particleanimlib.testing.attributes.AnimationLibPlayerData;
-import fr.skytale.particleanimlib.testing.attributes.AnimationType;
+import fr.skytale.particleanimlib.testing.attributes.AnimationSample;
 import fr.skytale.particleanimlib.testing.command.AnimationLibCommand;
 import fr.skytale.particleanimlib.testing.command.AnimationLibTabCompleter;
 import fr.skytale.particleanimlib.testing.listener.RightClickAirEventListener;
@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class ParticleAnimLibTest {
 
-    public static AnimationType DEFAULT_ANIMATION_TYPE = AnimationType.CUBOID;
+    public static AnimationSample DEFAULT_ANIMATION_TYPE = AnimationSample.CUBOID;
 
     public static boolean DEFAULT_SHOW_ON_CLICK = true;
 
@@ -55,9 +55,9 @@ public class ParticleAnimLibTest {
         playersData.put(player.getUniqueId(), playerData);
     }
 
-    public void setAnimationType(Player player, AnimationType animationType) {
+    public void setAnimationType(Player player, AnimationSample animationSample) {
         AnimationLibPlayerData playerData = getPlayerData(player);
-        playerData.setAnimationType(animationType);
+        playerData.setAnimationType(animationSample);
         playersData.put(player.getUniqueId(), playerData);
     }
 

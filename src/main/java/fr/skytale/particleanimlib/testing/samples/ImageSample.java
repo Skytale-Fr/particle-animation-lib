@@ -4,7 +4,7 @@ import fr.skytale.particleanimlib.animation.image.ImageBuilder;
 import fr.skytale.particleanimlib.attributes.ParticleTemplate;
 import fr.skytale.particleanimlib.parent.AAnimationBuilder;
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
-import fr.skytale.particleanimlib.testing.attributes.AnimationType;
+import fr.skytale.particleanimlib.testing.attributes.AnimationSample;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -21,7 +21,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
 
-public class ImageSample implements IParticleAnimSample {
+public class ImageSample implements IPAnimSample {
 
     private static final String IMAGES_FOLDER_NAME = "images";
     private static final String IMAGES_FOLDER_PATH_IN_JAR = IMAGES_FOLDER_NAME + "/";
@@ -57,8 +57,8 @@ public class ImageSample implements IParticleAnimSample {
     }
 
     @Override
-    public AnimationType getType() {
-        return AnimationType.IMAGE;
+    public AnimationSample getType() {
+        return AnimationSample.IMAGE;
     }
 
     private File createImagesFolder() {

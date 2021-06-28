@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.testing.command;
 
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
-import fr.skytale.particleanimlib.testing.attributes.AnimationType;
+import fr.skytale.particleanimlib.testing.attributes.AnimationSample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -35,7 +35,7 @@ public class AnimationLibTabCompleter implements TabCompleter {
                     .collect(Collectors.toList());
         }
         if (args.length == 2 && args[0].equals("type")) {
-            return Arrays.stream(AnimationType.values())
+            return Arrays.stream(AnimationSample.values())
                     .map(type -> type.name().toLowerCase(Locale.ROOT))
                     .filter(typeStr -> typeStr.startsWith(args[1]))
                     .collect(Collectors.toList());

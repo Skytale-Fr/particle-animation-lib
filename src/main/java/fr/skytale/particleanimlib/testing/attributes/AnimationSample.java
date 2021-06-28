@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.testing.attributes;
 
-public enum AnimationType {
+public enum AnimationSample {
     ATOM,
     CIRCLE,
     CUBE,

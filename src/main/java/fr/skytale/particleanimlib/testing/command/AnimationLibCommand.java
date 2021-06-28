@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.testing.command;
 
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
-import fr.skytale.particleanimlib.testing.attributes.AnimationType;
+import fr.skytale.particleanimlib.testing.attributes.AnimationSample;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -49,13 +49,13 @@ public class AnimationLibCommand implements CommandExecutor {
             }
             if (args.length == 2 && args[0].equals("type")) {
                 try {
-                    AnimationType type = AnimationType.valueOf(args[1].toUpperCase(Locale.ROOT));
+                    AnimationSample type = AnimationSample.valueOf(args[1].toUpperCase(Locale.ROOT));
                     this.particleAnimLibTest.setAnimationType(player, type);
                     player.sendMessage("Testing particle animation \"" + type.name().toLowerCase(Locale.ROOT) + "\".");
                     return true;
                 } catch (IllegalArgumentException e) {
                     player.sendMessage("This animation type does not exist. Available types : " +
-                            Arrays.stream(AnimationType.values())
+                            Arrays.stream(AnimationSample.values())
                                     .map(type -> type.name().toLowerCase(Locale.ROOT))
                                     .collect(Collectors.joining(", ")));
                 }
