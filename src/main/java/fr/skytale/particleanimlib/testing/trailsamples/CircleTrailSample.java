@@ -23,7 +23,7 @@ public class CircleTrailSample implements IPTrailAnimSample {
         circleBuilder.setMoveFrequency(1);
 
         circleBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
-        circleBuilder.setTicksDuration(80);
+        circleBuilder.setTicksDuration(400);
         circleBuilder.setShowFrequency(5);
         circleBuilder.setJavaPlugin(plugin);
 
