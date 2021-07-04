@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.testing.trailsamples;
 
 import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.cuboid.CuboidBuilder;
 import fr.skytale.particleanimlib.trail.TrailBuilder;
 import fr.skytale.particleanimlib.trail.TrailTask;
