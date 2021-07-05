@@ -47,6 +47,7 @@ dependencies {
     implementation 'io.github.classgraph:classgraph:4.8.108'
     implementation 'commons-io:commons-io:2.8.0'
     implementation 'com.udojava:EvalEx:2.6'
+    implementation 'gov.nist.math:jama:1.0.3'
 }
 
 tasks.withType(Javadoc) {

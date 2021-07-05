@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.image;
 
 
-import fr.skytale.particleanimlib.animation.parent.ARotatingAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
@@ -15,8 +15,6 @@ import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public class Image extends ARotatingAnimation {
-
-    /******** Static Attributes ********/
 
     /******** Static Methods ********/
 
@@ -146,7 +144,7 @@ public class Image extends ARotatingAnimation {
     }
 
     @Override
-    public Object clone() {
+    public Image clone() {
         Image obj = (Image) super.clone();
         obj.u = u.clone();
         obj.v = v.clone();

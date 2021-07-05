@@ -1,8 +1,10 @@
 package fr.skytale.particleanimlib.testing.samples;
 
+import fr.skytale.particleanimlib.animation.attributes.position.APosition;
+import fr.skytale.particleanimlib.animation.attributes.var.Constant;
 import fr.skytale.particleanimlib.animation.image.ImageBuilder;
 import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -30,26 +32,24 @@ public class ImageSample implements IPAnimSample {
     private boolean hasBeenInitialized = false;
 
     @Override
-    public AAnimationBuilder<?> getInitializedBuilder(Player player, JavaPlugin plugin) {
+    public AAnimationBuilder<?> getInitializedBuilder(APosition position, JavaPlugin plugin) {
         if (!hasBeenInitialized) {
             extractDefaultImages();
             hasBeenInitialized = true;
         }
         ImageBuilder imageBuilder = new ImageBuilder();
-        imageBuilder.setAxis(new Vector(0, 1, 0));
-        imageBuilder.setAxisChangeFrequency(0);
-        imageBuilder.setStepAngleAlpha(Math.toRadians(3));
-        imageBuilder.setStepAngleAlphaMax(Math.toRadians(30));
-        imageBuilder.setStepAngleAlphaChangeFactor(2);
-        imageBuilder.setStepAngleAlphaChangeFrequency(0);
+        if (position.getType() == APosition.Type.ENTITY) {
+            imageBuilder.setPosition(APosition.fromEntity(position.getMovingEntity(), new Constant<>(new Vector(6, 6, 0))));
+        } else {
+            imageBuilder.setPosition(position);
+        }
+        imageBuilder.setRotation(new Constant<>(new Vector(0, 1, 0)), new Constant<>(Math.PI / 12));
         imageBuilder.setDirectorVectors(new Vector(0, 0, 0.2), new Vector(0, 0.2, 0));
-        imageBuilder.setMovingEntity(player);
-        imageBuilder.setRelativeLocation(new Vector(6, 0, 0));
         imageBuilder.setImageFileName("skytale.png");
 
         imageBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         imageBuilder.setTicksDuration(400);
-        imageBuilder.setShowFrequency(5);
+        imageBuilder.setShowFrequency(new Constant<>(5));
         imageBuilder.setJavaPlugin(plugin);
 
         return imageBuilder;

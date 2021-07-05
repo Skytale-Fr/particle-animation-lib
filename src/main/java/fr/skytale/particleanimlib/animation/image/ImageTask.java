@@ -1,7 +1,8 @@
 package fr.skytale.particleanimlib.animation.image;
 
 import fr.skytale.particleanimlib.animation.attributes.CustomVector;
-import fr.skytale.particleanimlib.animation.parent.ARotatingAnimationTask;
+import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.parent.task.ARotatingAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
@@ -15,7 +16,8 @@ import java.util.stream.Collectors;
 
 public class ImageTask extends ARotatingAnimationTask<Image> {
     //Does particle type support color
-    private boolean hasColor;
+    private final boolean hasColor;
+    private final ParticleTemplate particleTemplate;
     public HashMap<Vector, Color> currentImagePixels;
 
     public ImageTask(Image image) {
@@ -23,29 +25,31 @@ public class ImageTask extends ARotatingAnimationTask<Image> {
 
         this.currentImagePixels = (HashMap<Vector, Color>) animation.getImagePixels().entrySet().stream()
                 .collect(Collectors.toMap(e -> e.getKey().clone(), e -> new Color(e.getValue().getRGB())));
-        this.hasColor = this.mainParticle.getParticleEffect() == ParticleEffect.REDSTONE;
+        this.particleTemplate = this.animation.getMainParticle();
+        this.hasColor = particleTemplate.getParticleEffect() == ParticleEffect.REDSTONE;
 
-        this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
+        startTask();
     }
 
     @Override
-    public void showRotated(Location iterationBaseLocation) {
-        Location currentLocation = iterationBaseLocation;
+    public void showRotated(boolean changeRotation, Location iterationBaseLocation) {
+        if (changeRotation) {
+            currentImagePixels = (HashMap<Vector, Color>) currentImagePixels.entrySet()
+                    .stream()
+                    .collect(Collectors.toMap(
+                            e -> new CustomVector(e.getKey()).rotateAroundAxis(
+                                    animation.getRotationAxis().getCurrentValue(iterationCount),
+                                    animation.getRotationAngleAlpha().getCurrentValue(iterationCount)),
+                            Map.Entry::getValue));
+        }
 
         currentImagePixels.forEach(((vector, color) -> {
-            ParticleBuilder particleBuilder = mainParticle.getParticleBuilder(currentLocation.clone().add(vector));
+            ParticleBuilder particleBuilder = particleTemplate.getParticleBuilder(iterationBaseLocation.clone().add(vector));
             if (hasColor) {
                 particleBuilder.setColor(color);
             }
             particleBuilder.display();
         }));
-    }
-
-    @Override
-    protected void computeRotation(Vector currentAxis, double currentStepAngleAlpha) {
-        currentImagePixels = (HashMap<Vector, Color>) currentImagePixels.entrySet()
-                .stream()
-                .collect(Collectors.toMap(e -> new CustomVector(e.getKey()).rotateAroundAxis(currentAxis, currentStepAngleAlpha), Map.Entry::getValue));
     }
 
 }

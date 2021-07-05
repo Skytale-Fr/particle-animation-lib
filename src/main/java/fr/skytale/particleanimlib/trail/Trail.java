@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.trail;
 
-import fr.skytale.particleanimlib.animation.parent.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.trail.attributes.TrailEndedCallback;
 
 import java.time.Duration;

@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.testing.command;
 
+import fr.skytale.particleanimlib.animation.attributes.position.APosition;
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

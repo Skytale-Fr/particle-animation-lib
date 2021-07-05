@@ -1,16 +1,22 @@
 package fr.skytale.particleanimlib.animation.spiral;
 
-import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attributes.projectiledirection.AnimationDirection;
+import fr.skytale.particleanimlib.animation.attributes.var.Constant;
+import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.parent.builder.ARoundAnimationBuilder;
 import org.bukkit.util.Vector;
 
-public class SpiralBuilder extends AAnimationBuilder<Spiral> {
+public class SpiralBuilder extends ARoundAnimationBuilder<Spiral> {
 
     public SpiralBuilder() {
         super();
-        animation.setStep(0.1);
-        animation.setRadius(1);
-        animation.setStepAngle(Math.toRadians(30));
-        animation.setGrowthSpeed(0);
+        animation.setDirection(AnimationDirection.fromMoveVector(new Constant<>(new Vector(0, 1, 0))));
+        animation.setNbSpiral(new Constant<>(2));
+        animation.setNbTrailingParticles(new Constant<>(1));
+        animation.setCentralParticle(null);
+        animation.setRadius(new Constant<>(2.0));
+        animation.setAngleBetweenEachPoint(new Constant<>(Math.toRadians(20)));
     }
 
     @Override
@@ -19,37 +25,38 @@ public class SpiralBuilder extends AAnimationBuilder<Spiral> {
     }
 
     /*********SETTERS des éléments spécifiques a la spirale ***********/
-    public void setStep(double s) {
-        if (s <= 0)
-            throw new IllegalArgumentException("Step must not be equal to zero.");
-        animation.setStep(s);
+
+
+    public void setDirection(AnimationDirection direction) {
+        checkNotNull(direction, "direction should not be null");
+        animation.setDirection(direction);
     }
 
-    public void setRadius(double radius) {
-        if (animation.getRadius() <= 0) {
-            throw new IllegalArgumentException("Radius should be positive.");
-        }
-        animation.setRadius(radius);
+    public void setNbSpiral(IVariable<Integer> nbSpiral) {
+        checkPositiveAndNotNull(nbSpiral, "nbSpiral should be positive", false);
+        animation.setNbSpiral(nbSpiral);
     }
 
-    public void setTarget(Vector target) {
-        animation.setTarget(target);
+    public void setNbTrailingParticles(IVariable<Integer> nbTrailingParticles) {
+        checkPositiveAndNotNull(nbTrailingParticles, "nbTrailingParticles should be positive or equal to zero", true);
+        animation.setNbTrailingParticles(nbTrailingParticles);
     }
 
-    public void setStepAngle(double a) {
-        if (a == 0)
-            throw new IllegalArgumentException("Step angle should not be equal to zero.");
-        animation.setStepAngle(a);
-    }
-
-    public void setGrowthSpeed(double g) {
-        animation.setGrowthSpeed(g);
+    public void setCentralParticle(ParticleTemplate centralParticle) {
+        animation.setCentralParticle(centralParticle);
     }
 
     @Override
     public Spiral getAnimation() {
-        if (animation.getTarget() == null)
-            throw new IllegalArgumentException("A target has to be defined.");
+        checkNotNull(animation.getDirection(), "direction should not be null");
+        checkPositiveAndNotNull(animation.getNbSpiral(), "nbSpiral should be positive", false);
+        checkPositiveAndNotNull(animation.getNbTrailingParticles(), "nbTrailingParticles should be positive or equal to zero", true);
         return super.getAnimation();
+    }
+
+    @Override
+    protected void checkAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint) {
+        //In the context of spirals, angleBetweenEachPoint can be negative, that's why we overrided the method.
+        checkNotNullOrZero(angleBetweenEachPoint, "angleBetweenEachPoint should not be null");
     }
 }

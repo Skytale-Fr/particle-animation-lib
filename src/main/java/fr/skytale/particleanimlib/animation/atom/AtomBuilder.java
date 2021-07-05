@@ -2,16 +2,17 @@ package fr.skytale.particleanimlib.animation.atom;
 
 import fr.skytale.particleanimlib.animation.attributes.AnimationEndedCallback;
 import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.parent.AAnimation;
-import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.attributes.var.Constant;
+import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 
 public class AtomBuilder extends AAnimationBuilder<Atom> {
     private Atom atom;
 
     public AtomBuilder() {
         super();
-        animation.setStepAngle(Math.toRadians(15));
-        animation.setShowFrequency(0);
+        animation.setShowFrequency(new Constant<>(0));
         animation.setTicksDuration(60);
     }
 
@@ -21,12 +22,6 @@ public class AtomBuilder extends AAnimationBuilder<Atom> {
     }
 
     /*********SETTERS des éléments spécifiques de l'atome ***********/
-
-    public void setStepAngle(double a) {
-        if (a == 0)
-            throw new IllegalArgumentException("Step angle should not be equal to zero.");
-        animation.setStepAngle(a);
-    }
 
     public void setSecondParticle(ParticleTemplate particle) {
         animation.setSecondParticle(particle);

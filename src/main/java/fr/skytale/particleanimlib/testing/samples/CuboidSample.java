@@ -1,9 +1,10 @@
 package fr.skytale.particleanimlib.testing.samples;
 
-import fr.skytale.particleanimlib.animation.cuboid.CuboidBuilder;
 import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
-import org.bukkit.entity.Player;
+import fr.skytale.particleanimlib.animation.attributes.position.APosition;
+import fr.skytale.particleanimlib.animation.attributes.var.*;
+import fr.skytale.particleanimlib.animation.cuboid.CuboidBuilder;
+import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
@@ -12,23 +13,17 @@ import java.awt.*;
 public class CuboidSample implements IPAnimSample {
 
     @Override
-    public AAnimationBuilder<?> getInitializedBuilder(Player player, JavaPlugin plugin) {
+    public AAnimationBuilder<?> getInitializedBuilder(APosition position, JavaPlugin plugin) {
         CuboidBuilder cuboidBuilder = new CuboidBuilder();
-        cuboidBuilder.setAxis(new Vector(0, 1, 0));
-        cuboidBuilder.setAxisChangeFrequency(0);
-        cuboidBuilder.setStepAngleAlpha(Math.toRadians(3));
-        cuboidBuilder.setStepAngleAlphaMax(Math.toRadians(30));
-        cuboidBuilder.setStepAngleAlphaChangeFactor(2);
-        cuboidBuilder.setStepAngleAlphaChangeFrequency(0);
-        cuboidBuilder.setFromLocationToFirstCorner(new Vector(-3, -3, -3));
-        cuboidBuilder.setFromLocationToSecondCorner(new Vector(3, 3, 3));
-        cuboidBuilder.setMovingEntity(player);
-        cuboidBuilder.setRelativeLocation(new Vector(0, 0, 0));
-        cuboidBuilder.setStep(0.4);
+        cuboidBuilder.setPosition(position);
+        cuboidBuilder.setRotation(new VectorEquationEvolvingVariable("RANDOM()", "RANDOM()", "RANDOM()"), new DoubleEquationEvolvingVariable("PI*RANDOM()*0.3"));
+        cuboidBuilder.setFromLocationToFirstCorner(new VectorPeriodicallyEvolvingVariable(new Vector(-5, -5, -5), new Vector(0.1, 0.1, 0.1),10));
+        cuboidBuilder.setFromLocationToSecondCorner(new VectorPeriodicallyEvolvingVariable(new Vector(5, 5, 5), new Vector(-0.1, -0.1, -0.1),10));
+        cuboidBuilder.setDistanceBetweenPoints(new DoublePeriodicallyEvolvingVariable(0.3, -0.05, 10));
 
         cuboidBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         cuboidBuilder.setTicksDuration(400);
-        cuboidBuilder.setShowFrequency(5);
+        cuboidBuilder.setShowFrequency(new Constant<>(4));
         cuboidBuilder.setJavaPlugin(plugin);
 
         return cuboidBuilder;

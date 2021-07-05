@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.cuboid;
 
 import fr.skytale.particleanimlib.animation.attributes.CustomVector;
-import fr.skytale.particleanimlib.animation.parent.ARotatingAnimationTask;
+import fr.skytale.particleanimlib.animation.parent.task.ARotatingAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
@@ -68,49 +68,55 @@ public class CuboidTask extends ARotatingAnimationTask<Cuboid> {
         }
     }
 
-    private final double step;
-
     public Map<CuboidCorner, Vector> corners;
 
     public CuboidTask(Cuboid cuboid) {
         super(cuboid);
-        this.step = animation.getStep();
-        this.corners = getCorners();
 
-        this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
+        startTask();
     }
 
     @Override
-    public void showRotated(Location iterationBaseLocation) {
+    public void showRotated(boolean changeRotation, Location iterationBaseLocation) {
+        boolean cornersUpdated = false;
+
+        if (this.corners == null
+                || animation.getFromLocationToFirstCorner().willChange(iterationCount)
+                || animation.getFromLocationToSecondCorner().willChange(iterationCount)) {
+            this.corners = getCorners();
+            cornersUpdated = true;
+        }
+
+        if (cornersUpdated || changeRotation) {
+            this.corners = this.corners.entrySet().stream()
+                    .collect(Collectors.toMap(Map.Entry::getKey, e -> new CustomVector(e.getValue()).rotateAroundAxis(currentRotationAxis, currentRotationStepAngleAlpha)));
+        }
         //get locations
         Map<CuboidCorner, Location> cornersLocation = this.corners.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> iterationBaseLocation.clone().add(e.getValue())));
 
         Set<CuboidEdge> edges = CuboidEdge.getEdges();
 
+        double distanceBetweenPoints = animation.getDistanceBetweenPoints().getCurrentValue(iterationCount);
         edges.forEach(edge -> {
             Location firstCorner = cornersLocation.get(edge.firstVertice);
             Location secondCorner = cornersLocation.get(edge.secondVertice);
-            drawLine(firstCorner, secondCorner, step);
+            drawLine(firstCorner, secondCorner, distanceBetweenPoints);
         });
     }
-
-    @Override
-    protected void computeRotation(Vector currentAxis, double currentStepAngleAlpha) {
-        this.corners = this.corners.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, e -> new CustomVector(e.getValue()).rotateAroundAxis(currentAxis, currentStepAngleAlpha)));
-    }
-
 
     private Map<CuboidCorner, Vector> getCorners() {
         Map<CuboidCorner, Vector> corners = new HashMap<>();
 
-        double x1 = animation.getFromLocationToFirstCorner().getX();
-        double y1 = animation.getFromLocationToFirstCorner().getY();
-        double z1 = animation.getFromLocationToFirstCorner().getZ();
-        double x2 = animation.getFromLocationToSecondCorner().getX();
-        double y2 = animation.getFromLocationToSecondCorner().getY();
-        double z2 = animation.getFromLocationToSecondCorner().getZ();
+        Vector firstCorner = animation.getFromLocationToFirstCorner().getCurrentValue(iterationCount);
+        Vector secondCorner = animation.getFromLocationToSecondCorner().getCurrentValue(iterationCount);
+
+        double x1 = firstCorner.getX();
+        double y1 = firstCorner.getY();
+        double z1 = firstCorner.getZ();
+        double x2 = secondCorner.getX();
+        double y2 = secondCorner.getY();
+        double z2 = secondCorner.getZ();
 
         double xMin, yMin, zMin, xMax, yMax, zMax;
 

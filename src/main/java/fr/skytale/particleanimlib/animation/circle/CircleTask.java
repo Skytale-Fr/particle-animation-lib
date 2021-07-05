@@ -1,38 +1,17 @@
 package fr.skytale.particleanimlib.animation.circle;
 
-import fr.skytale.particleanimlib.animation.parent.ARoundAnimationTask;
+import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public class CircleTask extends ARoundAnimationTask<Circle> {
-
-    private Vector u;
-    private Vector v;
-    private Vector axis;
-    private double stepAngleAlpha;
-    private double stepRadius;
-    private int taskId;
-
-    //Evolving variables
-    double alpha;
-    double currentRadius;
+public class CircleTask extends AAnimationTask<Circle> {
 
     public CircleTask(Circle circle) {
         super(circle);
 
-        this.u = animation.getU().clone();
-        this.v = animation.getV().clone();
-        if (animation.getAxis() != null) {
-            this.axis = animation.getAxis().clone();
-            this.stepAngleAlpha = animation.getStepAngleAlpha();
-        }
-        this.stepRadius = animation.getStepRadius();
-
-        alpha = 0;
-        currentRadius = radius;
-
-        this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
+        startTask();
     }
 
     @Override
@@ -42,24 +21,36 @@ public class CircleTask extends ARoundAnimationTask<Circle> {
             return;
         }
 
-        Location circleCenter = iterationBaseLocation;
+        Vector u = animation.getU().getCurrentValue(iterationCount).clone().normalize();
+        Vector v = animation.getV().getCurrentValue(iterationCount).clone().normalize();
 
-        for (int p = 0; p < nbPoints; p++) {
-            double theta = p * stepAngle;
+        double stepAngle = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
+        double radius = animation.getRadius().getCurrentValue(iterationCount);
+        int nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
 
-            double x = circleCenter.getX() + (u.getX() * currentRadius * Math.cos(theta)) + (v.getX() * currentRadius * Math.sin(theta));
-            double y = circleCenter.getY() + (u.getY() * currentRadius * Math.cos(theta)) + (v.getY() * currentRadius * Math.sin(theta));
-            double z = circleCenter.getZ() + (u.getZ() * currentRadius * Math.cos(theta)) + (v.getZ() * currentRadius * Math.sin(theta));
+        Vector rotationAxis = null;
+        Double rotationAngleAlpha = null;
 
-            Location particleLocation = new Location(circleCenter.getWorld(), x, y, z);
-
-            if (axis != null)
-                particleLocation = animation.rotateAroundAxis(particleLocation, axis, location, alpha);
-
-            mainParticle.getParticleBuilder(particleLocation).display();
+        if (animation.getRotationAxis() != null) {
+            rotationAxis = animation.getRotationAxis().getCurrentValue(iterationCount);
+            rotationAngleAlpha = animation.getRotationAngleAlpha().getCurrentValue(iterationCount);
         }
 
-        alpha += stepAngleAlpha;
-        currentRadius += stepRadius;
+        ParticleTemplate particleTemplate = animation.getMainParticle();
+
+        for (int pointIndex = 0; pointIndex < nbPoints; pointIndex ++) {
+            double theta = pointIndex * stepAngle;
+
+            double x = iterationBaseLocation.getX() + (u.getX() * radius * Math.cos(theta)) + (v.getX() * radius * Math.sin(theta));
+            double y = iterationBaseLocation.getY() + (u.getY() * radius * Math.cos(theta)) + (v.getY() * radius * Math.sin(theta));
+            double z = iterationBaseLocation.getZ() + (u.getZ() * radius * Math.cos(theta)) + (v.getZ() * radius * Math.sin(theta));
+
+            Location particleLocation = new Location(iterationBaseLocation.getWorld(), x, y, z);
+
+            if (rotationAxis != null)
+                particleLocation = rotateAroundAxis(particleLocation, rotationAxis, iterationBaseLocation, rotationAngleAlpha);
+
+            particleTemplate.getParticleBuilder(particleLocation).display();
+        }
     }
 }

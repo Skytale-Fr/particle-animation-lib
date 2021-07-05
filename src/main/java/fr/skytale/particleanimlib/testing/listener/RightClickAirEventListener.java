@@ -1,10 +1,14 @@
 package fr.skytale.particleanimlib.testing.listener;
 
+import fr.skytale.particleanimlib.animation.attributes.position.APosition;
+import fr.skytale.particleanimlib.animation.attributes.var.Constant;
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+
+import java.util.Objects;
 
 public class RightClickAirEventListener implements Listener {
 
@@ -18,6 +22,12 @@ public class RightClickAirEventListener implements Listener {
     public void onEvent(PlayerInteractEvent event) {
         if (event.getAction() == Action.LEFT_CLICK_AIR) {
             particleAnimLibTest.buildAndShowAnimation(event.getPlayer());
+        } else if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            particleAnimLibTest.buildAndShowAnimation(
+                    event.getPlayer(),
+                    APosition.fromLocation(
+                            new Constant<>(Objects.requireNonNull(event.getClickedBlock()).getLocation())
+                    ));
         }
     }
 }

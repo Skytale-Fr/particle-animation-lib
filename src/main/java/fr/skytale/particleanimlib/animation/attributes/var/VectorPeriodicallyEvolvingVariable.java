@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.attributes.var;
 
 import fr.skytale.particleanimlib.animation.attributes.var.parent.APeriodicallyEvolvingVariable;
+import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
 import org.bukkit.util.Vector;
 
 public class VectorPeriodicallyEvolvingVariable extends APeriodicallyEvolvingVariable<Vector> {
@@ -26,6 +27,15 @@ public class VectorPeriodicallyEvolvingVariable extends APeriodicallyEvolvingVar
     }
 
     /**
+     * Create a new Evolving variable by copy
+     *
+     * @param vectorPeriodicallyEvolvingVariable another VectorPeriodicallyEvolvingVariable
+     */
+    public VectorPeriodicallyEvolvingVariable(VectorPeriodicallyEvolvingVariable vectorPeriodicallyEvolvingVariable) {
+        super(vectorPeriodicallyEvolvingVariable);
+    }
+
+    /**
      * Returns the sum of currentValue and changeValue
      *
      * @param currentValue the current value
@@ -35,5 +45,15 @@ public class VectorPeriodicallyEvolvingVariable extends APeriodicallyEvolvingVar
     @Override
     protected Vector add(Vector currentValue, Vector changeValue) {
         return currentValue.add(changeValue);
+    }
+
+    /**
+     * Clone a IVariable
+     *
+     * @return the cloned IVariable
+     */
+    @Override
+    public IVariable<Vector> copy() {
+        return new VectorPeriodicallyEvolvingVariable(this);
     }
 }

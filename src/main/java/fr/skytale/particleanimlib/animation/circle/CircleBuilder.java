@@ -1,20 +1,35 @@
 package fr.skytale.particleanimlib.animation.circle;
 
-import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.attributes.var.Constant;
+import fr.skytale.particleanimlib.animation.attributes.var.DoubleEquationEvolvingVariable;
+import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.builder.ARotatingRoundAnimationBuilder;
 import org.bukkit.util.Vector;
 
-public class CircleBuilder extends AAnimationBuilder<Circle> {
+public class CircleBuilder extends ARotatingRoundAnimationBuilder<Circle> {
+
+    public static final String DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL = "directorVector u should not be null";
+    public static final String DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL = "directorVector v should not be null";
+    public static final String FULL_CIRCLE_ANGLE_BETWEEN_EACH_POINT_ERROR_MESSAGE = "To do a fullCircle, nbPoints and angleBetweenEachPoint should have related values.\n" +
+            "In order to automatically compute nbPoints value, angleBetweenEachPoint have to be a constant.\n" +
+            "Else you will have to compute the nbPoints evolving value yourself.\n" +
+            "Reminder (for a full circle) : nbPoints = (int) Math.round(2 * Math.PI / angleBetweenEachPoint)";
+    public static final String FULL_CIRCLE_NB_POINTS_ERROR_MESSAGE = "To do a fullCircle, nbPoints and angleBetweenEachPoint should have related values.\n" +
+            "In order to automatically compute angleBetweenEachPoint value, nbPoints have to be a constant.\n" +
+            "Else you will have to compute the angleBetweenEachPoint evolving value yourself.\n" +
+            "Reminder (for a full circle) :\n" +
+            "angleBetweenEachPoint = 2 * Math.PI / nbPoints" +
+            "nbPoints = (int) Math.round(2 * Math.PI / angleBetweenEachPoint)";
 
     public CircleBuilder() {
         super();
-        animation.setU(new Vector(1, 0, 0));
-        animation.setV(new Vector(0, 1, 0));
-        animation.setRadius(1.0);
-        animation.setNbPoints((int) animation.getRadius() * 20);
-        animation.setStepAngle(2 * Math.PI / animation.getNbPoints());
-        animation.setStepRadius(0);
-        animation.setShowFrequency(0);
+        animation.setU(new Constant<>(new Vector(1, 0, 0)));
+        animation.setV(new Constant<>(new Vector(0, 1, 0)));
+        animation.setRadius(new Constant<>(3.0));
+        animation.setShowFrequency(new Constant<>(1));
         animation.setTicksDuration(60);
+        setNbPoints(new Constant<>(20), true);
     }
 
     @Override
@@ -22,52 +37,40 @@ public class CircleBuilder extends AAnimationBuilder<Circle> {
         return new Circle();
     }
 
-    /*********SETTERS des éléments spécifiques au cercle ***********/
-    public void setDirectorVectors(Vector u, Vector v) {
-        if (u == null || v == null) {
-            throw new IllegalArgumentException("Director vectors should not be null");
-        }
-        u.normalize();
-        v.normalize();
-
+    /********* Circle specific setters ***********/
+    public void setDirectorVectors(IVariable<Vector> u, IVariable<Vector> v) {
+        checkNotNull(u, DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
+        checkNotNull(v, DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
         animation.setU(u);
         animation.setV(v);
     }
 
-    public void setRadius(double r) {
-        if (animation.getRadius() <= 0) {
-            throw new IllegalArgumentException("Radius should be positive");
+    public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint, boolean fullCircle) {
+        super.setAngleBetweenEachPoint(angleBetweenEachPoint);
+        if (fullCircle) {
+            if (!angleBetweenEachPoint.isConstant()) throw new IllegalArgumentException(FULL_CIRCLE_ANGLE_BETWEEN_EACH_POINT_ERROR_MESSAGE);
+            animation.setNbPoints(new Constant<>((int) Math.round(2 * Math.PI / angleBetweenEachPoint.getCurrentValue(0))));
         }
-        animation.setRadius(r);
     }
 
-    public void setNbPoints(int nbPoints) {
-        if (nbPoints <= 0) {
-            throw new IllegalArgumentException("The number of point should be positive");
-        }
+    public void setNbPoints(IVariable<Integer> nbPoints) {
+        setNbPoints(nbPoints, false);
+    }
+
+    public void setNbPoints(IVariable<Integer> nbPoints, boolean fullCircle) {
         animation.setNbPoints(nbPoints);
-        animation.setStepAngle(2 * Math.PI / nbPoints);
-    }
-
-    public void setAxis(Vector axis) {
-        animation.setAxis(axis);
-    }
-
-    public void setStepAngleAlpha(double s) {
-        animation.setStepAngleAlpha(s);
-    }
-
-    public void setStepRadius(double stepRadius) {
-        if (stepRadius < 0)
-            throw new IllegalArgumentException("Step radius must be positive");
-        animation.setStepRadius(stepRadius);
+        checkPositiveAndNotNull(nbPoints, "nbPoints should be positive", false);
+        if (fullCircle) {
+            if (!nbPoints.isConstant()) throw new IllegalArgumentException(FULL_CIRCLE_NB_POINTS_ERROR_MESSAGE);
+            animation.setAngleBetweenEachPoint(new Constant<>(2 * Math.PI / nbPoints.getCurrentValue(0)));
+        }
     }
 
     @Override
     public Circle getAnimation() {
-        if (animation.getAxis() != null && animation.getStepAngleAlpha() == 0) {
-            throw new IllegalArgumentException("The rotation animation should have a stepAngleAlpha");
-        }
+        checkNotNull(animation.getU(), DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
+        checkNotNull(animation.getV(), DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
+        checkPositiveAndNotNull(animation.getNbPoints(), "nbPoints should be positive", false);
         return super.getAnimation();
     }
 }

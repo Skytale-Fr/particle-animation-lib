@@ -11,10 +11,12 @@ public class TrailPlayerData {
     private ArrayList<TrailPlayerLocationData> locations;
     private LocalTime startTime;
     private Location lastLocation;
+    private int iterationCount;
 
     public TrailPlayerData() {
         this.startTime = LocalTime.now();
         this.locations = new ArrayList<>();
+        this.iterationCount = 0;
     }
 
     public ArrayList<TrailPlayerLocationData> getPreviousLocations() {
@@ -44,5 +46,13 @@ public class TrailPlayerData {
     public void addPreviousLocation(TrailPlayerLocationData trailPlayerLocationData) {
         locations.forEach(playerLocationData -> playerLocationData.addDistanceToPlayer(trailPlayerLocationData.getDistanceFromPreviousLocation()));
         locations.add(0, trailPlayerLocationData);
+    }
+
+    public int getIterationCount() {
+        return iterationCount;
+    }
+
+    public void setIterationCount(int iterationCount) {
+        this.iterationCount = iterationCount;
     }
 }

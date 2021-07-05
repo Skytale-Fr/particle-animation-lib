@@ -1,5 +1,7 @@
 package fr.skytale.particleanimlib.trail;
 
+import fr.skytale.particleanimlib.animation.attributes.position.APosition;
+import fr.skytale.particleanimlib.animation.attributes.var.Constant;
 import fr.skytale.particleanimlib.trail.attributes.TrailPlayerData;
 import fr.skytale.particleanimlib.trail.attributes.TrailPlayerLocationData;
 import org.bukkit.Bukkit;
@@ -31,8 +33,8 @@ public class TrailTask implements Runnable {
 
     /**
      * Stops the task
-     *
-     * The task stopping is already done when removing/clearing players
+     * <p>
+     * The task stopping is already done automatically when removing the last player
      *
      * @see #removePlayer(UUID)
      * @see #clearPlayers()
@@ -48,8 +50,8 @@ public class TrailTask implements Runnable {
 
     /**
      * Starts the task
-     *
-     * The task starting is already done when adding players
+     * <p>
+     * The task starting is already done automatically when adding the first player
      *
      * @see #addPlayer(UUID)
      */
@@ -84,7 +86,7 @@ public class TrailTask implements Runnable {
 
     /**
      * Runs the task
-     *
+     * <p>
      * Should not be called directly. The bukkit scheduler call this task itself.
      */
     @Deprecated
@@ -164,20 +166,22 @@ public class TrailTask implements Runnable {
             }
 
             // --- show the animation
+            int iterationCount = playerData.getIterationCount();
             if (locationToShowIndex != null) {
                 Location locationToShow = locationsData.get(locationToShowIndex).getLocation();
 
                 //clear the list from oldest locations (the one that will be shown and all the older ones)
                 locationsData.subList(locationToShowIndex - 1, locationsData.size()).clear();
 
-                showAnimations(locationToShow);
+                showAnimations(locationToShow, iterationCount);
             }
+            playerData.setIterationCount(iterationCount + 1);
         }
     }
 
-    private void showAnimations(Location locationToShow) {
+    private void showAnimations(Location locationToShow, int iterationCount) {
         trail.getAnimations().forEach(animation -> {
-            animation.setLocation(locationToShow.clone().add(animation.getRelativeLocation()));
+            animation.setPosition(APosition.fromLocation(new Constant<>(locationToShow.clone().add(animation.getPosition().getRelativeLocation().getCurrentValue(iterationCount)))));
             animation.show();
         });
     }

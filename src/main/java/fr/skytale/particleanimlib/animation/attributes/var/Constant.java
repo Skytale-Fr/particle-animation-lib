@@ -42,4 +42,35 @@ public class Constant<T> implements IVariable<T> {
     public T getCurrentValue(int iterationCount) {
         return value;
     }
+
+    /**
+     * Clone a IVariable
+     *
+     * @return the cloned IVariable
+     */
+    @Override
+    public IVariable<T> copy() {
+        return new Constant<T>(this.getValue());
+    }
+
+    /**
+     * Returns true if this variable will change over time
+     *
+     * @return true if this variable will change over time
+     */
+    @Override
+    public boolean isConstant() {
+        return true;
+    }
+
+    /**
+     * Returns true if this variable will change for this iteration count
+     *
+     * @param iterationCount the current iterationCount
+     * @return true if this variable will change for this iteration count
+     */
+    @Override
+    public boolean willChange(int iterationCount) {
+        return false;
+    }
 }

@@ -1,7 +1,5 @@
 package fr.skytale.particleanimlib.testing;
 
-import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
-import fr.skytale.particleanimlib.testing.samples.IPAnimSample;
 import fr.skytale.particleanimlib.testing.trailsamples.IPTrailAnimSample;
 import fr.skytale.particleanimlib.trail.TrailTask;
 import io.github.classgraph.ClassGraph;
@@ -9,11 +7,9 @@ import io.github.classgraph.ClassInfoList;
 import io.github.classgraph.ScanResult;
 import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TrailManager {
 
@@ -32,6 +28,31 @@ public class TrailManager {
 
     private TrailManager() {
         trailsByName = getSamples();
+    }
+
+    public void enableTrail(Player player, String trailAnimationSampleName) {
+        TrailTask trailTask = trailsByName.get(trailAnimationSampleName);
+        if (trailTask == null) {
+            player.sendMessage(NOT_IMPLEMENTED);
+            throw new NotImplementedException(NOT_IMPLEMENTED);
+        }
+        UUID playerUUID = player.getUniqueId();
+        if (!trailTask.containsPlayer(playerUUID)) {
+            trailTask.addPlayer(playerUUID);
+        }
+
+    }
+
+    public void disableTrail(Player player, String trailAnimationSampleName) {
+        TrailTask trailTask = trailsByName.get(trailAnimationSampleName);
+        if (trailTask == null) {
+            player.sendMessage(NOT_IMPLEMENTED);
+            throw new NotImplementedException(NOT_IMPLEMENTED);
+        }
+        UUID playerUUID = player.getUniqueId();
+        if (trailTask.containsPlayer(playerUUID)) {
+            trailTask.removePlayer(playerUUID);
+        }
     }
 
     public boolean toggleTrail(Player player, String trailAnimationSampleName) {

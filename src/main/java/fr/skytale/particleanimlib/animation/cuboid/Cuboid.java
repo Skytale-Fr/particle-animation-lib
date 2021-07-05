@@ -1,13 +1,14 @@
 package fr.skytale.particleanimlib.animation.cuboid;
 
-import fr.skytale.particleanimlib.animation.parent.ARotatingAnimation;
+import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
 import org.bukkit.util.Vector;
 
 public class Cuboid extends ARotatingAnimation {
 
-    private Vector fromLocationToFirstCorner;
-    private Vector fromLocationToSecondCorner;
-    private double step;
+    private IVariable<Vector> fromLocationToFirstCorner;
+    private IVariable<Vector> fromLocationToSecondCorner;
+    private IVariable<Double> distanceBetweenPoints;
 
     public Cuboid() {
     }
@@ -19,36 +20,36 @@ public class Cuboid extends ARotatingAnimation {
 
     /***********GETTERS & SETTERS***********/
 
-    public Vector getFromLocationToFirstCorner() {
+    public IVariable<Vector> getFromLocationToFirstCorner() {
         return fromLocationToFirstCorner;
     }
 
-    public void setFromLocationToFirstCorner(Vector fromLocationToFirstCorner) {
+    public void setFromLocationToFirstCorner(IVariable<Vector> fromLocationToFirstCorner) {
         this.fromLocationToFirstCorner = fromLocationToFirstCorner;
     }
 
-    public Vector getFromLocationToSecondCorner() {
+    public IVariable<Vector> getFromLocationToSecondCorner() {
         return fromLocationToSecondCorner;
     }
 
-    public void setFromLocationToSecondCorner(Vector fromLocationToSecondCorner) {
+    public void setFromLocationToSecondCorner(IVariable<Vector> fromLocationToSecondCorner) {
         this.fromLocationToSecondCorner = fromLocationToSecondCorner;
     }
 
-    public double getStep() {
-        return step;
+    public IVariable<Double> getDistanceBetweenPoints() {
+        return distanceBetweenPoints;
     }
 
-    public void setStep(double step) {
-        this.step = step;
+    public void setDistanceBetweenPoints(IVariable<Double> distanceBetweenPoints) {
+        this.distanceBetweenPoints = distanceBetweenPoints;
     }
-
 
     @Override
-    public Object clone() {
+    public Cuboid clone() {
         Cuboid obj = (Cuboid) super.clone();
-        obj.fromLocationToFirstCorner = fromLocationToFirstCorner.clone();
-        obj.fromLocationToSecondCorner = fromLocationToSecondCorner.clone();
+        obj.fromLocationToFirstCorner = fromLocationToFirstCorner.copy();
+        obj.fromLocationToSecondCorner = fromLocationToSecondCorner.copy();
+        obj.distanceBetweenPoints = distanceBetweenPoints.copy();
         return obj;
     }
 }

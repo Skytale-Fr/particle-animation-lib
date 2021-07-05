@@ -47,6 +47,17 @@ public abstract class APeriodicallyEvolvingVariable<T> implements IVariable<T> {
     }
 
     /**
+     * Create a new Evolving variable by copy
+     * @param periodicallyEvolvingVariable another periodicallyEvolvingVariable
+     */
+    public APeriodicallyEvolvingVariable(APeriodicallyEvolvingVariable<T> periodicallyEvolvingVariable) {
+        this.startValue = periodicallyEvolvingVariable.getStartValue();
+        this.currentValue = periodicallyEvolvingVariable.getStartValue();
+        this.changeValue = periodicallyEvolvingVariable.getChangeValue();
+        this.changePeriod = periodicallyEvolvingVariable.getChangePeriod();
+    }
+
+    /**
      * Retrieves the value that will be used at the beginning
      * @return the start value
      */
@@ -96,10 +107,31 @@ public abstract class APeriodicallyEvolvingVariable<T> implements IVariable<T> {
 
     @Override
     public final T getCurrentValue(int iterationCount) {
-        if (iterationCount % changePeriod == 0) {
+        if (changePeriod == 0 || iterationCount % changePeriod == 0) {
             currentValue = add(currentValue, changeValue);
         }
         return currentValue;
+    }
+
+    /**
+     * Returns true if this variable will change over time
+     *
+     * @return true if this variable will change over time
+     */
+    @Override
+    public boolean isConstant() {
+        return false;
+    }
+
+    /**
+     * Returns true if this variable will change for this iteration count
+     *
+     * @param iterationCount the current iterationCount
+     * @return true if this variable will change for this iteration count
+     */
+    @Override
+    public boolean willChange(int iterationCount) {
+        return (changePeriod == 0 || iterationCount % changePeriod == 0);
     }
 
     /**

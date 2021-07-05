@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.attributes.var;
 
 import fr.skytale.particleanimlib.animation.attributes.var.parent.APeriodicallyEvolvingVariable;
+import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
 
 public class IntegerPeriodicallyEvolvingVariable extends APeriodicallyEvolvingVariable<Integer> {
 
@@ -26,6 +27,15 @@ public class IntegerPeriodicallyEvolvingVariable extends APeriodicallyEvolvingVa
     }
 
     /**
+     * Create a new Evolving variable by copy
+     *
+     * @param integerPeriodicallyEvolvingVariable another IntegerPeriodicallyEvolvingVariable
+     */
+    public IntegerPeriodicallyEvolvingVariable(IntegerPeriodicallyEvolvingVariable integerPeriodicallyEvolvingVariable) {
+        super(integerPeriodicallyEvolvingVariable);
+    }
+
+    /**
      * Returns the sum of currentValue and changeValue
      *
      * @param currentValue the current value
@@ -35,5 +45,15 @@ public class IntegerPeriodicallyEvolvingVariable extends APeriodicallyEvolvingVa
     @Override
     protected Integer add(Integer currentValue, Integer changeValue) {
         return currentValue + changeValue;
+    }
+
+    /**
+     * Clone a IVariable
+     *
+     * @return the cloned IVariable
+     */
+    @Override
+    public IVariable<Integer> copy() {
+        return new IntegerPeriodicallyEvolvingVariable(this);
     }
 }

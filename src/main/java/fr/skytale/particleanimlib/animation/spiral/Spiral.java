@@ -1,12 +1,15 @@
 package fr.skytale.particleanimlib.animation.spiral;
 
-import fr.skytale.particleanimlib.animation.parent.ARoundAnimation;
-import org.bukkit.util.Vector;
+import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attributes.projectiledirection.AnimationDirection;
+import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.parent.animation.ARoundAnimation;
 
 public class Spiral extends ARoundAnimation {
-    private double step;
-    private Vector target;
-    private double growthSpeed;
+    private AnimationDirection direction;
+    private IVariable<Integer> nbSpiral;
+    private IVariable<Integer> nbTrailingParticles;
+    private ParticleTemplate centralParticle;
 
     public Spiral() {
     }
@@ -18,34 +21,45 @@ public class Spiral extends ARoundAnimation {
 
     /***********GETTERS & SETTERS***********/
 
-    public double getStep() {
-        return step;
+    public AnimationDirection getDirection() {
+        return direction;
     }
 
-    public void setStep(double step) {
-        this.step = step;
+    public void setDirection(AnimationDirection direction) {
+        this.direction = direction;
     }
 
-    public Vector getTarget() {
-        return target;
+    public IVariable<Integer> getNbSpiral() {
+        return nbSpiral;
     }
 
-    public void setTarget(Vector target) {
-        this.target = target;
+    public void setNbSpiral(IVariable<Integer> nbSpiral) {
+        this.nbSpiral = nbSpiral;
     }
 
-    public double getGrowthSpeed() {
-        return growthSpeed;
+    public IVariable<Integer> getNbTrailingParticles() {
+        return nbTrailingParticles;
     }
 
-    public void setGrowthSpeed(double growthSpeed) {
-        this.growthSpeed = growthSpeed;
+    public void setNbTrailingParticles(IVariable<Integer> nbTrailingParticles) {
+        this.nbTrailingParticles = nbTrailingParticles;
+    }
+
+    public ParticleTemplate getCentralParticle() {
+        return centralParticle;
+    }
+
+    public void setCentralParticle(ParticleTemplate centralParticle) {
+        this.centralParticle = centralParticle;
     }
 
     @Override
-    public Object clone() {
+    public Spiral clone() {
         Spiral obj = (Spiral) super.clone();
-        obj.target = target.clone();
+        obj.direction = direction.clone();
+        obj.nbSpiral = nbSpiral.copy();
+        obj.centralParticle = new ParticleTemplate(this.centralParticle);
+        obj.nbTrailingParticles = nbTrailingParticles.copy();
         return obj;
     }
 }

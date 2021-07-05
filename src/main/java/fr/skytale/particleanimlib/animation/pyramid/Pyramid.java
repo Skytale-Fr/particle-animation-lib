@@ -1,59 +1,64 @@
 package fr.skytale.particleanimlib.animation.pyramid;
 
-import fr.skytale.particleanimlib.animation.parent.AAnimation;
+import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.util.Vector;
 
 public class Pyramid extends AAnimation {
     //Vector between the base's center and the pyramid's apex
-    private Vector fromCenterToApex;
+    private IVariable<Vector> fromCenterToApex;
     //Distance between the center of the base and its vertices
-    private double distanceToAnyBaseApex;
+    private IVariable<Double> distanceToAnyBaseApex;
     //Number of vertices of the base
-    private int nbBaseApex;
-    private double distanceBetweenParticles;
+    private IVariable<Integer> nbBaseApex;
+    private IVariable<Double> distanceBetweenParticles;
 
     @Override
     public void show() {
         new PyramidTask(this);
     }
 
-    /***********GETTERS & SETTERS***********/
-    public Vector getFromCenterToApex() {
+    public IVariable<Vector> getFromCenterToApex() {
         return fromCenterToApex;
     }
 
-    public void setFromCenterToApex(Vector fromCenterToApex) {
+    /***********GETTERS & SETTERS***********/
+
+    public void setFromCenterToApex(IVariable<Vector> fromCenterToApex) {
         this.fromCenterToApex = fromCenterToApex;
     }
 
-    public double getDistanceToAnyBaseApex() {
+    public IVariable<Double> getDistanceToAnyBaseApex() {
         return distanceToAnyBaseApex;
     }
 
-    public void setDistanceToAnyBaseApex(double distanceToAnyBaseApex) {
+    public void setDistanceToAnyBaseApex(IVariable<Double> distanceToAnyBaseApex) {
         this.distanceToAnyBaseApex = distanceToAnyBaseApex;
     }
 
-    public int getNbBaseApex() {
+    public IVariable<Integer> getNbBaseApex() {
         return nbBaseApex;
     }
 
-    public void setNbBaseApex(int nbBaseApex) {
+    public void setNbBaseApex(IVariable<Integer> nbBaseApex) {
         this.nbBaseApex = nbBaseApex;
     }
 
-    public double getDistanceBetweenParticles() {
+    public IVariable<Double> getDistanceBetweenParticles() {
         return distanceBetweenParticles;
     }
 
-    public void setDistanceBetweenParticles(double distanceBetweenParticles) {
+    public void setDistanceBetweenParticles(IVariable<Double> distanceBetweenParticles) {
         this.distanceBetweenParticles = distanceBetweenParticles;
     }
 
     @Override
-    public Object clone() {
+    public Pyramid clone() {
         Pyramid obj = (Pyramid) super.clone();
-        obj.fromCenterToApex = fromCenterToApex.clone();
+        obj.fromCenterToApex = fromCenterToApex.copy();
+        obj.distanceToAnyBaseApex = distanceToAnyBaseApex.copy();
+        obj.nbBaseApex = nbBaseApex.copy();
+        obj.distanceBetweenParticles = distanceBetweenParticles.copy();
         return obj;
     }
 }

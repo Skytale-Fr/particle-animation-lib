@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.testing;
 
-import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.attributes.position.APosition;
+import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import fr.skytale.particleanimlib.testing.samples.IPAnimSample;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfoList;
@@ -32,13 +33,13 @@ public class AnimationManager {
         samplesByName = getSamples();
     }
 
-    public AAnimationBuilder<?> initBuilder(Player player, JavaPlugin plugin, String animationSampleName) {
+    public AAnimationBuilder<?> initBuilder(Player player, APosition position, JavaPlugin plugin, String animationSampleName) {
         IPAnimSample sample = samplesByName.get(animationSampleName);
         if (sample == null) {
             player.sendMessage(NOT_IMPLEMENTED);
             throw new NotImplementedException(NOT_IMPLEMENTED);
         }
-        return sample.getInitializedBuilder(player, plugin);
+        return sample.getInitializedBuilder(position, plugin);
     }
 
     public AAnimationBuilder<?> getChainedBuilders(Player player, JavaPlugin plugin) {
@@ -59,7 +60,7 @@ public class AnimationManager {
 
     private List<AAnimationBuilder<?>> getAllAnimationBuilders(Player player, JavaPlugin plugin) {
         return samplesByName.values().stream()
-                .map(sample -> sample.getInitializedBuilder(player, plugin))
+                .map(sample -> sample.getInitializedBuilder(APosition.fromEntity(player), plugin))
                 .collect(Collectors.toList());
     }
 

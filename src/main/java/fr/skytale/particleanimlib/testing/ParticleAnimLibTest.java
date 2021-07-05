@@ -1,5 +1,7 @@
 package fr.skytale.particleanimlib.testing;
 
+import fr.skytale.particleanimlib.animation.attributes.position.APosition;
+import fr.skytale.particleanimlib.animation.attributes.var.Constant;
 import fr.skytale.particleanimlib.testing.attributes.AnimationLibPlayerData;
 import fr.skytale.particleanimlib.testing.command.AnimationLibCommand;
 import fr.skytale.particleanimlib.testing.command.AnimationLibTabCompleter;
@@ -8,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,9 +69,12 @@ public class ParticleAnimLibTest {
     }
 
     public void buildAndShowAnimation(Player player) {
+        buildAndShowAnimation(player, APosition.fromEntity(player));
+    }
+    public void buildAndShowAnimation(Player player, APosition position) {
         AnimationLibPlayerData playerData = getPlayerData(player);
         if (!playerData.isShowAnimationOnClick()) return;
-        AnimationManager.getInstance().initBuilder(player, plugin, playerData.getAnimationType()).getAnimation().show();
+        AnimationManager.getInstance().initBuilder(player, position, plugin, playerData.getAnimationType()).getAnimation().show();
     }
 
     public AnimationLibPlayerData getPlayerData(Player player) {
@@ -99,7 +105,9 @@ public class ParticleAnimLibTest {
 
     public void setTrailType(Player player, String trailAnimationSampleName) {
         AnimationLibPlayerData playerData = getPlayerData(player);
+        TrailManager.getInstance().disableTrail(player, playerData.getTrailSampleName());
         playerData.setTrailSampleName(trailAnimationSampleName);
         playersData.put(player.getUniqueId(), playerData);
+        TrailManager.getInstance().enableTrail(player, trailAnimationSampleName);
     }
 }

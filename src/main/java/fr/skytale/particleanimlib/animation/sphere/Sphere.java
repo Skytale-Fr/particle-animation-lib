@@ -1,15 +1,24 @@
 package fr.skytale.particleanimlib.animation.sphere;
 
 
-import fr.skytale.particleanimlib.animation.attributes.PropagationType;
-import fr.skytale.particleanimlib.animation.attributes.SphereType;
-import fr.skytale.particleanimlib.animation.parent.ARoundAnimation;
+import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.parent.animation.ARoundAnimation;
+
 
 public class Sphere extends ARoundAnimation {
-    private int nbCircles;
+
+    public enum PropagationType {
+        TOP_TO_BOTTOM, BOTTOM_TO_TOP;
+    }
+
+    public enum Type {
+        FULL, HALF_TOP, HALF_BOTTOM;
+    }
+
+    private IVariable<Integer> nbCircles;
     private PropagationType propagationType;
-    private int simultaneousCircles;
-    private SphereType sphereType;
+    private IVariable<Integer> simultaneousCircles;
+    private Type type;
 
     public Sphere() {
     }
@@ -20,12 +29,21 @@ public class Sphere extends ARoundAnimation {
     }
 
     /***********GETTERS & SETTERS***********/
-    public int getNbCircles() {
+
+    public IVariable<Integer> getNbCircles() {
         return nbCircles;
     }
 
-    public void setNbCircles(int nbCircles) {
+    public void setNbCircles(IVariable<Integer> nbCircles) {
         this.nbCircles = nbCircles;
+    }
+
+    public IVariable<Integer> getSimultaneousCircles() {
+        return simultaneousCircles;
+    }
+
+    public void setSimultaneousCircles(IVariable<Integer> simultaneousCircles) {
+        this.simultaneousCircles = simultaneousCircles;
     }
 
     public PropagationType getPropagationType() {
@@ -36,25 +54,19 @@ public class Sphere extends ARoundAnimation {
         this.propagationType = propagationType;
     }
 
-    public int getSimultaneousCircles() {
-        return simultaneousCircles;
+    public Type getSphereType() {
+        return type;
     }
 
-    public void setSimultaneousCircles(int simultaneousCircles) {
-        this.simultaneousCircles = simultaneousCircles;
-    }
-
-    public SphereType getSphereType() {
-        return sphereType;
-    }
-
-    public void setSphereType(SphereType sphereType) {
-        this.sphereType = sphereType;
+    public void setSphereType(Type type) {
+        this.type = type;
     }
 
     @Override
-    public Object clone() {
+    public Sphere clone() {
         Sphere obj = (Sphere) super.clone();
+        obj.nbCircles = nbCircles.copy();
+        obj.simultaneousCircles = simultaneousCircles.copy();
         return obj;
     }
 }

@@ -3,10 +3,9 @@ package fr.skytale.particleanimlib.animation.atom;
 
 import fr.skytale.particleanimlib.animation.attributes.AnimationEndedCallback;
 import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.parent.AAnimation;
-import fr.skytale.particleanimlib.animation.parent.ARoundAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 
-public class Atom extends ARoundAnimation {
+public class Atom extends AAnimation {
     private AAnimation sphere;
     private AAnimation circle1;
     private AAnimation circle2;
@@ -73,7 +72,7 @@ public class Atom extends ARoundAnimation {
 
 
     @Override
-    public Object clone() {
+    public Atom clone() {
         Atom obj = (Atom) super.clone();
         obj.circle1 = (AAnimation) circle1.clone();
         obj.circle2 = (AAnimation) circle2.clone();

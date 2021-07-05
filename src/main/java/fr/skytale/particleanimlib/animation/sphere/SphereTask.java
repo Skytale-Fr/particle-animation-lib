@@ -1,59 +1,48 @@
 package fr.skytale.particleanimlib.animation.sphere;
 
-import fr.skytale.particleanimlib.animation.attributes.PropagationType;
-import fr.skytale.particleanimlib.animation.attributes.SphereType;
-import fr.skytale.particleanimlib.animation.parent.ARoundAnimationTask;
+import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-public class SphereTask extends ARoundAnimationTask<Sphere> {
-    int nbCircles;
-    PropagationType propagationType;
-    int simultaneousCircles;
-    SphereType sphereType;
+public class SphereTask extends AAnimationTask<Sphere> {
 
     //Evolving variables
-    double max;
-    double min;
-    double currentMin;
-    double step;
+    private final double max;
+    private final double min;
+
+    private Double currentMin;
 
     public SphereTask(Sphere sphere) {
         super(sphere);
 
-        this.nbCircles = animation.getNbCircles();
-        this.propagationType = animation.getPropagationType();
-        this.simultaneousCircles = animation.getSimultaneousCircles();
-        this.sphereType = animation.getSphereType();
-        min = 0;
-        max = Math.PI;
+        double tmpMin = 0, tmpMax = Math.PI;
 
-        switch (sphereType) {
+        switch (animation.getSphereType()) {
             case HALF_TOP:
-                max = Math.PI / 2;
+                tmpMax = Math.PI / 2;
                 break;
             case HALF_BOTTOM:
-                min = Math.PI / 2;
+                tmpMin = Math.PI / 2;
                 break;
         }
 
         //Si on va de bas en haut, le min et le max est inversé
-        if (propagationType == PropagationType.BOTTOM_TO_TOP) {
-            double tmp = min;
-            min = max;
-            max = tmp;
+        if (animation.getPropagationType() == Sphere.PropagationType.TOP_TO_BOTTOM) {
+            min = tmpMin;
+            max = tmpMax;
+        } else {
+            min = tmpMax;
+            max = tmpMin;
         }
-
-        step = (max - min) / nbCircles;
 
         currentMin = min;
 
-        this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, 0).getTaskId();
+        startTask();
     }
 
     @Override
     public void show(Location iterationBaseLocation) {
-        Location sphereCenter = iterationBaseLocation;
 
         //Stop
         if (hasDurationEnded()) {
@@ -61,30 +50,37 @@ public class SphereTask extends ARoundAnimationTask<Sphere> {
             return;
         }
 
+        Sphere.PropagationType propagationType = animation.getPropagationType();
+        double step = (max - min) / animation.getNbCircles().getCurrentValue(iterationCount);
+
         //Define the vertical limits of the sphere that will be shown
         double currentMax;
 
         if (propagationType != null) {
+            Integer simultaneousCircles = animation.getSimultaneousCircles().getCurrentValue(iterationCount);
             currentMax = currentMin + step * simultaneousCircles;
-            if (propagationType == PropagationType.BOTTOM_TO_TOP && currentMax < max) {
+            if (propagationType == Sphere.PropagationType.BOTTOM_TO_TOP && currentMax < max) {
                 currentMax = max;
-            } else if (propagationType == PropagationType.TOP_TO_BOTTOM && currentMax > max) {
+            } else if (propagationType == Sphere.PropagationType.TOP_TO_BOTTOM && currentMax > max) {
                 currentMax = max;
             }
         } else {
             currentMax = max;
         }
 
+        double radius = animation.getRadius().getCurrentValue(iterationCount);
+        double angleBetweenEachPoint = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
+        ParticleTemplate particleTemplate = animation.getMainParticle();
 
-        for (double i = currentMin; propagationType == PropagationType.BOTTOM_TO_TOP ? i >= currentMax : i <= currentMax; i += step) {
+        for (double i = currentMin; propagationType == Sphere.PropagationType.BOTTOM_TO_TOP ? i >= currentMax : i <= currentMax; i += step) {
             double currentRadius = Math.sin(i) * radius;
-            double y = sphereCenter.getY() + Math.cos(i) * radius;
+            double y = iterationBaseLocation.getY() + Math.cos(i) * radius;
 
-            for (double j = 0; j < Math.PI * 2; j += stepAngle) {
-                double x = sphereCenter.getX() + Math.cos(j) * currentRadius;
-                double z = sphereCenter.getZ() + Math.sin(j) * currentRadius;
+            for (double j = 0; j < Math.PI * 2; j += angleBetweenEachPoint) {
+                double x = iterationBaseLocation.getX() + Math.cos(j) * currentRadius;
+                double z = iterationBaseLocation.getZ() + Math.sin(j) * currentRadius;
 
-                mainParticle.getParticleBuilder(new Location(location.getWorld(), x, y, z)).display();
+                particleTemplate.getParticleBuilder(new Location(iterationBaseLocation.getWorld(), x, y, z)).display();
             }
         }
         currentMin += step;

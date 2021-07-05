@@ -1,20 +1,25 @@
 package fr.skytale.particleanimlib.animation.cuboid;
 
 
-import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.attributes.position.LocationPosition;
+import fr.skytale.particleanimlib.animation.attributes.var.Constant;
+import fr.skytale.particleanimlib.animation.attributes.var.IntegerEquationEvolvingVariable;
+import fr.skytale.particleanimlib.animation.attributes.var.IntegerPeriodicallyEvolvingVariable;
+import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public class CuboidBuilder extends AAnimationBuilder<Cuboid> {
+public class CuboidBuilder extends ARotatingAnimationBuilder<Cuboid> {
 
     public CuboidBuilder() {
         super();
-        animation.setStep(0.5);
-        animation.setShowFrequency(0);
+        animation.setDistanceBetweenPoints(new Constant<>(0.5));
+        animation.setShowFrequency(new Constant<>(0));
         animation.setTicksDuration(60);
-        animation.setAxisChangeFrequency(null);
-        animation.setStepAngleAlphaChangeFrequency(null);
-        animation.setStepAngleAlphaMax(Math.toRadians(30));
+        animation.setRotationAxis(null);
+        animation.setRotationAngleAlpha(null);
     }
 
     @Override
@@ -22,57 +27,28 @@ public class CuboidBuilder extends AAnimationBuilder<Cuboid> {
         return new Cuboid();
     }
 
-    /*********SETTERS des éléments spécifiques au cube ***********/
+    /********* Cuboid specific setters ***********/
 
-    public void setFromLocationToFirstCorner(Vector fromLocationToFirstCorner) {
+    public void setFromLocationToFirstCorner(IVariable<Vector> fromLocationToFirstCorner) {
         animation.setFromLocationToFirstCorner(fromLocationToFirstCorner);
     }
 
-    public void setFromLocationToSecondCorner(Vector fromLocationToSecondCorner) {
+    public void setFromLocationToSecondCorner(IVariable<Vector> fromLocationToSecondCorner) {
         animation.setFromLocationToSecondCorner(fromLocationToSecondCorner);
     }
+
+    public void setDistanceBetweenPoints(IVariable<Double> distanceBetweenPoints) {
+        animation.setDistanceBetweenPoints(distanceBetweenPoints);
+    }
+
 
     public void setCornersAndComputeCenter(Location firstCorner, Location secondCorner) {
         Vector fromFirstToSecond = secondCorner.toVector().subtract(firstCorner.toVector());
         Vector fromCenterToSecond = fromFirstToSecond.clone().multiply(0.5);
         Location center = firstCorner.clone().add(fromCenterToSecond);
-        animation.setLocation(center);
-        animation.setFromLocationToFirstCorner(fromCenterToSecond.clone().multiply(-1));
-        animation.setFromLocationToSecondCorner(fromCenterToSecond.clone());
-    }
-
-    public void setAxis(Vector axis) {
-        animation.setAxis(axis);
-    }
-
-    public void setStepAngleAlpha(double s) {
-        animation.setStepAngleAlpha(s);
-    }
-
-    public void setStepAngleAlphaChangeFrequency(Integer stepAngleAlphaChangeFrequency) {
-        if (stepAngleAlphaChangeFrequency != null && stepAngleAlphaChangeFrequency < 0)
-            throw new IllegalArgumentException("StepAngleAlphaChangeFrequency can not be negative");
-        animation.setStepAngleAlphaChangeFrequency(stepAngleAlphaChangeFrequency);
-    }
-
-    public void setStepAngleAlphaChangeFactor(double stepAngleAlphaChangeFactor) {
-        animation.setStepAngleAlphaChangeFactor(stepAngleAlphaChangeFactor);
-    }
-
-    public void setStepAngleAlphaMax(double stepAngleAlphaMax) {
-        animation.setStepAngleAlphaMax(stepAngleAlphaMax);
-    }
-
-    public void setAxisChangeFrequency(Integer axisChangeFrequency) {
-        if (axisChangeFrequency != null && axisChangeFrequency < 0)
-            throw new IllegalArgumentException("AxisChangeFrequency can not be negative");
-        animation.setAxisChangeFrequency(axisChangeFrequency);
-    }
-
-    public void setStep(double step) {
-        if (step <= 0)
-            throw new IllegalArgumentException("Step must be strictly positive");
-        animation.setStep(step);
+        animation.setPosition(new LocationPosition(new Constant<>(center)));
+        animation.setFromLocationToFirstCorner(new Constant<>(fromCenterToSecond.clone().multiply(-1)));
+        animation.setFromLocationToSecondCorner(new Constant<>(fromCenterToSecond.clone()));
     }
 
     @Override
