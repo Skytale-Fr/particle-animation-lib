@@ -1,9 +1,8 @@
 package fr.skytale.particleanimlib.animation.image;
 
-import fr.skytale.particleanimlib.animation.attributes.CustomVector;
+import fr.skytale.particleanimlib.animation.attributes.RotatableVector;
 import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.parent.task.ARotatingAnimationTask;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleBuilder;
@@ -37,7 +36,7 @@ public class ImageTask extends ARotatingAnimationTask<Image> {
             currentImagePixels = (HashMap<Vector, Color>) currentImagePixels.entrySet()
                     .stream()
                     .collect(Collectors.toMap(
-                            e -> new CustomVector(e.getKey()).rotateAroundAxis(
+                            e -> new RotatableVector(e.getKey()).rotateAroundAxis(
                                     animation.getRotationAxis().getCurrentValue(iterationCount),
                                     animation.getRotationAngleAlpha().getCurrentValue(iterationCount)),
                             Map.Entry::getValue));

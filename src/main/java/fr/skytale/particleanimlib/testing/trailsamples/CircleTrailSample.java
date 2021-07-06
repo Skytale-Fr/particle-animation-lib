@@ -2,14 +2,11 @@ package fr.skytale.particleanimlib.testing.trailsamples;
 
 import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attributes.position.APosition;
-import fr.skytale.particleanimlib.animation.attributes.position.LocationPosition;
 import fr.skytale.particleanimlib.animation.attributes.var.Constant;
-import fr.skytale.particleanimlib.animation.attributes.var.LocationEquationEvolvingVariable;
 import fr.skytale.particleanimlib.animation.attributes.var.VectorPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.trail.TrailBuilder;
 import fr.skytale.particleanimlib.trail.TrailTask;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 

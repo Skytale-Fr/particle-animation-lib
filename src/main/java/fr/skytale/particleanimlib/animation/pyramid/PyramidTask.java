@@ -1,8 +1,7 @@
 package fr.skytale.particleanimlib.animation.pyramid;
 
-import fr.skytale.particleanimlib.animation.attributes.CustomVector;
+import fr.skytale.particleanimlib.animation.attributes.RotatableVector;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -85,9 +84,9 @@ public class PyramidTask extends AAnimationTask<Pyramid> {
         fromCenterToBaseApexList.add(radiusVector);
 
         for (int i = 1; i < nbBaseApex; i++) {
-            CustomVector customVector = new CustomVector(radiusVector);
-            customVector.rotateAroundAxis(normalVector, theta * i);
-            fromCenterToBaseApexList.add(customVector);
+            RotatableVector rotatableVector = new RotatableVector(radiusVector);
+            rotatableVector.rotateAroundAxis(normalVector, theta * i);
+            fromCenterToBaseApexList.add(rotatableVector);
         }
     }
 }

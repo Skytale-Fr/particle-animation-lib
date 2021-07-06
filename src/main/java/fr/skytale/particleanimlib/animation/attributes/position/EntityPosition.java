@@ -12,11 +12,8 @@ public class EntityPosition extends APosition {
         if (movingEntity == null) {
             throw new IllegalArgumentException("MovingEntity should not be null");
         }
-        if (relativeLocation == null) {
-            this.relativeLocation = new Constant<>(new Vector(0, 0, 0));
-        }
+        this.relativeLocation = relativeLocation == null ? new Constant<>(new Vector(0, 0, 0)) : relativeLocation;
         this.movingEntity = movingEntity;
-        this.relativeLocation = relativeLocation;
     }
 
     public EntityPosition(Entity movingEntity) {

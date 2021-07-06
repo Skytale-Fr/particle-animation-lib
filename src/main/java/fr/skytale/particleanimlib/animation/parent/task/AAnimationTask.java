@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.parent.task;
 
-import fr.skytale.particleanimlib.animation.attributes.CustomVector;
+import fr.skytale.particleanimlib.animation.attributes.RotatableVector;
 import fr.skytale.particleanimlib.animation.attributes.position.APosition;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.Bukkit;
@@ -113,8 +113,8 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     public Location rotateAroundAxis(Location point, Vector axis, Location pointAxis, double angle) {
         Vector v = point.clone().subtract(pointAxis).toVector(); //Vecteur de axis au point à translater
-        CustomVector customVector = new CustomVector(v.getX(), v.getY(), v.getZ());
-        v = customVector.rotateAroundAxis(axis, angle);
+        RotatableVector rotatableVector = new RotatableVector(v.getX(), v.getY(), v.getZ());
+        v = rotatableVector.rotateAroundAxis(axis, angle);
         v = v.add(pointAxis.toVector()); //Translation vers le point d'origine (La rotiation a été faite à l'origine du repère)
         return v.toLocation(Objects.requireNonNull(point.getWorld()));
     }

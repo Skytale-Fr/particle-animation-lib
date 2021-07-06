@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.wave;
 
-import Jama.Matrix;
+import fr.skytale.particleanimlib.animation.attributes.PARotation;
 import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
@@ -8,7 +8,7 @@ import org.bukkit.util.Vector;
 
 public class WaveTask extends AAnimationTask<Wave> {
 
-    private final Matrix matrixMInverse;
+    private final PARotation rotation;
     private final double intermediateCachedResult;
 
     private double currentRadius;
@@ -16,22 +16,9 @@ public class WaveTask extends AAnimationTask<Wave> {
     public WaveTask(Wave wave) {
         super(wave);
 
-        currentRadius = animation.getRadiusStart();
+        this.rotation = new PARotation(animation.getU(), animation.getV());
 
-        Vector directorU = animation.getU().clone().normalize();
-        Vector directorV = animation.getV().clone().normalize();
-        Vector directorW = directorU.clone().crossProduct(directorV).normalize();
-
-
-        double[][] matrixMArray = {
-                {directorU.getX(), directorW.getX(), directorV.getX()},
-                {directorU.getY(), directorW.getY(), directorV.getY()},
-                {directorU.getZ(), directorW.getZ(), directorV.getZ()}
-        };
-
-        Matrix matrixM = new Matrix(matrixMArray);
-
-        this.matrixMInverse = matrixM.inverse();
+        this.currentRadius = animation.getRadiusStart();
 
         this.intermediateCachedResult = -0.1 * 39 / (animation.getRadiusMax() - animation.getRadiusStart());
 
@@ -53,26 +40,17 @@ public class WaveTask extends AAnimationTask<Wave> {
             return;
         }
 
-
-        // the vectical vector in UVW geometric lair
-        double[][] relativeLocationInUVW = {
-                {0},
-                {(2 * Math.exp(intermediateCachedResult * currentRadius) * Math.sin(currentRadius)) + 1},
-                {0}
-        };
+        // Computing the vertical coordinate of the wave's current circle
+        Vector currentVerticalPositionInXYZRef = new Vector(
+                0,
+                (2 * Math.exp(intermediateCachedResult * currentRadius) * Math.sin(currentRadius)) + 1,
+                0);
 
         // Passing to the XYZ geometric lair
-        Matrix relativeLocationInUVWMatrix = new Matrix(relativeLocationInUVW);
-
-        Matrix relativeLocationInXYZMatrix = this.matrixMInverse.times(relativeLocationInUVWMatrix);
-
-        Vector relativeLocationInXYZ = new Vector(
-                relativeLocationInXYZMatrix.get(0, 0),
-                relativeLocationInXYZMatrix.get(1, 0),
-                relativeLocationInXYZMatrix.get(2, 0));
+        Vector currentVerticalPositionInUVWRef = rotation.rotateVector(currentVerticalPositionInXYZRef);
 
         // Applying this to the iteration base Location
-        iterationBaseLocation.add(relativeLocationInXYZ);
+        iterationBaseLocation.add(currentVerticalPositionInUVWRef);
 
 
         double stepAngle = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
@@ -81,7 +59,7 @@ public class WaveTask extends AAnimationTask<Wave> {
         ParticleTemplate particleTemplate = animation.getMainParticle();
 
         // Tracing circle
-        for (int pointIndex = 0; pointIndex < nbPoints; pointIndex ++) {
+        for (int pointIndex = 0; pointIndex < nbPoints; pointIndex++) {
             double theta = pointIndex * stepAngle;
             double cosThetaDotRadius = currentRadius * Math.cos(theta);
             double sinThetaDotRadius = currentRadius * Math.sin(theta);

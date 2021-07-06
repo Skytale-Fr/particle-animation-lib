@@ -2,26 +2,27 @@ package fr.skytale.particleanimlib.animation.attributes;
 
 import com.google.common.base.Preconditions;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
-public class CustomVector extends Vector {
+public class RotatableVector extends Vector {
 
-    public CustomVector(int x, int y, int z) {
+    public RotatableVector(int x, int y, int z) {
         super(x, y, z);
     }
 
-    public CustomVector(Vector v) {
+    public RotatableVector(Vector v) {
         super(v.getX(), v.getY(), v.getZ());
     }
 
-    public CustomVector(double x, double y, double z) {
+    public RotatableVector(double x, double y, double z) {
         super(x, y, z);
     }
 
-    public CustomVector(float x, float y, float z) {
+    public RotatableVector(float x, float y, float z) {
         super(x, y, z);
     }
 
-    public Vector rotateAroundNonUnitAxis(Vector axis, double angle) throws IllegalArgumentException {
+    public @NotNull Vector rotateAroundNonUnitAxis(Vector axis, double angle) throws IllegalArgumentException {
         Preconditions.checkArgument(axis != null, "The provided axis vector was null");
         double x = this.getX();
         double y = this.getY();
@@ -38,7 +39,7 @@ public class CustomVector extends Vector {
         return super.setX(xPrime).setY(yPrime).setZ(zPrime);
     }
 
-    public Vector rotateAroundAxis(Vector axis, double angle) throws IllegalArgumentException {
+    public @NotNull Vector rotateAroundAxis(Vector axis, double angle) throws IllegalArgumentException {
         Preconditions.checkArgument(axis != null, "The provided axis vector was null");
         return rotateAroundNonUnitAxis(axis.clone().normalize(), angle);
     }

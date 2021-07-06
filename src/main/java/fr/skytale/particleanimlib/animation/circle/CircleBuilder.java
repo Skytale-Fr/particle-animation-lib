@@ -1,9 +1,7 @@
 package fr.skytale.particleanimlib.animation.circle;
 
 import fr.skytale.particleanimlib.animation.attributes.var.Constant;
-import fr.skytale.particleanimlib.animation.attributes.var.DoubleEquationEvolvingVariable;
 import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import fr.skytale.particleanimlib.animation.parent.builder.ARotatingRoundAnimationBuilder;
 import org.bukkit.util.Vector;
 

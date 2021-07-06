@@ -3,10 +3,7 @@ package fr.skytale.particleanimlib.animation.cuboid;
 
 import fr.skytale.particleanimlib.animation.attributes.position.LocationPosition;
 import fr.skytale.particleanimlib.animation.attributes.var.Constant;
-import fr.skytale.particleanimlib.animation.attributes.var.IntegerEquationEvolvingVariable;
-import fr.skytale.particleanimlib.animation.attributes.var.IntegerPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;

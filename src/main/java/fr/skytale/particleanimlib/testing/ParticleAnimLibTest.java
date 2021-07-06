@@ -69,8 +69,9 @@ public class ParticleAnimLibTest {
     }
 
     public void buildAndShowAnimation(Player player) {
-        buildAndShowAnimation(player, APosition.fromEntity(player));
+        buildAndShowAnimation(player, APosition.fromEntity(player, new Constant<>(player.getEyeLocation().toVector().subtract(player.getLocation().toVector()))));
     }
+
     public void buildAndShowAnimation(Player player, APosition position) {
         AnimationLibPlayerData playerData = getPlayerData(player);
         if (!playerData.isShowAnimationOnClick()) return;

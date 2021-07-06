@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.wave;
 
+import fr.skytale.particleanimlib.animation.attributes.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attributes.var.Constant;
-import fr.skytale.particleanimlib.animation.attributes.var.DoubleEquationEvolvingVariable;
 import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
@@ -13,7 +13,7 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
         animation.setRadiusStart(1.0);
         animation.setRadiusMax(20);
         animation.setNbPoints(new Constant<>(20));
-        animation.setRadiusStep(new DoubleEquationEvolvingVariable("0.3+SIN(t)/4"));
+        animation.setRadiusStep(new CallbackVariable<>(iterationCount -> 0.3 + Math.sin(iterationCount) / 4));
         animation.setAngleBetweenEachPoint(new Constant<>(2 * Math.PI / 20));
         animation.setShowFrequency(new Constant<>(0));
         animation.setTicksDuration(60);
@@ -38,6 +38,10 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
             throw new IllegalArgumentException("RadiusStart should be positive.");
         }
         animation.setRadiusStart(radiusStart);
+    }
+
+    public void setRadiusStep(IVariable<Double> radiusStep) {
+        animation.setRadiusStep(radiusStep);
     }
 
     public void setRadiusMax(double radiusMax) {
@@ -69,7 +73,8 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
         animation.setNbPoints(nbPoints);
         checkPositiveAndNotNull(nbPoints, "nbPoints should be positive", false);
         if (fullCircle) {
-            if (!nbPoints.isConstant()) throw new IllegalArgumentException(CircleBuilder.FULL_CIRCLE_NB_POINTS_ERROR_MESSAGE);
+            if (!nbPoints.isConstant())
+                throw new IllegalArgumentException(CircleBuilder.FULL_CIRCLE_NB_POINTS_ERROR_MESSAGE);
             animation.setAngleBetweenEachPoint(new Constant<>(2 * Math.PI / nbPoints.getCurrentValue(0)));
         }
     }
