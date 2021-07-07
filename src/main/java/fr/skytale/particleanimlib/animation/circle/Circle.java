@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.circle;
 
 
-import fr.skytale.particleanimlib.parent.ARoundAnimation;
+import fr.skytale.particleanimlib.animation.parent.ARoundAnimation;
 import org.bukkit.util.Vector;
 
 public class Circle extends ARoundAnimation {

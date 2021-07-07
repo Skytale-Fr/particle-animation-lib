@@ -1,8 +1,8 @@
 package fr.skytale.particleanimlib.animation.spiralprojectile;
 
-import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
-import fr.skytale.particleanimlib.parent.AAnimation;
-import fr.skytale.particleanimlib.parent.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.attributes.AnimationEndedCallback;
+import fr.skytale.particleanimlib.animation.parent.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
 import org.bukkit.util.Vector;
 
 public class SpiralProjectileBuilder extends AAnimationBuilder<SpiralProjectile> {

@@ -1,9 +1,8 @@
 package fr.skytale.particleanimlib.testing.samples;
 
 import fr.skytale.particleanimlib.animation.cuboid.CuboidBuilder;
-import fr.skytale.particleanimlib.attributes.ParticleTemplate;
-import fr.skytale.particleanimlib.parent.AAnimationBuilder;
-import fr.skytale.particleanimlib.testing.attributes.AnimationSample;
+import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
@@ -36,7 +35,7 @@ public class CuboidSample implements IPAnimSample {
     }
 
     @Override
-    public AnimationSample getType() {
-        return AnimationSample.CUBOID;
+    public String getName() {
+        return "cuboid";
     }
 }

@@ -1,10 +1,9 @@
 package fr.skytale.particleanimlib.testing.samples;
 
 import fr.skytale.particleanimlib.animation.image.ImageBuilder;
-import fr.skytale.particleanimlib.attributes.ParticleTemplate;
-import fr.skytale.particleanimlib.parent.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
-import fr.skytale.particleanimlib.testing.attributes.AnimationSample;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -57,8 +56,8 @@ public class ImageSample implements IPAnimSample {
     }
 
     @Override
-    public AnimationSample getType() {
-        return AnimationSample.IMAGE;
+    public String getName() {
+        return "image";
     }
 
     private File createImagesFolder() {

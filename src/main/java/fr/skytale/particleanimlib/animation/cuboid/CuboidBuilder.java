@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.cuboid;
 
 
-import fr.skytale.particleanimlib.parent.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 

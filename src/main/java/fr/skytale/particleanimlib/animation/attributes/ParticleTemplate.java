@@ -1,4 +1,4 @@
-package fr.skytale.particleanimlib.attributes;
+package fr.skytale.particleanimlib.animation.attributes;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.image;
 
 
-import fr.skytale.particleanimlib.parent.ARotatingAnimation;
+import fr.skytale.particleanimlib.animation.parent.ARotatingAnimation;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;

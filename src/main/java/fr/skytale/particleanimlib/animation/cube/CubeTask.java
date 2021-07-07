@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.cube;
 
-import fr.skytale.particleanimlib.parent.AAnimationTask;
+import fr.skytale.particleanimlib.animation.parent.AAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 

@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.cube;
 
-import fr.skytale.particleanimlib.parent.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.AAnimation;
 
 public class Cube extends AAnimation {
     private double sideLength;
