@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.testing.listener;
 
-import fr.skytale.particleanimlib.animation.attributes.position.APosition;
-import fr.skytale.particleanimlib.animation.attributes.var.Constant;
+import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

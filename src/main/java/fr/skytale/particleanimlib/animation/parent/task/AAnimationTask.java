@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.parent.task;
 
-import fr.skytale.particleanimlib.animation.attributes.RotatableVector;
-import fr.skytale.particleanimlib.animation.attributes.position.APosition;
+import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
+import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

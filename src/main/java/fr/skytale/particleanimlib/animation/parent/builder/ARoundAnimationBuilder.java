@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.animation.parent.builder;
 
-import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.animation.ARotatingRoundAnimation;
+import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARoundAnimation;
 
 public abstract class ARoundAnimationBuilder<T extends ARoundAnimation> extends AAnimationBuilder<T> {

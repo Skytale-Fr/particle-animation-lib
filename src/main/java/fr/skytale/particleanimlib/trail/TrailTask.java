@@ -1,13 +1,14 @@
 package fr.skytale.particleanimlib.trail;
 
-import fr.skytale.particleanimlib.animation.attributes.position.APosition;
-import fr.skytale.particleanimlib.animation.attributes.var.Constant;
-import fr.skytale.particleanimlib.trail.attributes.TrailPlayerData;
-import fr.skytale.particleanimlib.trail.attributes.TrailPlayerLocationData;
+import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
+import fr.skytale.particleanimlib.trail.attribute.TrailPlayerData;
+import fr.skytale.particleanimlib.trail.attribute.TrailPlayerLocationData;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -27,7 +28,7 @@ public class TrailTask implements Runnable {
 
     public TrailTask(Trail trail) {
         this.playersDatas = new HashMap<>();
-        this.trail = (Trail) trail.clone();
+        this.trail = trail.clone();
         this.plugin = trail.getAnimations().stream().findAny().orElseThrow(IllegalStateException::new).getPlugin();
     }
 
@@ -181,8 +182,12 @@ public class TrailTask implements Runnable {
 
     private void showAnimations(Location locationToShow, int iterationCount) {
         trail.getAnimations().forEach(animation -> {
-            animation.setPosition(APosition.fromLocation(new Constant<>(locationToShow.clone().add(animation.getPosition().getRelativeLocation().getCurrentValue(iterationCount)))));
+            APosition trailPosition = animation.getPosition();
+            Vector relativeLocation = trailPosition.getRelativeLocation().getCurrentValue(iterationCount);
+            animation.setPosition(APosition.fromLocation(new Constant<>(locationToShow.clone().add(relativeLocation))));
             animation.show();
+            //redefine trailPosition is order to keep the relative location data inside it for the next execution
+            animation.setPosition(trailPosition);
         });
     }
 }

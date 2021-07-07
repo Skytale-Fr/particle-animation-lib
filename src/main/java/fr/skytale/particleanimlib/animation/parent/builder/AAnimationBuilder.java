@@ -1,15 +1,17 @@
 package fr.skytale.particleanimlib.animation.parent.builder;
 
-import fr.skytale.particleanimlib.animation.attributes.AnimationEndedCallback;
-import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attributes.position.APosition;
-import fr.skytale.particleanimlib.animation.attributes.var.Constant;
-import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.attribute.AnimationEndedCallback;
+import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
+import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
+import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class AAnimationBuilder<T extends AAnimation> {
     public static final String POSITION_SHOULD_NOT_BE_NULL = "Position should not be null";
+
     protected T animation;
 
     public AAnimationBuilder() {
@@ -20,7 +22,7 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
 
     protected abstract T initAnimation();
 
-    /*********SETTERS des éléments généraux d'une animation ***********/
+    /********* Generic AAnimation attributes setters ***********/
 
     public void setPosition(APosition position) {
         checkNotNull(position, POSITION_SHOULD_NOT_BE_NULL);
@@ -59,7 +61,7 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
                 throw new IllegalArgumentException("Trail animations must not contain a moving entity or a location. Only the relative location can optionally be defined.");
         } else {
             if (animation.getPosition().getType().equals(APosition.Type.TRAIL)) {
-                throw new IllegalArgumentException("Animations must contain a moving entity or a location.");
+                throw new IllegalArgumentException("Animations must contain a moving entity or a location. If you are in the context of trails, please call builder.getAnimation(true) instead.");
 
             }
         }
@@ -70,6 +72,12 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         }
         return (T) animation.clone();
     }
+
+    public void applyPreset(AnimationPreset animationPreset) {
+        animationPreset.apply(this);
+    }
+
+    /* --- Checks */
 
     protected static void checkPositiveAndNotNull(IVariable<? extends Number> number, String checkFailureMessage, boolean allowZero) {
         checkNotNull(number, checkFailureMessage);

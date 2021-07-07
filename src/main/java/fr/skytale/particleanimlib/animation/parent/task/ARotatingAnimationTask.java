@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.parent.task;
 
-import fr.skytale.particleanimlib.animation.attributes.PARotation;
+import fr.skytale.particleanimlib.animation.attribute.PARotation;
 import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
@@ -12,16 +12,18 @@ public abstract class ARotatingAnimationTask<T extends ARotatingAnimation> exten
     protected final boolean hasChangingRotationAxis;
     protected final boolean hasChangingRotationAngle;
     protected Vector currentRotationAxis;
-    protected double currentRotationAngle;
+    protected Double currentRotationAngle;
 
     public ARotatingAnimationTask(T animation) {
         super(animation);
-        this.hasRotation = animation.getRotationAxis() != null;
+        this.hasRotation = animation.getRotationAxis() != null && animation.getRotationAngleAlpha() != null;
         this.hasChangingRotationAxis = hasRotation && !animation.getRotationAxis().isConstant();
         this.hasChangingRotationAngle = hasRotation && !animation.getRotationAngleAlpha().isConstant();
-        this.currentRotationAngle = animation.getRotationAngleAlpha().getCurrentValue(iterationCount);
-        this.currentRotationAxis = animation.getRotationAxis().getCurrentValue(iterationCount).normalize();
-        this.rotation = new PARotation(currentRotationAxis, currentRotationAngle);
+        if (hasRotation) {
+            this.currentRotationAngle = animation.getRotationAngleAlpha().getCurrentValue(iterationCount);
+            this.currentRotationAxis = animation.getRotationAxis().getCurrentValue(iterationCount).normalize();
+            this.rotation = new PARotation(currentRotationAxis, currentRotationAngle);
+        }
     }
 
     @Override

@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.parent.animation;
 
-import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 
 public abstract class ARoundAnimation extends AAnimation {
     protected IVariable<Double> radius;

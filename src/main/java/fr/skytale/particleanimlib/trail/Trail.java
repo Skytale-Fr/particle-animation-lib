@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.trail;
 
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
-import fr.skytale.particleanimlib.trail.attributes.TrailEndedCallback;
+import fr.skytale.particleanimlib.trail.attribute.TrailEndedCallback;
 
 import java.time.Duration;
 import java.util.HashSet;
@@ -26,7 +26,7 @@ public class Trail implements Cloneable {
         animations = new HashSet<>();
     }
 
-    public TrailTask start() {
+    public TrailTask getTrailTask() {
         if (animations.size() == 0) {
             throw new IllegalStateException("A trail requires at least 1 trailAnimation in order to be started.");
         }
@@ -34,7 +34,7 @@ public class Trail implements Cloneable {
     }
 
     @Override
-    public Object clone() {
+    public Trail clone() {
         Trail obj = null;
         try {
             obj = (Trail) super.clone();
@@ -53,10 +53,6 @@ public class Trail implements Cloneable {
 
     public Set<AAnimation> getAnimations() {
         return animations;
-    }
-
-    public void setAnimations(Set<AAnimation> animations) {
-        this.animations = animations;
     }
 
     public void addAnimation(AAnimation animation) {

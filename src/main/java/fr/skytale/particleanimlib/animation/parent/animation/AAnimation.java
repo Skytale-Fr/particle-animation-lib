@@ -1,9 +1,9 @@
 package fr.skytale.particleanimlib.animation.parent.animation;
 
-import fr.skytale.particleanimlib.animation.attributes.AnimationEndedCallback;
-import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attributes.position.APosition;
-import fr.skytale.particleanimlib.animation.attributes.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.attribute.AnimationEndedCallback;
+import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class AAnimation implements Cloneable {
