@@ -91,12 +91,11 @@ public class AnimationLibCommand implements CommandExecutor {
                     if (trailNames.contains(inputType)) {
                         this.particleAnimLibTest.setTrailType(player, inputType);
                         player.sendMessage("Testing the trail \"" + inputType + "\".");
-                        return true;
                     } else {
                         player.sendMessage("This trail type does not exist. Available types : " +
                                 String.join(", ", trailNames));
-                        return true;
                     }
+                    return true;
                 }
             }
 

@@ -1,9 +1,15 @@
 package fr.skytale.particleanimlib.testing;
 
-import fr.skytale.particleanimlib.testing.attributes.AnimationLibPlayerData;
+import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
+import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
+import fr.skytale.particleanimlib.testing.attribute.AnimationLibPlayerData;
 import fr.skytale.particleanimlib.testing.command.AnimationLibCommand;
 import fr.skytale.particleanimlib.testing.command.AnimationLibTabCompleter;
 import fr.skytale.particleanimlib.testing.listener.RightClickAirEventListener;
+import fr.skytale.particleanimlib.testing.manager.AnimationSampleManager;
+import fr.skytale.particleanimlib.testing.manager.TrailSampleManager;
+import fr.skytale.particleanimlib.trail.attribute.TrailPreset;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
@@ -16,8 +22,8 @@ import java.util.UUID;
 
 public class ParticleAnimLibTest {
 
-    public static String DEFAULT_ANIMATION_TYPE = "cuboid";
-    public static String DEFAULT_TRAIL_TYPE = "circle";
+    public static String DEFAULT_ANIMATION_TYPE = AnimationPreset.CUBOID_ROTATING.name();
+    public static String DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP.name();
     public static boolean DEFAULT_SHOW_ON_CLICK = true;
 
     private static ParticleAnimLibTest instance;
@@ -56,7 +62,7 @@ public class ParticleAnimLibTest {
     }
 
     public Set<String> getAnimationNames() {
-        return AnimationManager.getInstance().getAnimationNames();
+        return AnimationSampleManager.getInstance().getAnimationNames();
     }
 
     public void setAnimationType(Player player, String animationSampleName) {
@@ -66,9 +72,13 @@ public class ParticleAnimLibTest {
     }
 
     public void buildAndShowAnimation(Player player) {
+        buildAndShowAnimation(player, APosition.fromEntity(player, new Constant<>(player.getEyeLocation().toVector().subtract(player.getLocation().toVector()))));
+    }
+
+    public void buildAndShowAnimation(Player player, APosition position) {
         AnimationLibPlayerData playerData = getPlayerData(player);
         if (!playerData.isShowAnimationOnClick()) return;
-        AnimationManager.getInstance().initBuilder(player, plugin, playerData.getAnimationType()).getAnimation().show();
+        AnimationSampleManager.getInstance().initBuilder(player, position, plugin, playerData.getAnimationType()).getAnimation().show();
     }
 
     public AnimationLibPlayerData getPlayerData(Player player) {
@@ -81,7 +91,7 @@ public class ParticleAnimLibTest {
     }
 
     public void showAllAnimations(Player player) {
-        AnimationManager.getInstance().getChainedBuilders(player, plugin).getAnimation().show();
+        AnimationSampleManager.getInstance().getChainedBuilders(player, plugin).getAnimation().show();
     }
 
     public JavaPlugin getPlugin() {
@@ -90,16 +100,18 @@ public class ParticleAnimLibTest {
 
 
     public Set<String> getTrailNames() {
-        return TrailManager.getInstance().getTrailNames();
+        return TrailSampleManager.getInstance().getTrailNames();
     }
 
     public boolean toggleTrail(Player player) {
-        return TrailManager.getInstance().toggleTrail(player, getPlayerData(player).getTrailSampleName());
+        return TrailSampleManager.getInstance().toggleTrail(player, getPlayerData(player).getTrailSampleName());
     }
 
     public void setTrailType(Player player, String trailAnimationSampleName) {
         AnimationLibPlayerData playerData = getPlayerData(player);
+        TrailSampleManager.getInstance().disableTrail(player, playerData.getTrailSampleName());
         playerData.setTrailSampleName(trailAnimationSampleName);
         playersData.put(player.getUniqueId(), playerData);
+        TrailSampleManager.getInstance().enableTrail(player, trailAnimationSampleName);
     }
 }

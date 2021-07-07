@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.trail;
 
-import fr.skytale.particleanimlib.animation.parent.AAnimation;
-import fr.skytale.particleanimlib.trail.attributes.TrailEndedCallback;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
+import fr.skytale.particleanimlib.trail.attribute.TrailEndedCallback;
 
 import java.time.Duration;
 import java.util.Set;
@@ -14,13 +14,12 @@ public class TrailBuilder {
         trail = new Trail();
     }
 
-
-    public void setAnimations(Set<AAnimation> animations) {
-        trail.setAnimations(animations);
+    public void addAnimation(AAnimation animation) {
+        trail.addAnimation(animation);
     }
 
-    public void addAnimation(AAnimation animation) {
-        trail.getAnimations().add(animation);
+    public Set<AAnimation> getAnimations() {
+        return trail.getAnimations();
     }
 
     public void setCheckFrequency(int checkFrequency) {

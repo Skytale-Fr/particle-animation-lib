@@ -1,11 +1,14 @@
 package fr.skytale.particleanimlib.trail;
 
-import fr.skytale.particleanimlib.trail.attributes.TrailPlayerData;
-import fr.skytale.particleanimlib.trail.attributes.TrailPlayerLocationData;
+import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
+import fr.skytale.particleanimlib.trail.attribute.TrailPlayerData;
+import fr.skytale.particleanimlib.trail.attribute.TrailPlayerLocationData;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -25,14 +28,14 @@ public class TrailTask implements Runnable {
 
     public TrailTask(Trail trail) {
         this.playersDatas = new HashMap<>();
-        this.trail = (Trail) trail.clone();
+        this.trail = trail.clone();
         this.plugin = trail.getAnimations().stream().findAny().orElseThrow(IllegalStateException::new).getPlugin();
     }
 
     /**
      * Stops the task
-     *
-     * The task stopping is already done when removing/clearing players
+     * <p>
+     * The task stopping is already done automatically when removing the last player
      *
      * @see #removePlayer(UUID)
      * @see #clearPlayers()
@@ -48,8 +51,8 @@ public class TrailTask implements Runnable {
 
     /**
      * Starts the task
-     *
-     * The task starting is already done when adding players
+     * <p>
+     * The task starting is already done automatically when adding the first player
      *
      * @see #addPlayer(UUID)
      */
@@ -84,7 +87,7 @@ public class TrailTask implements Runnable {
 
     /**
      * Runs the task
-     *
+     * <p>
      * Should not be called directly. The bukkit scheduler call this task itself.
      */
     @Deprecated
@@ -164,21 +167,27 @@ public class TrailTask implements Runnable {
             }
 
             // --- show the animation
+            int iterationCount = playerData.getIterationCount();
             if (locationToShowIndex != null) {
                 Location locationToShow = locationsData.get(locationToShowIndex).getLocation();
 
                 //clear the list from oldest locations (the one that will be shown and all the older ones)
                 locationsData.subList(locationToShowIndex - 1, locationsData.size()).clear();
 
-                showAnimations(locationToShow);
+                showAnimations(locationToShow, iterationCount);
             }
+            playerData.setIterationCount(iterationCount + 1);
         }
     }
 
-    private void showAnimations(Location locationToShow) {
+    private void showAnimations(Location locationToShow, int iterationCount) {
         trail.getAnimations().forEach(animation -> {
-            animation.setLocation(locationToShow.clone().add(animation.getRelativeLocation()));
+            APosition trailPosition = animation.getPosition();
+            Vector relativeLocation = trailPosition.getRelativeLocation().getCurrentValue(iterationCount);
+            animation.setPosition(APosition.fromLocation(new Constant<>(locationToShow.clone().add(relativeLocation))));
             animation.show();
+            //redefine trailPosition is order to keep the relative location data inside it for the next execution
+            animation.setPosition(trailPosition);
         });
     }
 }
