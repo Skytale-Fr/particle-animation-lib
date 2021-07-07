@@ -44,6 +44,10 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
         animation.setRadiusStep(radiusStep);
     }
 
+    public void setRadiusStep(double radiusStep) {
+        setRadiusStep(new Constant<>(radiusStep));
+    }
+
     public void setRadiusMax(double radiusMax) {
         if (radiusMax <= 0) {
             throw new IllegalArgumentException("RadiusMax should be positive.");
@@ -53,6 +57,10 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
 
     public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint) {
         setAngleBetweenEachPoint(angleBetweenEachPoint, false);
+    }
+
+    public void setAngleBetweenEachPoint(double angleBetweenEachPoint) {
+        setAngleBetweenEachPoint(new Constant<>(angleBetweenEachPoint));
     }
 
     public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint, boolean fullCircle) {
@@ -65,8 +73,16 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
         }
     }
 
+    public void setAngleBetweenEachPoint(double angleBetweenEachPoint, boolean fullCircle) {
+        setAngleBetweenEachPoint(new Constant<>(angleBetweenEachPoint), fullCircle);
+    }
+
     public void setNbPoints(IVariable<Integer> nbPoints) {
         setNbPoints(nbPoints, false);
+    }
+
+    public void setNbPoints(int nbPoints) {
+        setNbPoints(new Constant<>(nbPoints));
     }
 
     public void setNbPoints(IVariable<Integer> nbPoints, boolean fullCircle) {
@@ -77,6 +93,10 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
                 throw new IllegalArgumentException(CircleBuilder.FULL_CIRCLE_NB_POINTS_ERROR_MESSAGE);
             animation.setAngleBetweenEachPoint(new Constant<>(2 * Math.PI / nbPoints.getCurrentValue(0)));
         }
+    }
+
+    public void setNbPoints(int nbPoints, boolean fullCircle) {
+        setNbPoints(new Constant<>(nbPoints), fullCircle);
     }
 
     @Override

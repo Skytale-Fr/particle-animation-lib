@@ -30,12 +30,24 @@ public class CuboidBuilder extends ARotatingAnimationBuilder<Cuboid> {
         animation.setFromLocationToFirstCorner(fromLocationToFirstCorner);
     }
 
+    public void setFromLocationToFirstCorner(Vector fromLocationToFirstCorner) {
+        setFromLocationToFirstCorner(new Constant<>(fromLocationToFirstCorner));
+    }
+
     public void setFromLocationToSecondCorner(IVariable<Vector> fromLocationToSecondCorner) {
         animation.setFromLocationToSecondCorner(fromLocationToSecondCorner);
     }
 
+    public void setFromLocationToSecondCorner(Vector fromLocationToSecondCorner) {
+        setFromLocationToSecondCorner(new Constant<>(fromLocationToSecondCorner));
+    }
+
     public void setDistanceBetweenPoints(IVariable<Double> distanceBetweenPoints) {
         animation.setDistanceBetweenPoints(distanceBetweenPoints);
+    }
+
+    public void setDistanceBetweenPoints(double distanceBetweenPoints) {
+        setDistanceBetweenPoints(new Constant<>(distanceBetweenPoints));
     }
 
 

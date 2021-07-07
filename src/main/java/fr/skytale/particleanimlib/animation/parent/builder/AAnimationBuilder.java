@@ -46,6 +46,10 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation.setShowFrequency(showFrequency);
     }
 
+    public void setShowFrequency(int showFrequency) {
+        setShowFrequency(new Constant<>(showFrequency));
+    }
+
     public void setCallback(AnimationEndedCallback callback) {
         animation.setCallback(callback);
     }

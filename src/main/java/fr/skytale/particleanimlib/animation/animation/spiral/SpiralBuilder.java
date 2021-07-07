@@ -37,9 +37,17 @@ public class SpiralBuilder extends ARoundAnimationBuilder<Spiral> {
         animation.setNbSpiral(nbSpiral);
     }
 
+    public void setNbSpiral(int nbSpiral) {
+        setNbSpiral(new Constant<>(nbSpiral));
+    }
+
     public void setNbTrailingParticles(IVariable<Integer> nbTrailingParticles) {
         checkPositiveAndNotNull(nbTrailingParticles, "nbTrailingParticles should be positive or equal to zero", true);
         animation.setNbTrailingParticles(nbTrailingParticles);
+    }
+
+    public void setNbTrailingParticles(int nbTrailingParticles) {
+        setNbTrailingParticles(new Constant<>(nbTrailingParticles));
     }
 
     public void setCentralParticle(ParticleTemplate centralParticle) {

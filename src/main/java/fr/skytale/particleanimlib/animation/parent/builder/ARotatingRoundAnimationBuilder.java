@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.parent.builder;
 
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARotatingRoundAnimation;
 
@@ -10,9 +11,17 @@ public abstract class ARotatingRoundAnimationBuilder<T extends ARotatingRoundAni
         animation.setRadius(radius);
     }
 
+    public void setRadius(double radius) {
+        setRadius(new Constant<>(radius));
+    }
+
     public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint) {
         checkPositiveAndNotNull(angleBetweenEachPoint, "angleBetweenEachPoint should be positive", false);
         animation.setAngleBetweenEachPoint(angleBetweenEachPoint);
+    }
+
+    public void setAngleBetweenEachPoint(double angleBetweenEachPoint) {
+        setAngleBetweenEachPoint(new Constant<>(angleBetweenEachPoint));
     }
 
     @Override

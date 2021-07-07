@@ -16,7 +16,11 @@ public class EntityPosition extends APosition {
         this.movingEntity = movingEntity;
     }
 
+    public EntityPosition(Entity movingEntity, Vector relativeLocation) {
+        this(movingEntity, new Constant<>(relativeLocation));
+    }
+
     public EntityPosition(Entity movingEntity) {
-        this(movingEntity, null);
+        this(movingEntity, new Vector(0, 0, 0));
     }
 }

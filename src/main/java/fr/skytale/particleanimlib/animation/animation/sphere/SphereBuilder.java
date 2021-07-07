@@ -29,6 +29,10 @@ public class SphereBuilder extends ARoundAnimationBuilder<Sphere> {
         animation.setNbCircles(nbCircles);
     }
 
+    public void setNbCircles(int nbCircles) {
+        setNbCircles(new Constant<>(nbCircles));
+    }
+
     public void setPropagationType(Sphere.PropagationType propagationType) {
         animation.setPropagationType(propagationType);
     }
@@ -36,6 +40,10 @@ public class SphereBuilder extends ARoundAnimationBuilder<Sphere> {
     public void setSimultaneousCircles(IVariable<Integer> propagationSimultaneousCircles) {
         checkPositive(propagationSimultaneousCircles, "propagationSimultaneousCircles should be positive.", false);
         animation.setSimultaneousCircles(propagationSimultaneousCircles);
+    }
+
+    public void setSimultaneousCircles(int propagationSimultaneousCircles) {
+        setSimultaneousCircles(new Constant<>(propagationSimultaneousCircles));
     }
 
     public void setSphereType(Sphere.Type sphereType) {

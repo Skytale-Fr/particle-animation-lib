@@ -25,9 +25,11 @@ public class PyramidBuilder extends AAnimationBuilder<Pyramid> {
     /********* Pyramid specific setters ***********/
 
     public void setFromCenterToApex(IVariable<Vector> fromCenterToApex) {
-        if (fromCenterToApex == null)
-            throw new IllegalArgumentException("Apex point of pyramid has to be defined.");
+        checkNotNull(fromCenterToApex, "Apex point of pyramid has to be defined.");
         animation.setFromCenterToApex(fromCenterToApex);
+    }
+    public void setFromCenterToApex(Vector fromCenterToApex) {
+        setFromCenterToApex(new Constant<>(fromCenterToApex));
     }
 
     public void setNbBaseApex(IVariable<Integer> nbBaseApex) {
@@ -36,16 +38,28 @@ public class PyramidBuilder extends AAnimationBuilder<Pyramid> {
         animation.setNbBaseApex(nbBaseApex);
     }
 
+    public void setNbBaseApex(int nbBaseApex) {
+        setNbBaseApex(new Constant<>(nbBaseApex));
+    }
+
     public void setDistanceBetweenParticles(IVariable<Double> distanceBetweenParticles) {
         if (distanceBetweenParticles.isConstant() && distanceBetweenParticles.getCurrentValue(0) <= 0)
             throw new IllegalArgumentException("The distanceBetweenParticles has to be strictly positive.");
         animation.setDistanceBetweenParticles(distanceBetweenParticles);
     }
 
+    public void setDistanceBetweenParticles(double distanceBetweenParticles) {
+        setDistanceBetweenParticles(new Constant<>(distanceBetweenParticles));
+    }
+
     public void setDistanceToAnyBaseApex(IVariable<Double> distanceToAnyBaseApex) {
         if (distanceToAnyBaseApex.isConstant() && distanceToAnyBaseApex.getCurrentValue(0) <= 0.5)
             throw new IllegalArgumentException("The distance between the pyramid center and its base apexes (distanceToAnyBaseApex) should be greater than 0.5.");
         animation.setDistanceToAnyBaseApex(distanceToAnyBaseApex);
+    }
+
+    public void setDistanceToAnyBaseApex(double distanceToAnyBaseApex) {
+        setDistanceToAnyBaseApex(new Constant<>(distanceToAnyBaseApex));
     }
 
     @Override
