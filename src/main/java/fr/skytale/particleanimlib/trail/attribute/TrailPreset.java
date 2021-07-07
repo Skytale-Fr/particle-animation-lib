@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.trail.attribute;
 
+import fr.skytale.particleanimlib.animation.animation.image.preset.ImagePresetInitializer;
 import fr.skytale.particleanimlib.animation.parent.preset.APresetInitializer;
 import fr.skytale.particleanimlib.trail.TrailBuilder;
 import fr.skytale.particleanimlib.trail.parent.ATrailPresetExecutor;
@@ -11,7 +12,9 @@ import java.util.Locale;
 
 public enum TrailPreset {
     CIRCLE_MOVING_UP(new CircleTrailPresetExecutor()),
-    ROTATING_CUBOID(new CuboidTrailPresetExecutor());
+    ROTATING_CUBOID(new CuboidTrailPresetExecutor()),
+    //SKYTALE(new SkytaleImageTrailPresetExecutor(), ImagePresetInitializer.class),
+    ;
 
     private final ATrailPresetExecutor presetExecutor;
 

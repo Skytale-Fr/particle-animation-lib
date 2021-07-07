@@ -1,8 +1,13 @@
 package fr.skytale.particleanimlib.animation.attribute;
 
+import fr.skytale.particleanimlib.animation.animation.circle.preset.GrowingHalfCirclePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.circle.preset.SimpleCirclePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.SmallCuboidRotatingPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.ImagePresetInitializer;
 import fr.skytale.particleanimlib.animation.animation.image.preset.SkytaleImagePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramidPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
+import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExecutor;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
@@ -11,9 +16,20 @@ import fr.skytale.particleanimlib.animation.parent.preset.APresetInitializer;
 import java.util.Locale;
 
 public enum AnimationPreset {
+    //ATOM(new AtomPresetExecutor()),
+    CIRCLE(new SimpleCirclePresetExecutor()),
+    CIRCLE_HALF_GROWING(new GrowingHalfCirclePresetExecutor()),
     CUBOID_ROTATING(new SmallCuboidRotatingPresetExecutor()),
     IMAGE_SKYTALE(new SkytaleImagePresetExecutor(), ImagePresetInitializer.class),
-    WAVE(new WavePresetExecutor());
+    PYRAMID_GROWING(new GrowingPyramidPresetExecutor()),
+    SPHERE(new SpherePresetExecutor()),
+    SPHERE_PROPAGATION_BOTTOM_TO_TOP(new PropagatingUpSpherePresetExecutor()),
+    SPHERE_PROPAGATION_TOP_TO_BOTTOM(new PropagatingDownSpherePresetExecutor()),
+    SPHERE_ELECTRIC(new ElectricExplodingSpherePresetExecutor()),
+    SPHERE_HALF_GROWING(new ExplodingHalfSpherePresetExecutor()),
+    SPIRAL(new SpiralPresetExecutor()),
+    WAVE(new WavePresetExecutor())
+    ;
 
     private final AAnimationPresetExecutor<?> presetExecutor;
 

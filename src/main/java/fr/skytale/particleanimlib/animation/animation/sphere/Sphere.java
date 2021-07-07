@@ -16,7 +16,7 @@ public class Sphere extends ARoundAnimation {
     }
 
     private IVariable<Integer> nbCircles;
-    private PropagationType propagationType;
+    private PropagationType propagationType = null;
     private IVariable<Integer> simultaneousCircles;
     private Type type;
 
@@ -66,7 +66,7 @@ public class Sphere extends ARoundAnimation {
     public Sphere clone() {
         Sphere obj = (Sphere) super.clone();
         obj.nbCircles = nbCircles.copy();
-        obj.simultaneousCircles = simultaneousCircles.copy();
+        obj.simultaneousCircles = simultaneousCircles == null ? null : simultaneousCircles.copy();
         return obj;
     }
 }

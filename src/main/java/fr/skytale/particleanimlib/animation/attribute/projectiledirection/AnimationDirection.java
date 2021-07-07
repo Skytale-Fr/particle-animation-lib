@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
-public abstract class AnimationDirection {
+public abstract class AnimationDirection implements Cloneable {
 
     public static class MoveData {
         public static MoveData createError() {
@@ -40,11 +40,31 @@ public abstract class AnimationDirection {
         return new VectorAnimationDirection(moveVector);
     }
 
+    public static AnimationDirection fromMoveVector(Vector moveVector) {
+        return new VectorAnimationDirection(moveVector);
+    }
+
     public static AnimationDirection fromTargetLocation(IVariable<Location> targetLocation, IVariable<Double> speed) {
         return new LocationAnimationDirection(targetLocation, speed);
     }
 
+    public static AnimationDirection fromTargetLocation(Location targetLocation, IVariable<Double> speed) {
+        return new LocationAnimationDirection(targetLocation, speed);
+    }
+
+    public static AnimationDirection fromTargetLocation(IVariable<Location> targetLocation, double speed) {
+        return new LocationAnimationDirection(targetLocation, speed);
+    }
+
+    public static AnimationDirection fromTargetLocation(Location targetLocation, double speed) {
+        return new LocationAnimationDirection(targetLocation, speed);
+    }
+
     public static AnimationDirection fromTargetEntity(Entity targetEntity, IVariable<Double> speed) {
+        return new EntityAnimationDirection(targetEntity, speed);
+    }
+
+    public static AnimationDirection fromTargetEntity(Entity targetEntity, double speed) {
         return new EntityAnimationDirection(targetEntity, speed);
     }
 

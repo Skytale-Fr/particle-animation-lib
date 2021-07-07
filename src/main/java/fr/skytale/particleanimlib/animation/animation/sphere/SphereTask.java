@@ -27,12 +27,12 @@ public class SphereTask extends AAnimationTask<Sphere> {
         }
 
         //Si on va de bas en haut, le min et le max est inversé
-        if (animation.getPropagationType() == Sphere.PropagationType.TOP_TO_BOTTOM) {
-            min = tmpMin;
-            max = tmpMax;
-        } else {
+        if (animation.getPropagationType() == Sphere.PropagationType.BOTTOM_TO_TOP) {
             min = tmpMax;
             max = tmpMin;
+        } else {
+            min = tmpMin;
+            max = tmpMax;
         }
 
         currentMin = min;
@@ -50,14 +50,14 @@ public class SphereTask extends AAnimationTask<Sphere> {
         }
 
         Sphere.PropagationType propagationType = animation.getPropagationType();
-        double step = (max - min) / animation.getNbCircles().getCurrentValue(iterationCount);
+        double stepBetweenCircles = (max - min) / animation.getNbCircles().getCurrentValue(iterationCount);
 
         //Define the vertical limits of the sphere that will be shown
         double currentMax;
 
         if (propagationType != null) {
             Integer simultaneousCircles = animation.getSimultaneousCircles().getCurrentValue(iterationCount);
-            currentMax = currentMin + step * simultaneousCircles;
+            currentMax = currentMin + stepBetweenCircles * simultaneousCircles;
             if (propagationType == Sphere.PropagationType.BOTTOM_TO_TOP && currentMax < max) {
                 currentMax = max;
             } else if (propagationType == Sphere.PropagationType.TOP_TO_BOTTOM && currentMax > max) {
@@ -67,11 +67,16 @@ public class SphereTask extends AAnimationTask<Sphere> {
             currentMax = max;
         }
 
+        if (propagationType != null && (propagationType == Sphere.PropagationType.BOTTOM_TO_TOP && currentMin <= max || propagationType == Sphere.PropagationType.TOP_TO_BOTTOM && currentMin >= max)) {
+            stopAnimation();
+            return;
+        }
+
         double radius = animation.getRadius().getCurrentValue(iterationCount);
         double angleBetweenEachPoint = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
         ParticleTemplate particleTemplate = animation.getMainParticle();
 
-        for (double i = currentMin; propagationType == Sphere.PropagationType.BOTTOM_TO_TOP ? i >= currentMax : i <= currentMax; i += step) {
+        for (double i = currentMin; propagationType == Sphere.PropagationType.BOTTOM_TO_TOP ? i >= currentMax : i <= currentMax; i += stepBetweenCircles) {
             double currentRadius = Math.sin(i) * radius;
             double y = iterationBaseLocation.getY() + Math.cos(i) * radius;
 
@@ -82,6 +87,9 @@ public class SphereTask extends AAnimationTask<Sphere> {
                 particleTemplate.getParticleBuilder(new Location(iterationBaseLocation.getWorld(), x, y, z)).display();
             }
         }
-        currentMin += step;
+
+        if (propagationType != null) {
+            currentMin += stepBetweenCircles;
+        }
     }
 }

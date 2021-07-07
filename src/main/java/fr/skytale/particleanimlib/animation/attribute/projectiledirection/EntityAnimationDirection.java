@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.attribute.projectiledirection;
 
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import org.bukkit.entity.Entity;
 
@@ -13,5 +14,9 @@ public class EntityAnimationDirection extends AnimationDirection {
                 speed,
                 Type.TARGET_ENTITY
         );
+    }
+
+    public EntityAnimationDirection(Entity targetEntity, double speed) {
+        this(targetEntity, new Constant<>(speed));
     }
 }
