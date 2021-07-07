@@ -1,4 +1,4 @@
-package fr.skytale.particleanimlib.parent;
+package fr.skytale.particleanimlib.animation.parent;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;

@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.explodingsphere;
 
-import fr.skytale.particleanimlib.parent.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
 
 public class ExplodingSphereBuilder extends AAnimationBuilder<ExplodingSphere> {
 

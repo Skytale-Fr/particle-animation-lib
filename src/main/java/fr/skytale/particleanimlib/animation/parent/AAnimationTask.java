@@ -1,6 +1,6 @@
-package fr.skytale.particleanimlib.parent;
+package fr.skytale.particleanimlib.animation.parent;
 
-import fr.skytale.particleanimlib.attributes.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;

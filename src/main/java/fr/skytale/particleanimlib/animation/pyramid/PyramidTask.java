@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.pyramid;
 
-import fr.skytale.particleanimlib.attributes.CustomVector;
-import fr.skytale.particleanimlib.parent.AAnimationTask;
+import fr.skytale.particleanimlib.animation.attributes.CustomVector;
+import fr.skytale.particleanimlib.animation.parent.AAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;

@@ -1,9 +1,9 @@
 package fr.skytale.particleanimlib.animation.sphere;
 
 
-import fr.skytale.particleanimlib.attributes.PropagationType;
-import fr.skytale.particleanimlib.attributes.SphereType;
-import fr.skytale.particleanimlib.parent.ARoundAnimation;
+import fr.skytale.particleanimlib.animation.attributes.PropagationType;
+import fr.skytale.particleanimlib.animation.attributes.SphereType;
+import fr.skytale.particleanimlib.animation.parent.ARoundAnimation;
 
 public class Sphere extends ARoundAnimation {
     private int nbCircles;

@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.explodingsphere;
 
-import fr.skytale.particleanimlib.parent.ARoundAnimation;
+import fr.skytale.particleanimlib.animation.parent.ARoundAnimation;
 
 public class ExplodingSphere extends ARoundAnimation {
     private double growthSpeed;

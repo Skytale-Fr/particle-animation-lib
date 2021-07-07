@@ -1,8 +1,8 @@
-package fr.skytale.particleanimlib.parent;
+package fr.skytale.particleanimlib.animation.parent;
 
-import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
-import fr.skytale.particleanimlib.attributes.CustomVector;
-import fr.skytale.particleanimlib.attributes.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attributes.AnimationEndedCallback;
+import fr.skytale.particleanimlib.animation.attributes.CustomVector;
+import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;

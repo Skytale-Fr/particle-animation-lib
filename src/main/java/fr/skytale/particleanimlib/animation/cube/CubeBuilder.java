@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.cube;
 
 
-import fr.skytale.particleanimlib.parent.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
 
 public class CubeBuilder extends AAnimationBuilder<Cube> {
 

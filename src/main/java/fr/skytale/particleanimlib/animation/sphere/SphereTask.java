@@ -1,8 +1,8 @@
 package fr.skytale.particleanimlib.animation.sphere;
 
-import fr.skytale.particleanimlib.attributes.PropagationType;
-import fr.skytale.particleanimlib.attributes.SphereType;
-import fr.skytale.particleanimlib.parent.ARoundAnimationTask;
+import fr.skytale.particleanimlib.animation.attributes.PropagationType;
+import fr.skytale.particleanimlib.animation.attributes.SphereType;
+import fr.skytale.particleanimlib.animation.parent.ARoundAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 

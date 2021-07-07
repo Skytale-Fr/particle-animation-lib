@@ -1,6 +1,6 @@
 # ParticleAnimLib
 
-This library allows developers to include complex minecraft particles animations within their own spigot plugins.
+This library allows developers to include complex minecraft particles animations and trails within their own spigot plugins.
 
 ## Introduction
 
@@ -46,12 +46,14 @@ dependencies {
 
 ### 2. Use the library features wherever you need it
 
+#### To create particle animations
+
 ```java
-/*** Create a builder ***/
+/** Create a builder **/
 CuboidBuilder cuboidBuilder = new CuboidBuilder();
 
-/*** Define the attributs common to every animations ***/
-// Give it your plugin
+/** Define the common attributes **/
+// Your plugin is required
 cuboidBuilder.setJavaPlugin(plugin);
 
 // Define how long (in ticks) the animation will be shown
@@ -70,7 +72,7 @@ cuboidBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 17
 cuboidBuilder.setMovingEntity(player);
 cuboidBuilder.setRelativeLocation(new Vector(0, 0, 0));
 
-/*** Define the specific attributes, depending on your animation type ***/
+/** Define the specific attributes, depending on your animation type **/
 
 // Required attributes like the 2 points that defines this cuboid
 cuboidBuilder.setFromLocationToFirstCorner(new Vector(-3, -3, -3));
@@ -88,7 +90,39 @@ cuboidBuilder.getAnimation().show();
 ```
 
 > You can save the result of getAnimation() (cache it within an attribute) in order to be able to show the animation multiple times in a row.
-> You can also change the parameters of the animation between each show. 
+> You can also change the parameters of the animation between each show.
+
+#### To create trails behind players
+
+```java
+
+/** Create a circle animation **/
+CircleBuilder circleBuilder = new CircleBuilder();
+circleBuilder.setRadius(2.0);
+circleBuilder.setNbPoints(20);
+circleBuilder.setRelativeLocation(new Vector(0, 0, 0));
+circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+circleBuilder.setMoveStepVector(new Vector(0,0.2,0));
+circleBuilder.setMoveFrequency(1);
+
+circleBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
+circleBuilder.setTicksDuration(400);
+circleBuilder.setShowFrequency(5);
+circleBuilder.setJavaPlugin(plugin);
+
+/** Create the trail **/
+TrailBuilder trailBuilder = new TrailBuilder();
+trailBuilder.setDuration(Duration.ofSeconds(200));
+trailBuilder.setCheckFrequency(2);
+trailBuilder.setMinPlayerToAnimationDistance(1);
+trailBuilder.setMinDistanceBetweenAnimations(2);
+trailBuilder.addAnimation(circleBuilder.getAnimation());
+
+return trailBuilder.getTrail().start();
+```
+
+> You can save the TrailTask (cache it within an attribute) in order to be able to add the trail to other players later.
+> You can also change the parameters of the Trail and its animation(s) before creating another task from it.
 
 ### 3. Go further
 
@@ -107,8 +141,14 @@ In order to let users test quickly every animation, a testing system has been bu
 ```yml
 commands:
   panim:
-    description: Animation particles
-    usage: /panim [<showall | event | type> [animationSample]]
+    description: Particle animations
+    usage: >
+      /panim
+      /panim showall
+      /panim event
+      /panim type <type>
+      /panim trail
+      /panim trail <type>
     aliases:
       - pa
 ```
@@ -149,3 +189,5 @@ shadowJar {
     * `/panim event` : Toggle the showing of the animation on right click air
     * `/panim type <AnimationType>` : Select the animation to be shown
     * `/panim showall` : Show all the animations.
+    * `/panim trail` : Show the selected trail animation (or the default one)
+    * `/panim trail <TrailType>` : Select the trail animation to be shown

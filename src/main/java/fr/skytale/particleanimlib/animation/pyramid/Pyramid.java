@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.pyramid;
 
-import fr.skytale.particleanimlib.parent.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.AAnimation;
 import org.bukkit.util.Vector;
 
 public class Pyramid extends AAnimation {

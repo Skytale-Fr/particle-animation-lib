@@ -1,10 +1,10 @@
 package fr.skytale.particleanimlib.animation.atom;
 
 
-import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
-import fr.skytale.particleanimlib.attributes.ParticleTemplate;
-import fr.skytale.particleanimlib.parent.AAnimation;
-import fr.skytale.particleanimlib.parent.ARoundAnimation;
+import fr.skytale.particleanimlib.animation.attributes.AnimationEndedCallback;
+import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.parent.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.ARoundAnimation;
 
 public class Atom extends ARoundAnimation {
     private AAnimation sphere;

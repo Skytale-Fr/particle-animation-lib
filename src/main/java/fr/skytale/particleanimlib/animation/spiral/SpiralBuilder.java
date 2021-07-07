@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.spiral;
 
-import fr.skytale.particleanimlib.parent.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
 import org.bukkit.util.Vector;
 
 public class SpiralBuilder extends AAnimationBuilder<Spiral> {

@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.spiralprojectile;
 
-import fr.skytale.particleanimlib.parent.AAnimation;
-import fr.skytale.particleanimlib.parent.ARoundAnimationTask;
+import fr.skytale.particleanimlib.animation.parent.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.ARoundAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;

@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.spiral;
 
-import fr.skytale.particleanimlib.parent.ARoundAnimation;
+import fr.skytale.particleanimlib.animation.parent.ARoundAnimation;
 import org.bukkit.util.Vector;
 
 public class Spiral extends ARoundAnimation {

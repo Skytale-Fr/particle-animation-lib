@@ -1,21 +1,22 @@
 package fr.skytale.particleanimlib.testing.command;
 
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
-import fr.skytale.particleanimlib.testing.attributes.AnimationSample;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.HumanEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AnimationLibTabCompleter implements TabCompleter {
 
-    public static final List<String> FIRST_PARAMS = Arrays.asList("event", "showall", "type");
+    public static final List<String> FIRST_PARAMS = Arrays.asList("event", "showall", "type", "trail");
 
     ParticleAnimLibTest particleAnimLibTest;
 
@@ -35,8 +36,12 @@ public class AnimationLibTabCompleter implements TabCompleter {
                     .collect(Collectors.toList());
         }
         if (args.length == 2 && args[0].equals("type")) {
-            return Arrays.stream(AnimationSample.values())
-                    .map(type -> type.name().toLowerCase(Locale.ROOT))
+            return this.particleAnimLibTest.getAnimationNames().stream()
+                    .filter(typeStr -> typeStr.startsWith(args[1]))
+                    .collect(Collectors.toList());
+        }
+        if (args.length == 2 && args[0].equals("trail")) {
+            return this.particleAnimLibTest.getTrailNames().stream()
                     .filter(typeStr -> typeStr.startsWith(args[1]))
                     .collect(Collectors.toList());
         }

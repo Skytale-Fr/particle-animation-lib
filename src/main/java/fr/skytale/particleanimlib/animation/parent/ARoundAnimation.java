@@ -1,4 +1,4 @@
-package fr.skytale.particleanimlib.parent;
+package fr.skytale.particleanimlib.animation.parent;
 
 public abstract class ARoundAnimation extends AAnimation {
     protected double radius;

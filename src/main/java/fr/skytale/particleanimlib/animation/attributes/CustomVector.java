@@ -1,4 +1,4 @@
-package fr.skytale.particleanimlib.attributes;
+package fr.skytale.particleanimlib.animation.attributes;
 
 import com.google.common.base.Preconditions;
 import org.bukkit.util.Vector;

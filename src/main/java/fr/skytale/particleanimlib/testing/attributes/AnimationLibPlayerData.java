@@ -4,16 +4,19 @@ import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
 
 public class AnimationLibPlayerData {
     private boolean showAnimationOnClick;
-    private AnimationSample animationSample;
+    private String animationSampleName;
+    private String trailSampleName;
 
-    public AnimationLibPlayerData(boolean showAnimationOnClick, AnimationSample animationSample) {
+    public AnimationLibPlayerData(boolean showAnimationOnClick, String animationSampleName, String trailSampleName) {
         this.showAnimationOnClick = showAnimationOnClick;
-        this.animationSample = animationSample;
+        this.animationSampleName = animationSampleName;
+        this.trailSampleName = trailSampleName;
     }
 
     public AnimationLibPlayerData() {
         this.showAnimationOnClick = ParticleAnimLibTest.DEFAULT_SHOW_ON_CLICK;
-        this.animationSample = ParticleAnimLibTest.DEFAULT_ANIMATION_TYPE;
+        this.animationSampleName = ParticleAnimLibTest.DEFAULT_ANIMATION_TYPE;
+        this.trailSampleName = ParticleAnimLibTest.DEFAULT_TRAIL_TYPE;
     }
 
     public boolean isShowAnimationOnClick() {
@@ -24,11 +27,19 @@ public class AnimationLibPlayerData {
         this.showAnimationOnClick = showAnimationOnClick;
     }
 
-    public AnimationSample getAnimationType() {
-        return animationSample;
+    public String getAnimationType() {
+        return animationSampleName;
     }
 
-    public void setAnimationType(AnimationSample animationSample) {
-        this.animationSample = animationSample;
+    public void setAnimationType(String animationSample) {
+        this.animationSampleName = animationSample;
+    }
+
+    public String getTrailSampleName() {
+        return trailSampleName;
+    }
+
+    public void setTrailSampleName(String trailSampleName) {
+        this.trailSampleName = trailSampleName;
     }
 }

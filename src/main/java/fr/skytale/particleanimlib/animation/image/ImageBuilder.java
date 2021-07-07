@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.image;
 
-import fr.skytale.particleanimlib.parent.AAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.AAnimationBuilder;
 import org.bukkit.util.Vector;
 
 public class ImageBuilder extends AAnimationBuilder<Image> {

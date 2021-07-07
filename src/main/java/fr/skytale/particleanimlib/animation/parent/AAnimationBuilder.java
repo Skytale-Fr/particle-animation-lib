@@ -1,7 +1,7 @@
-package fr.skytale.particleanimlib.parent;
+package fr.skytale.particleanimlib.animation.parent;
 
-import fr.skytale.particleanimlib.attributes.AnimationEndedCallback;
-import fr.skytale.particleanimlib.attributes.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attributes.AnimationEndedCallback;
+import fr.skytale.particleanimlib.animation.attributes.ParticleTemplate;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -66,12 +66,25 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
     }
 
     public T getAnimation() {
+        return getAnimation(false);
+    }
+
+    public T getAnimation(boolean trailUsage) {
         boolean hasMovingEntity = animation.getMovingEntity() != null;
-        if (animation.getLocation() != null && hasMovingEntity) {
-            throw new IllegalArgumentException("Fixed location and movingEntity should not be both defined");
-        }
-        if (hasMovingEntity && animation.getRelativeLocation() == null) {
-            animation.setRelativeLocation(new Vector(0, 0, 0));
+        if (trailUsage) {
+            if (animation.getLocation() != null || hasMovingEntity) {
+                throw new IllegalArgumentException("Trail animations must not contain a moving entity or a location. Only the relative location can optionally be defined.");
+            }
+            if (animation.getRelativeLocation() == null) {
+                animation.setRelativeLocation(new Vector(0, 0, 0));
+            }
+        } else {
+            if (animation.getLocation() != null && hasMovingEntity) {
+                throw new IllegalArgumentException("Fixed location and movingEntity should not be both defined");
+            }
+            if (hasMovingEntity && animation.getRelativeLocation() == null) {
+                animation.setRelativeLocation(new Vector(0, 0, 0));
+            }
         }
         if (animation.getMainParticle() == null) {
             throw new IllegalArgumentException("Main particle should not be null");
@@ -85,6 +98,4 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
 
         return (T) animation.clone();
     }
-
-    ;
 }

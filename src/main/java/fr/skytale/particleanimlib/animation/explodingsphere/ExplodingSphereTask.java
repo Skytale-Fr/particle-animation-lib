@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.explodingsphere;
 
-import fr.skytale.particleanimlib.parent.ARoundAnimationTask;
+import fr.skytale.particleanimlib.animation.parent.ARoundAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
