@@ -67,7 +67,7 @@ public class RotatableVector extends Vector {
 
     public Plane2D getPlane(Location locInThePlane) {
         Vector3D pointOfPlane = new RotatableVector(locInThePlane.toVector()).toVector3D();
-        Plane plane = new Plane(toVector3D(), pointOfPlane, 0.001);
+        Plane plane = new Plane(pointOfPlane, toVector3D(), 0.001);
         return new Plane2D(new RotatableVector(plane.getU()), new RotatableVector(plane.getV()));
     }
 

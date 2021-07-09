@@ -43,4 +43,12 @@ public abstract class AAnimationPresetExecutor<T extends AAnimationBuilder<?>> {
             throw new IllegalStateException(e);
         }
     }
+
+    public final AAnimationBuilder<?> createEmptyBuilder() {
+        try {
+            return builderClass.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 }

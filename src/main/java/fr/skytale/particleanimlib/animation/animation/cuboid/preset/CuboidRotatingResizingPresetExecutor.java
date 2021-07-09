@@ -10,9 +10,9 @@ import org.bukkit.util.Vector;
 
 import java.awt.*;
 
-public class SmallCuboidRotatingPresetExecutor extends AAnimationPresetExecutor<CuboidBuilder> {
+public class CuboidRotatingResizingPresetExecutor extends AAnimationPresetExecutor<CuboidBuilder> {
 
-    public SmallCuboidRotatingPresetExecutor() {
+    public CuboidRotatingResizingPresetExecutor() {
         super(CuboidBuilder.class);
     }
 

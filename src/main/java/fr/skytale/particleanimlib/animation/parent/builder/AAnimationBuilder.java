@@ -1,8 +1,8 @@
 package fr.skytale.particleanimlib.animation.parent.builder;
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationEndedCallback;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
+import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
@@ -31,12 +31,20 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation.setPosition(position);
     }
 
+    public APosition getPosition() {
+        return animation.getPosition();
+    }
+
     public void setMainParticle(ParticleTemplate mainParticle) {
         animation.setMainParticle(mainParticle);
     }
 
     public void setJavaPlugin(JavaPlugin javaPlugin) {
         animation.setPlugin(javaPlugin);
+    }
+
+    public JavaPlugin getJavaPlugin() {
+        return animation.getPlugin();
     }
 
     public void setTicksDuration(int ticksDuration) {
@@ -61,16 +69,16 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
     }
 
     public T getAnimation(boolean trailUsage) {
-        checkNotNull(animation.getPosition(), POSITION_SHOULD_NOT_BE_NULL);
-        if (trailUsage) {
-            if (!animation.getPosition().getType().equals(APosition.Type.TRAIL))
-                throw new IllegalArgumentException("Trail animations must not contain a moving entity or a location. Only the relative location can optionally be defined.");
-        } else {
-            if (animation.getPosition().getType().equals(APosition.Type.TRAIL)) {
-                throw new IllegalArgumentException("Animations must contain a moving entity or a location. If you are in the context of trails, please call builder.getAnimation(true) instead.");
+            checkNotNull(animation.getPosition(), POSITION_SHOULD_NOT_BE_NULL);
+            if (trailUsage) {
+                if (!animation.getPosition().getType().equals(APosition.Type.TRAIL))
+                    throw new IllegalArgumentException("Trail animations must not contain a moving entity or a location. Only the relative location can optionally be defined.");
+            } else {
+                if (animation.getPosition().getType().equals(APosition.Type.TRAIL)) {
+                    throw new IllegalArgumentException("Animations must contain a moving entity or a location. If you are in the context of trails, please call builder.getAnimation(true) instead.");
 
+                }
             }
-        }
         if (animation instanceof ISubAnimationContainer) {
             checkNotNull(((ISubAnimationContainer) animation).getPointDefinition(), POINT_DEFINITION_SHOULD_NOT_BE_NULL);
         } else {
@@ -124,14 +132,16 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
     protected void checkSuperior(IVariable<? extends Number> superior, IVariable<? extends Number> inferior, String checkFailureMessage, boolean allowEqual) {
         if (superior != null && superior.isConstant() && inferior != null && inferior.isConstant()) {
             if (allowEqual) {
-                if (superior.getCurrentValue(0).doubleValue() <= inferior.getCurrentValue(0).doubleValue()) {
+                if (superior.getCurrentValue(0).doubleValue() < inferior.getCurrentValue(0).doubleValue()) {
                     throw new IllegalArgumentException(checkFailureMessage);
                 }
             } else {
-                if (superior.getCurrentValue(0).doubleValue() < inferior.getCurrentValue(0).doubleValue()) {
+                if (superior.getCurrentValue(0).doubleValue() <= inferior.getCurrentValue(0).doubleValue()) {
                     throw new IllegalArgumentException(checkFailureMessage);
                 }
             }
         }
     }
+
+
 }

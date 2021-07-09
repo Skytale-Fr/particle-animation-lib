@@ -40,9 +40,10 @@ public class DirectionSubAnimPointDefinition extends SubAnimPointDefinition {
 
     @Override
     public void show(Location loc, Vector fromCenterToPoint) {
-        subAnimation.setPosition(APosition.fromLocation(loc));
-        subAnimation.setDirection(AnimationDirection.fromMoveVector(fromCenterToPoint.normalize().multiply(speed)));
-        subAnimation.show();
+        IDirectionSubAnimation newSubAnimation = (IDirectionSubAnimation) subAnimation.clone();
+        newSubAnimation.setPosition(APosition.fromLocation(loc));
+        newSubAnimation.setDirection(AnimationDirection.fromMoveVector(fromCenterToPoint.normalize().multiply(speed)));
+        newSubAnimation.show();
 
     }
 

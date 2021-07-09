@@ -1,15 +1,15 @@
 package fr.skytale.particleanimlib.animation.attribute;
 
-import fr.skytale.particleanimlib.animation.animation.circle.preset.GrowingHalfCirclePresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.circle.preset.RotatingCirclePresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.circle.preset.SimpleCirclePresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.cuboid.preset.SmallCuboidRotatingPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.circle.preset.*;
+import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.ImagePresetInitializer;
 import fr.skytale.particleanimlib.animation.animation.image.preset.SkytaleImagePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.GrowingPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.RotatingPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.SimplePolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramidPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.pyramid.preset.SimplePyramidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
 import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExecutor;
@@ -24,17 +24,26 @@ public enum AnimationPreset {
     CIRCLE(new SimpleCirclePresetExecutor()),
     CIRCLE_HALF_GROWING(new GrowingHalfCirclePresetExecutor()),
     CIRCLE_ROTATING(new RotatingCirclePresetExecutor()),
-    CUBOID_ROTATING(new SmallCuboidRotatingPresetExecutor()),
+    CIRCLE_SUB_ANIM_ROTATING(new SubAnimationCircleRotatingPresetExecutor()),
+    CIRCLE_SUB_ANIM_ROTATING2(new SubAnimationCircleRotating2PresetExecutor()),
+    CIRCLE_SUB_ANIM_ROTATING_PYRAMID(new SubAnimationCircleRotatingPyramidPresetExecutor()),
+    CUBOID(new CuboidPresetExecutor()),
+    CUBOID_ROTATING_RESIZING(new CuboidRotatingResizingPresetExecutor()),
     IMAGE_SKYTALE(new SkytaleImagePresetExecutor(), ImagePresetInitializer.class),
     POLYGON(new SimplePolygonPresetExecutor()),
     POLYGON_GROWING(new GrowingPolygonPresetExecutor()),
     POLYGON_ROTATING(new RotatingPolygonPresetExecutor()),
+    PYRAMID(new SimplePyramidPresetExecutor()),
     PYRAMID_GROWING(new GrowingPyramidPresetExecutor()),
     SPHERE(new SpherePresetExecutor()),
     SPHERE_PROPAGATION_BOTTOM_TO_TOP(new PropagatingUpSpherePresetExecutor()),
     SPHERE_PROPAGATION_TOP_TO_BOTTOM(new PropagatingDownSpherePresetExecutor()),
     SPHERE_ELECTRIC(new ElectricExplodingSpherePresetExecutor()),
     SPHERE_HALF_GROWING(new ExplodingHalfSpherePresetExecutor()),
+    SPHERE_SUB_ANIM_POLYGON(new SphereSubAnimPolygonPresetExecutor()),
+    SPHERE_SUB_ANIM_POLYGON2(new SphereSubAnimPolygon2PresetExecutor()),
+    SPHERE_SUB_ANIM_POLYGON_PROPAGATION(new SphereSubAnimPolygonPropagatingUpPresetExecutor()),
+    SPHERE_SUB_ANIM_SPIRAL_PROPAGATION(new SphereSubAnimSpiralPropagatingUpPresetExecutor()),
     SPIRAL(new SpiralPresetExecutor()),
     WAVE(new WavePresetExecutor())
     ;
@@ -51,6 +60,10 @@ public enum AnimationPreset {
 
     public Class<? extends AAnimationBuilder<?>> getBuilderClass() {
         return presetExecutor.getBuilderClass();
+    }
+
+    public AAnimationPresetExecutor<?> getPresetExecutor() {
+        return presetExecutor;
     }
 
     public void apply(AAnimationBuilder<?> builder) {

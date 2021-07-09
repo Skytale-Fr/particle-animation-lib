@@ -24,6 +24,6 @@ public class SimplePolygonPresetExecutor extends AAnimationPresetExecutor<Polygo
         polygonBuilder.setDistanceFromCenterToVertices(5);
         polygonBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         polygonBuilder.setTicksDuration(100);
-        polygonBuilder.setShowFrequency(new Constant<>(1));
+        polygonBuilder.setShowFrequency(1);
     }
 }

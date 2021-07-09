@@ -28,8 +28,9 @@ public class LocationSubAnimPointDefinition extends SubAnimPointDefinition {
     @Override
     @Deprecated
     public void show(Location loc) {
-        subAnimation.setPosition(APosition.fromLocation(loc));
-        subAnimation.show();
+        ISubAnimation newSubAnimation = (ISubAnimation) subAnimation.clone();
+        newSubAnimation.setPosition(APosition.fromLocation(loc));
+        newSubAnimation.show();
     }
 
     @Override

@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class ParticleAnimLibTest {
 
-    public static String DEFAULT_ANIMATION_TYPE = AnimationPreset.CUBOID_ROTATING.name();
+    public static String DEFAULT_ANIMATION_TYPE = AnimationPreset.SPHERE_SUB_ANIM_SPIRAL_PROPAGATION.name();
     public static String DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP.name();
     public static boolean DEFAULT_SHOW_ON_CLICK = true;
 

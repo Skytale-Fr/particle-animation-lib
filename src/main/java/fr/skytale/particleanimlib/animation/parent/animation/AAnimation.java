@@ -77,7 +77,7 @@ public abstract class AAnimation implements Cloneable {
         }
         assert obj != null;
         obj.position = this.position.clone();
-        obj.mainParticle = new ParticleTemplate(this.getMainParticle());
+        obj.mainParticle = mainParticle == null ? null : new ParticleTemplate(this.mainParticle);
         return obj;
     }
 

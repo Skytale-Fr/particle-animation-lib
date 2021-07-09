@@ -31,8 +31,9 @@ public class PlaneSubAnimPointDefinition extends SubAnimPointDefinition {
 
     @Override
     public void show(Location loc) {
-        subAnimation.setPosition(APosition.fromLocation(loc));
-        subAnimation.show();
+        IPlaneSubAnimation newSubAnimation = (IPlaneSubAnimation) subAnimation.clone();
+        newSubAnimation.setPosition(APosition.fromLocation(loc));
+        newSubAnimation.show();
     }
 
     @Override
