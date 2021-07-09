@@ -2,6 +2,7 @@ package fr.skytale.particleanimlib.animation.animation.image;
 
 
 import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
-public class Image extends ARotatingAnimation {
+public class Image extends ARotatingAnimation implements IPlaneSubAnimation {
 
     /******** Static Methods ********/
 
@@ -111,18 +112,22 @@ public class Image extends ARotatingAnimation {
 
     /******** Getters & Setters ********/
 
+    @Override
     public void setU(Vector u) {
         this.u = u;
     }
 
+    @Override
     public void setV(Vector v) {
         this.v = v;
     }
 
+    @Override
     public Vector getV() {
         return v;
     }
 
+    @Override
     public Vector getU() {
         return u;
     }

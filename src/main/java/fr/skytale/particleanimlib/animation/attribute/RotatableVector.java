@@ -1,10 +1,23 @@
 package fr.skytale.particleanimlib.animation.attribute;
 
 import com.google.common.base.Preconditions;
+import org.apache.commons.math3.geometry.euclidean.threed.Plane;
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 public class RotatableVector extends Vector {
+
+    public static class Plane2D {
+        public Vector u;
+        public Vector v;
+
+        public Plane2D(Vector u, Vector v) {
+            this.u = u;
+            this.v = v;
+        }
+    }
 
     public RotatableVector(int x, int y, int z) {
         super(x, y, z);
@@ -20,6 +33,10 @@ public class RotatableVector extends Vector {
 
     public RotatableVector(float x, float y, float z) {
         super(x, y, z);
+    }
+
+    public RotatableVector(Vector3D v) {
+        super(v.getX(), v.getY(), v.getZ());
     }
 
     public @NotNull Vector rotateAroundNonUnitAxis(Vector axis, double angle) throws IllegalArgumentException {
@@ -42,6 +59,16 @@ public class RotatableVector extends Vector {
     public @NotNull Vector rotateAroundAxis(Vector axis, double angle) throws IllegalArgumentException {
         Preconditions.checkArgument(axis != null, "The provided axis vector was null");
         return rotateAroundNonUnitAxis(axis.clone().normalize(), angle);
+    }
+
+    public Vector3D toVector3D() {
+        return new Vector3D(getX(), getY(), getZ());
+    }
+
+    public Plane2D getPlane(Location locInThePlane) {
+        Vector3D pointOfPlane = new RotatableVector(locInThePlane.toVector()).toVector3D();
+        Plane plane = new Plane(toVector3D(), pointOfPlane, 0.001);
+        return new Plane2D(new RotatableVector(plane.getU()), new RotatableVector(plane.getV()));
     }
 
 }

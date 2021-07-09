@@ -74,7 +74,6 @@ public class SphereTask extends AAnimationTask<Sphere> {
 
         double radius = animation.getRadius().getCurrentValue(iterationCount);
         double angleBetweenEachPoint = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
-        ParticleTemplate particleTemplate = animation.getMainParticle();
 
         for (double i = currentMin; propagationType == Sphere.PropagationType.BOTTOM_TO_TOP ? i >= currentMax : i <= currentMax; i += stepBetweenCircles) {
             double currentRadius = Math.sin(i) * radius;
@@ -84,7 +83,7 @@ public class SphereTask extends AAnimationTask<Sphere> {
                 double x = iterationBaseLocation.getX() + Math.cos(j) * currentRadius;
                 double z = iterationBaseLocation.getZ() + Math.sin(j) * currentRadius;
 
-                particleTemplate.getParticleBuilder(new Location(iterationBaseLocation.getWorld(), x, y, z)).display();
+                showPoint(animation.getPointDefinition(), new Location(iterationBaseLocation.getWorld(), x, y, z), iterationBaseLocation);
             }
         }
 

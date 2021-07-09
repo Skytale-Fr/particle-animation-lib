@@ -15,12 +15,12 @@ public class SimpleCirclePresetExecutor extends AAnimationPresetExecutor<CircleB
     }
 
     @Override
-    protected void apply(CircleBuilder circle) {
-        circle.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
-        circle.setNbPoints(20, true);
-        circle.setRadius(4);
-        circle.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
-        circle.setTicksDuration(100);
-        circle.setShowFrequency(new Constant<>(1));
+    protected void apply(CircleBuilder circleBuilder) {
+        circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        circleBuilder.setNbPoints(20, true);
+        circleBuilder.setRadius(4);
+        circleBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
+        circleBuilder.setTicksDuration(100);
+        circleBuilder.setShowFrequency(new Constant<>(1));
     }
 }

@@ -17,13 +17,13 @@ public class GrowingHalfCirclePresetExecutor extends AAnimationPresetExecutor<Ci
     }
 
     @Override
-    protected void apply(CircleBuilder circle) {
-        circle.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
-        circle.setNbPoints(20, false);
-        circle.setAngleBetweenEachPoint(Math.PI / 20);
-        circle.setRadius(new DoublePeriodicallyEvolvingVariable(1.0, 0.2, 1));
-        circle.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
-        circle.setTicksDuration(100);
-        circle.setShowFrequency(new Constant<>(1));
+    protected void apply(CircleBuilder circleBuilder) {
+        circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        circleBuilder.setNbPoints(20, false);
+        circleBuilder.setAngleBetweenEachPoint(Math.PI / 20);
+        circleBuilder.setRadius(new DoublePeriodicallyEvolvingVariable(1.0, 0.2, 1));
+        circleBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
+        circleBuilder.setTicksDuration(100);
+        circleBuilder.setShowFrequency(new Constant<>(1));
     }
 }

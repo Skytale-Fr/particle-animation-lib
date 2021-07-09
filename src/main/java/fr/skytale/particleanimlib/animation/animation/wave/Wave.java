@@ -3,9 +3,10 @@ package fr.skytale.particleanimlib.animation.animation.wave;
 
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
 import org.bukkit.util.Vector;
 
-public class Wave extends AAnimation {
+public class Wave extends AAnimation implements IPlaneSubAnimation {
     private Vector u;
     private Vector v;
     protected IVariable<Double> angleBetweenEachPoint;
@@ -24,18 +25,22 @@ public class Wave extends AAnimation {
 
     /***********GETTERS & SETTERS***********/
 
+    @Override
     public Vector getU() {
         return u;
     }
 
+    @Override
     public void setU(Vector u) {
         this.u = u;
     }
 
+    @Override
     public Vector getV() {
         return v;
     }
 
+    @Override
     public void setV(Vector v) {
         this.v = v;
     }

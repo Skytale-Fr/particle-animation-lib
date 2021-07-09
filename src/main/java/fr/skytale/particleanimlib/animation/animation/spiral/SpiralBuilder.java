@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.spiral;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
@@ -14,7 +15,7 @@ public class SpiralBuilder extends ARoundAnimationBuilder<Spiral> {
         animation.setDirection(AnimationDirection.fromMoveVector(new Constant<>(new Vector(0, 1, 0))));
         animation.setNbSpiral(new Constant<>(2));
         animation.setNbTrailingParticles(new Constant<>(1));
-        animation.setCentralParticle(null);
+        animation.setCentralPointDefinition(null);
         animation.setRadius(new Constant<>(2.0));
         animation.setAngleBetweenEachPoint(new Constant<>(Math.toRadians(20)));
     }
@@ -50,8 +51,21 @@ public class SpiralBuilder extends ARoundAnimationBuilder<Spiral> {
         setNbTrailingParticles(new Constant<>(nbTrailingParticles));
     }
 
-    public void setCentralParticle(ParticleTemplate centralParticle) {
-        animation.setCentralParticle(centralParticle);
+    public void setCentralPointDefinition(PointDefinition centralParticle) {
+        animation.setCentralPointDefinition(centralParticle);
+    }
+
+    public void setCentralPointDefinition(ParticleTemplate particleTemplate) {
+        setCentralPointDefinition(PointDefinition.fromParticleTemplate(particleTemplate));
+    }
+
+    public void setPointDefinition(PointDefinition pointDefinition) {
+        checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
+        animation.setPointDefinition(pointDefinition);
+    }
+
+    public void setPointDefinition(ParticleTemplate particleTemplate) {
+        setPointDefinition(PointDefinition.fromParticleTemplate(particleTemplate));
     }
 
     @Override

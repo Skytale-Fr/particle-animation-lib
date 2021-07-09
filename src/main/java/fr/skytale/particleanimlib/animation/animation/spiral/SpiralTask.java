@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.spiral;
 
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
@@ -15,19 +15,31 @@ import java.util.Set;
 
 public class SpiralTask extends AAnimationTask<Spiral> {
 
+    public static class PointData {
+        public PointDefinition pointDefinition;
+        public Location pointLocation;
+        public Vector fromCenterToPoint;
+
+        public PointData(PointDefinition pointDefinition, Location pointLocation, Vector fromCenterToPoint) {
+            this.pointDefinition = pointDefinition;
+            this.pointLocation = pointLocation;
+            this.fromCenterToPoint = fromCenterToPoint;
+        }
+    }
+
     private final boolean followEntity;
 
     private Vector entityRelativeLocation;
     private Location absoluteLocation;
     private double spiralParticlesChangingAngle;
-    private Set<ParticleBuilder> currentIterationParticles;
-    private final LinkedList<Set<ParticleBuilder>> trailParticlesPerIteration;
+    private Set<PointData> currentIterationPoints;
+    private final LinkedList<Set<PointData>> trailPointsPerIteration;
 
     public SpiralTask(Spiral spiral) {
         super(spiral);
         followEntity = animation.getDirection().getType() == AnimationDirection.Type.MOVE_VECTOR && animation.getPosition().getType() == APosition.Type.ENTITY;
         spiralParticlesChangingAngle = 0;
-        trailParticlesPerIteration = new LinkedList<>();
+        trailPointsPerIteration = new LinkedList<>();
 
         startTask();
     }
@@ -78,10 +90,10 @@ public class SpiralTask extends AAnimationTask<Spiral> {
         displayTrail(nbTrailingParticles);
 
         // --- Reinitialize the Set that contains this iteration particles
-        currentIterationParticles = new HashSet<>();
+        currentIterationPoints = new HashSet<>();
 
         // --- show the central particle (and add it to the Set to be able to show the particle again within the spiral trail during a future iteration)
-        displayParticle(animationCurrentLocation, true);
+        displayPoint(animationCurrentLocation, nextMoveData.move, true);
 
 
         //Calculating radiusVector
@@ -98,7 +110,7 @@ public class SpiralTask extends AAnimationTask<Spiral> {
             double currentSpiralParticleAngle = i * spiralParticlesGapAngle + spiralParticlesChangingAngle;
             Location currentSpiralParticleLocation = rotateAroundAxis(firstSpiralParticleLocationBeforeRotation, directorVector, animationCurrentLocation, currentSpiralParticleAngle);
             // --- show each spiral particle (and add it to the Set to be able to show the particle again within the spiral trail during a future iteration)
-            displayParticle(currentSpiralParticleLocation, false);
+            displayPoint(currentSpiralParticleLocation, currentSpiralParticleLocation.toVector().subtract(animationCurrentLocation.toVector()), false);
         }
 
 
@@ -118,7 +130,7 @@ public class SpiralTask extends AAnimationTask<Spiral> {
         }
 
         // We add the new trail particles at the beginning of the list. So bigger index = older
-        trailParticlesPerIteration.add(0, currentIterationParticles);
+        trailPointsPerIteration.add(0, currentIterationPoints);
     }
 
     private void displayTrail(Integer nbTrailingParticles) {
@@ -130,12 +142,12 @@ public class SpiralTask extends AAnimationTask<Spiral> {
             ==> Show 0 , 1 , 2
             ==> Remove 3 , 4 , 5
          */
-        Iterator<Set<ParticleBuilder>> it = trailParticlesPerIteration.iterator();
+        Iterator<Set<PointData>> it = trailPointsPerIteration.iterator();
         int i = 0;
         while (it.hasNext()) {
-            Set<ParticleBuilder> iterationParticles = it.next();
+            Set<PointData> iterationParticles = it.next();
             if (i < nbTrailingParticles) {
-                iterationParticles.forEach(ParticleBuilder::display);
+                iterationParticles.forEach(this::showPoint);
             } else {
                 it.remove();
             }
@@ -143,20 +155,28 @@ public class SpiralTask extends AAnimationTask<Spiral> {
         }
     }
 
-    private void displayParticle(Location particleLocation, boolean isCentral) {
-        ParticleTemplate template;
+    private void displayPoint(Location pointLocation, Vector fromCenterToPoint, boolean isCentral) {
+        PointDefinition pointDefinition;
         if (isCentral) {
-            template = animation.getCentralParticle();
-            if (template == null) return;
+            pointDefinition = animation.getCentralPointDefinition();
+            if (pointDefinition == null) return;
         } else {
-            template = animation.getMainParticle();
+            pointDefinition = animation.getPointDefinition();
         }
-        ParticleBuilder particleBuilder = template.getParticleBuilder(particleLocation.clone());
+        PointData pointData = new PointData(pointDefinition, pointLocation.clone(), fromCenterToPoint.clone().normalize());
 
         // Add the built particle to the currentIterationParticles Set to be able to show the particle again within the spiral trail during a future iteration
-        currentIterationParticles.add(particleBuilder);
+        currentIterationPoints.add(pointData);
 
-        // Show the particle
-        particleBuilder.display();
+        // Show the particle/ISubAnimation
+        showPoint(pointData);
+    }
+
+    public void showPoint(PointData pointData) {
+        if (pointData.pointDefinition.getShowMethodParameters() == PointDefinition.ShowMethodParameters.LOCATION) {
+            pointData.pointDefinition.show(pointData.pointLocation);
+        } else {
+            pointData.pointDefinition.show(pointData.pointLocation, pointData.fromCenterToPoint);
+        }
     }
 }

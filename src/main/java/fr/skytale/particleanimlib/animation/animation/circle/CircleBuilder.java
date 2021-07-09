@@ -1,5 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.circle;
 
+import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.ARotatingRoundAnimationBuilder;
@@ -22,8 +24,8 @@ public class CircleBuilder extends ARotatingRoundAnimationBuilder<Circle> {
 
     public CircleBuilder() {
         super();
-        animation.setU(new Constant<>(new Vector(1, 0, 0)));
-        animation.setV(new Constant<>(new Vector(0, 1, 0)));
+        animation.setU(new Vector(1, 0, 0));
+        animation.setV(new Vector(0, 1, 0));
         animation.setRadius(new Constant<>(3.0));
         animation.setShowFrequency(new Constant<>(1));
         animation.setTicksDuration(60);
@@ -36,20 +38,11 @@ public class CircleBuilder extends ARotatingRoundAnimationBuilder<Circle> {
     }
 
     /********* Circle specific setters ***********/
-    public void setDirectorVectors(IVariable<Vector> u, IVariable<Vector> v) {
+    public void setDirectorVectors(Vector u, Vector v) {
         checkNotNull(u, DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
         checkNotNull(v, DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
         animation.setU(u);
         animation.setV(v);
-    }
-    public void setDirectorVectors(Vector u, IVariable<Vector> v) {
-        setDirectorVectors(new Constant<>(u), v);
-    }
-    public void setDirectorVectors(IVariable<Vector> u, Vector v) {
-        setDirectorVectors(u, new Constant<>(v));
-    }
-    public void setDirectorVectors(Vector u, Vector v) {
-        setDirectorVectors(new Constant<>(u), new Constant<>(v));
     }
 
     public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint, boolean fullCircle) {
@@ -83,6 +76,15 @@ public class CircleBuilder extends ARotatingRoundAnimationBuilder<Circle> {
 
     public void setNbPoints(int nbPoints, boolean fullCircle) {
         setNbPoints(new Constant<>(nbPoints), fullCircle);
+    }
+
+    public void setPointDefinition(PointDefinition pointDefinition) {
+        checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
+        animation.setPointDefinition(pointDefinition);
+    }
+
+    public void setPointDefinition(ParticleTemplate particleTemplate) {
+        setPointDefinition(PointDefinition.fromParticleTemplate(particleTemplate));
     }
 
     @Override

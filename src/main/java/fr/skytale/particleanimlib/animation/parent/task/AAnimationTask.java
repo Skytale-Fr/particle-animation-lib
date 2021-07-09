@@ -1,12 +1,14 @@
 package fr.skytale.particleanimlib.animation.parent.task;
 
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
+import java.awt.*;
 import java.util.Objects;
 
 public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
@@ -81,7 +83,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         }
     }
 
-    protected Vector computeRadiusVector(Vector normalVector, double radius) {
+    public static Vector computeRadiusVector(Vector normalVector, double radius) {
         /*Let directorVector=(a,b,c).
         Then the equation of the plane containing the point (0,0,0) with directorVector as normal vector is ax + by + cz = 0.
         We want to find the vector radiusVector belonging to the plane*/
@@ -117,6 +119,15 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         v = rotatableVector.rotateAroundAxis(axis, angle);
         v = v.add(pointAxis.toVector()); //Translation vers le point d'origine (La rotiation a été faite à l'origine du repère)
         return v.toLocation(Objects.requireNonNull(point.getWorld()));
+    }
+
+    public void showPoint(PointDefinition pointDefinition, Location pointLocation, Location centerLocation) {
+        if (pointDefinition.getShowMethodParameters() == PointDefinition.ShowMethodParameters.LOCATION) {
+            pointDefinition.show(pointLocation);
+        } else {
+            Vector fromCenterToPoint = pointLocation.toVector().subtract(centerLocation.toVector());
+            pointDefinition.show(pointLocation, fromCenterToPoint);
+        }
     }
 
 }

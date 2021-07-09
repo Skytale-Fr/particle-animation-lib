@@ -2,9 +2,10 @@ package fr.skytale.particleanimlib.animation.animation.pyramid;
 
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 import org.bukkit.util.Vector;
 
-public class Pyramid extends AAnimation {
+public class Pyramid extends AAnimation implements ISubAnimation {
     //Vector between the base's center and the pyramid's apex
     private IVariable<Vector> fromCenterToApex;
     //Distance between the center of the base and its vertices

@@ -1,10 +1,14 @@
 package fr.skytale.particleanimlib.animation.attribute;
 
 import fr.skytale.particleanimlib.animation.animation.circle.preset.GrowingHalfCirclePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.circle.preset.RotatingCirclePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.circle.preset.SimpleCirclePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.SmallCuboidRotatingPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.ImagePresetInitializer;
 import fr.skytale.particleanimlib.animation.animation.image.preset.SkytaleImagePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.polygon.preset.GrowingPolygonPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.polygon.preset.RotatingPolygonPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.polygon.preset.SimplePolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
 import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralPresetExecutor;
@@ -19,8 +23,12 @@ public enum AnimationPreset {
     //ATOM(new AtomPresetExecutor()),
     CIRCLE(new SimpleCirclePresetExecutor()),
     CIRCLE_HALF_GROWING(new GrowingHalfCirclePresetExecutor()),
+    CIRCLE_ROTATING(new RotatingCirclePresetExecutor()),
     CUBOID_ROTATING(new SmallCuboidRotatingPresetExecutor()),
     IMAGE_SKYTALE(new SkytaleImagePresetExecutor(), ImagePresetInitializer.class),
+    POLYGON(new SimplePolygonPresetExecutor()),
+    POLYGON_GROWING(new GrowingPolygonPresetExecutor()),
+    POLYGON_ROTATING(new RotatingPolygonPresetExecutor()),
     PYRAMID_GROWING(new GrowingPyramidPresetExecutor()),
     SPHERE(new SpherePresetExecutor()),
     SPHERE_PROPAGATION_BOTTOM_TO_TOP(new PropagatingUpSpherePresetExecutor()),

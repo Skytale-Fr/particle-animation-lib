@@ -20,7 +20,7 @@ public class CircleTrailPresetExecutor extends ATrailPresetExecutor {
         circleBuilder.setRadius(new Constant<>(2.0));
         circleBuilder.setNbPoints(new Constant<>(10), true);
         circleBuilder.setPosition(APosition.fromTrail(new Constant<>(new Vector(0, 0, 0))));
-        circleBuilder.setDirectorVectors(new Constant<>(new Vector(1, 0, 0)), new Constant<>(new Vector(0, 0, 1)));
+        circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
 
         circleBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         circleBuilder.setTicksDuration(80);

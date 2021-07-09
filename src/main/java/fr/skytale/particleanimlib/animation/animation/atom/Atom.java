@@ -4,8 +4,9 @@ package fr.skytale.particleanimlib.animation.animation.atom;
 import fr.skytale.particleanimlib.animation.attribute.AnimationEndedCallback;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 
-public class Atom extends AAnimation {
+public class Atom extends AAnimation implements ISubAnimation {
     private AAnimation sphere;
     private AAnimation circle1;
     private AAnimation circle2;

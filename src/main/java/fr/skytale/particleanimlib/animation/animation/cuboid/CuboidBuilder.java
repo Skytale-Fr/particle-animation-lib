@@ -27,6 +27,7 @@ public class CuboidBuilder extends ARotatingAnimationBuilder<Cuboid> {
     /********* Cuboid specific setters ***********/
 
     public void setFromLocationToFirstCorner(IVariable<Vector> fromLocationToFirstCorner) {
+        checkNotNull(fromLocationToFirstCorner, "fromLocationToFirstCorner must not be null.");
         animation.setFromLocationToFirstCorner(fromLocationToFirstCorner);
     }
 
@@ -35,6 +36,7 @@ public class CuboidBuilder extends ARotatingAnimationBuilder<Cuboid> {
     }
 
     public void setFromLocationToSecondCorner(IVariable<Vector> fromLocationToSecondCorner) {
+        checkNotNull(fromLocationToSecondCorner, "fromLocationToSecondCorner must not be null.");
         animation.setFromLocationToSecondCorner(fromLocationToSecondCorner);
     }
 
@@ -43,6 +45,7 @@ public class CuboidBuilder extends ARotatingAnimationBuilder<Cuboid> {
     }
 
     public void setDistanceBetweenPoints(IVariable<Double> distanceBetweenPoints) {
+        checkNotNull(distanceBetweenPoints, "distanceBetweenPoints must not be null");
         animation.setDistanceBetweenPoints(distanceBetweenPoints);
     }
 
@@ -62,12 +65,9 @@ public class CuboidBuilder extends ARotatingAnimationBuilder<Cuboid> {
 
     @Override
     public Cuboid getAnimation() {
-        if (animation.getFromLocationToFirstCorner() == null) {
-            throw new IllegalArgumentException("fromLocationToFirstCorner must not be null.");
-        }
-        if (animation.getFromLocationToSecondCorner() == null) {
-            throw new IllegalArgumentException("fromLocationToSecondCorner must not be null.");
-        }
+        checkNotNull(animation.getFromLocationToFirstCorner(), "fromLocationToFirstCorner must not be null.");
+        checkNotNull(animation.getFromLocationToSecondCorner(), "fromLocationToSecondCorner must not be null.");
+        checkNotNull(animation.getDistanceBetweenPoints(), "distanceBetweenPoints must not be null");
         return super.getAnimation();
     }
 }

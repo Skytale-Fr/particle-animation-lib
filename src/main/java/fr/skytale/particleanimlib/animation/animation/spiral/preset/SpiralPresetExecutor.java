@@ -22,7 +22,7 @@ public class SpiralPresetExecutor extends AAnimationPresetExecutor<SpiralBuilder
         spiralBuilder.setNbSpiral(new IntegerPeriodicallyEvolvingVariable(1, 1, 30));
         spiralBuilder.setAngleBetweenEachPoint(Math.PI / 24);
         spiralBuilder.setNbTrailingParticles(3);
-        spiralBuilder.setCentralParticle(new ParticleTemplate("REDSTONE", new Color(255, 0, 0), null));
+        spiralBuilder.setCentralPointDefinition(new ParticleTemplate("REDSTONE", new Color(255, 0, 0), null));
         spiralBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         spiralBuilder.setDirection(AnimationDirection.fromMoveVector(new VectorPeriodicallyEvolvingVariable(new Vector(0, 0.1, 0), new Vector(0, 0.01, 0), 0)));
         spiralBuilder.setTicksDuration(200);

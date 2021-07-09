@@ -1,15 +1,20 @@
 package fr.skytale.particleanimlib.animation.animation.spiral;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARoundAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
 
-public class Spiral extends ARoundAnimation {
+public class Spiral extends ARoundAnimation implements IDirectionSubAnimation, ISubAnimationContainer {
     private AnimationDirection direction;
     private IVariable<Integer> nbSpiral;
     private IVariable<Integer> nbTrailingParticles;
-    private ParticleTemplate centralParticle;
+    private PointDefinition centralPointDefinition;
+    private PointDefinition pointDefinition;
 
     public Spiral() {
     }
@@ -21,10 +26,12 @@ public class Spiral extends ARoundAnimation {
 
     /***********GETTERS & SETTERS***********/
 
+    @Override
     public AnimationDirection getDirection() {
         return direction;
     }
 
+    @Override
     public void setDirection(AnimationDirection direction) {
         this.direction = direction;
     }
@@ -45,12 +52,35 @@ public class Spiral extends ARoundAnimation {
         this.nbTrailingParticles = nbTrailingParticles;
     }
 
-    public ParticleTemplate getCentralParticle() {
-        return centralParticle;
+    public PointDefinition getCentralPointDefinition() {
+        return centralPointDefinition;
     }
 
-    public void setCentralParticle(ParticleTemplate centralParticle) {
-        this.centralParticle = centralParticle;
+    public void setCentralPointDefinition(PointDefinition centralPointDefinition) {
+        this.centralPointDefinition = centralPointDefinition;
+    }
+
+    @Override
+    public PointDefinition getPointDefinition() {
+        return pointDefinition;
+    }
+
+    @Override
+    public void setPointDefinition(PointDefinition pointDefinition) {
+        this.pointDefinition = pointDefinition;
+    }
+
+    @Override
+    public ParticleTemplate getMainParticle() {
+        if (this.pointDefinition instanceof ParticlePointDefinition) {
+            return ((ParticlePointDefinition)pointDefinition).getParticleTemplate();
+        }
+        throw new IllegalStateException("ParticleTemplate is not defined since this animation PointDefinition defines a sub animation");
+    }
+
+    @Override
+    public void setMainParticle(ParticleTemplate mainParticle) {
+        setPointDefinition(PointDefinition.fromParticleTemplate(mainParticle));
     }
 
     @Override
@@ -58,8 +88,9 @@ public class Spiral extends ARoundAnimation {
         Spiral obj = (Spiral) super.clone();
         obj.direction = direction.clone();
         obj.nbSpiral = nbSpiral.copy();
-        obj.centralParticle = new ParticleTemplate(this.centralParticle);
         obj.nbTrailingParticles = nbTrailingParticles.copy();
+        obj.pointDefinition = pointDefinition.clone();
+        obj.centralPointDefinition = this.centralPointDefinition.clone();
         return obj;
     }
 }
