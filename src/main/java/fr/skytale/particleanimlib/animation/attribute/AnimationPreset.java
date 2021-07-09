@@ -4,6 +4,7 @@ import fr.skytale.particleanimlib.animation.animation.circle.preset.*;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.ImagePresetInitializer;
+import fr.skytale.particleanimlib.animation.animation.image.preset.MagicCircleImagePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.SkytaleImagePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.GrowingPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.RotatingPolygonPresetExecutor;
@@ -30,6 +31,7 @@ public enum AnimationPreset {
     CUBOID(new CuboidPresetExecutor()),
     CUBOID_ROTATING_RESIZING(new CuboidRotatingResizingPresetExecutor()),
     IMAGE_SKYTALE(new SkytaleImagePresetExecutor(), ImagePresetInitializer.class),
+    IMAGE_MAGIC_CIRCLE(new MagicCircleImagePresetExecutor(), ImagePresetInitializer.class),
     POLYGON(new SimplePolygonPresetExecutor()),
     POLYGON_GROWING(new GrowingPolygonPresetExecutor()),
     POLYGON_ROTATING(new RotatingPolygonPresetExecutor()),

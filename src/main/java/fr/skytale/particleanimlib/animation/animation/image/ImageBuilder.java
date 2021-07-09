@@ -1,7 +1,10 @@
 package fr.skytale.particleanimlib.animation.animation.image;
 
+import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
 import org.bukkit.util.Vector;
+
+import java.awt.*;
 
 public class ImageBuilder extends ARotatingAnimationBuilder<Image> {
 
@@ -11,6 +14,7 @@ public class ImageBuilder extends ARotatingAnimationBuilder<Image> {
         animation.setV(new Vector(0, 1, 0));
         animation.setRotationAxis(null);
         animation.setRotationAngleAlpha(null);
+        animation.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
     }
 
     @Override
