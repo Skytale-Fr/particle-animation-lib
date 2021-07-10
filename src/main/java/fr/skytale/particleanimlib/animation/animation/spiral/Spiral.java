@@ -90,7 +90,7 @@ public class Spiral extends ARoundAnimation implements IDirectionSubAnimation, I
         obj.nbSpiral = nbSpiral.copy();
         obj.nbTrailingParticles = nbTrailingParticles.copy();
         obj.pointDefinition = pointDefinition.clone();
-        obj.centralPointDefinition = this.centralPointDefinition.clone();
+        obj.centralPointDefinition = centralPointDefinition == null ? null : centralPointDefinition.clone();
         return obj;
     }
 }

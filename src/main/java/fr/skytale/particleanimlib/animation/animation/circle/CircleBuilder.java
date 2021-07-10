@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.circle;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
@@ -43,6 +44,12 @@ public class CircleBuilder extends ARotatingRoundAnimationBuilder<Circle> {
         checkNotNull(v, DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
         animation.setU(u);
         animation.setV(v);
+    }
+
+    public void setDirectorVectorsFromNormalVector(Vector normal) {
+        RotatableVector.Plane2D plane = new RotatableVector(normal).getPlane();
+        animation.setU(plane.u);
+        animation.setV(plane.v);
     }
 
     public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint, boolean fullCircle) {

@@ -12,6 +12,7 @@ import fr.skytale.particleanimlib.animation.animation.polygon.preset.SimplePolyg
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.SimplePyramidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
+import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralADNPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExecutor;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
@@ -47,6 +48,7 @@ public enum AnimationPreset {
     SPHERE_SUB_ANIM_POLYGON_PROPAGATION(new SphereSubAnimPolygonPropagatingUpPresetExecutor()),
     SPHERE_SUB_ANIM_SPIRAL_PROPAGATION(new SphereSubAnimSpiralPropagatingUpPresetExecutor()),
     SPIRAL(new SpiralPresetExecutor()),
+    SPIRAL_ADN(new SpiralADNPresetExecutor()),
     WAVE(new WavePresetExecutor())
     ;
 
