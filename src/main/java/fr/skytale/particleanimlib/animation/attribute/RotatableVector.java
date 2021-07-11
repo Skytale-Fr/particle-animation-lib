@@ -35,10 +35,6 @@ public class RotatableVector extends Vector {
         super(x, y, z);
     }
 
-    public RotatableVector(Vector3D v) {
-        super(v.getX(), v.getY(), v.getZ());
-    }
-
     public @NotNull Vector rotateAroundNonUnitAxis(Vector axis, double angle) throws IllegalArgumentException {
         Preconditions.checkArgument(axis != null, "The provided axis vector was null");
         double x = this.getX();
@@ -68,12 +64,12 @@ public class RotatableVector extends Vector {
     public Plane2D getPlane(Location locInThePlane) {
         Vector3D pointOfPlane = new RotatableVector(locInThePlane.toVector()).toVector3D();
         Plane plane = new Plane(pointOfPlane, toVector3D(), 0.001);
-        return new Plane2D(new RotatableVector(plane.getU()), new RotatableVector(plane.getV()));
+        return new Plane2D(new RotatableVector(plane.getU().getX(), plane.getU().getY(), plane.getU().getZ()), new RotatableVector(plane.getV().getX(), plane.getV().getY(), plane.getV().getZ()));
     }
 
     public Plane2D getPlane() {
         Plane plane = new Plane(toVector3D(), 0.001);
-        return new Plane2D(new RotatableVector(plane.getU()), new RotatableVector(plane.getV()));
+        return new Plane2D(new RotatableVector(plane.getU().getX(), plane.getU().getY(), plane.getU().getZ()), new RotatableVector(plane.getV().getX(), plane.getV().getY(), plane.getV().getZ()));
     }
 
 }

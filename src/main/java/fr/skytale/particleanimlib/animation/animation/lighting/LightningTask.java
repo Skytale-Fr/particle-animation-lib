@@ -62,26 +62,27 @@ public class LightningTask extends AAnimationTask<Lightning> {
         PointDefinition pointDefinition = animation.getPointDefinition();
 
         if (pointDefinition.hasSubAnimation()) {
-            persistentPoints.forEach(pointData -> showPoint(pointDefinition, pointData.pointLocation, pointData.directionToReachPoint));
+            persistentPoints.forEach(pointData -> showPoint(pointDefinition, pointData.pointLocation.clone(), pointData.directionToReachPoint.clone()));
         } else {
             double distanceBetweenParticles = animation.getDistanceBetweenPoints().getCurrentValue(iterationCount);
-
-            Iterator<PointData> it = persistentPoints.iterator();
-
-            PointData previousValue = it.next();
-            while (it.hasNext()) {
-                PointData currentValue = it.next();
-                drawLine(previousValue.pointLocation, currentValue.pointLocation, distanceBetweenParticles, pointDefinition);
-                previousValue = currentValue;
+            if (persistentPoints.size() > 1) {
+                PointData previousValue = persistentPoints.get(0);
+                for (int i = 1; i < persistentPoints.size(); i++) {
+                    PointData currentValue = persistentPoints.get(i);
+                    drawLine(previousValue.pointLocation.clone(), currentValue.pointLocation.clone(), distanceBetweenParticles, pointDefinition.clone());
+                    previousValue = currentValue;
+                }
             }
         }
 
 
         // --- Removing points that should not be shown anymore
         int nbRemainingTicks = animation.getTicksDuration() - iterationCount;
-        int nbPointsToDeleteRounded = Math.floorDiv(nbPoints, nbRemainingTicks);
-        if (nbPointsToDeleteRounded > 0) {
-            persistentPoints.subList(0, nbPointsToDeleteRounded).clear();
+        if (nbRemainingTicks > 0) {
+            int nbPointsToDeleteRounded = Math.floorDiv(nbPoints, nbRemainingTicks);
+            if (nbPointsToDeleteRounded > 0) {
+                persistentPoints.subList(0, nbPointsToDeleteRounded).clear();
+            }
         }
 
     }
