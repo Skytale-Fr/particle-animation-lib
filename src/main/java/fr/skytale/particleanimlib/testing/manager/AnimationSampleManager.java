@@ -17,14 +17,14 @@ public class AnimationSampleManager {
 
     public static AnimationSampleManager instance = null;
 
+    private AnimationSampleManager() {
+    }
+
     public static AnimationSampleManager getInstance() {
         if (instance == null) {
             instance = new AnimationSampleManager();
         }
         return instance;
-    }
-
-    private AnimationSampleManager() {
     }
 
     public AAnimationBuilder<?> initBuilder(Player player, APosition position, JavaPlugin plugin, String animationSampleName) {

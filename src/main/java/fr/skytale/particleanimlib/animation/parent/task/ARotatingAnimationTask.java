@@ -7,10 +7,10 @@ import org.bukkit.util.Vector;
 
 public abstract class ARotatingAnimationTask<T extends ARotatingAnimation> extends AAnimationTask<T> {
 
-    protected PARotation rotation;
     protected final boolean hasRotation;
     protected final boolean hasChangingRotationAxis;
     protected final boolean hasChangingRotationAngle;
+    protected PARotation rotation;
     protected Vector currentRotationAxis;
     protected Double currentRotationAngle;
 

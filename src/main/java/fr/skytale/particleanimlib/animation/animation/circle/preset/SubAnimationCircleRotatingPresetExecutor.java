@@ -27,7 +27,7 @@ public class SubAnimationCircleRotatingPresetExecutor extends AAnimationPresetEx
         circleBuilder.setShowFrequency(new Constant<>(2));
         Circle circle = circleBuilder.getAnimation();
         circleBuilder.setNbPoints(5, true);
-        circleBuilder.setRotation(new Constant<>(new Vector(0, 1, 0)),new DoublePeriodicallyEvolvingVariable(Math.PI / 500, Math.PI / 200, 3));
+        circleBuilder.setRotation(new Constant<>(new Vector(0, 1, 0)), new DoublePeriodicallyEvolvingVariable(Math.PI / 500, Math.PI / 200, 3));
         circleBuilder.setRadius(8);
         circleBuilder.setTicksDuration(600);
         circleBuilder.setShowFrequency(new Constant<>(2));

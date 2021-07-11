@@ -6,7 +6,6 @@ import fr.skytale.particleanimlib.animation.attribute.projectiledirection.Animat
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleBuilder;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -15,25 +14,12 @@ import java.util.Set;
 
 public class SpiralTask extends AAnimationTask<Spiral> {
 
-    public static class PointData {
-        public PointDefinition pointDefinition;
-        public Location pointLocation;
-        public Vector fromCenterToPoint;
-
-        public PointData(PointDefinition pointDefinition, Location pointLocation, Vector fromCenterToPoint) {
-            this.pointDefinition = pointDefinition;
-            this.pointLocation = pointLocation;
-            this.fromCenterToPoint = fromCenterToPoint;
-        }
-    }
-
     private final boolean followEntity;
-
+    private final LinkedList<Set<PointData>> trailPointsPerIteration;
     private Vector entityRelativeLocation;
     private Location absoluteLocation;
     private double spiralParticlesChangingAngle;
     private Set<PointData> currentIterationPoints;
-    private final LinkedList<Set<PointData>> trailPointsPerIteration;
 
     public SpiralTask(Spiral spiral) {
         super(spiral);
@@ -177,6 +163,18 @@ public class SpiralTask extends AAnimationTask<Spiral> {
             pointData.pointDefinition.show(pointData.pointLocation);
         } else {
             pointData.pointDefinition.show(pointData.pointLocation, pointData.fromCenterToPoint);
+        }
+    }
+
+    public static class PointData {
+        public PointDefinition pointDefinition;
+        public Location pointLocation;
+        public Vector fromCenterToPoint;
+
+        public PointData(PointDefinition pointDefinition, Location pointLocation, Vector fromCenterToPoint) {
+            this.pointDefinition = pointDefinition;
+            this.pointLocation = pointLocation;
+            this.fromCenterToPoint = fromCenterToPoint;
         }
     }
 }

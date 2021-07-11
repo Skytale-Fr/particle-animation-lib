@@ -1,6 +1,5 @@
 package fr.skytale.particleanimlib.animation.animation.circle;
 
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
@@ -8,6 +7,7 @@ import org.bukkit.util.Vector;
 
 public class CircleTask extends AAnimationTask<Circle> {
     Vector currentU, currentV;
+
     public CircleTask(Circle circle) {
         super(circle);
         currentU = animation.getU().clone();
@@ -26,7 +26,7 @@ public class CircleTask extends AAnimationTask<Circle> {
         double radius = animation.getRadius().getCurrentValue(iterationCount);
         int nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
 
-        for (int pointIndex = 0; pointIndex < nbPoints; pointIndex ++) {
+        for (int pointIndex = 0; pointIndex < nbPoints; pointIndex++) {
             double theta = pointIndex * stepAngle;
 
             double x = iterationBaseLocation.getX() + (currentU.getX() * radius * Math.cos(theta)) + (currentV.getX() * radius * Math.sin(theta));

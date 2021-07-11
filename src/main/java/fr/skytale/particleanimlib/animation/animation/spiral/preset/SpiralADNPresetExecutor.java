@@ -1,7 +1,5 @@
 package fr.skytale.particleanimlib.animation.animation.spiral.preset;
 
-import fr.skytale.particleanimlib.animation.animation.cuboid.Cuboid;
-import fr.skytale.particleanimlib.animation.animation.cuboid.CuboidBuilder;
 import fr.skytale.particleanimlib.animation.animation.polygon.Polygon;
 import fr.skytale.particleanimlib.animation.animation.polygon.PolygonBuilder;
 import fr.skytale.particleanimlib.animation.animation.spiral.Spiral;
@@ -36,7 +34,7 @@ public class SpiralADNPresetExecutor extends AAnimationPresetExecutor<SpiralBuil
         polygonBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         polygonBuilder.setDirectorVectorsFromNormalVector(new Vector(0, 0.25, 0));
         polygonBuilder.setTicksDuration(200);
-        polygonBuilder.setRotation(new Vector(0,1,0), Math.PI / 24);
+        polygonBuilder.setRotation(new Vector(0, 1, 0), Math.PI / 24);
         polygonBuilder.setShowFrequency(new Constant<>(2));
         Polygon polygon = polygonBuilder.getAnimation();
 

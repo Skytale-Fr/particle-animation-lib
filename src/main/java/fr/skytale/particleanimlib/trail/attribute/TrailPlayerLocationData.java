@@ -17,6 +17,10 @@ public class TrailPlayerLocationData {
         this.distanceToPlayer = 0;
     }
 
+    public static double addSafe(double a, double b) {
+        return a == Double.MAX_VALUE || b == Double.MAX_VALUE ? Double.MAX_VALUE : a + b;
+    }
+
     public Location getLocation() {
         return location;
     }
@@ -39,9 +43,5 @@ public class TrailPlayerLocationData {
 
     public void addDistanceToPlayer(double distanceToPlayerToAdd) {
         distanceToPlayer = addSafe(distanceToPlayer, distanceToPlayerToAdd);
-    }
-
-    public static double addSafe(double a, double b) {
-        return a == Double.MAX_VALUE || b == Double.MAX_VALUE ? Double.MAX_VALUE : a + b;
     }
 }

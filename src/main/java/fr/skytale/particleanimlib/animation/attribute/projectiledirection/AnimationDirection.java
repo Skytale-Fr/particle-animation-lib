@@ -8,32 +8,18 @@ import org.bukkit.util.Vector;
 
 public abstract class AnimationDirection implements Cloneable {
 
-    public static class MoveData {
-        public static MoveData createError() {
-            return new MoveData(null, false, true);
-        }
+    private final Entity targetEntity;
+    private final Type type;
+    private IVariable<Vector> moveVector;
+    private IVariable<Location> targetLocation;
+    private IVariable<Double> speed;
 
-        public static MoveData createMove(Vector move) {
-            return new MoveData(move, false, false);
-        }
-
-        public static MoveData createReachingMove(Vector move){
-            return new MoveData(move, true, false);
-        }
-
-        public final Vector move;
-        public final boolean willReachTarget;
-        public final boolean hasError;
-
-        protected MoveData(Vector move, boolean willReachTarget, boolean hasError) {
-            this.move = move;
-            this.willReachTarget = willReachTarget;
-            this.hasError = hasError;
-        }
-    }
-
-    public enum Type {
-        MOVE_VECTOR, TARGET_LOCATION, TARGET_ENTITY;
+    protected AnimationDirection(IVariable<Vector> moveVector, IVariable<Location> targetLocation, Entity targetEntity, IVariable<Double> speed, Type type) {
+        this.moveVector = moveVector;
+        this.targetLocation = targetLocation;
+        this.targetEntity = targetEntity;
+        this.speed = speed;
+        this.type = type;
     }
 
     public static AnimationDirection fromMoveVector(IVariable<Vector> moveVector) {
@@ -68,20 +54,6 @@ public abstract class AnimationDirection implements Cloneable {
         return new EntityAnimationDirection(targetEntity, speed);
     }
 
-    private IVariable<Vector> moveVector;
-    private IVariable<Location> targetLocation;
-    private final Entity targetEntity;
-    private IVariable<Double> speed;
-    private final Type type;
-
-    protected AnimationDirection(IVariable<Vector> moveVector, IVariable<Location> targetLocation, Entity targetEntity, IVariable<Double> speed, Type type) {
-        this.moveVector = moveVector;
-        this.targetLocation = targetLocation;
-        this.targetEntity = targetEntity;
-        this.speed = speed;
-        this.type = type;
-    }
-
     public IVariable<Vector> getMoveVector() {
         return moveVector;
     }
@@ -104,8 +76,9 @@ public abstract class AnimationDirection implements Cloneable {
 
     /**
      * Returns null if moveVector cannot be calculated or if we (almost) reached the target
+     *
      * @param currentLocation the current location
-     * @param iterationCount the iteration count
+     * @param iterationCount  the iteration count
      * @return the move vector or null if moveVector cannot be calculated or if we (almost) reached the target.
      */
     public MoveData getMoveVector(Location currentLocation, int iterationCount) {
@@ -163,6 +136,34 @@ public abstract class AnimationDirection implements Cloneable {
         obj.speed = this.speed == null ? null : this.speed.copy();
         obj.targetLocation = this.targetLocation == null ? null : this.targetLocation.copy();
         return obj;
+    }
+
+    public enum Type {
+        MOVE_VECTOR, TARGET_LOCATION, TARGET_ENTITY;
+    }
+
+    public static class MoveData {
+        public final Vector move;
+        public final boolean willReachTarget;
+        public final boolean hasError;
+
+        protected MoveData(Vector move, boolean willReachTarget, boolean hasError) {
+            this.move = move;
+            this.willReachTarget = willReachTarget;
+            this.hasError = hasError;
+        }
+
+        public static MoveData createError() {
+            return new MoveData(null, false, true);
+        }
+
+        public static MoveData createMove(Vector move) {
+            return new MoveData(move, false, false);
+        }
+
+        public static MoveData createReachingMove(Vector move) {
+            return new MoveData(move, true, false);
+        }
     }
 
 

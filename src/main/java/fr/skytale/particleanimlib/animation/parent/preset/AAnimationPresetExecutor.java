@@ -9,12 +9,13 @@ public abstract class AAnimationPresetExecutor<T extends AAnimationBuilder<?>> {
     public static final String PRESET_NOT_COMPATIBLE = "The preset \"%s\" is not compatible with the builder type. It is only compatible with \"%s\".";
 
     protected final Class<T> builderClass;
-    
+
     protected AAnimationPresetExecutor(Class<T> builderClass) {
         this.builderClass = builderClass;
     }
 
     protected abstract void apply(T builderCasted);
+
     public final void applyPreset(AAnimationBuilder<?> builder) {
         checkCompatibility(builder);
         T builderCasted = builderClass.cast(builder);

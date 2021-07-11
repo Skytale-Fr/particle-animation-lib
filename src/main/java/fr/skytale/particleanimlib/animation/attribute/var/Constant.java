@@ -11,6 +11,7 @@ public class Constant<T> implements IVariable<T> {
 
     /**
      * Defines the constant
+     *
      * @param value the constant
      */
     public Constant(T value) {
@@ -18,7 +19,17 @@ public class Constant<T> implements IVariable<T> {
     }
 
     /**
+     * Retrieves the constant value
+     *
+     * @return the constant value
+     */
+    public T getValue() {
+        return value;
+    }
+
+    /**
      * Defines the constant value
+     *
      * @param value the constant value
      */
     public void setValue(T value) {
@@ -27,14 +38,7 @@ public class Constant<T> implements IVariable<T> {
 
     /**
      * Retrieves the constant value
-     * @return the constant value
-     */
-    public T getValue() {
-        return value;
-    }
-
-    /**
-     * Retrieves the constant value
+     *
      * @param iterationCount unused because the value is a constant
      * @return the constant value
      */

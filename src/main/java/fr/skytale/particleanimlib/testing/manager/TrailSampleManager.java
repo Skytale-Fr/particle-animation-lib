@@ -14,18 +14,17 @@ public class TrailSampleManager {
     public static final String NOT_IMPLEMENTED = "This preset does not exist. Please implement the required code in \"fr/skytale/particleanimlib/trail/attribute/TrailPreset.java\"";
 
     public static TrailSampleManager instance = null;
+    private final Map<String, TrailTask> trailTasksByPresetName;
+
+    private TrailSampleManager() {
+        trailTasksByPresetName = new HashMap<>();
+    }
 
     public static TrailSampleManager getInstance() {
         if (instance == null) {
             instance = new TrailSampleManager();
         }
         return instance;
-    }
-
-    private final Map<String, TrailTask> trailTasksByPresetName;
-
-    private TrailSampleManager() {
-        trailTasksByPresetName = new HashMap<>();
     }
 
     public void enableTrail(Player player, String trailAnimationSampleName) {

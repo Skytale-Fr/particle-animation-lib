@@ -17,14 +17,19 @@ public class LocationAnimationDirection extends AnimationDirection {
     }
 
     public LocationAnimationDirection(Location targetLocation, IVariable<Double> speed) {
-        this(new Constant<>(targetLocation),speed);
+        this(new Constant<>(targetLocation), speed);
     }
 
     public LocationAnimationDirection(IVariable<Location> targetLocation, double speed) {
-        this(targetLocation,new Constant<>(speed));
+        this(targetLocation, new Constant<>(speed));
     }
 
     public LocationAnimationDirection(Location targetLocation, double speed) {
         this(new Constant<>(targetLocation), new Constant<>(speed));
+    }
+
+    @Override
+    public LocationAnimationDirection clone() {
+        return (LocationAnimationDirection) super.clone();
     }
 }

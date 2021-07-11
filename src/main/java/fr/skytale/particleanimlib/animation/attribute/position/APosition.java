@@ -1,6 +1,5 @@
 package fr.skytale.particleanimlib.animation.attribute.position;
 
-import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -8,11 +7,10 @@ import org.bukkit.util.Vector;
 
 public abstract class APosition implements Cloneable {
 
-    public static enum Type {
-        LOCATION,
-        ENTITY,
-        TRAIL
-    }
+    protected Type type;
+    protected IVariable<Location> location;
+    protected Entity movingEntity;
+    protected IVariable<Vector> relativeLocation;
 
     public static APosition fromLocation(IVariable<Location> location) {
         return new LocationPosition(location);
@@ -42,11 +40,6 @@ public abstract class APosition implements Cloneable {
         return new TrailPosition(relativeLocation);
     }
 
-    protected Type type;
-    protected IVariable<Location> location;
-    protected Entity movingEntity;
-    protected IVariable<Vector> relativeLocation;
-
     public IVariable<Location> getLocation() {
         return location;
     }
@@ -75,5 +68,11 @@ public abstract class APosition implements Cloneable {
         obj.location = this.location == null ? null : this.location.copy();
         obj.relativeLocation = this.getRelativeLocation() == null ? null : this.getRelativeLocation().copy();
         return obj;
+    }
+
+    public static enum Type {
+        LOCATION,
+        ENTITY,
+        TRAIL
     }
 }

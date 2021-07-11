@@ -32,6 +32,16 @@ public class ParticleAnimLibTest {
 
     private final Map<UUID, AnimationLibPlayerData> playersData;
 
+    private ParticleAnimLibTest(JavaPlugin plugin, PluginCommand command) {
+        this.plugin = plugin;
+        this.playersData = new HashMap<>();
+        Bukkit.getPluginManager().registerEvents(new RightClickAirEventListener(this), plugin);
+        if (command != null) {
+            command.setExecutor(new AnimationLibCommand(this));
+            command.setTabCompleter(new AnimationLibTabCompleter(this));
+        }
+    }
+
     public static void enable(JavaPlugin plugin, PluginCommand command) {
         if (instance == null) {
             instance = new ParticleAnimLibTest(plugin, command);
@@ -43,16 +53,6 @@ public class ParticleAnimLibTest {
             throw new IllegalStateException("Could not call ParticleAnimLibTest.getInstance() before the ParticleAnimLibTest.enable(JavaPlugin plugin, PluginCommand command) method has been called.");
         }
         return instance;
-    }
-
-    private ParticleAnimLibTest(JavaPlugin plugin, PluginCommand command) {
-        this.plugin = plugin;
-        this.playersData = new HashMap<>();
-        Bukkit.getPluginManager().registerEvents(new RightClickAirEventListener(this), plugin);
-        if (command != null) {
-            command.setExecutor(new AnimationLibCommand(this));
-            command.setTabCompleter(new AnimationLibTabCompleter(this));
-        }
     }
 
     public void setShowAnimOnClick(Player player, Boolean showAnimationOnClick) {

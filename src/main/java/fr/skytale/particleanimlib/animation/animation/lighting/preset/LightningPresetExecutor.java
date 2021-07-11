@@ -1,11 +1,8 @@
 package fr.skytale.particleanimlib.animation.animation.lighting.preset;
 
 import fr.skytale.particleanimlib.animation.animation.lighting.LightningBuilder;
-import fr.skytale.particleanimlib.animation.animation.spiral.SpiralBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
-import fr.skytale.particleanimlib.animation.attribute.var.IntegerPeriodicallyEvolvingVariable;
-import fr.skytale.particleanimlib.animation.attribute.var.VectorPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.util.Vector;
 

@@ -3,31 +3,16 @@ package fr.skytale.particleanimlib.animation.animation.lighting;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 
 public class LightningTask extends AAnimationTask<Lightning> {
 
-    private LinkedList<PointData> persistentPoints;
-
     private final Random random;
-
-    public static class PointData {
-        //Each location where a particle/SubAnimation must be shown
-        public Location pointLocation;
-        //Used for some sub animation showing (those who requires a vector)
-        public Vector directionToReachPoint;
-
-        public PointData(Location pointLocation, Vector directionToReachPoint) {
-            this.pointLocation = pointLocation;
-            this.directionToReachPoint = directionToReachPoint;
-        }
-    }
+    private LinkedList<PointData> persistentPoints;
 
     public LightningTask(Lightning lightning) {
         super(lightning);
@@ -178,6 +163,18 @@ public class LightningTask extends AAnimationTask<Lightning> {
 
             fromOriginToPreviousPointLength = fromOriginToCurrentPointLength;
             previousPoint = currentPoint;
+        }
+    }
+
+    public static class PointData {
+        //Each location where a particle/SubAnimation must be shown
+        public Location pointLocation;
+        //Used for some sub animation showing (those who requires a vector)
+        public Vector directionToReachPoint;
+
+        public PointData(Location pointLocation, Vector directionToReachPoint) {
+            this.pointLocation = pointLocation;
+            this.directionToReachPoint = directionToReachPoint;
         }
     }
 }

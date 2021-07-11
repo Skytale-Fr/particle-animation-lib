@@ -15,6 +15,6 @@ public class GrowingPolygonPresetExecutor extends AAnimationPresetExecutor<Polyg
     protected void apply(PolygonBuilder polygonBuilder) {
         AnimationPreset.POLYGON.apply(polygonBuilder);
         polygonBuilder.setTicksDuration(400);
-        polygonBuilder.setNbVertices(new IntegerPeriodicallyEvolvingVariable(3,1,40));
+        polygonBuilder.setNbVertices(new IntegerPeriodicallyEvolvingVariable(3, 1, 40));
     }
 }

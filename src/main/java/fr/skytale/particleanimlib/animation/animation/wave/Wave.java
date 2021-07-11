@@ -7,13 +7,13 @@ import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAn
 import org.bukkit.util.Vector;
 
 public class Wave extends AAnimation implements IPlaneSubAnimation {
+    protected IVariable<Double> angleBetweenEachPoint;
+    protected double radiusStart;
     private Vector u;
     private Vector v;
-    protected IVariable<Double> angleBetweenEachPoint;
     private IVariable<Integer> nbPoints;
     private double radiusMax;
     private IVariable<Double> radiusStep;
-    protected double radiusStart;
 
     public Wave() {
     }

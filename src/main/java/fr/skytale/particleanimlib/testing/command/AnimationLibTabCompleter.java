@@ -1,18 +1,15 @@
 package fr.skytale.particleanimlib.testing.command;
 
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.HumanEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class AnimationLibTabCompleter implements TabCompleter {
 

@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.image;
 
-import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.parent.task.ARotatingAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;

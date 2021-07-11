@@ -8,6 +8,9 @@ public abstract class APresetInitializer {
 
     public static Set<Class<? extends APresetInitializer>> alreadyInitializedSet = new HashSet<>();
 
+    protected APresetInitializer() {
+    }
+
     public static void initialize(Class<? extends APresetInitializer> initializerClass) {
         if (!alreadyInitializedSet.contains(initializerClass)) {
             try {
@@ -17,9 +20,6 @@ public abstract class APresetInitializer {
                 throw new IllegalStateException(e);
             }
         }
-    }
-
-    protected APresetInitializer() {
     }
 
     protected abstract void initialize();

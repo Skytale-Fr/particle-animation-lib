@@ -5,9 +5,9 @@ import org.bukkit.util.Vector;
 public interface IPlaneSubAnimation extends ISubAnimation {
     Vector getU();
 
-    Vector getV();
-
     void setU(Vector directorU);
+
+    Vector getV();
 
     void setV(Vector directorV);
 

@@ -26,6 +26,36 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         this.iterationCount = 0;
     }
 
+    public static Vector computeRadiusVector(Vector normalVector, double radius) {
+        /*Let directorVector=(a,b,c).
+        Then the equation of the plane containing the point (0,0,0) with directorVector as normal vector is ax + by + cz = 0.
+        We want to find the vector radiusVector belonging to the plane*/
+        double a = normalVector.getX();
+        double b = normalVector.getY();
+        double c = normalVector.getZ();
+
+        Vector radiusVector;
+
+        if (a == 0) {
+            if (b == 0)
+                radiusVector = new Vector(1, 1, 0);
+            else if (c == 0)
+                radiusVector = new Vector(1, 0, 1);
+            else
+                radiusVector = new Vector(1, 1, -b / c);
+        } else if (b == 0) {
+            if (c == 0)
+                radiusVector = new Vector(0, 1, 1);
+            else
+                radiusVector = new Vector(1, 1, -a / c);
+        } else if (c == 0)
+            radiusVector = new Vector(1, -b / a, 1);
+        else
+            radiusVector = new Vector(1, 1, (-a - b) / c);
+
+        return radiusVector.normalize().multiply(radius);
+    }
+
     protected final void startTask() {
         this.taskId = Bukkit.getScheduler().runTaskTimerAsynchronously(animation.getPlugin(), this, 0, 0).getTaskId();
     }
@@ -90,36 +120,6 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
             pointDefinition.show(currentLoc);
             length += step;
         }
-    }
-
-    public static Vector computeRadiusVector(Vector normalVector, double radius) {
-        /*Let directorVector=(a,b,c).
-        Then the equation of the plane containing the point (0,0,0) with directorVector as normal vector is ax + by + cz = 0.
-        We want to find the vector radiusVector belonging to the plane*/
-        double a = normalVector.getX();
-        double b = normalVector.getY();
-        double c = normalVector.getZ();
-
-        Vector radiusVector;
-
-        if (a == 0) {
-            if (b == 0)
-                radiusVector = new Vector(1, 1, 0);
-            else if (c == 0)
-                radiusVector = new Vector(1, 0, 1);
-            else
-                radiusVector = new Vector(1, 1, -b / c);
-        } else if (b == 0) {
-            if (c == 0)
-                radiusVector = new Vector(0, 1, 1);
-            else
-                radiusVector = new Vector(1, 1, -a / c);
-        } else if (c == 0)
-            radiusVector = new Vector(1, -b / a, 1);
-        else
-            radiusVector = new Vector(1, 1, (-a - b) / c);
-
-        return radiusVector.normalize().multiply(radius);
     }
 
     public Location rotateAroundAxis(Location point, Vector axis, Location pointAxis, double angle) {

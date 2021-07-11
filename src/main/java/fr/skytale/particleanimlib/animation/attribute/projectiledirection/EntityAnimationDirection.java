@@ -19,4 +19,9 @@ public class EntityAnimationDirection extends AnimationDirection {
     public EntityAnimationDirection(Entity targetEntity, double speed) {
         this(targetEntity, new Constant<>(speed));
     }
+
+    @Override
+    public EntityAnimationDirection clone() {
+        return (EntityAnimationDirection) super.clone();
+    }
 }

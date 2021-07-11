@@ -67,6 +67,11 @@ public enum AnimationPreset {
         this.presetPrerequisitesClasses = presetPrerequisitesClasses;
     }
 
+    public static AnimationPreset fromName(String name) {
+        if (name == null) throw new NullPointerException("name should not be null");
+        return AnimationPreset.valueOf(name.trim().toUpperCase(Locale.ROOT));
+    }
+
     public Class<? extends AAnimationBuilder<?>> getBuilderClass() {
         return presetExecutor.getBuilderClass();
     }
@@ -86,10 +91,5 @@ public enum AnimationPreset {
 
     public AAnimationBuilder<?> createBuilder() {
         return presetExecutor.createBuilder();
-    }
-
-    public static AnimationPreset fromName(String name) {
-        if (name == null) throw new NullPointerException("name should not be null");
-        return AnimationPreset.valueOf(name.trim().toUpperCase(Locale.ROOT));
     }
 }

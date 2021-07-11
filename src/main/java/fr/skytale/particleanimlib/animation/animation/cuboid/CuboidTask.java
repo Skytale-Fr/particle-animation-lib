@@ -11,62 +11,7 @@ import java.util.stream.Collectors;
 
 public class CuboidTask extends ARotatingAnimationTask<Cuboid> {
 
-    private enum CuboidCorner {
-        UPPER_EAST_SOUTH,
-        UPPER_EAST_NORTH,
-        UPPER_WEST_SOUTH,
-        UPPER_WEST_NORTH,
-        LOWER_EAST_SOUTH,
-        LOWER_EAST_NORTH,
-        LOWER_WEST_SOUTH,
-        LOWER_WEST_NORTH;
-    }
-
-    private static class CuboidEdge {
-        public final CuboidCorner firstVertice;
-        public final CuboidCorner secondVertice;
-
-        private CuboidEdge(CuboidCorner firstVertice, CuboidCorner secondVertice) {
-            this.firstVertice = firstVertice;
-            this.secondVertice = secondVertice;
-        }
-
-        private static HashSet<CuboidEdge> edges;
-
-        public static HashSet<CuboidEdge> getEdges() {
-            if (edges == null) {
-                edges = initEdges();
-            }
-            return edges;
-        }
-
-        private static HashSet<CuboidEdge> initEdges() {
-            HashSet<CuboidEdge> edgeSet = new HashSet<>();
-
-            //UPPER EDGES
-            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_EAST_NORTH, CuboidCorner.UPPER_EAST_SOUTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_WEST_NORTH, CuboidCorner.UPPER_WEST_SOUTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_EAST_NORTH, CuboidCorner.UPPER_WEST_NORTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_EAST_SOUTH, CuboidCorner.UPPER_WEST_SOUTH));
-
-            //LOWER EDGES
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_NORTH, CuboidCorner.LOWER_EAST_SOUTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_NORTH, CuboidCorner.LOWER_WEST_SOUTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_NORTH, CuboidCorner.LOWER_WEST_NORTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_SOUTH, CuboidCorner.LOWER_WEST_SOUTH));
-
-            //SIDE EDGES
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_NORTH, CuboidCorner.UPPER_EAST_NORTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_NORTH, CuboidCorner.UPPER_WEST_NORTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_SOUTH, CuboidCorner.UPPER_EAST_SOUTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_SOUTH, CuboidCorner.UPPER_WEST_SOUTH));
-
-            return edgeSet;
-        }
-    }
-
     public Map<CuboidCorner, Vector> corners;
-
     public Map<CuboidCorner, Vector> rotatedCorners;
 
     public CuboidTask(Cuboid cuboid) {
@@ -146,6 +91,59 @@ public class CuboidTask extends ARotatingAnimationTask<Cuboid> {
         corners.put(CuboidCorner.LOWER_WEST_NORTH, new Vector(xMin, yMin, zMin));
 
         return corners;
+    }
+
+    private enum CuboidCorner {
+        UPPER_EAST_SOUTH,
+        UPPER_EAST_NORTH,
+        UPPER_WEST_SOUTH,
+        UPPER_WEST_NORTH,
+        LOWER_EAST_SOUTH,
+        LOWER_EAST_NORTH,
+        LOWER_WEST_SOUTH,
+        LOWER_WEST_NORTH;
+    }
+
+    private static class CuboidEdge {
+        private static HashSet<CuboidEdge> edges;
+        public final CuboidCorner firstVertice;
+        public final CuboidCorner secondVertice;
+
+        private CuboidEdge(CuboidCorner firstVertice, CuboidCorner secondVertice) {
+            this.firstVertice = firstVertice;
+            this.secondVertice = secondVertice;
+        }
+
+        public static HashSet<CuboidEdge> getEdges() {
+            if (edges == null) {
+                edges = initEdges();
+            }
+            return edges;
+        }
+
+        private static HashSet<CuboidEdge> initEdges() {
+            HashSet<CuboidEdge> edgeSet = new HashSet<>();
+
+            //UPPER EDGES
+            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_EAST_NORTH, CuboidCorner.UPPER_EAST_SOUTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_WEST_NORTH, CuboidCorner.UPPER_WEST_SOUTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_EAST_NORTH, CuboidCorner.UPPER_WEST_NORTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_EAST_SOUTH, CuboidCorner.UPPER_WEST_SOUTH));
+
+            //LOWER EDGES
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_NORTH, CuboidCorner.LOWER_EAST_SOUTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_NORTH, CuboidCorner.LOWER_WEST_SOUTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_NORTH, CuboidCorner.LOWER_WEST_NORTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_SOUTH, CuboidCorner.LOWER_WEST_SOUTH));
+
+            //SIDE EDGES
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_NORTH, CuboidCorner.UPPER_EAST_NORTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_NORTH, CuboidCorner.UPPER_WEST_NORTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_SOUTH, CuboidCorner.UPPER_EAST_SOUTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_SOUTH, CuboidCorner.UPPER_WEST_SOUTH));
+
+            return edgeSet;
+        }
     }
 
 }

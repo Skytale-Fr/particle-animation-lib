@@ -11,13 +11,13 @@ import java.util.stream.Collectors;
 
 public class PyramidTask extends AAnimationTask<Pyramid> {
 
+    private final boolean baseDataAreVariable;
     private Vector fromCenterToApex = null;
     private List<Vector> fromCenterToBaseApexList;
-    private final boolean baseDataAreVariable;
 
     public PyramidTask(Pyramid pyramid) {
         super(pyramid);
-        this.baseDataAreVariable = !animation.getNbBaseApex().isConstant() || !animation.getDistanceToAnyBaseApex().isConstant()|| !animation.getFromCenterToApex().isConstant();
+        this.baseDataAreVariable = !animation.getNbBaseApex().isConstant() || !animation.getDistanceToAnyBaseApex().isConstant() || !animation.getFromCenterToApex().isConstant();
 
         startTask();
     }

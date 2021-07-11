@@ -17,6 +17,21 @@ import java.util.stream.Collectors;
 
 public class Image extends ARotatingAnimation implements IPlaneSubAnimation {
 
+    /******** Attributes ********/
+
+    //Starting plane
+    private Vector u;
+    private Vector v;
+    //Image file name
+    private String imageFileName;
+    private HashMap<Vector, Color> imagePixels;
+    private boolean hasColor;
+
+    /******** Constructor ********/
+
+    public Image() {
+    }
+
     /******** Static Methods ********/
 
     public static File getImagesDirectory(JavaPlugin plugin) {
@@ -48,21 +63,6 @@ public class Image extends ARotatingAnimation implements IPlaneSubAnimation {
             throw new IllegalArgumentException(String.format("%s should not be a directory.", imageFile.getAbsolutePath()));
         }
         return imageFile;
-    }
-
-    /******** Attributes ********/
-
-    //Starting plane
-    private Vector u;
-    private Vector v;
-    //Image file name
-    private String imageFileName;
-    private HashMap<Vector, Color> imagePixels;
-    private boolean hasColor;
-
-    /******** Constructor ********/
-
-    public Image() {
     }
 
     /******** Methods ********/
@@ -110,11 +110,9 @@ public class Image extends ARotatingAnimation implements IPlaneSubAnimation {
         }
     }
 
-    /******** Getters & Setters ********/
-
     @Override
-    public void setU(Vector u) {
-        this.u = u;
+    public Vector getV() {
+        return v;
     }
 
     @Override
@@ -123,13 +121,15 @@ public class Image extends ARotatingAnimation implements IPlaneSubAnimation {
     }
 
     @Override
-    public Vector getV() {
-        return v;
-    }
-
-    @Override
     public Vector getU() {
         return u;
+    }
+
+    /******** Getters & Setters ********/
+
+    @Override
+    public void setU(Vector u) {
+        this.u = u;
     }
 
     public String getImageFileName() {

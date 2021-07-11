@@ -1,10 +1,7 @@
 package fr.skytale.particleanimlib.trail.parent;
 
-import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import fr.skytale.particleanimlib.trail.TrailBuilder;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.lang.reflect.InvocationTargetException;
 
 public abstract class ATrailPresetExecutor {
 

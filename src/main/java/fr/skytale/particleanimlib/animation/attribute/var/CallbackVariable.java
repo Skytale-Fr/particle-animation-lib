@@ -12,6 +12,7 @@ public class CallbackVariable<T> implements IVariable<T> {
 
     /**
      * Construct a callback variable
+     *
      * @param callback the callback that will be able to return the current value
      */
     public CallbackVariable(ParametrizedCallback<T> callback) {
@@ -20,6 +21,7 @@ public class CallbackVariable<T> implements IVariable<T> {
 
     /**
      * Retrieves the callback able to return the current value of type T
+     *
      * @return the callback able to return the current value of type T
      */
     public ParametrizedCallback<T> getCallback() {
@@ -28,6 +30,7 @@ public class CallbackVariable<T> implements IVariable<T> {
 
     /**
      * Defines the callback able to return the current value of type T
+     *
      * @param callback the callback able to return the current value of type T
      */
     public void setCallback(ParametrizedCallback<T> callback) {
@@ -36,6 +39,7 @@ public class CallbackVariable<T> implements IVariable<T> {
 
     /**
      * Retrieves the current value
+     *
      * @param iterationCount given to the callback in order to compute the current value
      * @return the current value
      */
