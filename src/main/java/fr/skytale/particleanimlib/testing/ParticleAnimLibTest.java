@@ -91,7 +91,7 @@ public class ParticleAnimLibTest {
     }
 
     public void showAllAnimations(Player player) {
-        AnimationSampleManager.getInstance().getChainedBuilders(player, plugin).getAnimation().show();
+        AnimationSampleManager.getInstance().showChainedBuilders(player, plugin);
     }
 
     public JavaPlugin getPlugin() {

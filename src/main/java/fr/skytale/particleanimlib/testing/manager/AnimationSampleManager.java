@@ -4,12 +4,11 @@ import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import org.apache.commons.lang.NotImplementedException;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AnimationSampleManager {
@@ -43,26 +42,34 @@ public class AnimationSampleManager {
         return builder;
     }
 
-    public AAnimationBuilder<?> getChainedBuilders(Player player, JavaPlugin plugin) {
-        List<AAnimationBuilder<?>> allBuilders = getAllAnimationBuilders(player, plugin);
+    public void showChainedBuilders(Player player, JavaPlugin plugin) {
+        List<AnimationPreset> presets = new ArrayList<AnimationPreset>(Arrays.asList(AnimationPreset.values()));
+        presets.sort(Comparator.comparingInt(preset -> preset.name().length()));
+
         AAnimationBuilder<?> prevBuilder = null;
         AAnimationBuilder<?> firstBuilder = null;
-        for (int i = allBuilders.size() - 1; i >= 0; --i) {
-            AAnimationBuilder<?> currentBuilder = allBuilders.get(i);
+        String firstBuilderStr = null;
+        for (AnimationPreset preset : presets) {
+            AAnimationBuilder<?> currentBuilder = initBuilder(player, APosition.fromEntity(player), plugin, preset.name());
+            String animationStr = String.format("Showing animation preset \"%s\"", preset.name());
             if (prevBuilder != null) {
-                prevBuilder.setCallback((anim) -> currentBuilder.getAnimation().show());
+                prevBuilder.setCallback((anim) -> {
+                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                        player.sendMessage(animationStr);
+                        currentBuilder.getAnimation().show();
+                    }, 40);
+                });
             } else {
                 firstBuilder = currentBuilder;
+                firstBuilderStr = animationStr;
             }
             prevBuilder = currentBuilder;
-        }
-        return firstBuilder;
-    }
 
-    private List<AAnimationBuilder<?>> getAllAnimationBuilders(Player player, JavaPlugin plugin) {
-        return Arrays.stream(AnimationPreset.values())
-                .map(animationPreset -> initBuilder(player, APosition.fromEntity(player), plugin, animationPreset.name()))
-                .collect(Collectors.toList());
+        }
+        assert firstBuilderStr != null;
+        assert firstBuilder != null;
+        player.sendMessage(firstBuilderStr);
+        firstBuilder.getAnimation().show();
     }
 
     public Set<String> getAnimationNames() {

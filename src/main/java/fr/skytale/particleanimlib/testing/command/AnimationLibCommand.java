@@ -50,8 +50,8 @@ public class AnimationLibCommand implements CommandExecutor {
             // ---- SHOW ALL ----
 
             else if (args.length == 1 && args[0].equals("showall")) {
-                this.particleAnimLibTest.showAllAnimations(player);
                 player.sendMessage("Showing all animation samples in a row.");
+                this.particleAnimLibTest.showAllAnimations(player);
                 return true;
             }
 
