@@ -5,7 +5,7 @@ import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimati
 public abstract class SubAnimPointDefinition extends PointDefinition {
 
     protected SubAnimPointDefinition(ShowMethodParameters showMethodParameters) {
-        super(showMethodParameters);
+        super(showMethodParameters, true);
     }
 
     public abstract ISubAnimation getSubAnimation();

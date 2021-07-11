@@ -138,6 +138,7 @@ public class Image extends ARotatingAnimation implements IPlaneSubAnimation {
 
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
+        this.imagePixels = null;
     }
 
     public HashMap<Vector, Color> getImagePixels() {

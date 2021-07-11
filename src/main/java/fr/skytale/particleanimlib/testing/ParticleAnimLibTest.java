@@ -22,8 +22,8 @@ import java.util.UUID;
 
 public class ParticleAnimLibTest {
 
-    public static String DEFAULT_ANIMATION_TYPE = AnimationPreset.SPHERE_SUB_ANIM_SPIRAL_PROPAGATION.name();
-    public static String DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP.name();
+    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.LIGHTING;
+    public static TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
     public static boolean DEFAULT_SHOW_ON_CLICK = true;
 
     private static ParticleAnimLibTest instance;

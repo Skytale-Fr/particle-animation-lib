@@ -33,12 +33,19 @@ public abstract class PointDefinition implements Cloneable {
 
     protected ShowMethodParameters showMethodParameters;
 
-    protected PointDefinition(ShowMethodParameters showMethodParameters) {
+    protected boolean hasSubAnimation;
+
+    protected PointDefinition(ShowMethodParameters showMethodParameters, boolean hasSubAnimation) {
         this.showMethodParameters = showMethodParameters;
+        this.hasSubAnimation = hasSubAnimation;
     }
 
     public ShowMethodParameters getShowMethodParameters() {
         return showMethodParameters;
+    }
+
+    public boolean hasSubAnimation() {
+        return hasSubAnimation;
     }
 
     public abstract void show(Location loc);

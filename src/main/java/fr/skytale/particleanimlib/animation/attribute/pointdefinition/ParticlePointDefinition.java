@@ -9,7 +9,7 @@ public class ParticlePointDefinition extends PointDefinition {
     private ParticleTemplate particleTemplate;
 
     public ParticlePointDefinition(ParticleTemplate particleTemplate) {
-        super(ShowMethodParameters.LOCATION);
+        super(ShowMethodParameters.LOCATION, false);
         this.particleTemplate = particleTemplate;
     }
 

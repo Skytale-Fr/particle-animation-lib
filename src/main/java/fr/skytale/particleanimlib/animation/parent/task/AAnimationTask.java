@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-import java.awt.*;
 import java.util.Objects;
 
 public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
@@ -83,6 +82,16 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         }
     }
 
+    public void drawLine(Location point1, Location point2, double step, PointDefinition pointDefinition) {
+        double distance = point1.distance(point2);
+        Vector stepVector = point2.toVector().subtract(point1.toVector()).normalize().multiply(step);
+        Location currentLoc = point1.clone();
+        for (double length = 0; length < distance; currentLoc.add(stepVector)) {
+            pointDefinition.show(currentLoc);
+            length += step;
+        }
+    }
+
     public static Vector computeRadiusVector(Vector normalVector, double radius) {
         /*Let directorVector=(a,b,c).
         Then the equation of the plane containing the point (0,0,0) with directorVector as normal vector is ax + by + cz = 0.
@@ -127,6 +136,14 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         } else {
             Vector fromCenterToPoint = pointLocation.toVector().subtract(centerLocation.toVector());
             pointDefinition.show(pointLocation, fromCenterToPoint);
+        }
+    }
+
+    public void showPoint(PointDefinition pointDefinition, Location pointLocation, Vector pointDirection) {
+        if (pointDefinition.getShowMethodParameters() == PointDefinition.ShowMethodParameters.LOCATION) {
+            pointDefinition.show(pointLocation);
+        } else {
+            pointDefinition.show(pointLocation, pointDirection);
         }
     }
 

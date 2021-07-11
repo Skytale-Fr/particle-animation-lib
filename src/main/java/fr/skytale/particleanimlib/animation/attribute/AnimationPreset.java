@@ -3,9 +3,8 @@ package fr.skytale.particleanimlib.animation.attribute;
 import fr.skytale.particleanimlib.animation.animation.circle.preset.*;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.image.preset.ImagePresetInitializer;
-import fr.skytale.particleanimlib.animation.animation.image.preset.MagicCircleImagePresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.image.preset.SkytaleImagePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.image.preset.*;
+import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.GrowingPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.RotatingPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.SimplePolygonPresetExecutor;
@@ -33,6 +32,9 @@ public enum AnimationPreset {
     CUBOID_ROTATING_RESIZING(new CuboidRotatingResizingPresetExecutor()),
     IMAGE_SKYTALE(new SkytaleImagePresetExecutor(), ImagePresetInitializer.class),
     IMAGE_MAGIC_CIRCLE(new MagicCircleImagePresetExecutor(), ImagePresetInitializer.class),
+    IMAGE_COUNTDOWN(new CountdownImagePresetExecutor(), ImagePresetInitializer.class),
+    IMAGE_PIG_BOAT_BOW(new PigBoatBowImagePresetExecutor(), ImagePresetInitializer.class),
+    LIGHTING(new LightningPresetExecutor()),
     POLYGON(new SimplePolygonPresetExecutor()),
     POLYGON_GROWING(new GrowingPolygonPresetExecutor()),
     POLYGON_ROTATING(new RotatingPolygonPresetExecutor()),
@@ -49,8 +51,7 @@ public enum AnimationPreset {
     SPHERE_SUB_ANIM_SPIRAL_PROPAGATION(new SphereSubAnimSpiralPropagatingUpPresetExecutor()),
     SPIRAL(new SpiralPresetExecutor()),
     SPIRAL_ADN(new SpiralADNPresetExecutor()),
-    WAVE(new WavePresetExecutor())
-    ;
+    WAVE(new WavePresetExecutor());
 
     private final AAnimationPresetExecutor<?> presetExecutor;
 

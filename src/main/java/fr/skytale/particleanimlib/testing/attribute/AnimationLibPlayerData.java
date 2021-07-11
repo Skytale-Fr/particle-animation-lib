@@ -15,8 +15,8 @@ public class AnimationLibPlayerData {
 
     public AnimationLibPlayerData() {
         this.showAnimationOnClick = ParticleAnimLibTest.DEFAULT_SHOW_ON_CLICK;
-        this.animationSampleName = ParticleAnimLibTest.DEFAULT_ANIMATION_TYPE;
-        this.trailSampleName = ParticleAnimLibTest.DEFAULT_TRAIL_TYPE;
+        this.animationSampleName = ParticleAnimLibTest.DEFAULT_ANIMATION_TYPE.name();
+        this.trailSampleName = ParticleAnimLibTest.DEFAULT_TRAIL_TYPE.name();
     }
 
     public boolean isShowAnimationOnClick() {
