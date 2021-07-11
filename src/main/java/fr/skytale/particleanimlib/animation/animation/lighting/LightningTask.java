@@ -46,30 +46,26 @@ public class LightningTask extends AAnimationTask<Lightning> {
 
         PointDefinition pointDefinition = animation.getPointDefinition();
 
+        double nbPointsByTicks = ((double) persistentPoints.size()) / animation.getTicksDuration();
+        int nbRemainingTicks = animation.getTicksDuration() - iterationCount;
+        double nbPointsToShow = Math.floor(nbPointsByTicks * nbRemainingTicks);
+
         if (pointDefinition.hasSubAnimation()) {
-            persistentPoints.forEach(pointData -> showPoint(pointDefinition, pointData.pointLocation.clone(), pointData.directionToReachPoint.clone()));
+            for (int i = 0; i < nbPointsToShow && i < persistentPoints.size(); i++) {
+                PointData pointData = persistentPoints.get(i);
+                showPoint(pointDefinition, pointData.pointLocation.clone(), pointData.directionToReachPoint.clone());
+            }
         } else {
             double distanceBetweenParticles = animation.getDistanceBetweenPoints().getCurrentValue(iterationCount);
             if (persistentPoints.size() > 1) {
                 PointData previousValue = persistentPoints.get(0);
-                for (int i = 1; i < persistentPoints.size(); i++) {
+                for (int i = 1; i < nbPointsToShow && i < persistentPoints.size(); i++) {
                     PointData currentValue = persistentPoints.get(i);
                     drawLine(previousValue.pointLocation.clone(), currentValue.pointLocation.clone(), distanceBetweenParticles, pointDefinition.clone());
                     previousValue = currentValue;
                 }
             }
         }
-
-
-        // --- Removing points that should not be shown anymore
-        int nbRemainingTicks = animation.getTicksDuration() - iterationCount;
-        if (nbRemainingTicks > 0) {
-            int nbPointsToDeleteRounded = Math.floorDiv(nbPoints, nbRemainingTicks);
-            if (nbPointsToDeleteRounded > 0) {
-                persistentPoints.subList(0, nbPointsToDeleteRounded).clear();
-            }
-        }
-
     }
 
     private void initAnimationData(Location iterationBaseLocation) {
