@@ -17,6 +17,9 @@ public class PigBoatBowImagePresetExecutor extends AAnimationPresetExecutor<Imag
     @Override
     protected void apply(ImageBuilder imageBuilder) {
 
+        if (imageBuilder.getPosition() == null || imageBuilder.getJavaPlugin() == null) {
+            throw new IllegalArgumentException("This particular preset requires to define the Position and the JavaPlugin before calling builder.applyPreset(AnimationPreset) method.");
+        }
         Location originLocation = imageBuilder.getPosition().getType() == APosition.Type.ENTITY ? imageBuilder.getPosition().getMovingEntity().getLocation().add(imageBuilder.getPosition().getRelativeLocation().getCurrentValue(0)) : imageBuilder.getPosition().getLocation().getCurrentValue(0);
         imageBuilder.setImageFileName("bow.png");
         imageBuilder.setDirectorVectors(new Vector(-0.2, 0, 0), new Vector(0, 0.2, 0));
