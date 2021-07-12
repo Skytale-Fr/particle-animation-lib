@@ -1,5 +1,7 @@
 package fr.skytale.particleanimlib.animation.parent.preset;
 
+import org.bukkit.plugin.java.JavaPlugin;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,16 +13,16 @@ public abstract class APresetInitializer {
     protected APresetInitializer() {
     }
 
-    public static void initialize(Class<? extends APresetInitializer> initializerClass) {
+    public static void initialize(Class<? extends APresetInitializer> initializerClass, JavaPlugin plugin) {
         if (!alreadyInitializedSet.contains(initializerClass)) {
             try {
                 APresetInitializer initializer = initializerClass.getDeclaredConstructor().newInstance();
-                initializer.initialize();
+                initializer.initialize(plugin);
             } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 throw new IllegalStateException(e);
             }
         }
     }
 
-    protected abstract void initialize();
+    protected abstract void initialize(JavaPlugin plugin);
 }

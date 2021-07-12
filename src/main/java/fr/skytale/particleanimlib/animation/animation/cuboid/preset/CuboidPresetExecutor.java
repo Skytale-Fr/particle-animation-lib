@@ -4,6 +4,7 @@ import fr.skytale.particleanimlib.animation.animation.cuboid.CuboidBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import java.awt.*;
@@ -15,7 +16,7 @@ public class CuboidPresetExecutor extends AAnimationPresetExecutor<CuboidBuilder
     }
 
     @Override
-    protected void apply(CuboidBuilder cuboidBuilder) {
+    protected void apply(CuboidBuilder cuboidBuilder, JavaPlugin plugin) {
         cuboidBuilder.setFromLocationToFirstCorner(new Vector(-4, -4, -4));
         cuboidBuilder.setFromLocationToSecondCorner(new Vector(4, 4, 4));
         cuboidBuilder.setDistanceBetweenPoints(new Constant<>(0.4));

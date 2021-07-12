@@ -11,6 +11,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.LocationPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.Location;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import java.awt.*;
@@ -22,7 +23,7 @@ public class SpiralADNPresetExecutor extends AAnimationPresetExecutor<SpiralBuil
     }
 
     @Override
-    protected void apply(SpiralBuilder spiralBuilder) {
+    protected void apply(SpiralBuilder spiralBuilder, JavaPlugin plugin) {
 
         Location originLocation = spiralBuilder.getPosition().getType() == APosition.Type.ENTITY ? spiralBuilder.getPosition().getMovingEntity().getLocation() : spiralBuilder.getPosition().getLocation().getCurrentValue(0);
         PolygonBuilder polygonBuilder = new PolygonBuilder();

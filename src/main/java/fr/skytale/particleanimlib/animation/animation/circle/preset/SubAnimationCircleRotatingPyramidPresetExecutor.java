@@ -7,6 +7,7 @@ import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefin
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 public class SubAnimationCircleRotatingPyramidPresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
@@ -16,11 +17,11 @@ public class SubAnimationCircleRotatingPyramidPresetExecutor extends AAnimationP
     }
 
     @Override
-    protected void apply(CircleBuilder circleBuilder) {
+    protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
         PyramidBuilder pyramidBuilder = new PyramidBuilder();
         pyramidBuilder.setPosition(circleBuilder.getPosition());
         pyramidBuilder.setJavaPlugin(circleBuilder.getJavaPlugin());
-        pyramidBuilder.applyPreset(AnimationPreset.PYRAMID);
+        pyramidBuilder.applyPreset(AnimationPreset.PYRAMID, plugin);
         pyramidBuilder.setFromCenterToApex(new Vector(0, 0, 4));
         pyramidBuilder.setTicksDuration(2);
         pyramidBuilder.setShowFrequency(1);

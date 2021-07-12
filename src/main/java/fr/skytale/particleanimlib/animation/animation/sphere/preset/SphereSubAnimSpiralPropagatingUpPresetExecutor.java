@@ -7,6 +7,7 @@ import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class SphereSubAnimSpiralPropagatingUpPresetExecutor extends AAnimationPresetExecutor<SphereBuilder> {
 
@@ -15,11 +16,11 @@ public class SphereSubAnimSpiralPropagatingUpPresetExecutor extends AAnimationPr
     }
 
     @Override
-    protected void apply(SphereBuilder sphereBuilder) {
+    protected void apply(SphereBuilder sphereBuilder, JavaPlugin plugin) {
         SpiralBuilder spiralBuilder = new SpiralBuilder();
         spiralBuilder.setPosition(sphereBuilder.getPosition());
         spiralBuilder.setJavaPlugin(sphereBuilder.getJavaPlugin());
-        spiralBuilder.applyPreset(AnimationPreset.SPIRAL);
+        spiralBuilder.applyPreset(AnimationPreset.SPIRAL, plugin);
         spiralBuilder.setRadius(new DoublePeriodicallyEvolvingVariable(1.0, 0.2, 3));
         sphereBuilder.setRadius(5);
         sphereBuilder.setNbCircles(5);

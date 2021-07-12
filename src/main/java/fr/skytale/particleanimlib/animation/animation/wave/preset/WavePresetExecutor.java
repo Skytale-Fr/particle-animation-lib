@@ -5,6 +5,7 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import java.awt.*;
@@ -16,7 +17,7 @@ public class WavePresetExecutor extends AAnimationPresetExecutor<WaveBuilder> {
     }
 
     @Override
-    protected void apply(WaveBuilder waveBuilder) {
+    protected void apply(WaveBuilder waveBuilder, JavaPlugin plugin) {
         waveBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         waveBuilder.setTicksDuration(400);
         waveBuilder.setShowFrequency(new Constant<>(0));

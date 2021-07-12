@@ -115,8 +115,8 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         return (T) animation.clone();
     }
 
-    public void applyPreset(AnimationPreset animationPreset) {
-        animationPreset.apply(this);
+    public void applyPreset(AnimationPreset animationPreset, JavaPlugin plugin) {
+        animationPreset.apply(this, plugin);
     }
 
     protected void checkNotNullOrZero(IVariable<? extends Number> number, String checkFailureMessage) {

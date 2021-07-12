@@ -7,6 +7,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousVa
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.Location;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 public class CountdownImagePresetExecutor extends AAnimationPresetExecutor<ImageBuilder> {
@@ -16,7 +17,7 @@ public class CountdownImagePresetExecutor extends AAnimationPresetExecutor<Image
     }
 
     @Override
-    protected void apply(ImageBuilder imageBuilder) {
+    protected void apply(ImageBuilder imageBuilder, JavaPlugin plugin) {
 
         if (imageBuilder.getPosition() == null || imageBuilder.getJavaPlugin() == null) {
             throw new IllegalArgumentException("This particular preset requires to define the Position and the JavaPlugin before calling builder.applyPreset(AnimationPreset) method.");

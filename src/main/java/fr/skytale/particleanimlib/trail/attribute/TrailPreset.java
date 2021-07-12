@@ -32,7 +32,7 @@ public enum TrailPreset {
 
     public void apply(TrailBuilder builder, JavaPlugin plugin) {
         for (Class<? extends APresetInitializer> presetPrerequisiteClass : presetPrerequisitesClasses) {
-            APresetInitializer.initialize(presetPrerequisiteClass);
+            APresetInitializer.initialize(presetPrerequisiteClass, plugin);
         }
         presetExecutor.applyPreset(builder, plugin);
     }

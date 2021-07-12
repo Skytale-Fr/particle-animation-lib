@@ -4,6 +4,7 @@ import fr.skytale.particleanimlib.animation.animation.pyramid.PyramidBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import java.awt.*;
@@ -15,7 +16,7 @@ public class SimplePyramidPresetExecutor extends AAnimationPresetExecutor<Pyrami
     }
 
     @Override
-    protected void apply(PyramidBuilder pyramidBuilder) {
+    protected void apply(PyramidBuilder pyramidBuilder, JavaPlugin plugin) {
         pyramidBuilder.setDistanceBetweenParticles(0.3);
         pyramidBuilder.setDistanceToAnyBaseApex(2.0);
         pyramidBuilder.setFromCenterToApex(new Vector(0, 4, 0));

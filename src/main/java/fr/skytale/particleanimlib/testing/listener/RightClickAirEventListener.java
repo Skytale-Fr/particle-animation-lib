@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class RightClickAirEventListener implements Listener {
 
-    private ParticleAnimLibTest particleAnimLibTest;
+    private final ParticleAnimLibTest particleAnimLibTest;
 
     private boolean antiSpam;
 

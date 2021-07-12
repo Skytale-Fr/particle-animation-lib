@@ -6,6 +6,7 @@ import fr.skytale.particleanimlib.animation.animation.sphere.SphereBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.awt.*;
 
@@ -16,7 +17,7 @@ public class SphereSubAnimPolygonPresetExecutor extends AAnimationPresetExecutor
     }
 
     @Override
-    protected void apply(SphereBuilder sphereBuilder) {
+    protected void apply(SphereBuilder sphereBuilder, JavaPlugin plugin) {
         PolygonBuilder polygonBuilder = new PolygonBuilder();
         polygonBuilder.setPosition(sphereBuilder.getPosition());
         polygonBuilder.setJavaPlugin(sphereBuilder.getJavaPlugin());
