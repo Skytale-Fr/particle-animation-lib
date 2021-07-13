@@ -23,32 +23,40 @@ public abstract class AAnimation implements Cloneable {
         return position;
     }
 
-    public ParticleTemplate getMainParticle() {
-        return mainParticle;
-    }
-
-    public int getTicksDuration() {
-        return ticksDuration;
-    }
-
-    public IVariable<Integer> getShowFrequency() {
-        return showFrequency;
-    }
-
-    public AnimationEndedCallback getCallback() {
-        return callback;
-    }
-
     public void setPosition(APosition position) {
         this.position = position;
+    }
+
+    public ParticleTemplate getMainParticle() {
+        return mainParticle;
     }
 
     public void setMainParticle(ParticleTemplate mainParticle) {
         this.mainParticle = mainParticle;
     }
 
+    public int getTicksDuration() {
+        return ticksDuration;
+    }
+
     public void setTicksDuration(int ticksDuration) {
         this.ticksDuration = ticksDuration;
+    }
+
+    public IVariable<Integer> getShowFrequency() {
+        return showFrequency;
+    }
+
+    public void setShowFrequency(IVariable<Integer> showFrequency) {
+        this.showFrequency = showFrequency;
+    }
+
+    public AnimationEndedCallback getCallback() {
+        return callback;
+    }
+
+    public void setCallback(AnimationEndedCallback callback) {
+        this.callback = callback;
     }
 
     public JavaPlugin getPlugin() {
@@ -57,14 +65,6 @@ public abstract class AAnimation implements Cloneable {
 
     public void setPlugin(JavaPlugin plugin) {
         this.plugin = plugin;
-    }
-
-    public void setShowFrequency(IVariable<Integer> showFrequency) {
-        this.showFrequency = showFrequency;
-    }
-
-    public void setCallback(AnimationEndedCallback callback) {
-        this.callback = callback;
     }
 
     @Override

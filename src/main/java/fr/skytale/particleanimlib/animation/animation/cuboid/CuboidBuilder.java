@@ -46,7 +46,7 @@ public class CuboidBuilder extends ARotatingAnimationBuilder<Cuboid> {
 
     public void setDistanceBetweenPoints(IVariable<Double> distanceBetweenPoints) {
         checkNotNull(distanceBetweenPoints, "distanceBetweenPoints must not be null");
-        checkSuperior(distanceBetweenPoints,new Constant<>(0.1), "distanceBetweenPoints should be greater than 0.1", false);
+        checkSuperior(distanceBetweenPoints, new Constant<>(0.1), "distanceBetweenPoints should be greater than 0.1", false);
         animation.setDistanceBetweenPoints(distanceBetweenPoints);
     }
 

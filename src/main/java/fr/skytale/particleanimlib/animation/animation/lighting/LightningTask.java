@@ -3,31 +3,16 @@ package fr.skytale.particleanimlib.animation.animation.lighting;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 
 public class LightningTask extends AAnimationTask<Lightning> {
 
-    private LinkedList<PointData> persistentPoints;
-
     private final Random random;
-
-    public static class PointData {
-        //Each location where a particle/SubAnimation must be shown
-        public Location pointLocation;
-        //Used for some sub animation showing (those who requires a vector)
-        public Vector directionToReachPoint;
-
-        public PointData(Location pointLocation, Vector directionToReachPoint) {
-            this.pointLocation = pointLocation;
-            this.directionToReachPoint = directionToReachPoint;
-        }
-    }
+    private LinkedList<PointData> persistentPoints;
 
     public LightningTask(Lightning lightning) {
         super(lightning);
@@ -61,30 +46,26 @@ public class LightningTask extends AAnimationTask<Lightning> {
 
         PointDefinition pointDefinition = animation.getPointDefinition();
 
+        double nbPointsByTicks = ((double) persistentPoints.size()) / animation.getTicksDuration();
+        int nbRemainingTicks = animation.getTicksDuration() - iterationCount;
+        double nbPointsToShow = Math.floor(nbPointsByTicks * nbRemainingTicks);
+
         if (pointDefinition.hasSubAnimation()) {
-            persistentPoints.forEach(pointData -> showPoint(pointDefinition, pointData.pointLocation.clone(), pointData.directionToReachPoint.clone()));
+            for (int i = 0; i < nbPointsToShow && i < persistentPoints.size(); i++) {
+                PointData pointData = persistentPoints.get(i);
+                showPoint(pointDefinition, pointData.pointLocation.clone(), pointData.directionToReachPoint.clone());
+            }
         } else {
             double distanceBetweenParticles = animation.getDistanceBetweenPoints().getCurrentValue(iterationCount);
             if (persistentPoints.size() > 1) {
                 PointData previousValue = persistentPoints.get(0);
-                for (int i = 1; i < persistentPoints.size(); i++) {
+                for (int i = 1; i < nbPointsToShow && i < persistentPoints.size(); i++) {
                     PointData currentValue = persistentPoints.get(i);
                     drawLine(previousValue.pointLocation.clone(), currentValue.pointLocation.clone(), distanceBetweenParticles, pointDefinition.clone());
                     previousValue = currentValue;
                 }
             }
         }
-
-
-        // --- Removing points that should not be shown anymore
-        int nbRemainingTicks = animation.getTicksDuration() - iterationCount;
-        if (nbRemainingTicks > 0) {
-            int nbPointsToDeleteRounded = Math.floorDiv(nbPoints, nbRemainingTicks);
-            if (nbPointsToDeleteRounded > 0) {
-                persistentPoints.subList(0, nbPointsToDeleteRounded).clear();
-            }
-        }
-
     }
 
     private void initAnimationData(Location iterationBaseLocation) {
@@ -178,6 +159,18 @@ public class LightningTask extends AAnimationTask<Lightning> {
 
             fromOriginToPreviousPointLength = fromOriginToCurrentPointLength;
             previousPoint = currentPoint;
+        }
+    }
+
+    public static class PointData {
+        //Each location where a particle/SubAnimation must be shown
+        public Location pointLocation;
+        //Used for some sub animation showing (those who requires a vector)
+        public Vector directionToReachPoint;
+
+        public PointData(Location pointLocation, Vector directionToReachPoint) {
+            this.pointLocation = pointLocation;
+            this.directionToReachPoint = directionToReachPoint;
         }
     }
 }

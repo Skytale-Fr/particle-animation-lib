@@ -9,16 +9,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class RotatableVector extends Vector {
 
-    public static class Plane2D {
-        public Vector u;
-        public Vector v;
-
-        public Plane2D(Vector u, Vector v) {
-            this.u = u;
-            this.v = v;
-        }
-    }
-
     public RotatableVector(int x, int y, int z) {
         super(x, y, z);
     }
@@ -70,6 +60,16 @@ public class RotatableVector extends Vector {
     public Plane2D getPlane() {
         Plane plane = new Plane(toVector3D(), 0.001);
         return new Plane2D(new RotatableVector(plane.getU().getX(), plane.getU().getY(), plane.getU().getZ()), new RotatableVector(plane.getV().getX(), plane.getV().getY(), plane.getV().getZ()));
+    }
+
+    public static class Plane2D {
+        public Vector u;
+        public Vector v;
+
+        public Plane2D(Vector u, Vector v) {
+            this.u = u;
+            this.v = v;
+        }
     }
 
 }

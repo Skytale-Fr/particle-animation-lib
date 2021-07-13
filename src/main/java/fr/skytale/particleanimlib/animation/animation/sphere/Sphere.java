@@ -12,14 +12,6 @@ import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimati
 
 public class Sphere extends ARoundAnimation implements ISubAnimation, ISubAnimationContainer {
 
-    public enum PropagationType {
-        TOP_TO_BOTTOM, BOTTOM_TO_TOP;
-    }
-
-    public enum Type {
-        FULL, HALF_TOP, HALF_BOTTOM;
-    }
-
     private IVariable<Integer> nbCircles;
     private PropagationType propagationType = null;
     private IVariable<Integer> simultaneousCircles;
@@ -81,7 +73,7 @@ public class Sphere extends ARoundAnimation implements ISubAnimation, ISubAnimat
     @Override
     public ParticleTemplate getMainParticle() {
         if (this.pointDefinition instanceof ParticlePointDefinition) {
-            return ((ParticlePointDefinition)pointDefinition).getParticleTemplate();
+            return ((ParticlePointDefinition) pointDefinition).getParticleTemplate();
         }
         throw new IllegalStateException("ParticleTemplate is not defined since this animation PointDefinition defines a sub animation");
     }
@@ -98,5 +90,13 @@ public class Sphere extends ARoundAnimation implements ISubAnimation, ISubAnimat
         obj.simultaneousCircles = simultaneousCircles == null ? null : simultaneousCircles.copy();
         obj.pointDefinition = pointDefinition.clone();
         return obj;
+    }
+
+    public enum PropagationType {
+        TOP_TO_BOTTOM, BOTTOM_TO_TOP;
+    }
+
+    public enum Type {
+        FULL, HALF_TOP, HALF_BOTTOM;
     }
 }

@@ -1,13 +1,9 @@
 package fr.skytale.particleanimlib.animation.animation.polygon;
 
 
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
 import org.bukkit.util.Vector;
 
 public class Polygon extends ARotatingAnimation implements IPlaneSubAnimation {

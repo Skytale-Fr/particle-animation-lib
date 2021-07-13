@@ -4,5 +4,6 @@ import fr.skytale.particleanimlib.animation.attribute.projectiledirection.Animat
 
 public interface IDirectionSubAnimation extends ISubAnimation {
     AnimationDirection getDirection();
+
     void setDirection(AnimationDirection direction);
 }

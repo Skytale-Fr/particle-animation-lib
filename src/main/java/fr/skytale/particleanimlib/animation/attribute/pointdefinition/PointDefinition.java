@@ -9,6 +9,14 @@ import org.bukkit.util.Vector;
 
 public abstract class PointDefinition implements Cloneable {
 
+    protected ShowMethodParameters showMethodParameters;
+    protected boolean hasSubAnimation;
+
+    protected PointDefinition(ShowMethodParameters showMethodParameters, boolean hasSubAnimation) {
+        this.showMethodParameters = showMethodParameters;
+        this.hasSubAnimation = hasSubAnimation;
+    }
+
     public static ParticlePointDefinition fromParticleTemplate(ParticleTemplate particleTemplate) {
         return new ParticlePointDefinition(particleTemplate);
     }
@@ -27,17 +35,6 @@ public abstract class PointDefinition implements Cloneable {
 
     public static DirectionSubAnimPointDefinition fromSubAnim(IDirectionSubAnimation directionAnimation, double speed) {
         return new DirectionSubAnimPointDefinition(directionAnimation, speed);
-    }
-
-    public enum ShowMethodParameters {LOCATION, LOCATION_AND_DIRECTION}
-
-    protected ShowMethodParameters showMethodParameters;
-
-    protected boolean hasSubAnimation;
-
-    protected PointDefinition(ShowMethodParameters showMethodParameters, boolean hasSubAnimation) {
-        this.showMethodParameters = showMethodParameters;
-        this.hasSubAnimation = hasSubAnimation;
     }
 
     public ShowMethodParameters getShowMethodParameters() {
@@ -63,4 +60,6 @@ public abstract class PointDefinition implements Cloneable {
         assert obj != null;
         return obj;
     }
+
+    public enum ShowMethodParameters {LOCATION, LOCATION_AND_DIRECTION}
 }

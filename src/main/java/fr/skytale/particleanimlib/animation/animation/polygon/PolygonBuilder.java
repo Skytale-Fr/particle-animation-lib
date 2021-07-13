@@ -1,12 +1,9 @@
 package fr.skytale.particleanimlib.animation.animation.polygon;
 
-import fr.skytale.particleanimlib.animation.animation.circle.Circle;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
-import fr.skytale.particleanimlib.animation.parent.builder.ARotatingRoundAnimationBuilder;
 import org.bukkit.util.Vector;
 
 public class PolygonBuilder extends ARotatingAnimationBuilder<Polygon> {

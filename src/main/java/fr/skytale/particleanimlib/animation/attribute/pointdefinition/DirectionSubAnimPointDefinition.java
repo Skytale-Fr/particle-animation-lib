@@ -9,9 +9,8 @@ import org.bukkit.util.Vector;
 
 public class DirectionSubAnimPointDefinition extends SubAnimPointDefinition {
 
-    protected IDirectionSubAnimation subAnimation;
-
     protected final double speed;
+    protected IDirectionSubAnimation subAnimation;
 
     public DirectionSubAnimPointDefinition(IDirectionSubAnimation subAnimation, double speed) {
         super(ShowMethodParameters.LOCATION_AND_DIRECTION);

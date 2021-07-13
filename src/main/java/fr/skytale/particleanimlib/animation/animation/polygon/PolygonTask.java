@@ -1,6 +1,5 @@
 package fr.skytale.particleanimlib.animation.animation.polygon;
 
-import fr.skytale.particleanimlib.animation.animation.circle.Circle;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
@@ -37,7 +36,7 @@ public class PolygonTask extends AAnimationTask<Polygon> {
 
         List<Location> vertices = new ArrayList<>();
 
-        for (int pointIndex = 0; pointIndex < nbVertices; pointIndex ++) {
+        for (int pointIndex = 0; pointIndex < nbVertices; pointIndex++) {
             double theta = pointIndex * stepAngle;
 
             double x = iterationBaseLocation.getX() + (currentU.getX() * radius * Math.cos(theta)) + (currentV.getX() * radius * Math.sin(theta));

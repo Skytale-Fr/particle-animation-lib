@@ -67,7 +67,7 @@ public class Circle extends ARotatingRoundAnimation implements IPlaneSubAnimatio
     @Override
     public ParticleTemplate getMainParticle() {
         if (this.pointDefinition instanceof ParticlePointDefinition) {
-            return ((ParticlePointDefinition)pointDefinition).getParticleTemplate();
+            return ((ParticlePointDefinition) pointDefinition).getParticleTemplate();
         }
         throw new IllegalStateException("ParticleTemplate is not defined since this animation PointDefinition defines a sub animation");
     }

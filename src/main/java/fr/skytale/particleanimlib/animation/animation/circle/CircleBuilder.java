@@ -55,7 +55,8 @@ public class CircleBuilder extends ARotatingRoundAnimationBuilder<Circle> {
     public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint, boolean fullCircle) {
         super.setAngleBetweenEachPoint(angleBetweenEachPoint);
         if (fullCircle) {
-            if (!angleBetweenEachPoint.isConstant()) throw new IllegalArgumentException(FULL_CIRCLE_ANGLE_BETWEEN_EACH_POINT_ERROR_MESSAGE);
+            if (!angleBetweenEachPoint.isConstant())
+                throw new IllegalArgumentException(FULL_CIRCLE_ANGLE_BETWEEN_EACH_POINT_ERROR_MESSAGE);
             animation.setNbPoints(new Constant<>((int) Math.round(2 * Math.PI / angleBetweenEachPoint.getCurrentValue(0))));
         }
     }

@@ -1,6 +1,5 @@
 package fr.skytale.particleanimlib.animation.animation.sphere;
 
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 

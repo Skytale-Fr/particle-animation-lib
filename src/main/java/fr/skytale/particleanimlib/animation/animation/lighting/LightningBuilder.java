@@ -18,7 +18,7 @@ public class LightningBuilder extends AAnimationBuilder<Lightning> {
         animation.setMinDistanceBetweenLightingAngles(1.0);
         animation.setMaxDistance(200);
         animation.setPointDefinition(PointDefinition.fromParticleTemplate(new ParticleTemplate("REDSTONE", new Color(255, 0, 0), null)));
-        animation.setDispersionAngle(Math.PI/6);
+        animation.setDispersionAngle(Math.PI / 6);
         animation.setConvergeToTarget(true);
     }
 

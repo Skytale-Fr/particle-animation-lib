@@ -6,6 +6,7 @@ import fr.skytale.particleanimlib.animation.attribute.projectiledirection.Animat
 import fr.skytale.particleanimlib.animation.attribute.var.IntegerPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.VectorPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import java.awt.*;
@@ -17,7 +18,7 @@ public class SpiralPresetExecutor extends AAnimationPresetExecutor<SpiralBuilder
     }
 
     @Override
-    protected void apply(SpiralBuilder spiralBuilder) {
+    protected void apply(SpiralBuilder spiralBuilder, JavaPlugin plugin) {
         spiralBuilder.setRadius(2);
         spiralBuilder.setNbSpiral(new IntegerPeriodicallyEvolvingVariable(1, 1, 30));
         spiralBuilder.setAngleBetweenEachPoint(Math.PI / 24);

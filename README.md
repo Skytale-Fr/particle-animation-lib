@@ -199,6 +199,19 @@ A IVariable can be:
 * Based on a callback (that can contain any complex equation):
   ```java
   IVariable<double> evolvingDouble = new CallbackVariable<>(iterationCount -> 0.3 + Math.sin(iterationCount) / 4));
+  
+  IVariable<Location> evolvingLocation = new CallbackWithPreviousValueVariable<>(player.getLocation().clone(),(iterationCount, previousValue) -> {
+           if (iterationCount < 20) {
+               //Doesn't move during the first second (20 ticks)
+               return previousValue;
+           } else if (iterationCount < 60) {
+               //Then moves up during the next 2 seconds (40 ticks)
+                return previousValue.add(new Vector(0, 0.05, 0));   
+           } else {
+               //Then moves down until the ends of the animation 
+               return previousValue.add(new Vector(0, -0.05, 0));
+           }
+        });
   ```
   the parameter iterationCount is a value starting from 0 and increasing on each animation show iteration.
 

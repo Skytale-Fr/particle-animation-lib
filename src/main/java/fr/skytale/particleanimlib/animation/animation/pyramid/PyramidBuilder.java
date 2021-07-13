@@ -28,6 +28,7 @@ public class PyramidBuilder extends AAnimationBuilder<Pyramid> {
         checkNotNull(fromCenterToApex, "Apex point of pyramid has to be defined.");
         animation.setFromCenterToApex(fromCenterToApex);
     }
+
     public void setFromCenterToApex(Vector fromCenterToApex) {
         setFromCenterToApex(new Constant<>(fromCenterToApex));
     }

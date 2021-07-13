@@ -1,6 +1,5 @@
 package fr.skytale.particleanimlib.trail.attribute;
 
-import fr.skytale.particleanimlib.animation.animation.image.preset.ImagePresetInitializer;
 import fr.skytale.particleanimlib.animation.parent.preset.APresetInitializer;
 import fr.skytale.particleanimlib.trail.TrailBuilder;
 import fr.skytale.particleanimlib.trail.parent.ATrailPresetExecutor;
@@ -26,19 +25,19 @@ public enum TrailPreset {
         this.presetPrerequisitesClasses = presetPrerequisitesClasses;
     }
 
+    public static TrailPreset fromName(String name) {
+        if (name == null) throw new NullPointerException("name should not be null");
+        return TrailPreset.valueOf(name.trim().toUpperCase(Locale.ROOT));
+    }
+
     public void apply(TrailBuilder builder, JavaPlugin plugin) {
         for (Class<? extends APresetInitializer> presetPrerequisiteClass : presetPrerequisitesClasses) {
-            APresetInitializer.initialize(presetPrerequisiteClass);
+            APresetInitializer.initialize(presetPrerequisiteClass, plugin);
         }
         presetExecutor.applyPreset(builder, plugin);
     }
 
     public TrailBuilder createBuilder(JavaPlugin plugin) {
         return presetExecutor.createBuilder(plugin);
-    }
-
-    public static TrailPreset fromName(String name) {
-        if (name == null) throw new NullPointerException("name should not be null");
-        return TrailPreset.valueOf(name.trim().toUpperCase(Locale.ROOT));
     }
 }

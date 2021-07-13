@@ -1,8 +1,6 @@
 package fr.skytale.particleanimlib.animation.attribute.pointdefinition;
 
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
-import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;

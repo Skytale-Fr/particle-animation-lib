@@ -4,6 +4,7 @@ import fr.skytale.particleanimlib.animation.animation.image.Image;
 import fr.skytale.particleanimlib.animation.animation.image.ImageBuilder;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 public class MagicCircleImagePresetExecutor extends AAnimationPresetExecutor<ImageBuilder> {
@@ -13,7 +14,7 @@ public class MagicCircleImagePresetExecutor extends AAnimationPresetExecutor<Ima
     }
 
     @Override
-    protected void apply(ImageBuilder imageBuilder) {
+    protected void apply(ImageBuilder imageBuilder, JavaPlugin plugin) {
 
         imageBuilder.setImageFileName("magic_circle_ext.png");
         imageBuilder.setDirectorVectors(new Vector(0.2, 0, 0), new Vector(0, 0, 0.2));

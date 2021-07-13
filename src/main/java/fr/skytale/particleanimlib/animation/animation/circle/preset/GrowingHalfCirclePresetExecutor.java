@@ -4,8 +4,8 @@ import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
-import fr.skytale.particleanimlib.animation.attribute.var.VectorPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import java.awt.*;
@@ -17,7 +17,7 @@ public class GrowingHalfCirclePresetExecutor extends AAnimationPresetExecutor<Ci
     }
 
     @Override
-    protected void apply(CircleBuilder circleBuilder) {
+    protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
         circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
         circleBuilder.setNbPoints(20, false);
         circleBuilder.setAngleBetweenEachPoint(Math.PI / 20);

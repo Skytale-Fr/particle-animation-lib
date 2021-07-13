@@ -1,10 +1,10 @@
 package fr.skytale.particleanimlib.animation.animation.image.preset;
 
 import fr.skytale.particleanimlib.animation.parent.preset.APresetInitializer;
-import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,13 +22,13 @@ public class ImagePresetInitializer extends APresetInitializer {
     private static final String IMAGES_EXTRACTION_ERROR = "Error extracting default image into " + IMAGES_FOLDER_NAME + " folder.";
 
     @Override
-    protected void initialize() {
-        extractDefaultImages();
+    protected void initialize(JavaPlugin plugin) {
+        extractDefaultImages(plugin);
     }
 
-    private void extractDefaultImages() {
+    private void extractDefaultImages(JavaPlugin plugin) {
         final File jarFile = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
-        final File imagesFolder = createImagesFolder();
+        final File imagesFolder = createImagesFolder(plugin);
         if (jarFile.isFile() && imagesFolder != null) {
             try {
                 JarFile jar = new JarFile(jarFile);
@@ -52,8 +52,8 @@ public class ImagePresetInitializer extends APresetInitializer {
         }
     }
 
-    private File createImagesFolder() {
-        File pluginDataFolder = ParticleAnimLibTest.getInstance().getPlugin().getDataFolder();
+    private File createImagesFolder(JavaPlugin plugin) {
+        File pluginDataFolder = plugin.getDataFolder();
         if (!pluginDataFolder.exists() || !pluginDataFolder.isDirectory()) {
             try {
                 if (!pluginDataFolder.mkdir()) {

@@ -4,6 +4,7 @@ import fr.skytale.particleanimlib.animation.animation.polygon.PolygonBuilder;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 public class RotatingPolygonPresetExecutor extends AAnimationPresetExecutor<PolygonBuilder> {
@@ -13,8 +14,8 @@ public class RotatingPolygonPresetExecutor extends AAnimationPresetExecutor<Poly
     }
 
     @Override
-    protected void apply(PolygonBuilder polygonBuilder) {
-        AnimationPreset.POLYGON_GROWING.apply(polygonBuilder);
+    protected void apply(PolygonBuilder polygonBuilder, JavaPlugin plugin) {
+        AnimationPreset.POLYGON_GROWING.apply(polygonBuilder, plugin);
         polygonBuilder.setTicksDuration(400);
         polygonBuilder.setRotation(
                 new CallbackWithPreviousValueVariable<Vector>(

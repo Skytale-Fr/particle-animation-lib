@@ -20,4 +20,9 @@ public class VectorAnimationDirection extends AnimationDirection {
         this(new Constant<>(vector));
     }
 
+    @Override
+    public VectorAnimationDirection clone() {
+        return (VectorAnimationDirection) super.clone();
+    }
+
 }

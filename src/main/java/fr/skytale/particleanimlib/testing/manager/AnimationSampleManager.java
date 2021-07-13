@@ -17,14 +17,14 @@ public class AnimationSampleManager {
 
     public static AnimationSampleManager instance = null;
 
+    private AnimationSampleManager() {
+    }
+
     public static AnimationSampleManager getInstance() {
         if (instance == null) {
             instance = new AnimationSampleManager();
         }
         return instance;
-    }
-
-    private AnimationSampleManager() {
     }
 
     public AAnimationBuilder<?> initBuilder(Player player, APosition position, JavaPlugin plugin, String animationSampleName) {
@@ -36,9 +36,9 @@ public class AnimationSampleManager {
             throw new NotImplementedException(NOT_IMPLEMENTED);
         }
         AAnimationBuilder<?> builder = animationPreset.getPresetExecutor().createEmptyBuilder();
-        builder.setPosition(position);
         builder.setJavaPlugin(plugin);
-        animationPreset.apply(builder);
+        builder.setPosition(position);
+        animationPreset.apply(builder, plugin);
         return builder;
     }
 

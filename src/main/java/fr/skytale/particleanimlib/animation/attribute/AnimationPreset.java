@@ -21,6 +21,7 @@ import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExec
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import fr.skytale.particleanimlib.animation.parent.preset.APresetInitializer;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Locale;
 
@@ -71,6 +72,11 @@ public enum AnimationPreset {
         this.presetPrerequisitesClasses = presetPrerequisitesClasses;
     }
 
+    public static AnimationPreset fromName(String name) {
+        if (name == null) throw new NullPointerException("name should not be null");
+        return AnimationPreset.valueOf(name.trim().toUpperCase(Locale.ROOT));
+    }
+
     public Class<? extends AAnimationBuilder<?>> getBuilderClass() {
         return presetExecutor.getBuilderClass();
     }
@@ -79,21 +85,16 @@ public enum AnimationPreset {
         return presetExecutor;
     }
 
-    public void apply(AAnimationBuilder<?> builder) {
+    public void apply(AAnimationBuilder<?> builder, JavaPlugin plugin) {
         presetExecutor.checkCompatibility(builder);
         for (Class<? extends APresetInitializer> presetPrerequisiteClass : presetPrerequisitesClasses) {
-            APresetInitializer.initialize(presetPrerequisiteClass);
+            APresetInitializer.initialize(presetPrerequisiteClass, plugin);
         }
 
-        presetExecutor.applyPreset(builder);
+        presetExecutor.applyPreset(builder, plugin);
     }
 
-    public AAnimationBuilder<?> createBuilder() {
-        return presetExecutor.createBuilder();
-    }
-
-    public static AnimationPreset fromName(String name) {
-        if (name == null) throw new NullPointerException("name should not be null");
-        return AnimationPreset.valueOf(name.trim().toUpperCase(Locale.ROOT));
+    public AAnimationBuilder<?> createBuilder(JavaPlugin plugin) {
+        return presetExecutor.createBuilder(plugin);
     }
 }

@@ -1,12 +1,10 @@
 package fr.skytale.particleanimlib.animation.animation.sphere.preset;
 
-import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.animation.sphere.Sphere;
 import fr.skytale.particleanimlib.animation.animation.sphere.SphereBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
-import org.bukkit.util.Vector;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.awt.*;
 
@@ -17,7 +15,7 @@ public class SpherePresetExecutor extends AAnimationPresetExecutor<SphereBuilder
     }
 
     @Override
-    protected void apply(SphereBuilder sphereBuilder) {
+    protected void apply(SphereBuilder sphereBuilder, JavaPlugin plugin) {
         sphereBuilder.setRadius(4);
         sphereBuilder.setNbCircles(8);
         sphereBuilder.setAngleBetweenEachPoint(Math.PI / 4);
