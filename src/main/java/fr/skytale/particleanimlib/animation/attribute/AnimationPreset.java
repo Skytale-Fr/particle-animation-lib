@@ -7,6 +7,8 @@ import fr.skytale.particleanimlib.animation.animation.image.preset.*;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningSubAnimLightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningSubAnimSpherePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPlayerAimPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.GrowingPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.RotatingPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.SimplePolygonPresetExecutor;
@@ -39,6 +41,8 @@ public enum AnimationPreset {
     LIGHTNING(new LightningPresetExecutor()),
     LIGHTNING_SUB_ANIM_LIGHTNING(new LightningSubAnimLightningPresetExecutor()),
     LIGHTNING_SUB_ANIM_SPHERE(new LightningSubAnimSpherePresetExecutor()),
+    PARABOLA_PLAYER_AIM(new ParabolaPlayerAimPresetExecutor()),
+    PARABOLA(new ParabolaPresetExecutor()),
     POLYGON(new SimplePolygonPresetExecutor()),
     POLYGON_GROWING(new GrowingPolygonPresetExecutor()),
     POLYGON_ROTATING(new RotatingPolygonPresetExecutor()),

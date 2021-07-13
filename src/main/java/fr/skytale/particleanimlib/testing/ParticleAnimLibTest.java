@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class ParticleAnimLibTest {
 
-    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.LIGHTNING;
+    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.PARABOLA_PLAYER_AIM;
     public static TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
     public static boolean DEFAULT_SHOW_ON_CLICK = true;
 
