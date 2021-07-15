@@ -50,6 +50,9 @@ public class ParabolaTask extends ARotatingAnimationTask<Parabola> {
             if (bulletData.lifetime == 0) {
                 return true;
             }
+//          For each bullet, update velocity and position for each time step using (forward) Euler's method:
+//          V(t + dt) = V(t) + dV(t + dt)/dt * dt = V(t) + gravity * dt
+//          X(t + dt) = X(t) + dX(t + dt)/dt * dt = X(t) + V(t + dt) * dt
             bulletData.velocity.add(gravity.clone().multiply(finalFreq));
             bulletData.location.add(bulletData.velocity.clone().multiply(finalFreq));
             bulletData.lifetime --;
