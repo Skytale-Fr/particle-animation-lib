@@ -35,6 +35,7 @@ public enum AnimationPreset {
     CIRCLE_ROTATING(new RotatingCirclePresetExecutor()),
     CIRCLE_SUB_ANIM_ROTATING(new SubAnimationCircleRotatingPresetExecutor()),
     CIRCLE_SUB_ANIM_ROTATING2(new SubAnimationCircleRotating2PresetExecutor()),
+    CIRCLE_SUB_ANIM_ROTATING3(new SubAnimationCircleRotating3PresetExecutor()),
     CIRCLE_SUB_ANIM_ROTATING_PYRAMID(new SubAnimationCircleRotatingPyramidPresetExecutor()),
     CUBOID(new CuboidPresetExecutor()),
     CUBOID_ROTATING_RESIZING(new CuboidRotatingResizingPresetExecutor()),
