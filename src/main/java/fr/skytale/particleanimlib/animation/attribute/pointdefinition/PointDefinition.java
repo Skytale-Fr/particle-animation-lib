@@ -37,6 +37,10 @@ public abstract class PointDefinition implements Cloneable {
         return new DirectionSubAnimPointDefinition(directionAnimation, speed);
     }
 
+    public static DirectionSubAnimPointDefinition fromSubAnim(IDirectionSubAnimation directionAnimation, double speed, Vector direction, boolean isDirectionRelative) {
+        return new DirectionSubAnimPointDefinition(directionAnimation, speed, direction, isDirectionRelative);
+    }
+
     public ShowMethodParameters getShowMethodParameters() {
         return showMethodParameters;
     }
