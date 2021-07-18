@@ -3,7 +3,7 @@ package fr.skytale.particleanimlib.animation.animation.sphere;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARoundAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
@@ -16,7 +16,7 @@ public class Sphere extends ARoundAnimation implements ISubAnimation, ISubAnimat
     private PropagationType propagationType = null;
     private IVariable<Integer> simultaneousCircles;
     private Type type;
-    private PointDefinition pointDefinition;
+    private APointDefinition pointDefinition;
 
     public Sphere() {
     }
@@ -61,12 +61,12 @@ public class Sphere extends ARoundAnimation implements ISubAnimation, ISubAnimat
     }
 
     @Override
-    public PointDefinition getPointDefinition() {
+    public APointDefinition getPointDefinition() {
         return pointDefinition;
     }
 
     @Override
-    public void setPointDefinition(PointDefinition pointDefinition) {
+    public void setPointDefinition(APointDefinition pointDefinition) {
         this.pointDefinition = pointDefinition;
     }
 
@@ -80,7 +80,7 @@ public class Sphere extends ARoundAnimation implements ISubAnimation, ISubAnimat
 
     @Override
     public void setMainParticle(ParticleTemplate mainParticle) {
-        setPointDefinition(PointDefinition.fromParticleTemplate(mainParticle));
+        setPointDefinition(APointDefinition.fromParticleTemplate(mainParticle));
     }
 
     @Override

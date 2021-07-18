@@ -3,7 +3,7 @@ package fr.skytale.particleanimlib.animation.animation.lighting.preset;
 import fr.skytale.particleanimlib.animation.animation.lighting.LightningBuilder;
 import fr.skytale.particleanimlib.animation.animation.sphere.SphereBuilder;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,7 +21,7 @@ public class LightningSubAnimSpherePresetExecutor extends AAnimationPresetExecut
         subAnimSphereBuilder.setJavaPlugin(lightningBuilder.getJavaPlugin());
 
         lightningBuilder.applyPreset(AnimationPreset.LIGHTNING, plugin);
-        lightningBuilder.setPointDefinition(PointDefinition.fromSubAnim(subAnimSphereBuilder.getAnimation()));
+        lightningBuilder.setPointDefinition(APointDefinition.fromSubAnim(subAnimSphereBuilder.getAnimation()));
         lightningBuilder.setTicksDuration(1);
     }
 }

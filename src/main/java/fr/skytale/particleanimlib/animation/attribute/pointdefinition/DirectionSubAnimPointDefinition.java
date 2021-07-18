@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.attribute.pointdefinition;
 
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.DirectionVectorModifierCallback;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
@@ -10,20 +11,18 @@ import org.bukkit.util.Vector;
 public class DirectionSubAnimPointDefinition extends SubAnimPointDefinition {
 
     protected final double speed;
-    protected Vector direction;
-    protected final boolean directionIsRelative;
+    protected final DirectionVectorModifierCallback directionVectorModifierCallback;
     protected IDirectionSubAnimation subAnimation;
 
-    public DirectionSubAnimPointDefinition(IDirectionSubAnimation subAnimation, double speed, Vector direction, boolean directionIsRelative) {
+    public DirectionSubAnimPointDefinition(IDirectionSubAnimation subAnimation, double speed, DirectionVectorModifierCallback directionVectorModifierCallback) {
         super(ShowMethodParameters.LOCATION_AND_DIRECTION);
         this.subAnimation = subAnimation;
         this.speed = speed;
-        this.direction = direction.clone().normalize();
-        this.directionIsRelative = directionIsRelative;
+        this.directionVectorModifierCallback = directionVectorModifierCallback;
     }
 
     public DirectionSubAnimPointDefinition(IDirectionSubAnimation subAnimation, double speed) {
-        this(subAnimation, speed, new Vector(0,0,0), true);
+        this(subAnimation, speed, (v) -> v);
     }
 
     @Override
@@ -42,26 +41,18 @@ public class DirectionSubAnimPointDefinition extends SubAnimPointDefinition {
     @Override
     @Deprecated
     public void show(Location loc) {
-        if (directionIsRelative) throw new IllegalStateException("This method should never be called for DirectionSubAnimPointDefinition if isDirectionRelative is true. Set a fixed direction instead or call show(Location, Vector) instead.");
-        IDirectionSubAnimation newSubAnimation = (IDirectionSubAnimation) subAnimation.clone();
-        newSubAnimation.setPosition(APosition.fromLocation(loc));
-        newSubAnimation.setDirection(AnimationDirection.fromMoveVector(direction.clone().multiply(speed)));
-        newSubAnimation.show();
+        show(loc, new Vector(0, 1, 0));
     }
 
     @Override
-    public void show(Location loc, Vector fromCenterToPoint) {
+    public void show(Location loc, Vector v) {
         IDirectionSubAnimation newSubAnimation = (IDirectionSubAnimation) subAnimation.clone();
         newSubAnimation.setPosition(APosition.fromLocation(loc));
-        AnimationDirection subAnimDirection;
-        if (directionIsRelative) {
-            subAnimDirection = AnimationDirection.fromMoveVector(
-                    fromCenterToPoint.normalize().add(direction).normalize().multiply(speed)
-            );
-        } else {
-            subAnimDirection = AnimationDirection.fromMoveVector(direction.clone().multiply(speed));
-        }
-        newSubAnimation.setDirection(subAnimDirection);
+        newSubAnimation.setDirection(AnimationDirection.fromMoveVector(
+                this.directionVectorModifierCallback.run(v.clone().normalize())
+                        .normalize()
+                        .multiply(speed)
+        ));
         newSubAnimation.show();
     }
 
@@ -69,7 +60,6 @@ public class DirectionSubAnimPointDefinition extends SubAnimPointDefinition {
     public DirectionSubAnimPointDefinition clone() {
         DirectionSubAnimPointDefinition obj = (DirectionSubAnimPointDefinition) super.clone();
         obj.subAnimation = (IDirectionSubAnimation) subAnimation.clone();
-        obj.direction = direction.clone();
         return obj;
     }
 }

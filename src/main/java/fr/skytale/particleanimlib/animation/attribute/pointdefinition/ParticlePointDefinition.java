@@ -1,10 +1,11 @@
 package fr.skytale.particleanimlib.animation.attribute.pointdefinition;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public class ParticlePointDefinition extends PointDefinition {
+public class ParticlePointDefinition extends APointDefinition {
 
     private ParticleTemplate particleTemplate;
 

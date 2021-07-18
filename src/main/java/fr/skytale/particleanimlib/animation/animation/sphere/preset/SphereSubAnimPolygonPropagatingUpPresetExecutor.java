@@ -4,7 +4,7 @@ import fr.skytale.particleanimlib.animation.animation.polygon.PolygonBuilder;
 import fr.skytale.particleanimlib.animation.animation.sphere.Sphere;
 import fr.skytale.particleanimlib.animation.animation.sphere.SphereBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,7 +31,7 @@ public class SphereSubAnimPolygonPropagatingUpPresetExecutor extends AAnimationP
         sphereBuilder.setNbCircles(10);
         sphereBuilder.setAngleBetweenEachPoint(Math.PI / 8);
         sphereBuilder.setPropagation(Sphere.PropagationType.BOTTOM_TO_TOP, 3);
-        sphereBuilder.setPointDefinition(PointDefinition.fromSubAnim(polygonBuilder.getAnimation()));
+        sphereBuilder.setPointDefinition(APointDefinition.fromSubAnim(polygonBuilder.getAnimation()));
         sphereBuilder.setSphereType(Sphere.Type.FULL);
         sphereBuilder.setTicksDuration(100);
         sphereBuilder.setShowFrequency(3);

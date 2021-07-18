@@ -2,7 +2,7 @@ package fr.skytale.particleanimlib.animation.animation.lighting;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
@@ -12,7 +12,7 @@ import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimati
 public class Lightning extends AAnimation implements IDirectionSubAnimation, ISubAnimationContainer {
 
     private AnimationDirection direction;
-    private PointDefinition pointDefinition;
+    private APointDefinition pointDefinition;
     private double dispersionAngle;
     private IVariable<Double> distanceBetweenPoints;
     private double minDistanceBetweenLightingAngles;
@@ -41,12 +41,12 @@ public class Lightning extends AAnimation implements IDirectionSubAnimation, ISu
     }
 
     @Override
-    public PointDefinition getPointDefinition() {
+    public APointDefinition getPointDefinition() {
         return this.pointDefinition;
     }
 
     @Override
-    public void setPointDefinition(PointDefinition pointDefinition) {
+    public void setPointDefinition(APointDefinition pointDefinition) {
         this.pointDefinition = pointDefinition;
     }
 
@@ -100,7 +100,7 @@ public class Lightning extends AAnimation implements IDirectionSubAnimation, ISu
 
     @Override
     public void setMainParticle(ParticleTemplate mainParticle) {
-        setPointDefinition(PointDefinition.fromParticleTemplate(mainParticle));
+        setPointDefinition(APointDefinition.fromParticleTemplate(mainParticle));
     }
 
     public boolean isConvergeToTarget() {

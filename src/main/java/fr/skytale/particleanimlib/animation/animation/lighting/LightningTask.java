@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.lighting;
 
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
@@ -44,7 +44,7 @@ public class LightningTask extends AAnimationTask<Lightning> {
 
         // --- Show each lines or sub animations
 
-        PointDefinition pointDefinition = animation.getPointDefinition();
+        APointDefinition pointDefinition = animation.getPointDefinition();
 
         double nbPointsByTicks = ((double) persistentPoints.size()) / animation.getTicksDuration();
         int nbRemainingTicks = animation.getTicksDuration() - iterationCount;

@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.spiral;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
@@ -51,21 +51,21 @@ public class SpiralBuilder extends ARoundAnimationBuilder<Spiral> {
         setNbTrailingParticles(new Constant<>(nbTrailingParticles));
     }
 
-    public void setCentralPointDefinition(PointDefinition centralParticle) {
+    public void setCentralPointDefinition(APointDefinition centralParticle) {
         animation.setCentralPointDefinition(centralParticle);
     }
 
     public void setCentralPointDefinition(ParticleTemplate particleTemplate) {
-        setCentralPointDefinition(PointDefinition.fromParticleTemplate(particleTemplate));
+        setCentralPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
     }
 
-    public void setPointDefinition(PointDefinition pointDefinition) {
+    public void setPointDefinition(APointDefinition pointDefinition) {
         checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
         animation.setPointDefinition(pointDefinition);
     }
 
     public void setPointDefinition(ParticleTemplate particleTemplate) {
-        setPointDefinition(PointDefinition.fromParticleTemplate(particleTemplate));
+        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
     }
 
     @Override

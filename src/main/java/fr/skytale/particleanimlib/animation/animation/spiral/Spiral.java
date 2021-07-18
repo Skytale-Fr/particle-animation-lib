@@ -2,7 +2,7 @@ package fr.skytale.particleanimlib.animation.animation.spiral;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARoundAnimation;
@@ -13,8 +13,8 @@ public class Spiral extends ARoundAnimation implements IDirectionSubAnimation, I
     private AnimationDirection direction;
     private IVariable<Integer> nbSpiral;
     private IVariable<Integer> nbTrailingParticles;
-    private PointDefinition centralPointDefinition;
-    private PointDefinition pointDefinition;
+    private APointDefinition centralPointDefinition;
+    private APointDefinition pointDefinition;
 
     public Spiral() {
     }
@@ -52,21 +52,21 @@ public class Spiral extends ARoundAnimation implements IDirectionSubAnimation, I
         this.nbTrailingParticles = nbTrailingParticles;
     }
 
-    public PointDefinition getCentralPointDefinition() {
+    public APointDefinition getCentralPointDefinition() {
         return centralPointDefinition;
     }
 
-    public void setCentralPointDefinition(PointDefinition centralPointDefinition) {
+    public void setCentralPointDefinition(APointDefinition centralPointDefinition) {
         this.centralPointDefinition = centralPointDefinition;
     }
 
     @Override
-    public PointDefinition getPointDefinition() {
+    public APointDefinition getPointDefinition() {
         return pointDefinition;
     }
 
     @Override
-    public void setPointDefinition(PointDefinition pointDefinition) {
+    public void setPointDefinition(APointDefinition pointDefinition) {
         this.pointDefinition = pointDefinition;
     }
 
@@ -80,7 +80,7 @@ public class Spiral extends ARoundAnimation implements IDirectionSubAnimation, I
 
     @Override
     public void setMainParticle(ParticleTemplate mainParticle) {
-        setPointDefinition(PointDefinition.fromParticleTemplate(mainParticle));
+        setPointDefinition(APointDefinition.fromParticleTemplate(mainParticle));
     }
 
     @Override
