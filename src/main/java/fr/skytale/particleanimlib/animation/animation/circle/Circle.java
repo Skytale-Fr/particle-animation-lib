@@ -3,7 +3,7 @@ package fr.skytale.particleanimlib.animation.animation.circle;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARotatingRoundAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
@@ -14,7 +14,7 @@ public class Circle extends ARotatingRoundAnimation implements IPlaneSubAnimatio
     private Vector u;
     private Vector v;
     private IVariable<Integer> nbPoints;
-    private PointDefinition pointDefinition;
+    private APointDefinition pointDefinition;
 
     public Circle() {
     }
@@ -55,12 +55,12 @@ public class Circle extends ARotatingRoundAnimation implements IPlaneSubAnimatio
     }
 
     @Override
-    public PointDefinition getPointDefinition() {
+    public APointDefinition getPointDefinition() {
         return pointDefinition;
     }
 
     @Override
-    public void setPointDefinition(PointDefinition pointDefinition) {
+    public void setPointDefinition(APointDefinition pointDefinition) {
         this.pointDefinition = pointDefinition;
     }
 
@@ -74,7 +74,7 @@ public class Circle extends ARotatingRoundAnimation implements IPlaneSubAnimatio
 
     @Override
     public void setMainParticle(ParticleTemplate mainParticle) {
-        setPointDefinition(PointDefinition.fromParticleTemplate(mainParticle));
+        setPointDefinition(APointDefinition.fromParticleTemplate(mainParticle));
     }
 
     @Override

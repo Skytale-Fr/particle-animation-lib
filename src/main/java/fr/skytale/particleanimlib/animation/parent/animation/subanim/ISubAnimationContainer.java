@@ -1,11 +1,11 @@
 package fr.skytale.particleanimlib.animation.parent.animation.subanim;
 
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 
 public interface ISubAnimationContainer {
 
-    PointDefinition getPointDefinition();
+    APointDefinition getPointDefinition();
 
-    void setPointDefinition(PointDefinition pointDefinition);
+    void setPointDefinition(APointDefinition pointDefinition);
 
 }

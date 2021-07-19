@@ -19,7 +19,7 @@ public class ParabolaBuilder extends ARotatingAnimationBuilder<Parabola> {
         animation.setDirection(AnimationDirection.fromMoveVector(new Vector(1, 1, 1)));
         animation.setSpeed(new Constant<>((double) 1));
         animation.setBulletLifetime(60);
-        animation.setGravity(new Constant<>(new Vector(0, -9.81/Math.pow(20, 2), 0)));
+        animation.setGravity(new Constant<>(new Vector(0, -9.81 / Math.pow(20, 2), 0)));
     }
 
     @Override
@@ -38,9 +38,17 @@ public class ParabolaBuilder extends ARotatingAnimationBuilder<Parabola> {
         animation.setSpeed(speed);
     }
 
+    public void setSpeed(double speed) {
+        setSpeed(new Constant<>(speed));
+    }
+
     public void setGravity(IVariable<Vector> gravity) {
         checkNotNull(gravity, GRAVITY_NOT_NULL);
         animation.setGravity(gravity);
+    }
+
+    public void setGravity(Vector gravity) {
+        setGravity(new Constant<>(gravity));
     }
 
     public void setBulletLifetime(int bulletLifetime) {

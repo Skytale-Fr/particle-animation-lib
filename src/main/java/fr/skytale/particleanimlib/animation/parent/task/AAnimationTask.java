@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.parent.task;
 
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.Bukkit;
@@ -112,7 +112,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         }
     }
 
-    public void drawLine(Location point1, Location point2, double step, PointDefinition pointDefinition) {
+    public void drawLine(Location point1, Location point2, double step, APointDefinition pointDefinition) {
         double distance = point1.distance(point2);
         Vector stepVector = point2.toVector().subtract(point1.toVector()).normalize().multiply(step);
         Location currentLoc = point1.clone();
@@ -130,8 +130,8 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         return v.toLocation(Objects.requireNonNull(point.getWorld()));
     }
 
-    public void showPoint(PointDefinition pointDefinition, Location pointLocation, Location centerLocation) {
-        if (pointDefinition.getShowMethodParameters() == PointDefinition.ShowMethodParameters.LOCATION) {
+    public void showPoint(APointDefinition pointDefinition, Location pointLocation, Location centerLocation) {
+        if (pointDefinition.getShowMethodParameters() == APointDefinition.ShowMethodParameters.LOCATION) {
             pointDefinition.show(pointLocation);
         } else {
             Vector fromCenterToPoint = pointLocation.toVector().subtract(centerLocation.toVector());
@@ -139,8 +139,8 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         }
     }
 
-    public void showPoint(PointDefinition pointDefinition, Location pointLocation, Vector pointDirection) {
-        if (pointDefinition.getShowMethodParameters() == PointDefinition.ShowMethodParameters.LOCATION) {
+    public void showPoint(APointDefinition pointDefinition, Location pointLocation, Vector pointDirection) {
+        if (pointDefinition.getShowMethodParameters() == APointDefinition.ShowMethodParameters.LOCATION) {
             pointDefinition.show(pointLocation);
         } else {
             pointDefinition.show(pointLocation, pointDirection);

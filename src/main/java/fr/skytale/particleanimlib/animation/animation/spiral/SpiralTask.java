@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.spiral;
 
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
@@ -142,7 +142,7 @@ public class SpiralTask extends AAnimationTask<Spiral> {
     }
 
     private void displayPoint(Location pointLocation, Vector fromCenterToPoint, boolean isCentral) {
-        PointDefinition pointDefinition;
+        APointDefinition pointDefinition;
         if (isCentral) {
             pointDefinition = animation.getCentralPointDefinition();
             if (pointDefinition == null) return;
@@ -159,7 +159,7 @@ public class SpiralTask extends AAnimationTask<Spiral> {
     }
 
     public void showPoint(PointData pointData) {
-        if (pointData.pointDefinition.getShowMethodParameters() == PointDefinition.ShowMethodParameters.LOCATION) {
+        if (pointData.pointDefinition.getShowMethodParameters() == APointDefinition.ShowMethodParameters.LOCATION) {
             pointData.pointDefinition.show(pointData.pointLocation);
         } else {
             pointData.pointDefinition.show(pointData.pointLocation, pointData.fromCenterToPoint);
@@ -167,11 +167,11 @@ public class SpiralTask extends AAnimationTask<Spiral> {
     }
 
     public static class PointData {
-        public PointDefinition pointDefinition;
+        public APointDefinition pointDefinition;
         public Location pointLocation;
         public Vector fromCenterToPoint;
 
-        public PointData(PointDefinition pointDefinition, Location pointLocation, Vector fromCenterToPoint) {
+        public PointData(APointDefinition pointDefinition, Location pointLocation, Vector fromCenterToPoint) {
             this.pointDefinition = pointDefinition;
             this.pointLocation = pointLocation;
             this.fromCenterToPoint = fromCenterToPoint;

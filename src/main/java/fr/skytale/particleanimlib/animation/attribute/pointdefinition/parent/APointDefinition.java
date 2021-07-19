@@ -1,18 +1,22 @@
-package fr.skytale.particleanimlib.animation.attribute.pointdefinition;
+package fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.DirectionSubAnimPointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.LocationSubAnimPointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PlaneSubAnimPointDefinition;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public abstract class PointDefinition implements Cloneable {
+public abstract class APointDefinition implements Cloneable {
 
     protected ShowMethodParameters showMethodParameters;
     protected boolean hasSubAnimation;
 
-    protected PointDefinition(ShowMethodParameters showMethodParameters, boolean hasSubAnimation) {
+    protected APointDefinition(ShowMethodParameters showMethodParameters, boolean hasSubAnimation) {
         this.showMethodParameters = showMethodParameters;
         this.hasSubAnimation = hasSubAnimation;
     }
@@ -37,6 +41,10 @@ public abstract class PointDefinition implements Cloneable {
         return new DirectionSubAnimPointDefinition(directionAnimation, speed);
     }
 
+    public static DirectionSubAnimPointDefinition fromSubAnim(IDirectionSubAnimation directionAnimation, double speed, DirectionVectorModifierCallback vectorModifierCallback) {
+        return new DirectionSubAnimPointDefinition(directionAnimation, speed, vectorModifierCallback);
+    }
+
     public ShowMethodParameters getShowMethodParameters() {
         return showMethodParameters;
     }
@@ -50,10 +58,10 @@ public abstract class PointDefinition implements Cloneable {
     public abstract void show(Location loc, Vector fromCenterToPoint);
 
     @Override
-    public PointDefinition clone() {
-        PointDefinition obj = null;
+    public APointDefinition clone() {
+        APointDefinition obj = null;
         try {
-            obj = (PointDefinition) super.clone();
+            obj = (APointDefinition) super.clone();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }

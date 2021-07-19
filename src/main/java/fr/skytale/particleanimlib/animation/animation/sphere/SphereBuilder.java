@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.sphere;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.ARoundAnimationBuilder;
@@ -50,13 +50,13 @@ public class SphereBuilder extends ARoundAnimationBuilder<Sphere> {
         animation.setSphereType(sphereType);
     }
 
-    public void setPointDefinition(PointDefinition pointDefinition) {
+    public void setPointDefinition(APointDefinition pointDefinition) {
         checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
         animation.setPointDefinition(pointDefinition);
     }
 
     public void setPointDefinition(ParticleTemplate particleTemplate) {
-        setPointDefinition(PointDefinition.fromParticleTemplate(particleTemplate));
+        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
     }
 
     @Override

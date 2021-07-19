@@ -3,7 +3,7 @@ package fr.skytale.particleanimlib.animation.animation.circle.preset;
 import fr.skytale.particleanimlib.animation.animation.circle.Circle;
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
@@ -32,6 +32,6 @@ public class SubAnimationCircleRotatingPresetExecutor extends AAnimationPresetEx
         circleBuilder.setRadius(8);
         circleBuilder.setTicksDuration(600);
         circleBuilder.setShowFrequency(new Constant<>(2));
-        circleBuilder.setPointDefinition(PointDefinition.fromSubAnim(circle));
+        circleBuilder.setPointDefinition(APointDefinition.fromSubAnim(circle));
     }
 }

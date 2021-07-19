@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.lighting;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
@@ -17,7 +17,7 @@ public class LightningBuilder extends AAnimationBuilder<Lightning> {
         animation.setMaxDistanceBetweenLightingAngles(30.0);
         animation.setMinDistanceBetweenLightingAngles(1.0);
         animation.setMaxDistance(200);
-        animation.setPointDefinition(PointDefinition.fromParticleTemplate(new ParticleTemplate("REDSTONE", new Color(255, 0, 0), null)));
+        animation.setPointDefinition(APointDefinition.fromParticleTemplate(new ParticleTemplate("REDSTONE", new Color(255, 0, 0), null)));
         animation.setDispersionAngle(Math.PI / 6);
         animation.setConvergeToTarget(true);
     }
@@ -30,13 +30,13 @@ public class LightningBuilder extends AAnimationBuilder<Lightning> {
         animation.setDirection(direction);
     }
 
-    public void setPointDefinition(PointDefinition pointDefinition) {
+    public void setPointDefinition(APointDefinition pointDefinition) {
         checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
         animation.setPointDefinition(pointDefinition);
     }
 
     public void setPointDefinition(ParticleTemplate particleTemplate) {
-        setPointDefinition(PointDefinition.fromParticleTemplate(particleTemplate));
+        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
     }
 
     public void setDispersionAngle(double dispersionAngle) {

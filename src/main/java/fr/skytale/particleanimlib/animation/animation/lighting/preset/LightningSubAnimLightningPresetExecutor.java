@@ -2,7 +2,7 @@ package fr.skytale.particleanimlib.animation.animation.lighting.preset;
 
 import fr.skytale.particleanimlib.animation.animation.lighting.LightningBuilder;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,7 +22,7 @@ public class LightningSubAnimLightningPresetExecutor extends AAnimationPresetExe
         subLightningBuilder.setMaxDistance(40);
 
         lightningBuilder.applyPreset(AnimationPreset.LIGHTNING, plugin);
-        lightningBuilder.setPointDefinition(PointDefinition.fromSubAnim(subLightningBuilder.getAnimation()));
+        lightningBuilder.setPointDefinition(APointDefinition.fromSubAnim(subLightningBuilder.getAnimation()));
         lightningBuilder.setTicksDuration(1);
     }
 }
