@@ -22,6 +22,6 @@ public class SpherePresetExecutor extends AAnimationPresetExecutor<SphereBuilder
         sphereBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         sphereBuilder.setSphereType(Sphere.Type.FULL);
         sphereBuilder.setTicksDuration(100);
-        sphereBuilder.setShowFrequency(5);
+        sphereBuilder.setShowPeriod(5);
     }
 }

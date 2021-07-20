@@ -24,13 +24,13 @@ public class SubAnimationCircleRotatingPyramidPresetExecutor extends AAnimationP
         pyramidBuilder.applyPreset(AnimationPreset.PYRAMID, plugin);
         pyramidBuilder.setFromCenterToApex(new Vector(0, 0, 4));
         pyramidBuilder.setTicksDuration(2);
-        pyramidBuilder.setShowFrequency(1);
+        pyramidBuilder.setShowPeriod(1);
 
         circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 1, 0));
         circleBuilder.setNbPoints(5, true);
         circleBuilder.setRadius(8);
         circleBuilder.setTicksDuration(600);
-        circleBuilder.setShowFrequency(new Constant<>(2));
+        circleBuilder.setShowPeriod(new Constant<>(2));
         circleBuilder.setRotation(new Constant<>(new Vector(1, 0, 0)), new DoublePeriodicallyEvolvingVariable(Math.PI / 500, Math.PI / 200, 3));
         circleBuilder.setPointDefinition(APointDefinition.fromSubAnim(pyramidBuilder.getAnimation()));
     }

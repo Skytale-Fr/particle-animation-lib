@@ -22,6 +22,6 @@ public class SimpleCirclePresetExecutor extends AAnimationPresetExecutor<CircleB
         circleBuilder.setRadius(4);
         circleBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         circleBuilder.setTicksDuration(100);
-        circleBuilder.setShowFrequency(new Constant<>(1));
+        circleBuilder.setShowPeriod(new Constant<>(1));
     }
 }

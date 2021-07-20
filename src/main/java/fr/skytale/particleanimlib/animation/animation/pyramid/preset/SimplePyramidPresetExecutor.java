@@ -23,6 +23,6 @@ public class SimplePyramidPresetExecutor extends AAnimationPresetExecutor<Pyrami
         pyramidBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         pyramidBuilder.setNbBaseApex(8);
         pyramidBuilder.setTicksDuration(200);
-        pyramidBuilder.setShowFrequency(new Constant<>(1));
+        pyramidBuilder.setShowPeriod(new Constant<>(1));
     }
 }

@@ -20,7 +20,7 @@ public class MagicCircleImagePresetExecutor extends AAnimationPresetExecutor<Ima
         imageBuilder.setDirectorVectors(new Vector(0.2, 0, 0), new Vector(0, 0, 0.2));
         imageBuilder.setRotation(new Constant<>(new Vector(0, 1, 0)), new Constant<>(-Math.PI / 100));
         imageBuilder.setTicksDuration(400);
-        imageBuilder.setShowFrequency(new Constant<>(3));
+        imageBuilder.setShowPeriod(new Constant<>(3));
 
         ImageBuilder midImageBuilder = new ImageBuilder();
         midImageBuilder.setPosition(imageBuilder.getPosition());
@@ -30,7 +30,7 @@ public class MagicCircleImagePresetExecutor extends AAnimationPresetExecutor<Ima
         midImageBuilder.setDirectorVectors(new Vector(0.2, 0, 0), new Vector(0, 0, 0.2));
         midImageBuilder.setRotation(new Constant<>(new Vector(0, 1, 0)), new Constant<>(Math.PI / 40));
         midImageBuilder.setTicksDuration(400);
-        midImageBuilder.setShowFrequency(new Constant<>(3));
+        midImageBuilder.setShowPeriod(new Constant<>(3));
 
         ImageBuilder inImageBuilder = new ImageBuilder();
         inImageBuilder.setPosition(imageBuilder.getPosition());
@@ -40,14 +40,14 @@ public class MagicCircleImagePresetExecutor extends AAnimationPresetExecutor<Ima
         inImageBuilder.setDirectorVectors(new Vector(0.2, 0, 0), new Vector(0, 0, 0.2));
         inImageBuilder.setRotation(new Constant<>(new Vector(0, 1, 0)), new Constant<>(-Math.PI / 23));
         inImageBuilder.setTicksDuration(400);
-        inImageBuilder.setShowFrequency(new Constant<>(3));
+        inImageBuilder.setShowPeriod(new Constant<>(3));
 
         Image extImage = imageBuilder.getAnimation();
         Image midImage = midImageBuilder.getAnimation();
         Image inImage = inImageBuilder.getAnimation();
 
         imageBuilder.setTicksDuration(1);
-        imageBuilder.setShowFrequency(1);
+        imageBuilder.setShowPeriod(1);
         imageBuilder.setCallback(result -> {
             extImage.show();
             midImage.show();

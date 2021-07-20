@@ -11,7 +11,7 @@ public class AtomBuilder extends AAnimationBuilder<Atom> {
 
     public AtomBuilder() {
         super();
-        animation.setShowFrequency(new Constant<>(0));
+        animation.setShowPeriod(new Constant<>(0));
         animation.setTicksDuration(60);
     }
 

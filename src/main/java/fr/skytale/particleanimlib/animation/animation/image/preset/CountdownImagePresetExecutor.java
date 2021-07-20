@@ -28,7 +28,7 @@ public class CountdownImagePresetExecutor extends AAnimationPresetExecutor<Image
         imageBuilder.setDirectorVectors(new Vector(0, 0, -0.2), new Vector(0, 0.2, 0));
         imageBuilder.setImageFileName("race_countdown_go.png");
         imageBuilder.setTicksDuration(20);
-        imageBuilder.setShowFrequency(new Constant<>(2));
+        imageBuilder.setShowPeriod(new Constant<>(2));
         imageBuilder.setPosition(APosition.fromLocation(new CallbackWithPreviousValueVariable<>(originLocation, (iterationCount, previousValue) -> {
             if (iterationCount == 2) {
                 return previousValue.add(new Vector(0.5, 0, 0));

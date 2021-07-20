@@ -23,6 +23,6 @@ public class SkytaleImagePresetExecutor extends AAnimationPresetExecutor<ImageBu
 
         imageBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         imageBuilder.setTicksDuration(400);
-        imageBuilder.setShowFrequency(new Constant<>(2));
+        imageBuilder.setShowPeriod(new Constant<>(2));
     }
 }

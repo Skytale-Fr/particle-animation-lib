@@ -28,7 +28,7 @@ public class CircleBuilder extends ARotatingRoundAnimationBuilder<Circle> {
         animation.setU(new Vector(1, 0, 0));
         animation.setV(new Vector(0, 1, 0));
         animation.setRadius(new Constant<>(3.0));
-        animation.setShowFrequency(new Constant<>(1));
+        animation.setShowPeriod(new Constant<>(1));
         animation.setTicksDuration(60);
         setNbPoints(new Constant<>(20), true);
     }

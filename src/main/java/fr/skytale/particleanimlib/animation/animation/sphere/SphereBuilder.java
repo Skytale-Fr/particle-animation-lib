@@ -14,7 +14,7 @@ public class SphereBuilder extends ARoundAnimationBuilder<Sphere> {
         animation.setRadius(new Constant<>(2.0));
         animation.setAngleBetweenEachPoint(new Constant<>(Math.toRadians(30)));
         animation.setSphereType(Sphere.Type.FULL);
-        animation.setShowFrequency(new Constant<>(1));
+        animation.setShowPeriod(new Constant<>(1));
         animation.setPropagationType(null);
         animation.setTicksDuration(60);
     }

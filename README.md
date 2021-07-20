@@ -147,7 +147,7 @@ builder.setFromLocationToSecondCorner(new VectorPeriodicallyEvolvingVariable(new
 builder.setDistanceBetweenPoints(new Constant<>(0.4));
 builder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
 builder.setTicksDuration(400);
-builder.setShowFrequency(new Constant<>(1));
+builder.setShowPeriod(new Constant<>(1));
 builder.setJavaPlugin(plugin);
 ```
 
@@ -163,11 +163,11 @@ circleBuilder.setDirectorVectors(new Constant<>(new Vector(1, 0, 0)), new Consta
 
 circleBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
 circleBuilder.setTicksDuration(80);
-circleBuilder.setShowFrequency(new Constant<>(5));
+circleBuilder.setShowPeriod(new Constant<>(5));
 circleBuilder.setJavaPlugin(plugin);
 
 trailBuilder.setDuration(Duration.ofSeconds(200));
-trailBuilder.setCheckFrequency(2);
+trailBuilder.setCheckPeriod(2);
 trailBuilder.setMinPlayerToAnimationDistance(1);
 trailBuilder.setMinDistanceBetweenAnimations(2);
 trailBuilder.addAnimation(circleBuilder.getAnimation(true));

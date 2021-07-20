@@ -74,8 +74,8 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         }
 
         //We only show at the specified frequency
-        Integer showFrequency = animation.getShowFrequency().getCurrentValue(iterationCount);
-        if (showFrequency == 0 || iterationCount % showFrequency == 0) {
+        Integer showPeriod = animation.getShowPeriod().getCurrentValue(iterationCount);
+        if (showPeriod == 0 || iterationCount % showPeriod == 0) {
             show(iterationBaseLocation);
         }
         iterationCount++;

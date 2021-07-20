@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.parabola;
 
 import fr.skytale.particleanimlib.animation.parent.task.ARotatingAnimationTask;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -35,15 +36,18 @@ public class ParabolaTask extends ARotatingAnimationTask<Parabola> {
             direction = rotation.rotateVector(direction.clone());
 
         }
-        BulletData bulletData = new BulletData();
-        bulletData.location = iterationBaseLocation.toVector();
-        bulletData.velocity = direction.clone().normalize().multiply(animation.getSpeed().getCurrentValue(iterationCount));
-        bulletData.lifetime = animation.getBulletLifetime();
-        bullets.add(bulletData);
+        int bulletShootPeriod = animation.getBulletShootPeriod().getCurrentValue(iterationCount);
+        if (bulletShootPeriod == 0 || iterationCount % bulletShootPeriod == 0) {
+            BulletData bulletData = new BulletData();
+            bulletData.location = iterationBaseLocation.toVector();
+            bulletData.velocity = direction.clone().normalize().multiply(animation.getSpeed().getCurrentValue(iterationCount));
+            bulletData.lifetime = animation.getBulletLifetime().getCurrentValue(iterationCount);
+            bullets.add(bulletData);
+        }
     }
 
     private void updateBullets(Location iterationBaseLocation) {
-        int freq = animation.getShowFrequency().getCurrentValue(iterationCount);
+        int freq = animation.getShowPeriod().getCurrentValue(iterationCount);
         final int finalFreq = freq == 0 ? 1 : freq;
         Vector gravity = animation.getGravity().getCurrentValue(iterationCount);
         bullets.removeIf(bulletData -> {

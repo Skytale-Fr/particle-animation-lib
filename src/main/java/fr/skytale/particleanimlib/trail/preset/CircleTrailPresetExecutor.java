@@ -24,11 +24,11 @@ public class CircleTrailPresetExecutor extends ATrailPresetExecutor {
 
         circleBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         circleBuilder.setTicksDuration(80);
-        circleBuilder.setShowFrequency(new Constant<>(5));
+        circleBuilder.setShowPeriod(new Constant<>(5));
         circleBuilder.setJavaPlugin(plugin);
 
         trailBuilder.setDuration(Duration.ofSeconds(200));
-        trailBuilder.setCheckFrequency(2);
+        trailBuilder.setCheckPeriod(2);
         trailBuilder.setMinPlayerToAnimationDistance(1);
         trailBuilder.setMinDistanceBetweenAnimations(2);
         trailBuilder.addAnimation(circleBuilder.getAnimation(true));

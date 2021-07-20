@@ -23,6 +23,6 @@ public class PropagatingDownSpherePresetExecutor extends AAnimationPresetExecuto
         sphereBuilder.setSphereType(Sphere.Type.FULL);
         sphereBuilder.setPropagation(Sphere.PropagationType.TOP_TO_BOTTOM, 2);
         sphereBuilder.setTicksDuration(200);
-        sphereBuilder.setShowFrequency(5);
+        sphereBuilder.setShowPeriod(5);
     }
 }

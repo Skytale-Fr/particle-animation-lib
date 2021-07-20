@@ -27,6 +27,6 @@ public class SpiralPresetExecutor extends AAnimationPresetExecutor<SpiralBuilder
         spiralBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         spiralBuilder.setDirection(AnimationDirection.fromMoveVector(new VectorPeriodicallyEvolvingVariable(new Vector(0, 0.1, 0), new Vector(0, 0.01, 0), 0)));
         spiralBuilder.setTicksDuration(200);
-        spiralBuilder.setShowFrequency(2);
+        spiralBuilder.setShowPeriod(2);
     }
 }

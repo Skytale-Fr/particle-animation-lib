@@ -25,6 +25,6 @@ public class ParabolaPlayerAimPresetExecutor extends AAnimationPresetExecutor<Pa
         }
         parabolaBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 0, 0), null));
         parabolaBuilder.setTicksDuration(100);
-        parabolaBuilder.setShowFrequency(new Constant<>(3));
+        parabolaBuilder.setShowPeriod(new Constant<>(3));
     }
 }

@@ -59,7 +59,7 @@ public class TrailTask implements Runnable {
     @Deprecated
     public void startTask() {
         if (taskId == null) {
-            this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, trail.getCheckFrequency()).getTaskId();
+            this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, trail.getCheckPeriod()).getTaskId();
         }
     }
 

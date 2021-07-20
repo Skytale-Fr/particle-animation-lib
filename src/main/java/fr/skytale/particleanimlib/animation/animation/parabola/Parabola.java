@@ -10,8 +10,9 @@ public class Parabola extends ARotatingAnimation implements IDirectionSubAnimati
 
     private IVariable<Double> speed;
     private IVariable<Vector> gravity;
-    private int bulletLifetime;
+    private IVariable<Integer> bulletLifetime;
     private AnimationDirection direction;
+    private IVariable<Integer> bulletShootPeriod;
 
     public Parabola() {
     }
@@ -35,24 +36,32 @@ public class Parabola extends ARotatingAnimation implements IDirectionSubAnimati
         return speed;
     }
 
-    public int getBulletLifetime() {
-        return bulletLifetime;
+    public void setSpeed(IVariable<Double> speed) {
+        this.speed = speed;
     }
 
     public IVariable<Vector> getGravity() {
         return gravity;
     }
 
-    public void setSpeed(IVariable<Double> speed) {
-        this.speed = speed;
-    }
-
     public void setGravity(IVariable<Vector> gravity) {
         this.gravity = gravity;
     }
 
-    public void setBulletLifetime(int bulletLifetime) {
+    public IVariable<Integer> getBulletLifetime() {
+        return bulletLifetime;
+    }
+
+    public void setBulletLifetime(IVariable<Integer> bulletLifetime) {
         this.bulletLifetime = bulletLifetime;
+    }
+
+    public IVariable<Integer> getBulletShootPeriod() {
+        return bulletShootPeriod;
+    }
+
+    public void setBulletShootPeriod(IVariable<Integer> bulletShootPeriod) {
+        this.bulletShootPeriod = bulletShootPeriod;
     }
 
     @Override
@@ -61,6 +70,8 @@ public class Parabola extends ARotatingAnimation implements IDirectionSubAnimati
         obj.speed = speed.copy();
         obj.gravity = gravity.copy();
         obj.direction = direction.clone();
+        obj.bulletShootPeriod = bulletShootPeriod.copy();
+        obj.bulletLifetime = bulletLifetime.copy();
         return obj;
     }
 }

@@ -10,7 +10,7 @@ public class PyramidBuilder extends AAnimationBuilder<Pyramid> {
     public PyramidBuilder() {
         super();
         animation.setDistanceBetweenParticles(new Constant<>(0.3));
-        animation.setShowFrequency(new Constant<>(0));
+        animation.setShowPeriod(new Constant<>(0));
         animation.setTicksDuration(60);
         animation.setNbBaseApex(new Constant<>(3));
         animation.setFromCenterToApex(new Constant<>(new Vector(0, 5, 0)));

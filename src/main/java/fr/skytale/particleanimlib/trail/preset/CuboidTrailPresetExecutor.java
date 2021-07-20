@@ -25,11 +25,11 @@ public class CuboidTrailPresetExecutor extends ATrailPresetExecutor {
 
         cuboidBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         cuboidBuilder.setTicksDuration(100);
-        cuboidBuilder.setShowFrequency(new Constant<>(5));
+        cuboidBuilder.setShowPeriod(new Constant<>(5));
         cuboidBuilder.setJavaPlugin(plugin);
 
         trailBuilder.setDuration(Duration.ofSeconds(200));
-        trailBuilder.setCheckFrequency(2);
+        trailBuilder.setCheckPeriod(2);
         trailBuilder.setMinPlayerToAnimationDistance(1);
         trailBuilder.setMinDistanceBetweenAnimations(2);
         trailBuilder.addAnimation(cuboidBuilder.getAnimation(true));

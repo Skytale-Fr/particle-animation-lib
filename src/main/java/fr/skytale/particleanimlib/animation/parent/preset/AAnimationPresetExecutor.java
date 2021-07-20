@@ -21,6 +21,7 @@ public abstract class AAnimationPresetExecutor<T extends AAnimationBuilder<?>> {
         checkCompatibility(builder);
         T builderCasted = builderClass.cast(builder);
         apply(builderCasted, plugin);
+        builderCasted.setJavaPlugin(plugin);
     }
 
     public final boolean isCompatible(AAnimationBuilder<?> builder) {

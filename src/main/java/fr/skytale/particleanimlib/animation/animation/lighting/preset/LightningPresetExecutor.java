@@ -25,7 +25,7 @@ public class LightningPresetExecutor extends AAnimationPresetExecutor<LightningB
         lightningBuilder.setMinDistanceBetweenLightingAngles(5);
         lightningBuilder.setMaxDistance(75);
         lightningBuilder.setTicksDuration(25);
-        lightningBuilder.setShowFrequency(3);
+        lightningBuilder.setShowPeriod(3);
         lightningBuilder.setConvergeToTarget(true);
     }
 }

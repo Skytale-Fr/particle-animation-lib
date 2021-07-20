@@ -12,7 +12,7 @@ public abstract class AAnimation implements Cloneable {
     protected ParticleTemplate mainParticle;
     protected JavaPlugin plugin;
     protected int ticksDuration;
-    protected IVariable<Integer> showFrequency;
+    protected IVariable<Integer> showPeriod;
     protected AnimationEndedCallback callback;
 
     public abstract void show();
@@ -43,12 +43,12 @@ public abstract class AAnimation implements Cloneable {
         this.ticksDuration = ticksDuration;
     }
 
-    public IVariable<Integer> getShowFrequency() {
-        return showFrequency;
+    public IVariable<Integer> getShowPeriod() {
+        return showPeriod;
     }
 
-    public void setShowFrequency(IVariable<Integer> showFrequency) {
-        this.showFrequency = showFrequency;
+    public void setShowPeriod(IVariable<Integer> showPeriod) {
+        this.showPeriod = showPeriod;
     }
 
     public AnimationEndedCallback getCallback() {

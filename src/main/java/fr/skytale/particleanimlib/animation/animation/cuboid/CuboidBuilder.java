@@ -13,7 +13,7 @@ public class CuboidBuilder extends ARotatingAnimationBuilder<Cuboid> {
     public CuboidBuilder() {
         super();
         animation.setDistanceBetweenPoints(new Constant<>(0.5));
-        animation.setShowFrequency(new Constant<>(0));
+        animation.setShowPeriod(new Constant<>(0));
         animation.setTicksDuration(60);
         animation.setRotationAxis(null);
         animation.setRotationAngleAlpha(null);

@@ -24,12 +24,12 @@ public class PigBoatBowImagePresetExecutor extends AAnimationPresetExecutor<Imag
         Location originLocation = imageBuilder.getPosition().getType() == APosition.Type.ENTITY ? imageBuilder.getPosition().getMovingEntity().getLocation().add(imageBuilder.getPosition().getRelativeLocation().getCurrentValue(0)) : imageBuilder.getPosition().getLocation().getCurrentValue(0);
         imageBuilder.setImageFileName("bow.png");
         imageBuilder.setDirectorVectors(new Vector(-0.2, 0, 0), new Vector(0, 0.2, 0));
-        int showFrequency = 2;
-        imageBuilder.setShowFrequency(showFrequency);
+        int showPeriod = 2;
+        imageBuilder.setShowPeriod(showPeriod);
         imageBuilder.setPosition(APosition.fromLocation(originLocation));
         double stepAngle = Math.PI / 200;
         int acceleration_tick_duration = 129;
-        double maxRotation = stepAngle * acceleration_tick_duration / showFrequency;
+        double maxRotation = stepAngle * acceleration_tick_duration / showPeriod;
         int still_duration = 40;
         imageBuilder.setTicksDuration(acceleration_tick_duration * 2 + still_duration);
 

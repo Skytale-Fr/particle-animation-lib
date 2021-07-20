@@ -12,7 +12,7 @@ public class Trail implements Cloneable {
 
     private Set<AAnimation> animations;
 
-    private int checkFrequency;
+    private int checkPeriod;
 
     private double minPlayerToAnimationDistance;
 
@@ -67,12 +67,12 @@ public class Trail implements Cloneable {
         this.animations.clear();
     }
 
-    public int getCheckFrequency() {
-        return checkFrequency;
+    public int getCheckPeriod() {
+        return checkPeriod;
     }
 
-    public void setCheckFrequency(int checkFrequency) {
-        this.checkFrequency = checkFrequency;
+    public void setCheckPeriod(int checkPeriod) {
+        this.checkPeriod = checkPeriod;
     }
 
     public double getMinPlayerToAnimationDistance() {

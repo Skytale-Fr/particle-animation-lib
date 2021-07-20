@@ -20,7 +20,7 @@ public class WavePresetExecutor extends AAnimationPresetExecutor<WaveBuilder> {
     protected void apply(WaveBuilder waveBuilder, JavaPlugin plugin) {
         waveBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         waveBuilder.setTicksDuration(400);
-        waveBuilder.setShowFrequency(new Constant<>(0));
+        waveBuilder.setShowPeriod(new Constant<>(0));
         waveBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
         waveBuilder.setNbPoints(new Constant<>(50), true);
         waveBuilder.setRadiusMax(20);

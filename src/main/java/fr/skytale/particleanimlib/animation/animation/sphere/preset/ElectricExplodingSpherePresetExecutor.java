@@ -21,6 +21,6 @@ public class ElectricExplodingSpherePresetExecutor extends AAnimationPresetExecu
         sphereBuilder.setAngleBetweenEachPoint(Math.toRadians(30));
         sphereBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         sphereBuilder.setTicksDuration(100);
-        sphereBuilder.setShowFrequency(5);
+        sphereBuilder.setShowPeriod(5);
     }
 }

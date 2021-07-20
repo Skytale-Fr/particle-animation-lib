@@ -29,6 +29,6 @@ public class SphereSubAnimSpiralPropagatingUpPresetExecutor extends AAnimationPr
         sphereBuilder.setPointDefinition(APointDefinition.fromSubAnim(spiralBuilder.getAnimation(), 1.0));
         sphereBuilder.setSphereType(Sphere.Type.HALF_TOP);
         sphereBuilder.setTicksDuration(300);
-        sphereBuilder.setShowFrequency(30);
+        sphereBuilder.setShowPeriod(30);
     }
 }

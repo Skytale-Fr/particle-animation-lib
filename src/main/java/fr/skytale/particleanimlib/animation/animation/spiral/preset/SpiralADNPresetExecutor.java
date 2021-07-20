@@ -36,7 +36,7 @@ public class SpiralADNPresetExecutor extends AAnimationPresetExecutor<SpiralBuil
         polygonBuilder.setDirectorVectorsFromNormalVector(new Vector(0, 0.25, 0));
         polygonBuilder.setTicksDuration(200);
         polygonBuilder.setRotation(new Vector(0, 1, 0), Math.PI / 24);
-        polygonBuilder.setShowFrequency(new Constant<>(2));
+        polygonBuilder.setShowPeriod(new Constant<>(2));
         Polygon polygon = polygonBuilder.getAnimation();
 
 
@@ -47,7 +47,7 @@ public class SpiralADNPresetExecutor extends AAnimationPresetExecutor<SpiralBuil
         spiralBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 0, 0), null));
         spiralBuilder.setDirection(AnimationDirection.fromMoveVector(new Vector(0, 0.25, 0)));
         spiralBuilder.setTicksDuration(200);
-        spiralBuilder.setShowFrequency(2);
+        spiralBuilder.setShowPeriod(2);
         Spiral spiral = spiralBuilder.getAnimation();
 
         spiralBuilder.setTicksDuration(1);

@@ -9,9 +9,9 @@ import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecut
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-public class SubAnimationParabolaRotatingPresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
+public class SubAnimationParabolaRotating3PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
-    public SubAnimationParabolaRotatingPresetExecutor() {
+    public SubAnimationParabolaRotating3PresetExecutor() {
         super(CircleBuilder.class);
     }
 
@@ -20,16 +20,17 @@ public class SubAnimationParabolaRotatingPresetExecutor extends AAnimationPreset
         ParabolaBuilder parabolaBuilder = new ParabolaBuilder();
         parabolaBuilder.applyPreset(AnimationPreset.PARABOLA, plugin);
         parabolaBuilder.setShowPeriod(2);
-        parabolaBuilder.setTicksDuration(40);
-        parabolaBuilder.setBulletLifetime(20);
+        parabolaBuilder.setTicksDuration(100);
+        parabolaBuilder.setBulletLifetime(100);
+        parabolaBuilder.setBulletShootPeriod(100);
         parabolaBuilder.setPosition(circleBuilder.getPosition());
 
         circleBuilder.setNbPoints(5, true);
-        circleBuilder.setRotation(new Vector(0, 1, 0), new DoublePeriodicallyEvolvingVariable(Math.PI / 500, Math.PI / 100, 1));
-        circleBuilder.setRadius(8);
+        circleBuilder.setRotation(new Vector(0, 1, 0), new DoublePeriodicallyEvolvingVariable(Math.PI / 500, Math.PI / 300, 1));
+        circleBuilder.setRadius(1.5);
         circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
         circleBuilder.setTicksDuration(600);
-        circleBuilder.setShowPeriod(20);
-        circleBuilder.setPointDefinition(APointDefinition.fromSubAnim(parabolaBuilder.getAnimation(), 1.0, (v) -> v.multiply(-1).add(new Vector(0, 5, 0))));
+        circleBuilder.setShowPeriod(15);
+        circleBuilder.setPointDefinition(APointDefinition.fromSubAnim(parabolaBuilder.getAnimation(), 1.0, (v) -> v.add(new Vector(0, 10, 0))));
     }
 }

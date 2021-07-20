@@ -26,6 +26,6 @@ public class GrowingPyramidPresetExecutor extends AAnimationPresetExecutor<Pyram
         pyramidBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         pyramidBuilder.setNbBaseApex(new IntegerPeriodicallyEvolvingVariable(3, 1, 40));
         pyramidBuilder.setTicksDuration(200);
-        pyramidBuilder.setShowFrequency(new Constant<>(1));
+        pyramidBuilder.setShowPeriod(new Constant<>(1));
     }
 }

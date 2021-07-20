@@ -36,7 +36,6 @@ public class AnimationSampleManager {
             throw new NotImplementedException(NOT_IMPLEMENTED);
         }
         AAnimationBuilder<?> builder = animationPreset.getPresetExecutor().createEmptyBuilder();
-        builder.setJavaPlugin(plugin);
         builder.setPosition(position);
         animationPreset.apply(builder, plugin);
         return builder;

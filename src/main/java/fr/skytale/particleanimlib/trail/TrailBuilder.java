@@ -22,8 +22,8 @@ public class TrailBuilder {
         return trail.getAnimations();
     }
 
-    public void setCheckFrequency(int checkFrequency) {
-        trail.setCheckFrequency(checkFrequency);
+    public void setCheckPeriod(int checkPeriod) {
+        trail.setCheckPeriod(checkPeriod);
     }
 
     public void setMinPlayerToAnimationDistance(double minPlayerToAnimationDistance) {

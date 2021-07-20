@@ -18,7 +18,7 @@ public class PolygonBuilder extends ARotatingAnimationBuilder<Polygon> {
         animation.setDistanceFromCenterToVertices(new Constant<>(4.0));
         animation.setDistanceBetweenPoints(new Constant<>(0.3));
         animation.setNbVertices(new Constant<>(8));
-        animation.setShowFrequency(new Constant<>(1));
+        animation.setShowPeriod(new Constant<>(1));
         animation.setTicksDuration(60);
     }
 

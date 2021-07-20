@@ -26,7 +26,7 @@ public class SphereSubAnimPolygonPropagatingUpPresetExecutor extends AAnimationP
         polygonBuilder.setDistanceFromCenterToVertices(2);
         polygonBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         polygonBuilder.setTicksDuration(1);
-        polygonBuilder.setShowFrequency(1);
+        polygonBuilder.setShowPeriod(1);
         sphereBuilder.setRadius(10);
         sphereBuilder.setNbCircles(10);
         sphereBuilder.setAngleBetweenEachPoint(Math.PI / 8);
@@ -34,6 +34,6 @@ public class SphereSubAnimPolygonPropagatingUpPresetExecutor extends AAnimationP
         sphereBuilder.setPointDefinition(APointDefinition.fromSubAnim(polygonBuilder.getAnimation()));
         sphereBuilder.setSphereType(Sphere.Type.FULL);
         sphereBuilder.setTicksDuration(100);
-        sphereBuilder.setShowFrequency(3);
+        sphereBuilder.setShowPeriod(3);
     }
 }

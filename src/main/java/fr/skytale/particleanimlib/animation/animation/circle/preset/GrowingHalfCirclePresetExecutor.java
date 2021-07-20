@@ -24,6 +24,6 @@ public class GrowingHalfCirclePresetExecutor extends AAnimationPresetExecutor<Ci
         circleBuilder.setRadius(new DoublePeriodicallyEvolvingVariable(1.0, 0.2, 1));
         circleBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         circleBuilder.setTicksDuration(100);
-        circleBuilder.setShowFrequency(new Constant<>(1));
+        circleBuilder.setShowPeriod(new Constant<>(1));
     }
 }

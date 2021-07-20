@@ -16,7 +16,7 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
         animation.setNbPoints(new Constant<>(20));
         animation.setRadiusStep(new CallbackVariable<>(iterationCount -> 0.3 + Math.sin(iterationCount) / 4));
         animation.setAngleBetweenEachPoint(new Constant<>(2 * Math.PI / 20));
-        animation.setShowFrequency(new Constant<>(0));
+        animation.setShowPeriod(new Constant<>(0));
         animation.setTicksDuration(60);
     }
 

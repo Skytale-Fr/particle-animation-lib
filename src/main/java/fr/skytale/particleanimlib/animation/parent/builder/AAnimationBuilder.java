@@ -18,30 +18,13 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
 
     public AAnimationBuilder() {
         animation = initAnimation();
-        animation.setShowFrequency(new Constant<>(0));
+        animation.setShowPeriod(new Constant<>(0));
         animation.setTicksDuration(60);
     }
 
     protected static void checkPositiveAndNotNull(IVariable<? extends Number> number, String checkFailureMessage, boolean allowZero) {
         checkNotNull(number, checkFailureMessage);
         checkPositive(number, checkFailureMessage, allowZero);
-    }
-
-    protected static void checkPositive(IVariable<? extends Number> number, String checkFailureMessage, boolean allowZero) {
-        if (number != null && number.isConstant()) {
-            double doubleValue = number.getCurrentValue(0).doubleValue();
-            if (allowZero) {
-                if (doubleValue < 0) throw new IllegalArgumentException(checkFailureMessage);
-            } else {
-                if (doubleValue <= 0) throw new IllegalArgumentException(checkFailureMessage);
-            }
-        }
-    }
-
-    protected static void checkNotNull(Object obj, String checkFailureMessage) {
-        if (obj == null) {
-            throw new IllegalArgumentException(checkFailureMessage);
-        }
     }
 
     protected abstract T initAnimation();
@@ -51,6 +34,8 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
     }
 
     /********* Generic AAnimation attributes setters ***********/
+
+    // --------------------- Final Build ---------------------
 
     public void setPosition(APosition position) {
         checkNotNull(position, POSITION_SHOULD_NOT_BE_NULL);
@@ -73,20 +58,20 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation.setTicksDuration(ticksDuration);
     }
 
-    public void setShowFrequency(IVariable<Integer> showFrequency) {
-        checkPositiveAndNotNull(showFrequency, "showFrequency should be positive or zero", true);
-        animation.setShowFrequency(showFrequency);
+    public void setShowPeriod(IVariable<Integer> showPeriod) {
+        checkPositiveAndNotNull(showPeriod, "showPeriod should be positive or zero", true);
+        animation.setShowPeriod(showPeriod);
     }
 
-    public void setShowFrequency(int showFrequency) {
-        setShowFrequency(new Constant<>(showFrequency));
+    public void setShowPeriod(int showPeriod) {
+        setShowPeriod(new Constant<>(showPeriod));
     }
 
     public void setCallback(AnimationEndedCallback callback) {
         animation.setCallback(callback);
     }
 
-    /* --- Checks */
+    // --------------------- Final Build ---------------------
 
     public T getAnimation() {
         return getAnimation(false);
@@ -115,8 +100,29 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         return (T) animation.clone();
     }
 
+    // --------------------- APPLY PRESET ---------------------
+
     public void applyPreset(AnimationPreset animationPreset, JavaPlugin plugin) {
         animationPreset.apply(this, plugin);
+    }
+
+    // --------------------- CHECK SYSTEM ---------------------
+
+    protected static void checkPositive(IVariable<? extends Number> number, String checkFailureMessage, boolean allowZero) {
+        if (number != null && number.isConstant()) {
+            double doubleValue = number.getCurrentValue(0).doubleValue();
+            if (allowZero) {
+                if (doubleValue < 0) throw new IllegalArgumentException(checkFailureMessage);
+            } else {
+                if (doubleValue <= 0) throw new IllegalArgumentException(checkFailureMessage);
+            }
+        }
+    }
+
+    protected static void checkNotNull(Object obj, String checkFailureMessage) {
+        if (obj == null) {
+            throw new IllegalArgumentException(checkFailureMessage);
+        }
     }
 
     protected void checkNotNullOrZero(IVariable<? extends Number> number, String checkFailureMessage) {

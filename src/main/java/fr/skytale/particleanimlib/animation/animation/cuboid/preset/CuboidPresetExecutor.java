@@ -22,6 +22,6 @@ public class CuboidPresetExecutor extends AAnimationPresetExecutor<CuboidBuilder
         cuboidBuilder.setDistanceBetweenPoints(new Constant<>(0.4));
         cuboidBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         cuboidBuilder.setTicksDuration(100);
-        cuboidBuilder.setShowFrequency(new Constant<>(3));
+        cuboidBuilder.setShowPeriod(new Constant<>(3));
     }
 }
