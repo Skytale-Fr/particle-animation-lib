@@ -43,7 +43,7 @@ public class WaveTask extends AAnimationTask<Wave> {
         // Computing the vertical coordinate of the wave's current circle
         Vector currentVerticalPositionInXYZRef = new Vector(
                 0,
-                (2 * Math.exp(intermediateCachedResult * currentRadius) * Math.sin(currentRadius)) + 1,
+                ((2 * Math.exp(intermediateCachedResult * currentRadius) * Math.sin(currentRadius)) + 1) * (animation.getPositiveHeight() ? 1 : - 1),
                 0);
 
         // Passing to the XYZ geometric lair

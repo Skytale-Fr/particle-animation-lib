@@ -41,6 +41,8 @@ public enum AnimationPreset {
     CIRCLE_SUB_ANIM_ROTATING_PARABOLA2(new SubAnimationParabolaRotating2PresetExecutor()),
     CIRCLE_SUB_ANIM_ROTATING_PARABOLA3(new SubAnimationParabolaRotating3PresetExecutor()),
     CIRCLE_SUB_ANIM_ROTATING_PYRAMID(new SubAnimationCircleRotatingPyramidPresetExecutor()),
+    CIRCLE_THEN_WAVE(new CircleWavePresetExecutor()),
+    CIRCLE_THEN_WAVE_REVERSED(new CircleWaveReversedPresetExecutor()),
     CUBOID(new CuboidPresetExecutor()),
     CUBOID_ROTATING_RESIZING(new CuboidRotatingResizingPresetExecutor()),
     IMAGE_SKYTALE(new SkytaleImagePresetExecutor(), ImagePresetInitializer.class),

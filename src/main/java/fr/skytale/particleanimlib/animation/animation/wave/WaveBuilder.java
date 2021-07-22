@@ -18,6 +18,7 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
         animation.setAngleBetweenEachPoint(new Constant<>(2 * Math.PI / 20));
         animation.setShowPeriod(new Constant<>(0));
         animation.setTicksDuration(60);
+        animation.setPositiveHeight(true);
     }
 
     @Override
@@ -104,6 +105,10 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
 
     public void setNbPoints(int nbPoints, boolean fullCircle) {
         setNbPoints(new Constant<>(nbPoints), fullCircle);
+    }
+
+    public void setPositiveHeight(boolean positiveHeight) {
+        animation.setPositiveHeight(positiveHeight);
     }
 
     @Override

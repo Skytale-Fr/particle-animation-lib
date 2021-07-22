@@ -14,6 +14,7 @@ public class Wave extends AAnimation implements IPlaneSubAnimation {
     private IVariable<Integer> nbPoints;
     private double radiusMax;
     private IVariable<Double> radiusStep;
+    private boolean positiveHeight;
 
     public Wave() {
     }
@@ -83,6 +84,14 @@ public class Wave extends AAnimation implements IPlaneSubAnimation {
 
     public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint) {
         this.angleBetweenEachPoint = angleBetweenEachPoint;
+    }
+
+    public boolean getPositiveHeight() {
+        return positiveHeight;
+    }
+
+    public void setPositiveHeight(boolean positiveHeight) {
+        this.positiveHeight = positiveHeight;
     }
 
     @Override
