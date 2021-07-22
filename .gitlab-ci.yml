@@ -39,7 +39,7 @@ Tests:
       - .gradle
 
 Build:
-  << : *build
+  <<: *build
   only:
     - master
     - tags
@@ -49,7 +49,7 @@ Build:
     expire_in: 30 days
 
 Build branch:
-  << : *build
+  <<: *build
   except:
     - master
     - tags

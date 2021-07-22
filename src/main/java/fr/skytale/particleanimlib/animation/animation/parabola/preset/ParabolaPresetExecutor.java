@@ -1,12 +1,9 @@
 package fr.skytale.particleanimlib.animation.animation.parabola.preset;
 
-import fr.skytale.particleanimlib.animation.animation.cuboid.CuboidBuilder;
 import fr.skytale.particleanimlib.animation.animation.parabola.ParabolaBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
 
 import java.awt.*;
 

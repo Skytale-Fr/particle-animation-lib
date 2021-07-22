@@ -7,6 +7,7 @@ import fr.skytale.particleanimlib.animation.animation.image.preset.*;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningSubAnimLightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningSubAnimSpherePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.obj.preset.*;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPlayerAimPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizeParabolaPresetExecutor;
@@ -49,6 +50,12 @@ public enum AnimationPreset {
     LIGHTNING(new LightningPresetExecutor()),
     LIGHTNING_SUB_ANIM_LIGHTNING(new LightningSubAnimLightningPresetExecutor()),
     LIGHTNING_SUB_ANIM_SPHERE(new LightningSubAnimSpherePresetExecutor()),
+    OBJ_CUBE(new CubeObjPresetExecutor(), ObjPresetInitializer.class),
+    OBJ_HAMMER(new HammerObjPresetExecutor(), ObjPresetInitializer.class),
+    OBJ_AL(new AlObjPresetExecutor(), ObjPresetInitializer.class),
+    OBJ_HUMANOID_QUAD(new HumanoidQuadObjPresetExecutor(), ObjPresetInitializer.class),
+    OBJ_HUMANOID_TRI(new HumanoidTriObjPresetExecutor(), ObjPresetInitializer.class),
+    OBJ_SHUTTLE(new ShuttleObjPresetExecutor(), ObjPresetInitializer.class),
     PARABOLA_PLAYER_AIM(new ParabolaPlayerAimPresetExecutor()),
     PARABOLA_RAND_ROTATION(new RandomizeParabolaPresetExecutor()),
     PARABOLA_RAND_DIRECTION_AND_ROTATION(new RandomizedRotatingParabolaPresetExecutor()),

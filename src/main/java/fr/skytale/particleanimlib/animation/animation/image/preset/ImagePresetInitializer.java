@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.image.preset;
 
+import fr.skytale.particleanimlib.animation.animation.image.Image;
 import fr.skytale.particleanimlib.animation.parent.preset.APresetInitializer;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -16,7 +17,7 @@ import java.util.logging.Level;
 
 public class ImagePresetInitializer extends APresetInitializer {
 
-    private static final String IMAGES_FOLDER_NAME = "images";
+    private static final String IMAGES_FOLDER_NAME = Image.IMAGES_FOLDER;
     private static final String IMAGES_FOLDER_PATH_IN_JAR = IMAGES_FOLDER_NAME + "/";
     private static final String IMAGES_FOLDER_CREATION_ERROR = "Error creating " + IMAGES_FOLDER_NAME + " folder.";
     private static final String IMAGES_EXTRACTION_ERROR = "Error extracting default image into " + IMAGES_FOLDER_NAME + " folder.";

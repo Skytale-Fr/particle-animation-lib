@@ -17,6 +17,7 @@ repositories {
   maven {
     url "https://repository.lasers-enigma.eu:443/r"
   }
+  maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -76,12 +77,13 @@ With gradle, this can be done using the "shadowJar" task and by adding the follo
 
 ```properties
 plugins {
-    id "java"
-    id "com.github.johnrengelman.shadow" version "5.2.0"
+  id "java"
+  id "com.github.johnrengelman.shadow" version "5.2.0"
 }
 
 shadowJar {
-    append 'images/'
+  append 'images/'
+  append '3dmodels/'
 }
 ```
 
@@ -90,87 +92,89 @@ shadowJar {
 If you activated the testing system, you will be able to use the following features.
 
 * Right click air:
-  * it will show the currently selected animation (or the default one)
+    * it will show the currently selected animation (or the default one)
 * Commands:
-  * `/panim`: starts the currently selected animation (or the default one)
-  * `/panim event`: Toggle the showing of the animation on right click air
-  * `/panim type <AnimationType>`: Select the animation to be shown
-  * `/panim showall`: Show all the animations.
-  * `/panim trail`: Show the selected trail animation (or the default one) when you move
-  * `/panim trail <TrailType>`: Select the trail animation to be shown
+    * `/panim`: starts the currently selected animation (or the default one)
+    * `/panim event`: Toggle the showing of the animation on right click air
+    * `/panim type <AnimationType>`: Select the animation to be shown
+    * `/panim showall`: Show all the animations.
+    * `/panim trail`: Show the selected trail animation (or the default one) when you move
+    * `/panim trail <TrailType>`: Select the trail animation to be shown
 
 ## Add animations to your plugin
 
 ### 1. Create a builder
 
-When you create Animations or TrailAnimations, it begins with a builder. 
+When you create Animations or TrailAnimations, it begins with a builder.
 
 #### You can **create an empty one**:
+
 * Example with a cuboid particle animation
     ```java
     CuboidBuilder cuboidBuilder = new CuboidBuilder();
     ```
-    [See all animation types](https://gitlab.com/skytale_/skytale-mc/particleanimlib/-/tree/master/src/main/java/fr/skytale/particleanimlib/animation/animation)
-  
+  [See all animation types](https://gitlab.com/skytale_/skytale-mc/particleanimlib/-/tree/master/src/main/java/fr/skytale/particleanimlib/animation/animation)
+
 
 * Example with a trail animation
     ```java
     TrailBuilder trailBuilder = new TrailBuilder();
     ```
-  
+
 #### Or you can **create one from a preset**:
-  * Example with a cuboid particle animation
-    ```java
-    CuboidBuilder builder = (CuboidBuilder) AnimationPreset.CUBOID_ROTATING.createBuilder();
-    ```
-    [See all AnimationPreset](https://gitlab.com/skytale_/skytale-mc/particleanimlib/-/tree/master/src/main/java/fr/skytale/particleanimlib/animation/attribute/AnimationPreset.java)
-  
 
-  * Example with a trail animation
-    ```java
-    TrailBuilder builder = TrailPreset.CIRCLE_MOVING_UP.createBuilder(myPluginMainClass);
-    ```
-    [See all TrailPreset](https://gitlab.com/skytale_/skytale-mc/particleanimlib/-/tree/master/src/main/java/fr/skytale/particleanimlib/trail/attribute/TrailPreset.java)
+* Example with a cuboid particle animation
+  ```java
+  CuboidBuilder builder = (CuboidBuilder) AnimationPreset.CUBOID_ROTATING.createBuilder();
+  ```
+  [See all AnimationPreset](https://gitlab.com/skytale_/skytale-mc/particleanimlib/-/tree/master/src/main/java/fr/skytale/particleanimlib/animation/attribute/AnimationPreset.java)
 
-### 2. Use the builder 
+
+* Example with a trail animation
+  ```java
+  TrailBuilder builder = TrailPreset.CIRCLE_MOVING_UP.createBuilder(myPluginMainClass);
+  ```
+  [See all TrailPreset](https://gitlab.com/skytale_/skytale-mc/particleanimlib/-/tree/master/src/main/java/fr/skytale/particleanimlib/trail/attribute/TrailPreset.java)
+
+### 2. Use the builder
 
 You can use a lot of methods to fill an empty builder or to slightly modify a preset builder.
 
 #### Example to build a Cuboid
 
 ```java
-CuboidBuilder builder = new CuboidBuilder();
-builder.setPosition(APosition.fromEntity(player));
-builder.setRotation(new Constant<>(new Vector(0, 1, 0)), new DoublePeriodicallyEvolvingVariable(Math.toRadians(0), Math.toRadians(1), 0));
-builder.setFromLocationToFirstCorner(new VectorPeriodicallyEvolvingVariable(new Vector(-3, -3, -3), new Vector(0.05, 0.1, 0.05), 10));
-builder.setFromLocationToSecondCorner(new VectorPeriodicallyEvolvingVariable(new Vector(3, 3, 3), new Vector(-0.05, -0.1, -0.05), 10));
-builder.setDistanceBetweenPoints(new Constant<>(0.4));
-builder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
-builder.setTicksDuration(400);
-builder.setShowPeriod(new Constant<>(1));
-builder.setJavaPlugin(plugin);
+CuboidBuilder builder=new CuboidBuilder();
+        builder.setPosition(APosition.fromEntity(player));
+        builder.setRotation(new Constant<>(new Vector(0,1,0)),new DoublePeriodicallyEvolvingVariable(Math.toRadians(0),Math.toRadians(1),0));
+        builder.setFromLocationToFirstCorner(new VectorPeriodicallyEvolvingVariable(new Vector(-3,-3,-3),new Vector(0.05,0.1,0.05),10));
+        builder.setFromLocationToSecondCorner(new VectorPeriodicallyEvolvingVariable(new Vector(3,3,3),new Vector(-0.05,-0.1,-0.05),10));
+        builder.setDistanceBetweenPoints(new Constant<>(0.4));
+        builder.setMainParticle(new ParticleTemplate("REDSTONE",new Color(255,170,0),null));
+        builder.setTicksDuration(400);
+        builder.setShowPeriod(new Constant<>(1));
+        builder.setJavaPlugin(plugin);
 ```
 
 #### Example to build a Trail
 
 ```java
-TrailBuilder trailBuilder = new TrailBuilder();
-CircleBuilder circleBuilder = new CircleBuilder();
-circleBuilder.setRadius(new Constant<>(2.0));
-circleBuilder.setNbPoints(new Constant<>(10), true);
-circleBuilder.setPosition(APosition.fromTrail(new Constant<>(new Vector(0, 0, 0))));
-circleBuilder.setDirectorVectors(new Constant<>(new Vector(1, 0, 0)), new Constant<>(new Vector(0, 0, 1)));
+TrailBuilder trailBuilder=new TrailBuilder();
+        CircleBuilder circleBuilder=new CircleBuilder();
+        circleBuilder.setRadius(new Constant<>(2.0));
+        circleBuilder.setNbPoints(new Constant<>(10),true);
+        circleBuilder.setPosition(APosition.fromTrail(new Constant<>(new Vector(0,0,0))));
+        circleBuilder.setDirectorVectors(new Constant<>(new Vector(1,0,0)),new Constant<>(new Vector(0,0,1)));
 
-circleBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
-circleBuilder.setTicksDuration(80);
-circleBuilder.setShowPeriod(new Constant<>(5));
-circleBuilder.setJavaPlugin(plugin);
+        circleBuilder.setMainParticle(new ParticleTemplate("REDSTONE",new Color(255,170,0),null));
+        circleBuilder.setTicksDuration(80);
+        circleBuilder.setShowPeriod(new Constant<>(5));
+        circleBuilder.setJavaPlugin(plugin);
 
-trailBuilder.setDuration(Duration.ofSeconds(200));
-trailBuilder.setCheckPeriod(2);
-trailBuilder.setMinPlayerToAnimationDistance(1);
-trailBuilder.setMinDistanceBetweenAnimations(2);
-trailBuilder.addAnimation(circleBuilder.getAnimation(true));
+        trailBuilder.setDuration(Duration.ofSeconds(200));
+        trailBuilder.setCheckPeriod(2);
+        trailBuilder.setMinPlayerToAnimationDistance(1);
+        trailBuilder.setMinDistanceBetweenAnimations(2);
+        trailBuilder.addAnimation(circleBuilder.getAnimation(true));
 ```
 
 #### Understanding IVariable
@@ -178,6 +182,7 @@ trailBuilder.addAnimation(circleBuilder.getAnimation(true));
 Some of the builder methods expects IVariable as parameter.
 
 A IVariable can be:
+
 * A constant:
   ```java
   // Simple Integer equal to 3
@@ -215,10 +220,10 @@ A IVariable can be:
   ```
   the parameter iterationCount is a value starting from 0 and increasing on each animation show iteration.
 
-
 ### 3. Start the animation
 
 #### For normal animations
+
 ```java
 builder.getAnimation().show();
 ```
@@ -229,8 +234,8 @@ builder.getAnimation().show();
 #### For trails
 
 ```java
-TrailTask trailTask = trailBuilder.getTrail().getTrailTask();
-trailTask.addPlayer(player);
+TrailTask trailTask=trailBuilder.getTrail().getTrailTask();
+        trailTask.addPlayer(player);
 ```
 
 > You can save the TrailTask (cache it within an attribute) in order to be able to add the trail to other players later.

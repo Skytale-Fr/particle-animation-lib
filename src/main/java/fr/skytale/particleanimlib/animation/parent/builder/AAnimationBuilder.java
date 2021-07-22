@@ -27,6 +27,23 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         checkPositive(number, checkFailureMessage, allowZero);
     }
 
+    protected static void checkPositive(IVariable<? extends Number> number, String checkFailureMessage, boolean allowZero) {
+        if (number != null && number.isConstant()) {
+            double doubleValue = number.getCurrentValue(0).doubleValue();
+            if (allowZero) {
+                if (doubleValue < 0) throw new IllegalArgumentException(checkFailureMessage);
+            } else {
+                if (doubleValue <= 0) throw new IllegalArgumentException(checkFailureMessage);
+            }
+        }
+    }
+
+    protected static void checkNotNull(Object obj, String checkFailureMessage) {
+        if (obj == null) {
+            throw new IllegalArgumentException(checkFailureMessage);
+        }
+    }
+
     protected abstract T initAnimation();
 
     public APosition getPosition() {
@@ -36,7 +53,6 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
     /********* Generic AAnimation attributes setters ***********/
 
     // --------------------- Final Build ---------------------
-
     public void setPosition(APosition position) {
         checkNotNull(position, POSITION_SHOULD_NOT_BE_NULL);
         animation.setPosition(position);
@@ -63,6 +79,8 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation.setShowPeriod(showPeriod);
     }
 
+    // --------------------- Final Build ---------------------
+
     public void setShowPeriod(int showPeriod) {
         setShowPeriod(new Constant<>(showPeriod));
     }
@@ -71,11 +89,13 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation.setCallback(callback);
     }
 
-    // --------------------- Final Build ---------------------
+    // --------------------- APPLY PRESET ---------------------
 
     public T getAnimation() {
         return getAnimation(false);
     }
+
+    // --------------------- CHECK SYSTEM ---------------------
 
     public T getAnimation(boolean trailUsage) {
         checkNotNull(animation.getPosition(), POSITION_SHOULD_NOT_BE_NULL);
@@ -100,29 +120,8 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         return (T) animation.clone();
     }
 
-    // --------------------- APPLY PRESET ---------------------
-
     public void applyPreset(AnimationPreset animationPreset, JavaPlugin plugin) {
         animationPreset.apply(this, plugin);
-    }
-
-    // --------------------- CHECK SYSTEM ---------------------
-
-    protected static void checkPositive(IVariable<? extends Number> number, String checkFailureMessage, boolean allowZero) {
-        if (number != null && number.isConstant()) {
-            double doubleValue = number.getCurrentValue(0).doubleValue();
-            if (allowZero) {
-                if (doubleValue < 0) throw new IllegalArgumentException(checkFailureMessage);
-            } else {
-                if (doubleValue <= 0) throw new IllegalArgumentException(checkFailureMessage);
-            }
-        }
-    }
-
-    protected static void checkNotNull(Object obj, String checkFailureMessage) {
-        if (obj == null) {
-            throw new IllegalArgumentException(checkFailureMessage);
-        }
     }
 
     protected void checkNotNullOrZero(IVariable<? extends Number> number, String checkFailureMessage) {

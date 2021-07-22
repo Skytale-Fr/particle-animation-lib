@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.parabola;
 
 import fr.skytale.particleanimlib.animation.parent.task.ARotatingAnimationTask;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -10,11 +9,6 @@ import java.util.Set;
 
 public class ParabolaTask extends ARotatingAnimationTask<Parabola> {
 
-    public static class BulletData {
-        public Vector location;
-        public Vector velocity;
-        public int lifetime;
-    }
     private Set<BulletData> bullets;
 
     public ParabolaTask(Parabola parabola) {
@@ -59,10 +53,16 @@ public class ParabolaTask extends ARotatingAnimationTask<Parabola> {
 //          X(t + dt) = X(t) + dX(t + dt)/dt * dt = X(t) + V(t + dt) * dt
             bulletData.velocity.add(gravity.clone().multiply(finalFreq));
             bulletData.location.add(bulletData.velocity.clone().multiply(finalFreq));
-            bulletData.lifetime --;
+            bulletData.lifetime--;
             animation.getMainParticle().getParticleBuilder(bulletData.location.toLocation(iterationBaseLocation.getWorld())).display();
             return false;
         });
+    }
+
+    public static class BulletData {
+        public Vector location;
+        public Vector velocity;
+        public int lifetime;
     }
 
 }

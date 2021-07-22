@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 public class Image extends ARotatingAnimation implements IPlaneSubAnimation {
 
+    public static final String IMAGES_FOLDER = "images";
     /******** Attributes ********/
 
     //Starting plane
@@ -42,11 +43,11 @@ public class Image extends ARotatingAnimation implements IPlaneSubAnimation {
                 throw new IllegalStateException("The plugin directory could not be created. It is probably a permission issue.");
             }
         }
-        File imagesDir = new File(pluginDir, "images");
+        File imagesDir = new File(pluginDir, IMAGES_FOLDER);
         if (!imagesDir.exists()) {
             boolean result = imagesDir.mkdir();
             if (!result) {
-                throw new IllegalStateException("The images directory could not be created. It is probably a permission issue.");
+                throw new IllegalStateException("The " + IMAGES_FOLDER + " directory could not be created. It is probably a permission issue.");
             }
         }
         return imagesDir;
