@@ -14,7 +14,7 @@ plugins {
 }
 
 group = 'fr.skytale'
-version = '4.6.1'
+version = '4.6.2'
 
 compileJava {
     sourceCompatibility = JavaVersion.VERSION_1_8
