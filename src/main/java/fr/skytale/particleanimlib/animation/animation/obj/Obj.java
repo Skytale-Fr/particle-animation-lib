@@ -3,13 +3,23 @@ package fr.skytale.particleanimlib.animation.animation.obj;
 
 import com.mokiat.data.front.parser.*;
 import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
+import org.apache.commons.math3.geometry.Space;
+import org.apache.commons.math3.geometry.euclidean.threed.Euclidean3D;
 import org.apache.commons.math3.geometry.euclidean.threed.Plane;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.apache.commons.math3.geometry.euclidean.twod.PolygonsSet;
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import org.apache.commons.math3.geometry.euclidean.twod.hull.ConvexHull2D;
+import org.apache.commons.math3.geometry.euclidean.twod.hull.ConvexHullGenerator2D;
+import org.apache.commons.math3.geometry.hull.ConvexHull;
+import org.apache.commons.math3.geometry.partitioning.BSPTree;
+import org.apache.commons.math3.geometry.partitioning.Region;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,8 +42,10 @@ public class Obj extends ARotatingAnimation {
     private double distanceBetweenParticles;
     private double scale;
     private double minAngleBetweenFaces;
+    private double minFaceArea;
     //Computed the first time show() is executed
     private Set<Vector> objPixels;
+
     /******** Constructor ********/
 
     public Obj() {
@@ -115,6 +127,15 @@ public class Obj extends ARotatingAnimation {
 
     public void setMinAngleBetweenFaces(double minAngleBetweenFaces) {
         this.minAngleBetweenFaces = minAngleBetweenFaces;
+        this.objPixels = null;
+    }
+
+    public double getMinFaceArea() {
+        return minFaceArea;
+    }
+
+    public void setMinFaceArea(double minFaceArea) {
+        this.minFaceArea = minFaceArea;
         this.objPixels = null;
     }
 
@@ -259,26 +280,42 @@ public class Obj extends ARotatingAnimation {
             Plane plane = new Plane(faceVertexes.get(0), faceVertexes.get(1), faceVertexes.get(2), 1.0e-5);
             faceData.planeNormal = plane.getNormal().normalize();
 
-            //1.3 Find out the face segments
-            //1.3.1 Add the segment between the first and the last vertex
-            addSegment(
-                    segments,
-                    faceData.vertices.get(0),
-                    faceData.vertices.get(faceData.vertices.size() - 1),
-                    faceData
-            );
+            //1.3 Check if face area is not too small
+            if (compute2DPolygonArea(faceData) >= minFaceArea) {
+                //1.4 Find out the face segments
+                //1.4.1 Add the segment between the first and the last vertex
+                Segment firstSegment = new Segment(faceData.vertices.get(0), faceData.vertices.get(faceData.vertices.size() - 1), faceData);
+                addSegment(segments, firstSegment);
 
-            //1.3.2 Add each other segments
-            for (int i = 1; i < faceData.vertices.size(); i++) {
-                addSegment(
-                        segments,
-                        faceData.vertices.get(i - 1),
-                        faceData.vertices.get(i),
-                        faceData
-                );
+                //1.4.2 Add each other segments
+                for (int i = 1; i < faceData.vertices.size(); i++) {
+                    Segment currentSegment = new Segment(faceData.vertices.get(i - 1), faceData.vertices.get(i), faceData);
+                    addSegment(segments, currentSegment);
+                }
             }
         })));
         return segments;
+    }
+
+    /**
+     * @param face The faceData (without segments yet)
+     * @return the area
+     */
+    private double compute2DPolygonArea(Segment.Face face) {
+        if (face.vertices.size() < 3) {
+            throw new IllegalArgumentException("A Mesh face has less than 3 vertices");
+        }
+
+        Vector3D firstPoint = face.vertices.get(0);
+        Vector3D secondPoint = face.vertices.get(1);
+        Vector3D thirdPoint = face.vertices.get(2);
+
+
+        Plane plane = new Plane(firstPoint, secondPoint, thirdPoint, 0.001);
+        Vector2D[] vertices2D = face.vertices.stream()
+                .map(plane::toSubSpace).toArray(Vector2D[]::new);
+        ConvexHull2D convexHull2D = new ConvexHull2D(vertices2D, 0.001);
+        return convexHull2D.createRegion().getSize();
     }
 
     @NotNull
@@ -298,15 +335,13 @@ public class Obj extends ARotatingAnimation {
         return model;
     }
 
-    private void addSegment(Set<Segment> segments, Vector3D a, Vector3D b, Segment.Face face) {
-        Segment segment = new Segment(a, b, face);
-
+    private void addSegment(Set<Segment> segments, Segment segment) {
         Segment sameSegment = segments.stream().filter(thisSegment -> thisSegment.equals(segment)).findAny().orElse(null);
         if (sameSegment == null) {
             segments.add(segment);
         } else {
             //Avoid duplicates
-            sameSegment.getRelatedFaces().add(face);
+            sameSegment.getRelatedFaces().add(segment.getRelatedFaces().get(0));
         }
     }
 }

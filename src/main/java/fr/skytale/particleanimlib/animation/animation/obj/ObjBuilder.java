@@ -12,6 +12,7 @@ public class ObjBuilder extends ARotatingAnimationBuilder<Obj> {
         animation.setScale(0.05);
         animation.setDistanceBetweenParticles(0.5);
         animation.setMinAngleBetweenFaces(Math.toRadians(20));
+        animation.setMinFaceArea(1);
         animation.setRotationAxis(null);
         animation.setRotationAngleAlpha(null);
         animation.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
@@ -42,6 +43,12 @@ public class ObjBuilder extends ARotatingAnimationBuilder<Obj> {
         animation.setMinAngleBetweenFaces(minAngleBetweenFaces);
     }
 
+    public void setMinFaceArea(double minFaceArea) {
+        if (minFaceArea < 0)
+            throw new IllegalArgumentException("minFaceArea must be positive.");
+        animation.setMinFaceArea(minFaceArea);
+    }
+
     public void setObjFileName(String imageFileName) {
         animation.setObjFileName(imageFileName);
     }
@@ -55,6 +62,8 @@ public class ObjBuilder extends ARotatingAnimationBuilder<Obj> {
             throw new IllegalArgumentException("distanceBetweenParticles must be strictly positive.");
         if (animation.getMinAngleBetweenFaces() <= 0)
             throw new IllegalArgumentException("minAngleBetweenFaces must be strictly positive.");
+        if (animation.getMinFaceArea() < 0)
+            throw new IllegalArgumentException("minFaceArea must be positive.");
         return super.getAnimation();
     }
 }

@@ -52,6 +52,7 @@ public enum AnimationPreset {
     LIGHTNING(new LightningPresetExecutor()),
     LIGHTNING_SUB_ANIM_LIGHTNING(new LightningSubAnimLightningPresetExecutor()),
     LIGHTNING_SUB_ANIM_SPHERE(new LightningSubAnimSpherePresetExecutor()),
+    OBJ_CROWN(new CrownPresetExecutor(), ObjPresetInitializer.class),
     OBJ_CUBE(new CubeObjPresetExecutor(), ObjPresetInitializer.class),
     OBJ_HAMMER(new HammerObjPresetExecutor(), ObjPresetInitializer.class),
     OBJ_AL(new AlObjPresetExecutor(), ObjPresetInitializer.class),
