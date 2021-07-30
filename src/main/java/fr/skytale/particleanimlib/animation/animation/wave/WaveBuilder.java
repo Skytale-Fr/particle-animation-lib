@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.wave;
 
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
+import fr.skytale.particleanimlib.animation.attribute.Orientation;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
@@ -33,6 +34,10 @@ public class WaveBuilder extends AAnimationBuilder<Wave> {
         checkNotNull(v, CircleBuilder.DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
         animation.setU(u);
         animation.setV(v);
+    }
+
+    public void setDirectorVectorsFromOrientation(Orientation direction, double length) {
+        setDirectorVectors(direction.getU(length), direction.getV(length));
     }
 
     public void setDirectorVectorsFromNormalVector(Vector normal) {

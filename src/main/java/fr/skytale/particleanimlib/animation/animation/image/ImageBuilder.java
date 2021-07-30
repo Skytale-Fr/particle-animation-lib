@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.image;
 
+import fr.skytale.particleanimlib.animation.attribute.Orientation;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
@@ -31,6 +32,10 @@ public class ImageBuilder extends ARotatingAnimationBuilder<Image> {
 
         animation.setU(u);
         animation.setV(v.clone().multiply(-1));
+    }
+
+    public void setDirectorVectorsFromOrientation(Orientation direction, double length) {
+        setDirectorVectors(direction.getU(length), direction.getV(length));
     }
 
     public void setDirectorVectorsFromNormalVector(Vector normal) {
