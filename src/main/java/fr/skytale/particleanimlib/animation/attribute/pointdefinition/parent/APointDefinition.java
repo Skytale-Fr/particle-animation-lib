@@ -5,6 +5,7 @@ import fr.skytale.particleanimlib.animation.attribute.pointdefinition.DirectionS
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.LocationSubAnimPointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PlaneSubAnimPointDefinition;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
@@ -53,9 +54,9 @@ public abstract class APointDefinition implements Cloneable {
         return hasSubAnimation;
     }
 
-    public abstract void show(Location loc);
+    public abstract void show(AAnimation animation, Location loc);
 
-    public abstract void show(Location loc, Vector fromCenterToPoint);
+    public abstract void show(AAnimation animation, Location loc, Vector fromCenterToPoint);
 
     @Override
     public APointDefinition clone() {

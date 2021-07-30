@@ -2,6 +2,7 @@ package fr.skytale.particleanimlib.animation.attribute.pointdefinition;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -19,13 +20,13 @@ public class ParticlePointDefinition extends APointDefinition {
     }
 
     @Override
-    public void show(Location loc) {
-        particleTemplate.getParticleBuilder(loc).display();
+    public void show(AAnimation animation, Location loc) {
+        particleTemplate.getParticleBuilder(loc).display(animation.getViewers().getPlayers(loc));
     }
 
     @Override
-    public void show(Location loc, Vector fromCenterToPoint) {
-        show(loc);
+    public void show(AAnimation animation, Location loc, Vector fromCenterToPoint) {
+        show(animation, loc);
     }
 
     @Override

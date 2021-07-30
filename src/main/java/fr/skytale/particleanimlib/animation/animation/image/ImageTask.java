@@ -4,11 +4,13 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.parent.task.ARotatingAnimationTask;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
 
 import java.awt.*;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,13 +43,15 @@ public class ImageTask extends ARotatingAnimationTask<Image> {
                                     animation.getRotationAngleAlpha().getCurrentValue(iterationCount)),
                             Map.Entry::getValue));
         }
+        final Collection<? extends Player> viewers = animation.getViewers().getPlayers(iterationBaseLocation);
 
         currentImagePixels.forEach(((vector, color) -> {
-            ParticleBuilder particleBuilder = particleTemplate.getParticleBuilder(iterationBaseLocation.clone().add(vector));
+            final Location loc = iterationBaseLocation.clone().add(vector);
+            ParticleBuilder particleBuilder = particleTemplate.getParticleBuilder(loc);
             if (hasColor) {
                 particleBuilder.setColor(color);
             }
-            particleBuilder.display();
+            particleBuilder.display(viewers);
         }));
     }
 

@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.attribute;
 
+import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

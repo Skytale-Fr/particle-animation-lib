@@ -3,6 +3,7 @@ package fr.skytale.particleanimlib.animation.attribute.pointdefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.DirectionVectorModifierCallback;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 import org.bukkit.Location;
@@ -40,12 +41,12 @@ public class DirectionSubAnimPointDefinition extends SubAnimPointDefinition {
 
     @Override
     @Deprecated
-    public void show(Location loc) {
-        show(loc, new Vector(0, 1, 0));
+    public void show(AAnimation animation, Location loc) {
+        show(animation, loc, new Vector(0, 1, 0));
     }
 
     @Override
-    public void show(Location loc, Vector v) {
+    public void show(AAnimation animation, Location loc, Vector v) {
         IDirectionSubAnimation newSubAnimation = (IDirectionSubAnimation) subAnimation.clone();
         newSubAnimation.setPosition(APosition.fromLocation(loc));
         newSubAnimation.setDirection(AnimationDirection.fromMoveVector(

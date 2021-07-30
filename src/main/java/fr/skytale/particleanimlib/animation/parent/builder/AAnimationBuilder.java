@@ -6,9 +6,15 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Collection;
+import java.util.function.BiPredicate;
 
 public abstract class AAnimationBuilder<T extends AAnimation> {
     public static final String POSITION_SHOULD_NOT_BE_NULL = "Position should not be null";
@@ -20,28 +26,7 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation = initAnimation();
         animation.setShowPeriod(new Constant<>(0));
         animation.setTicksDuration(60);
-    }
-
-    protected static void checkPositiveAndNotNull(IVariable<? extends Number> number, String checkFailureMessage, boolean allowZero) {
-        checkNotNull(number, checkFailureMessage);
-        checkPositive(number, checkFailureMessage, allowZero);
-    }
-
-    protected static void checkPositive(IVariable<? extends Number> number, String checkFailureMessage, boolean allowZero) {
-        if (number != null && number.isConstant()) {
-            double doubleValue = number.getCurrentValue(0).doubleValue();
-            if (allowZero) {
-                if (doubleValue < 0) throw new IllegalArgumentException(checkFailureMessage);
-            } else {
-                if (doubleValue <= 0) throw new IllegalArgumentException(checkFailureMessage);
-            }
-        }
-    }
-
-    protected static void checkNotNull(Object obj, String checkFailureMessage) {
-        if (obj == null) {
-            throw new IllegalArgumentException(checkFailureMessage);
-        }
+        animation.setViewers(AViewers.fromNearbyPlayers(300));
     }
 
     protected abstract T initAnimation();
@@ -52,7 +37,7 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
 
     /********* Generic AAnimation attributes setters ***********/
 
-    // --------------------- Final Build ---------------------
+    // --------------------- Attributes ---------------------
     public void setPosition(APosition position) {
         checkNotNull(position, POSITION_SHOULD_NOT_BE_NULL);
         animation.setPosition(position);
@@ -79,7 +64,25 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation.setShowPeriod(showPeriod);
     }
 
-    // --------------------- Final Build ---------------------
+    public void setViewers(AViewers viewers) {
+        checkNotNull(viewers, "viewers should not be null");
+        animation.setViewers(viewers);
+    }
+
+    public void setViewers(Collection<? extends Player> viewers) {
+        checkNotNull(viewers, "viewers should not be null");
+        animation.setViewers(AViewers.fromCustomPlayers(viewers));
+    }
+
+    public void setViewers(double distance) {
+        animation.setViewers(AViewers.fromNearbyPlayers(distance));
+    }
+
+    public void setViewers(BiPredicate<Player, Location> biPredicate) {
+        animation.setViewers(AViewers.fromPredicateMatchingPlayers(biPredicate));
+    }
+
+    // --------------------- FINAL BUILD ---------------------
 
     public void setShowPeriod(int showPeriod) {
         setShowPeriod(new Constant<>(showPeriod));
@@ -114,14 +117,33 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
             checkNotNull(animation.getMainParticle(), "Main particle should not be null");
         }
         checkNotNull(animation.getPlugin(), "The plugin should be defined");
+        checkNotNull(animation.getViewers(), "viewers should not be null");
         if (animation.getTicksDuration() <= 0) {
             throw new IllegalArgumentException("Position should be positive");
         }
+        //noinspection unchecked
         return (T) animation.clone();
     }
 
     public void applyPreset(AnimationPreset animationPreset, JavaPlugin plugin) {
         animationPreset.apply(this, plugin);
+    }
+
+    protected static void checkNotNull(Object obj, String checkFailureMessage) {
+        if (obj == null) {
+            throw new IllegalArgumentException(checkFailureMessage);
+        }
+    }
+
+    protected static void checkPositive(IVariable<? extends Number> number, String checkFailureMessage, boolean allowZero) {
+        if (number != null && number.isConstant()) {
+            double doubleValue = number.getCurrentValue(0).doubleValue();
+            if (allowZero) {
+                if (doubleValue < 0) throw new IllegalArgumentException(checkFailureMessage);
+            } else {
+                if (doubleValue <= 0) throw new IllegalArgumentException(checkFailureMessage);
+            }
+        }
     }
 
     protected void checkNotNullOrZero(IVariable<? extends Number> number, String checkFailureMessage) {
@@ -146,6 +168,11 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
                 }
             }
         }
+    }
+
+    protected static void checkPositiveAndNotNull(IVariable<? extends Number> number, String checkFailureMessage, boolean allowZero) {
+        checkNotNull(number, checkFailureMessage);
+        checkPositive(number, checkFailureMessage, allowZero);
     }
 
 

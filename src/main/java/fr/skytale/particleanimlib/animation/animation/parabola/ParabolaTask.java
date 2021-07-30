@@ -2,9 +2,12 @@ package fr.skytale.particleanimlib.animation.animation.parabola;
 
 import fr.skytale.particleanimlib.animation.parent.task.ARotatingAnimationTask;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class ParabolaTask extends ARotatingAnimationTask<Parabola> {
@@ -44,6 +47,7 @@ public class ParabolaTask extends ARotatingAnimationTask<Parabola> {
         int freq = animation.getShowPeriod().getCurrentValue(iterationCount);
         final int finalFreq = freq == 0 ? 1 : freq;
         Vector gravity = animation.getGravity().getCurrentValue(iterationCount);
+        final Collection<? extends Player> players = animation.getViewers().getPlayers(iterationBaseLocation);
         bullets.removeIf(bulletData -> {
             if (bulletData.lifetime == 0) {
                 return true;
@@ -54,7 +58,9 @@ public class ParabolaTask extends ARotatingAnimationTask<Parabola> {
             bulletData.velocity.add(gravity.clone().multiply(finalFreq));
             bulletData.location.add(bulletData.velocity.clone().multiply(finalFreq));
             bulletData.lifetime--;
-            animation.getMainParticle().getParticleBuilder(bulletData.location.toLocation(iterationBaseLocation.getWorld())).display();
+            animation.getMainParticle()
+                    .getParticleBuilder(bulletData.location.toLocation(Objects.requireNonNull(iterationBaseLocation.getWorld())))
+                    .display(players);
             return false;
         });
     }

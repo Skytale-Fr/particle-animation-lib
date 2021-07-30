@@ -4,6 +4,7 @@ import fr.skytale.particleanimlib.animation.attribute.AnimationEndedCallback;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
@@ -18,6 +19,7 @@ public abstract class AAnimation implements Cloneable {
     protected int ticksDuration;
     protected IVariable<Integer> showPeriod;
     protected AnimationEndedCallback callback;
+    protected AViewers viewers;
 
     protected static Set<Vector> getLinePoints(Vector point1, Vector point2, double step) {
         double distance = point1.distance(point2);
@@ -50,6 +52,14 @@ public abstract class AAnimation implements Cloneable {
 
     public void setMainParticle(ParticleTemplate mainParticle) {
         this.mainParticle = mainParticle;
+    }
+
+    public AViewers getViewers() {
+        return viewers;
+    }
+
+    public void setViewers(AViewers viewers) {
+        this.viewers = viewers;
     }
 
     public int getTicksDuration() {
@@ -94,6 +104,7 @@ public abstract class AAnimation implements Cloneable {
         }
         assert obj != null;
         obj.position = this.position.clone();
+        obj.viewers = this.viewers.clone();
         obj.mainParticle = mainParticle == null ? null : new ParticleTemplate(this.mainParticle);
         return obj;
     }

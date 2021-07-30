@@ -2,6 +2,7 @@ package fr.skytale.particleanimlib.animation.attribute.pointdefinition;
 
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 import org.bukkit.Location;
@@ -30,14 +31,14 @@ public class PlaneSubAnimPointDefinition extends SubAnimPointDefinition {
     }
 
     @Override
-    public void show(Location loc) {
+    public void show(AAnimation animation, Location loc) {
         IPlaneSubAnimation newSubAnimation = (IPlaneSubAnimation) subAnimation.clone();
         newSubAnimation.setPosition(APosition.fromLocation(loc));
         newSubAnimation.show();
     }
 
     @Override
-    public void show(Location loc, Vector fromCenterToPoint) {
+    public void show(AAnimation animation, Location loc, Vector fromCenterToPoint) {
         if (this.showMethodParameters == ShowMethodParameters.LOCATION_AND_DIRECTION) {
             RotatableVector.Plane2D plane = new RotatableVector(fromCenterToPoint).getPlane(loc);
             subAnimation.setPosition(APosition.fromLocation(loc));
@@ -45,7 +46,7 @@ public class PlaneSubAnimPointDefinition extends SubAnimPointDefinition {
             subAnimation.setV(plane.v);
             subAnimation.show();
         } else {
-            show(loc);
+            show(animation, loc);
         }
     }
 

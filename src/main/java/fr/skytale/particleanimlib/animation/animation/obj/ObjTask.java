@@ -3,9 +3,11 @@ package fr.skytale.particleanimlib.animation.animation.obj;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.parent.task.ARotatingAnimationTask;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleBuilder;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,9 +30,12 @@ public class ObjTask extends ARotatingAnimationTask<Obj> {
                     .map(v -> this.rotation.rotateVector(v))
                     .collect(Collectors.toSet());
         }
+        final Collection<? extends Player> viewers = animation.getViewers().getPlayers(iterationBaseLocation);
 
         currentImagePixels.forEach(vector -> {
-            ParticleBuilder particleBuilder = particleTemplate.getParticleBuilder(iterationBaseLocation.clone().add(vector));
+            final Location loc = iterationBaseLocation.clone().add(vector);
+            ParticleBuilder particleBuilder = particleTemplate.getParticleBuilder(loc);
+            particleBuilder.display(viewers);
             particleBuilder.display();
         });
     }

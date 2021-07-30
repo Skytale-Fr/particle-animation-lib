@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.attribute.pointdefinition;
 
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
@@ -25,14 +26,14 @@ public class LocationSubAnimPointDefinition extends SubAnimPointDefinition {
 
     @Override
     @Deprecated
-    public void show(Location loc) {
+    public void show(AAnimation animation, Location loc) {
         ISubAnimation newSubAnimation = (ISubAnimation) subAnimation.clone();
         newSubAnimation.setPosition(APosition.fromLocation(loc));
         newSubAnimation.show();
     }
 
     @Override
-    public void show(Location loc, Vector fromCenterToPoint) {
+    public void show(AAnimation animation, Location loc, Vector fromCenterToPoint) {
         throw new IllegalStateException("This method should never be called for DirectionSubAnimPointDefinition. show(Location, Vector) should be called instead.");
     }
 

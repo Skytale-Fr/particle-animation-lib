@@ -159,11 +159,7 @@ public class SpiralTask extends AAnimationTask<Spiral> {
     }
 
     public void showPoint(PointData pointData) {
-        if (pointData.pointDefinition.getShowMethodParameters() == APointDefinition.ShowMethodParameters.LOCATION) {
-            pointData.pointDefinition.show(pointData.pointLocation);
-        } else {
-            pointData.pointDefinition.show(pointData.pointLocation, pointData.fromCenterToPoint);
-        }
+        showPoint(pointData.pointDefinition, pointData.pointLocation, pointData.fromCenterToPoint);
     }
 
     public static class PointData {

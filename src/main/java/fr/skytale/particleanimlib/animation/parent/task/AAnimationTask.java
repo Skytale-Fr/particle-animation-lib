@@ -6,8 +6,10 @@ import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.util.Collection;
 import java.util.Objects;
 
 public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
@@ -106,8 +108,9 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         double distance = point1.distance(point2);
         Vector stepVector = point2.toVector().subtract(point1.toVector()).normalize().multiply(step);
         Location currentLoc = point1.clone();
+        final Collection<? extends Player> players = animation.getViewers().getPlayers(point1);
         for (double length = 0; length < distance; currentLoc.add(stepVector)) {
-            animation.getMainParticle().getParticleBuilder(currentLoc).display();
+            animation.getMainParticle().getParticleBuilder(currentLoc).display(players);
             length += step;
         }
     }
@@ -117,7 +120,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         Vector stepVector = point2.toVector().subtract(point1.toVector()).normalize().multiply(step);
         Location currentLoc = point1.clone();
         for (double length = 0; length < distance; currentLoc.add(stepVector)) {
-            pointDefinition.show(currentLoc);
+            pointDefinition.show(animation, currentLoc);
             length += step;
         }
     }
@@ -131,19 +134,14 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     }
 
     public void showPoint(APointDefinition pointDefinition, Location pointLocation, Location centerLocation) {
-        if (pointDefinition.getShowMethodParameters() == APointDefinition.ShowMethodParameters.LOCATION) {
-            pointDefinition.show(pointLocation);
-        } else {
-            Vector fromCenterToPoint = pointLocation.toVector().subtract(centerLocation.toVector());
-            pointDefinition.show(pointLocation, fromCenterToPoint);
-        }
+        showPoint(pointDefinition, pointLocation, pointLocation.toVector().subtract(centerLocation.toVector()));
     }
 
     public void showPoint(APointDefinition pointDefinition, Location pointLocation, Vector pointDirection) {
         if (pointDefinition.getShowMethodParameters() == APointDefinition.ShowMethodParameters.LOCATION) {
-            pointDefinition.show(pointLocation);
+            pointDefinition.show(animation, pointLocation);
         } else {
-            pointDefinition.show(pointLocation, pointDirection);
+            pointDefinition.show(animation, pointLocation, pointDirection);
         }
     }
 

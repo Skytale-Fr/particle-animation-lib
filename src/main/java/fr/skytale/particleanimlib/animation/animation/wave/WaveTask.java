@@ -4,7 +4,10 @@ import fr.skytale.particleanimlib.animation.attribute.PARotation;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+
+import java.util.Collection;
 
 public class WaveTask extends AAnimationTask<Wave> {
 
@@ -58,6 +61,8 @@ public class WaveTask extends AAnimationTask<Wave> {
 
         ParticleTemplate particleTemplate = animation.getMainParticle();
 
+        final Collection<? extends Player> players = animation.getViewers().getPlayers(iterationBaseLocation);
+        
         // Tracing circle
         for (int pointIndex = 0; pointIndex < nbPoints; pointIndex++) {
             double theta = pointIndex * stepAngle;
@@ -70,7 +75,7 @@ public class WaveTask extends AAnimationTask<Wave> {
 
             Location particleLocation = new Location(iterationBaseLocation.getWorld(), x, y, z);
 
-            particleTemplate.getParticleBuilder(particleLocation).display();
+            particleTemplate.getParticleBuilder(particleLocation).display(players);
         }
 
         currentRadius += animation.getRadiusStep().getCurrentValue(iterationCount);
