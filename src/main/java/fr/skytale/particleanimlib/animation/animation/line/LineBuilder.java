@@ -1,20 +1,23 @@
 package fr.skytale.particleanimlib.animation.animation.line;
 
-import fr.skytale.particleanimlib.animation.animation.circle.Circle;
 import fr.skytale.particleanimlib.animation.attribute.Orientation;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
-import fr.skytale.particleanimlib.animation.parent.builder.ARotatingRoundAnimationBuilder;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 public class LineBuilder extends AAnimationBuilder<Line> {
 
     public static final String DIRECTION_VECTOR_SHOULD_NOT_BE_NULL = "direction vector should not be null";
+    public static final String ENDLOCATION_SHOULD_NOT_BE_NULL = "endLocation should not be null";
+    public static final String POSITION_SHOULD_BE_SET = "Animation position should be set";
+    public static final String NBPOINTS_SHOULD_NOT_BE_NULL_OR_LOWER_THAN_ZERO = "nbPoints should not be null or lower than zero";
+    public static final String LENGTH_SHOULD_NOT_BE_NULL_OR_LOWER_THAN_ZERO = "length should not be null or lower than zero";
 
     public LineBuilder() {
         super();
@@ -33,8 +36,20 @@ public class LineBuilder extends AAnimationBuilder<Line> {
 
     /********* Line specific setters ***********/
     public void setEndLocation(Location endLocation) {
-        Location startLocation = animation.getPosition().getLocation().getCurrentValue(0);
-        Vector direction = endLocation.clone().subtract(startLocation).toVector();
+        checkNotNull(endLocation, ENDLOCATION_SHOULD_NOT_BE_NULL);
+
+        APosition position = animation.getPosition();
+        checkNotNull(position, POSITION_SHOULD_BE_SET);
+
+        // Compute the direction vector
+        Location startLocation = position.getLocation().getCurrentValue(0);
+        Vector toVector = endLocation.clone().subtract(startLocation).toVector();
+        // Get it's length and update the animation's length
+        double length = toVector.length();
+        setLength(new Constant<>(length));
+
+        // Normalize and set the direction
+        Vector direction = toVector.normalize();
         animation.setDirection(direction);
     }
 
@@ -43,8 +58,12 @@ public class LineBuilder extends AAnimationBuilder<Line> {
         animation.setDirection(direction);
     }
 
-    public void setDirectionFromOrientation(Orientation direction, double length) {
-        setDirection(direction.getU(length));
+    public void setDirectionFromOrientation(Orientation orientation, double length) {
+        Validate.isTrue(length > 0, LENGTH_SHOULD_NOT_BE_NULL_OR_LOWER_THAN_ZERO);
+        Vector u = orientation.getU(length);
+        Vector v = orientation.getV(length);
+        Vector direction = u.crossProduct(v);
+        setDirection(direction);
     }
 
     public void setPointDefinition(APointDefinition pointDefinition) {
@@ -67,6 +86,8 @@ public class LineBuilder extends AAnimationBuilder<Line> {
     @Override
     public Line getAnimation() {
         checkNotNull(animation.getDirection(), DIRECTION_VECTOR_SHOULD_NOT_BE_NULL);
+        checkPositiveAndNotNull(animation.getNbPoints(), NBPOINTS_SHOULD_NOT_BE_NULL_OR_LOWER_THAN_ZERO, false);
+        checkPositiveAndNotNull(animation.getLength(), LENGTH_SHOULD_NOT_BE_NULL_OR_LOWER_THAN_ZERO, false);
         return super.getAnimation();
     }
 }

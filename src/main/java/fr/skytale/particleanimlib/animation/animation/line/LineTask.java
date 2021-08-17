@@ -1,15 +1,16 @@
 package fr.skytale.particleanimlib.animation.animation.line;
 
+import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
+import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
+import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 public class LineTask extends AAnimationTask<Line> {
-    Vector direction;
 
     public LineTask(Line line) {
         super(line);
-        this.direction = ((Vector)line.getDirection().getMoveVector().getCurrentValue(0)).normalize();
         this.startTask();
     }
 
@@ -19,16 +20,23 @@ public class LineTask extends AAnimationTask<Line> {
             return;
         }
 
-        int nbPoints = (Integer)((Line)this.animation).getNbPoints().getCurrentValue(this.iterationCount);
-        double length = (Double)((Line)this.animation).getLength().getCurrentValue(this.iterationCount);
+        int nbPoints = this.animation.getNbPoints().getCurrentValue(iterationCount);
+        double length = this.animation.getLength().getCurrentValue(iterationCount);
         double step = (1.0D / nbPoints) * length; // Compute the step used in the drawLine method below
 
+        // Get the current direction
+        AnimationDirection direction = animation.getDirection();
+        IVariable<Vector> moveVector = direction.getMoveVector();
+        Vector currentValue = moveVector.getCurrentValue(iterationCount);
+        Vector vDirection = currentValue.normalize();
+
         // Maybe this can be improved
-        Vector lengthVector = direction.clone().multiply(length);
+        Vector lengthVector = vDirection.clone().multiply(length);
         Location startLocation = iterationBaseLocation.clone();
         Location endLocation = startLocation.clone().add(lengthVector);
 
         // Draw the current line from startLocation to endLocation
         drawLine(startLocation, endLocation, step, animation.getPointDefinition());
+
     }
 }

@@ -92,6 +92,7 @@ public class Line extends AAnimation implements IDirectionSubAnimation, ISubAnim
         Line obj = (Line) super.clone();
         obj.direction = direction.clone();
         obj.nbPoints = nbPoints.copy();
+        obj.length = length.copy();
         obj.pointDefinition = pointDefinition.clone();
         return obj;
     }
