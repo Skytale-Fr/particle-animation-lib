@@ -17,9 +17,9 @@ import org.bukkit.util.Vector;
 
 import java.awt.*;
 
-public class LineWithCirclePresetExecutor extends AAnimationPresetExecutor<LineBuilder> {
+public class LineWithPolygonsPresetExecutor extends AAnimationPresetExecutor<LineBuilder> {
 
-    public LineWithCirclePresetExecutor() {
+    public LineWithPolygonsPresetExecutor() {
         super(LineBuilder.class);
     }
 
