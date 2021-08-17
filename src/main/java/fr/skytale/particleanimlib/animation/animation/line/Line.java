@@ -14,7 +14,6 @@ import fr.skytale.particleanimlib.animation.parent.animation.ARotatingRoundAnima
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
-import javafx.animation.Animation;
 import org.bukkit.util.Vector;
 
 public class Line extends AAnimation implements IDirectionSubAnimation, ISubAnimationContainer {
