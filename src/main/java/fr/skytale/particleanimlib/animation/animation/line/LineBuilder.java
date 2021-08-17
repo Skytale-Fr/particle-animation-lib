@@ -19,11 +19,11 @@ public class LineBuilder extends AAnimationBuilder<Line> {
     public LineBuilder() {
         super();
         // Default values
-        animation.setDirection(new Vector(1, 0, 0)); // Default direction
-        animation.setShowPeriod(new Constant<>(1)); // Default show interval
+        animation.setDirection(new Vector(1, 0, 0));
+        animation.setShowPeriod(new Constant<>(1));
         animation.setNbPoints(new Constant<>(10));
         animation.setLength(new Constant<>(10.0d));
-        animation.setTicksDuration(60); // Default durection (in ticks)
+        animation.setTicksDuration(60);
     }
 
     @Override

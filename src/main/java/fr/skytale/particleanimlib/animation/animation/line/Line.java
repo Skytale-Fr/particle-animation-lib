@@ -19,9 +19,9 @@ import org.bukkit.util.Vector;
 
 public class Line extends AAnimation implements IDirectionSubAnimation, ISubAnimationContainer {
 
-    private AnimationDirection direction;
-    private IVariable<Integer> nbPoints;
-    private IVariable<Double> length;
+    private AnimationDirection direction; // The direction of the line
+    private IVariable<Integer> nbPoints; // The number of point on the line
+    private IVariable<Double> length; // The length of the line
     private APointDefinition pointDefinition;
 
     public Line() {

@@ -16,14 +16,19 @@ public class LineTask extends AAnimationTask<Line> {
     public void show(Location iterationBaseLocation) {
         if (this.hasDurationEnded()) {
             this.stopAnimation();
-        } else {
-            int nbPoints = (Integer)((Line)this.animation).getNbPoints().getCurrentValue(this.iterationCount);
-            double length = (Double)((Line)this.animation).getLength().getCurrentValue(this.iterationCount);
-            double step = 1.0D / (double)nbPoints * length;
-            Vector lengthVector = this.direction.clone().multiply(length);
-            Location startLocation = iterationBaseLocation.clone();
-            Location endLocation = startLocation.clone().add(lengthVector);
-            this.drawLine(startLocation, endLocation, step, ((Line)this.animation).getPointDefinition());
+            return;
         }
+
+        int nbPoints = (Integer)((Line)this.animation).getNbPoints().getCurrentValue(this.iterationCount);
+        double length = (Double)((Line)this.animation).getLength().getCurrentValue(this.iterationCount);
+        double step = (1.0D / nbPoints) * length; // Compute the step used in the drawLine method below
+
+        // Maybe this can be improved
+        Vector lengthVector = direction.clone().multiply(length);
+        Location startLocation = iterationBaseLocation.clone();
+        Location endLocation = startLocation.clone().add(lengthVector);
+
+        // Draw the current line from startLocation to endLocation
+        drawLine(startLocation, endLocation, step, animation.getPointDefinition());
     }
 }

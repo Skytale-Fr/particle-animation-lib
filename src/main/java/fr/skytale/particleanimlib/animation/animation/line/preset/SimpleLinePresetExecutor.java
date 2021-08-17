@@ -20,9 +20,10 @@ public class SimpleLinePresetExecutor extends AAnimationPresetExecutor<LineBuild
 
     @Override
     protected void apply(LineBuilder lineBuilder, JavaPlugin plugin) {
-        // If we want to set the direction, we need
-        // to check if the position is from an entity
-        // or just a simple location.
+        // Fetch the correct direction to set
+        // from the current type of the position
+        // (if the particle animation was set on a block
+        // or is linked to an entity).
         APosition position = lineBuilder.getPosition();
         APosition.Type type = position.getType();
         Vector direction = null;

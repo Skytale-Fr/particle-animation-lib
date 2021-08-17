@@ -25,6 +25,11 @@ public class LineWithCirclePresetExecutor extends AAnimationPresetExecutor<LineB
 
     @Override
     protected void apply(LineBuilder lineBuilder, JavaPlugin plugin) {
+        // Describes a line with a polygon at every point
+        // instead of a simple particle.
+
+        // Polygon configuration
+
         PolygonBuilder polygonBuilder = new PolygonBuilder();
         polygonBuilder.setPosition(lineBuilder.getPosition());
         polygonBuilder.setJavaPlugin(lineBuilder.getJavaPlugin());
@@ -35,6 +40,10 @@ public class LineWithCirclePresetExecutor extends AAnimationPresetExecutor<LineB
         polygonBuilder.setTicksDuration(1);
         polygonBuilder.setShowPeriod(1);
 
+        // Fetch the correct direction to set
+        // from the current type of the position
+        // (if the particle animation was set on a block
+        // or is linked to an entity).
         APosition position = lineBuilder.getPosition();
         APosition.Type type = position.getType();
         Vector direction = null;
@@ -50,11 +59,12 @@ public class LineWithCirclePresetExecutor extends AAnimationPresetExecutor<LineB
             }
         }
 
+        // Line configuration
+
         lineBuilder.setDirection(direction);
         // Also update the direction vectors of the polygon
         polygonBuilder.setDirectorVectorsFromNormalVector(direction);
 
-        //lineBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(0, 255, 0), null));
         lineBuilder.setPointDefinition(APointDefinition.fromSubAnim(polygonBuilder.getAnimation()));
         lineBuilder.setTicksDuration(100);
         lineBuilder.setShowPeriod(new Constant<>(4));
