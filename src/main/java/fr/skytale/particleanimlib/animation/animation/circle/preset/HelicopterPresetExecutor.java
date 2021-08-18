@@ -32,11 +32,8 @@ public class HelicopterPresetExecutor extends AAnimationPresetExecutor<CircleBui
         lineBuilder.setJavaPlugin(circleBuilder.getJavaPlugin());
 
         lineBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
-        // Beautify
         APosition position = circleBuilder.getPosition();
         lineBuilder.bindEndLocation(position);
-//        lineBuilder.setEndLocation(position);
-//        lineBuilder.setDirectionFromOrientation(ORIENTATION, 10);
         lineBuilder.setTicksDuration(1);
         lineBuilder.setShowPeriod(new Constant<>(1));
         lineBuilder.setNbPoints(new Constant<>(50));

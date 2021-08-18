@@ -28,8 +28,8 @@ public class LineTask extends ARotatingAnimationTask<Line> {
             animation.updateBindedEndLocation(iterationCount);
         }
 
-        int nbPoints = this.animation.getNbPoints().getCurrentValue(iterationCount);
-        double length = this.animation.getLength().getCurrentValue(iterationCount);
+        int nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
+        double length = animation.getLength().getCurrentValue(iterationCount);
         double step = (1.0D / nbPoints) * length; // Compute the step used in the drawLine method below
 
         // Get the current direction

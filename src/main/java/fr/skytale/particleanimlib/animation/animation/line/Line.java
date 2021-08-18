@@ -11,6 +11,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -49,6 +50,8 @@ public class Line extends ARotatingAnimation implements IDirectionSubAnimation, 
     public void updateBindedEndLocation(int iterationCount) {
         // Nearly the same process as the one done in LineBuilde#setEndLocation(...)
         if(!hasEndLocationBinded()) return;
+
+        Validate.notNull(getPosition(), "position should not be null.");
 
         // Compute the direction vector
         Location startLocation = getPosition().getLocation().getCurrentValue(iterationCount);
