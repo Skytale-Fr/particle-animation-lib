@@ -30,7 +30,7 @@ public class LineTask extends ARotatingAnimationTask<Line> {
 
         int nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
         double length = animation.getLength().getCurrentValue(iterationCount);
-        double step = (1.0D / nbPoints) * length; // Compute the step used in the drawLine method below
+        double step = 1.0D / nbPoints * length; // Compute the step used in the drawLine method below
 
         // Get the current direction
         AnimationDirection direction = animation.getDirection();
