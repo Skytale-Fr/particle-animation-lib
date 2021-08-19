@@ -24,10 +24,6 @@ public class LineTask extends ARotatingAnimationTask<Line> {
             return;
         }
 
-        // TODO: Ne faire de nouveaux calculs que si l'étape précédente est différente de l'étape suivante:
-        // 1. Position des deux points
-        // 2. Rotation (rotationChanged & hasRotation)
-
         int nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
         double length = animation.getLength().getCurrentValue(iterationCount);
         double step = 1.0D / nbPoints * length; // Compute the step used in the drawLine method below

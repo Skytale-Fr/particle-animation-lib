@@ -14,10 +14,6 @@ import org.bukkit.util.Vector;
 
 public class Line extends ARotatingAnimation implements IDirectionSubAnimation, ISubAnimationContainer {
 
-    // TODO:
-    // 1. Definition des deux points (positions relatives) définie par IVariable<Vector>
-    // 2. Rotation par l'object rotation (yaw, pitch, roll) -> voir Discord
-
     // Those properties are not important to be "cached" but it might
     // be important for optimization efforts ...
     // (instead of computing them every time getDirection() or getLength() is called,
