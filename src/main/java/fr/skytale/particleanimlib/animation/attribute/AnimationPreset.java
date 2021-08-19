@@ -7,6 +7,10 @@ import fr.skytale.particleanimlib.animation.animation.image.preset.*;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningSubAnimLightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningSubAnimSpherePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.line.preset.LineRotationYPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.line.preset.LineWithPolygonsPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.line.preset.LineWithPolygonsPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.line.preset.SimpleLinePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.obj.preset.*;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPlayerAimPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPresetExecutor;
@@ -80,7 +84,11 @@ public enum AnimationPreset {
     SPHERE_SUB_ANIM_SPIRAL_PROPAGATION(new SphereSubAnimSpiralPropagatingUpPresetExecutor()),
     SPIRAL(new SpiralPresetExecutor()),
     SPIRAL_ADN(new SpiralADNPresetExecutor()),
-    WAVE(new WavePresetExecutor());
+    WAVE(new WavePresetExecutor()),
+    LINE(new SimpleLinePresetExecutor()),
+    LINE_WITH_POLYGONS(new LineWithPolygonsPresetExecutor()),
+    LINE_ROTATING_ALONG_Y(new LineRotationYPresetExecutor()),
+    HELICOPTER(new HelicopterPresetExecutor());
 
     private final AAnimationPresetExecutor<?> presetExecutor;
 

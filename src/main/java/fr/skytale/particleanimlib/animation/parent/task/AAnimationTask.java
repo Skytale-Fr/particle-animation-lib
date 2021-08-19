@@ -120,7 +120,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         Vector stepVector = point2.toVector().subtract(point1.toVector()).normalize().multiply(step);
         Location currentLoc = point1.clone();
         for (double length = 0; length < distance; currentLoc.add(stepVector)) {
-            pointDefinition.show(animation, currentLoc);
+            pointDefinition.show(animation, currentLoc.clone());
             length += step;
         }
     }
