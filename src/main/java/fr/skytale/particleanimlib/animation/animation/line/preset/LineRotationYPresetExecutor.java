@@ -40,7 +40,7 @@ public class LineRotationYPresetExecutor extends AAnimationPresetExecutor<LineBu
         }
 
         lineBuilder.setDirection(direction);
-        lineBuilder.setRotation(new Vector(0, 1, 0), new DoublePeriodicallyEvolvingVariable(0.0d, Math.PI / 10));
+        lineBuilder.setRotation(new Vector(0, 1, 0), new Constant<>(Math.PI / 10));
         lineBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         lineBuilder.setTicksDuration(100);
         lineBuilder.setShowPeriod(new Constant<>(1));

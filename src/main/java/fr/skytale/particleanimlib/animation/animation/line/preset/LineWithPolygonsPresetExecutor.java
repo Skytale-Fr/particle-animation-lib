@@ -1,7 +1,5 @@
 package fr.skytale.particleanimlib.animation.animation.line.preset;
 
-import fr.skytale.particleanimlib.animation.animation.circle.Circle;
-import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.animation.line.LineBuilder;
 import fr.skytale.particleanimlib.animation.animation.polygon.PolygonBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
@@ -9,7 +7,7 @@ import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APo
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
-import fr.skytale.particleanimlib.animation.attribute.var.IntegerPeriodicallyEvolvingVariable;
+import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,15 +44,17 @@ public class LineWithPolygonsPresetExecutor extends AAnimationPresetExecutor<Lin
         // or is linked to an entity).
         APosition position = lineBuilder.getPosition();
         APosition.Type type = position.getType();
-        Vector direction = null;
+        IVariable<Vector> direction = null;
         switch (type) {
             case ENTITY: {
                 Entity entity = position.getMovingEntity();
-                direction = entity.getLocation().getDirection();
+                direction = new CallbackVariable<>(iterationCount -> {
+                    return entity.getLocation().getDirection();
+                });
                 break;
             }
             default: {
-                direction = new Vector(1, 0, 0);
+                direction = new Constant<>(new Vector(1, 0, 0));
                 break;
             }
         }
@@ -62,9 +62,6 @@ public class LineWithPolygonsPresetExecutor extends AAnimationPresetExecutor<Lin
         // Line configuration
 
         lineBuilder.setDirection(direction);
-        // Also update the direction vectors of the polygon
-        polygonBuilder.setDirectorVectorsFromNormalVector(direction);
-
         lineBuilder.setPointDefinition(APointDefinition.fromSubAnim(polygonBuilder.getAnimation()));
         lineBuilder.setTicksDuration(100);
         lineBuilder.setShowPeriod(new Constant<>(4));

@@ -4,6 +4,7 @@ import fr.skytale.particleanimlib.animation.attribute.Orientation;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
@@ -24,10 +25,12 @@ public class LineBuilder extends ARotatingAnimationBuilder<Line> {
     public LineBuilder() {
         super();
         // Default values
-        animation.setDirection(new Vector(1, 0, 0));
+        setPoint1AtOrigin();
+        animation.setPoint2(new Constant<>(new Vector(10, 0, 0)));
+//        animation.setDirection(new Vector(1, 0, 0));
         animation.setShowPeriod(new Constant<>(1));
         animation.setNbPoints(new Constant<>(10));
-        animation.setLength(new Constant<>(10.0d));
+//        animation.setLength(new Constant<>(10.0d));
         animation.setTicksDuration(60);
     }
 
@@ -37,90 +40,65 @@ public class LineBuilder extends ARotatingAnimationBuilder<Line> {
     }
 
     /********* Line specific setters ***********/
-    public void setEndLocation(Location endLocation) {
-        checkNotNull(endLocation, ENDLOCATION_SHOULD_NOT_BE_NULL);
-
-        APosition position = animation.getPosition();
-        checkNotNull(position, POSITION_SHOULD_BE_SET);
-
-        // Compute the direction vector
-        Location startLocation = getLocationFromAPosition(position);
-        Vector toVector = endLocation.clone().subtract(startLocation).toVector();
-        // Get it's length and update the animation's length
-        double length = toVector.length();
-        setLength(new Constant<>(length));
-
-        // Normalize and set the direction
-        Vector direction = toVector.normalize();
-        animation.setDirection(direction);
+    public void setPoint1(APosition position) {
+        IVariable<Vector> point1 = getVectorVariableFromAPosition(position);
+        animation.setPoint1(point1);
+    }
+    public void setPoint1AtOrigin() {
+        IVariable<Vector> point1 = new Constant<>(new Vector(0, 0, 0));
+        animation.setPoint1(point1);
+    }
+    public void setPoint2(APosition position) {
+        IVariable<Vector> point2 = getVectorVariableFromAPosition(position);
+        animation.setPoint1(point2);
+    }
+    public void setPoint2AtOrigin() {
+        IVariable<Vector> point2 = new Constant<>(new Vector(0, 0, 0));
+        animation.setPoint2(point2);
     }
 
-    public void setEndLocation(APosition position) {
-        Location endLocation = getLocationFromAPosition(position);
-        setEndLocation(endLocation);
-    }
-
-    /**
-     * The difference between setEndLocation and bindEndLocation can be found
-     * in time. With bindEndLocation, the boundary of the line will always be linked to
-     * the specified location. Even if the animation's position or the end location is changing.
-     * @param endLocation
-     */
-    public void bindEndLocation(IVariable<Location> endLocation) {
-        animation.bindEndLocation(endLocation);
-    }
-    public void bindEndLocation(APosition position) {
-        IVariable<Location> endLocation = null;
+    private IVariable<Vector> getVectorVariableFromAPosition(APosition position) {
         APosition.Type type = position.getType();
+        IVariable<Vector> variable = null;
         switch (type) {
             case ENTITY: {
                 Entity entity = position.getMovingEntity();
-                // Use a callback variable to fetch the entity's location every getCurrentValue calls.
-                endLocation = new CallbackVariable<>(iterationCount -> entity.getLocation());
+                variable = new CallbackVariable<>(iterationCount -> {
+                    return entity.getLocation().toVector();
+                });
+                break;
+            }
+            case LOCATION: {
+                variable = new CallbackVariable<>(iterationCount -> {
+                    Location location = position.getLocation().getCurrentValue(iterationCount);
+                    return location.toVector();
+                });
+                break;
+            }
+            case TRAIL: {
+                variable = position.getRelativeLocation();
                 break;
             }
             default: {
-                Location location = position.getLocation().getCurrentValue(0);
-                endLocation = new Constant<>(location);
-                break;
+                throw new IllegalArgumentException(String.format("Position type '%s' is not handle yet.", type.name()));
             }
         }
-        bindEndLocation(endLocation);
+        return variable;
     }
 
-    /**
-     * Fetch the location from a APosition based
-     * from it's inner type (ENTITY, LOCATION, TRAIL)
-     * @param position
-     * @return the fetched location
-     */
-    private Location getLocationFromAPosition(APosition position) {
-        APosition.Type type = position.getType();
-        Location location = null;
-        switch (type) {
-            case ENTITY: {
-                Entity entity = position.getMovingEntity();
-                location = entity.getLocation();
-                break;
-            }
-            default: {
-                location = position.getLocation().getCurrentValue(0);
-                break;
-            }
-        }
-        return location;
+    public void setDirection(IVariable<Vector> direction) {
+        checkNotNull(direction, DIRECTION_VECTOR_SHOULD_NOT_BE_NULL);
+        AnimationDirection animationDirection = AnimationDirection.fromMoveVector(direction);
+        animation.setDirection(animationDirection);
     }
 
     public void setDirection(Vector direction) {
-        checkNotNull(direction, DIRECTION_VECTOR_SHOULD_NOT_BE_NULL);
-        animation.setDirection(direction);
+        setDirection(new Constant<>(direction));
     }
 
     public void setDirectionFromOrientation(Orientation orientation, double length) {
         Validate.isTrue(length > 0, LENGTH_SHOULD_NOT_BE_NULL_OR_LOWER_THAN_ZERO);
-        Vector u = orientation.getU(length);
-        Vector v = orientation.getV(length);
-        Vector direction = u.crossProduct(v);
+        Vector direction = orientation.getDirection(length);
         setDirection(direction);
     }
 
