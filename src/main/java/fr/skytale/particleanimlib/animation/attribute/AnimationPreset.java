@@ -88,7 +88,8 @@ public enum AnimationPreset {
     LINE(new SimpleLinePresetExecutor()),
     LINE_WITH_POLYGONS(new LineWithPolygonsPresetExecutor()),
     LINE_ROTATING_ALONG_Y(new LineRotationYPresetExecutor()),
-    HELICOPTER(new HelicopterPresetExecutor());
+    HELICOPTER(new HelicopterPresetExecutor()),
+    SPHERE_PLASMA(new SpherePlasmaPresetExecutor());
 
     private final AAnimationPresetExecutor<?> presetExecutor;
 
