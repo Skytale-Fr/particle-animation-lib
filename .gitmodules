@@ -1,0 +1,3 @@
+[submodule "ttfparser"]
+	path = ttfparser
+	url = ../ttfparser.git

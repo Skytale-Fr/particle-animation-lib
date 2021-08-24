@@ -9,7 +9,6 @@ import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningS
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningSubAnimSpherePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.line.preset.LineRotationYPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.line.preset.LineWithPolygonsPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.line.preset.LineWithPolygonsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.line.preset.SimpleLinePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.obj.preset.*;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPlayerAimPresetExecutor;
@@ -25,6 +24,8 @@ import fr.skytale.particleanimlib.animation.animation.pyramid.preset.SimplePyram
 import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
 import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralADNPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.text.preset.SimpleTextKGEverSinceNewYorkPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.text.preset.SimpleTextMinecraftPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExecutor;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
@@ -89,7 +90,10 @@ public enum AnimationPreset {
     LINE_WITH_POLYGONS(new LineWithPolygonsPresetExecutor()),
     LINE_ROTATING_ALONG_Y(new LineRotationYPresetExecutor()),
     HELICOPTER(new HelicopterPresetExecutor()),
-    SPHERE_PLASMA(new SpherePlasmaPresetExecutor());
+    SPHERE_PLASMA(new SpherePlasmaPresetExecutor()),
+    TEXT_MINECRAFT(new SimpleTextMinecraftPresetExecutor()),
+    TEXT_KGEVERSINCENEWYORK(new SimpleTextKGEverSinceNewYorkPresetExecutor());
+
 
     private final AAnimationPresetExecutor<?> presetExecutor;
 

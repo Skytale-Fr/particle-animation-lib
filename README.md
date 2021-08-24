@@ -240,3 +240,14 @@ TrailTask trailTask=trailBuilder.getTrail().getTrailTask();
 
 > You can save the TrailTask (cache it within an attribute) in order to be able to add the trail to other players later.
 > You can also change the parameters of the Trail and its animation(s) before creating another task from it.
+
+## Contribute
+
+* First init git submodules :
+
+```bash
+git submodule init
+git submodule update
+```
+
+* Then reload gradle config.
