@@ -21,6 +21,7 @@ public class TextTask extends AAnimationTask<Text> {
     public TextTask(Text text) {
         super(text);
         ttfString = text.getTTFString();
+        System.out.println("ttfString = " + ttfString);
         currentU = animation.getU().clone();
         currentV = animation.getV().clone();
         this.startTask();
