@@ -83,6 +83,7 @@ plugins {
 
 shadowJar {
   append 'images/'
+  append 'fonts/'
   append '3dmodels/'
 }
 ```

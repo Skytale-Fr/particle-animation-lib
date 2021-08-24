@@ -1,2 +1,3 @@
 rootProject.name = 'particle-animation-lib'
-include 'ttfparser'
+include ':ttfparser'
+project(':ttfparser').projectDir = file(new File(rootDir, 'ttfparser'))

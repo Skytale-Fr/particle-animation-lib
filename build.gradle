@@ -52,13 +52,17 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
     implementation 'org.apache.commons:commons-math3:3.6.1'
     implementation 'com.github.mokiat:java-data-front:2.0.0'
-    implementation project('ttfparser')
+    implementation project(':ttfparser')
 }
 
 tasks.withType(Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet')
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('charSet', 'UTF-8')
+}
+
+tasks.withType(ProcessResources) {
+    duplicatesStrategy = DuplicatesStrategy.WARN
 }
 
 sourceSets.main.resources {
