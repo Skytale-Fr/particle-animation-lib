@@ -1,6 +1,8 @@
 package fr.skytale.particleanimlib.animation.animation.text;
 
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
+import fr.skytale.particleanimlib.animation.parent.task.ARotatingAnimationTask;
+import fr.skytale.ttfparser.TTFAlphabet;
 import fr.skytale.ttfparser.TTFCharacter;
 import fr.skytale.ttfparser.TTFString;
 import fr.skytale.ttfparser.tables.TTFPoint;
@@ -11,27 +13,42 @@ import org.bukkit.util.Vector;
 import java.awt.geom.Point2D;
 import java.util.List;
 
-public class TextTask extends AAnimationTask<Text> {
+public class TextTask extends ARotatingAnimationTask<Text> {
 
     private static final double FILL_LINE_PADDING = 0.2;
 
-    TTFString ttfString;
+    TTFAlphabet ttfAlphabet;
+    Vector startU, startV;
     Vector currentU, currentV;
 
     public TextTask(Text text) {
         super(text);
-        ttfString = text.getTTFString();
-        currentU = animation.getU().clone();
-        currentV = animation.getV().clone();
+        ttfAlphabet = text.getTTFAlphabet();
+        startU = animation.getU().clone();
+        startV = animation.getV().clone();
         this.startTask();
     }
 
     @Override
-    public void show(Location iterationBaseLocation) {
+    protected void showRotated(boolean rotationChanged, Location iterationBaseLocation) {
         if (hasDurationEnded()) {
             stopAnimation();
             return;
         }
+
+        currentU = startU;
+        currentV = startV;
+
+        if(hasRotation && rotationChanged) {
+            currentU = rotation.rotateVector(startU);
+            currentV = rotation.rotateVector(startV);
+        }
+
+        String baseString = animation.getBaseString().getCurrentValue(iterationCount);
+        // The scale factor of 1.3 his to fit a Minecraft block size.
+        // So a font size of 10.0 will create an upper case character of 10.0 blocks height.
+        double fontSize = animation.getFontSize().getCurrentValue(iterationCount) * 1.3d;
+        TTFString ttfString = ttfAlphabet.getString(baseString, fontSize);
 
         for (int i = 0; i < ttfString.length(); i++) {
             TTFCharacter ttfCharacter = ttfString.getCharacter(i);

@@ -22,23 +22,17 @@ import java.io.File;
 import java.net.URL;
 import java.nio.file.Path;
 
-public class Text extends AAnimation implements IPlaneSubAnimation, ISubAnimationContainer {
+public class Text extends ARotatingAnimation implements IPlaneSubAnimation, ISubAnimationContainer {
 
     public static final String FONTS_FOLDER = "fonts";
 
     private Vector u;
     private Vector v;
-    private String baseString;
-//    private IVariable<String> baseString;
-//    private IVariable<Double> fontSize;
+    private IVariable<String> baseString;
+    private IVariable<Double> fontSize;
     private String fontFileName;
     // private FontDecoration fontDecoration
-//    private TTFAlphabet ttfAlphabet;
-    // A virer:
-    private TTFString ttfString; // Built when init() is called.
-
-    private double scaleX;
-    private double scaleY;
+    private TTFAlphabet ttfAlphabet;
 
     private APointDefinition pointDefinition;
 
@@ -52,16 +46,14 @@ public class Text extends AAnimation implements IPlaneSubAnimation, ISubAnimatio
     }
 
     protected void init() {
-        if(ttfString != null) {
+        if(ttfAlphabet != null) {
             // Already initialized.
             return;
         }
 
         File fontFile = getFontFile();
         TTFParser ttfParser = new TTFParser(fontFile);
-        TTFAlphabet ttfAlphabet = ttfParser.parse();
-        ttfString = ttfAlphabet.getString(baseString);
-        ttfString = ttfString.scale(scaleX, scaleY);
+        ttfAlphabet = ttfParser.parse();
     }
 
     public static File getFontsDirectory(JavaPlugin plugin) {
@@ -97,29 +89,13 @@ public class Text extends AAnimation implements IPlaneSubAnimation, ISubAnimatio
 
     /***********GETTERS & SETTERS***********/
 
-    public TTFString getTTFString() {
-        return ttfString;
+    public TTFAlphabet getTTFAlphabet() {
+        return ttfAlphabet;
     }
-    public String getBaseString() { return baseString; }
+    public IVariable<String> getBaseString() { return baseString; }
 
-    public void setString(String string) {
+    public void setString(IVariable<String> string) {
         this.baseString = string;
-    }
-
-    public double getScaleX() {
-        return scaleX;
-    }
-
-    public void setScaleX(double scaleX) {
-        this.scaleX = scaleX;
-    }
-
-    public double getScaleY() {
-        return scaleY;
-    }
-
-    public void setScaleY(double scaleY) {
-        this.scaleY = scaleY;
     }
 
     public File getFontFile() {
@@ -132,6 +108,14 @@ public class Text extends AAnimation implements IPlaneSubAnimation, ISubAnimatio
 
     public void setFontFileName(String fontFileName) {
         this.fontFileName = fontFileName;
+    }
+
+    public IVariable<Double> getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(IVariable<Double> fontSize) {
+        this.fontSize = fontSize;
     }
 
     @Override
@@ -180,13 +164,12 @@ public class Text extends AAnimation implements IPlaneSubAnimation, ISubAnimatio
     @Override
     public Text clone() {
         Text obj = (Text) super.clone();
-        obj.ttfString = ttfString == null ? null : ttfString.clone();
-        obj.baseString = baseString; // Immutable object
+        obj.ttfAlphabet = ttfAlphabet == null ? null : ttfAlphabet; // Clone a TTFAlphabet seems to be weird (there is only getters).
+        obj.baseString = baseString.copy();
+        obj.fontSize = fontSize.copy();
         obj.fontFileName = fontFileName;
         obj.u = u.clone();
         obj.v = v.clone();
-        obj.scaleX = scaleX;
-        obj.scaleY = scaleY;
         obj.pointDefinition = pointDefinition.clone();
         return obj;
     }

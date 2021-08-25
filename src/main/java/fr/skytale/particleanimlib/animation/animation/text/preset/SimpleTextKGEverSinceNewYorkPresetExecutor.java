@@ -21,8 +21,8 @@ public class SimpleTextKGEverSinceNewYorkPresetExecutor extends AAnimationPreset
         textBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         textBuilder.setTicksDuration(100);
         textBuilder.setShowPeriod(new Constant<>(1));
-        textBuilder.setString("Coucou");
+        textBuilder.setString(new Constant<>("Coucou"));
+        textBuilder.setFontSize(new Constant<>(10.0d));
         textBuilder.setFontFileName("KGEverSinceNewYork.ttf");
-        textBuilder.setScale(0.01, 0.01);
     }
 }

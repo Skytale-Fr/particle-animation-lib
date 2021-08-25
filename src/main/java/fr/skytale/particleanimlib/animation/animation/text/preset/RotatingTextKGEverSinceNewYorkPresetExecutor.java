@@ -1,6 +1,5 @@
 package fr.skytale.particleanimlib.animation.animation.text.preset;
 
-import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.animation.text.TextBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
@@ -10,9 +9,9 @@ import org.bukkit.util.Vector;
 
 import java.awt.*;
 
-public class SimpleTextMinecraftPresetExecutor extends AAnimationPresetExecutor<TextBuilder> {
+public class RotatingTextKGEverSinceNewYorkPresetExecutor extends AAnimationPresetExecutor<TextBuilder> {
 
-    public SimpleTextMinecraftPresetExecutor() {
+    public RotatingTextKGEverSinceNewYorkPresetExecutor() {
         super(TextBuilder.class);
     }
 
@@ -23,7 +22,8 @@ public class SimpleTextMinecraftPresetExecutor extends AAnimationPresetExecutor<
         textBuilder.setTicksDuration(100);
         textBuilder.setShowPeriod(new Constant<>(1));
         textBuilder.setString(new Constant<>("Coucou"));
-        textBuilder.setFontSize(new Constant<>(3.0d));
-        textBuilder.setFontFileName("Minecraft.ttf");
+        textBuilder.setFontSize(new Constant<>(10.0d));
+        textBuilder.setFontFileName("KGEverSinceNewYork.ttf");
+        textBuilder.setRotation(new Vector(0, 1, 0), Math.PI / 30);
     }
 }

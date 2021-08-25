@@ -24,8 +24,7 @@ import fr.skytale.particleanimlib.animation.animation.pyramid.preset.SimplePyram
 import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
 import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralADNPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.text.preset.SimpleTextKGEverSinceNewYorkPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.text.preset.SimpleTextMinecraftPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.text.preset.*;
 import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExecutor;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
@@ -92,7 +91,10 @@ public enum AnimationPreset {
     HELICOPTER(new HelicopterPresetExecutor()),
     SPHERE_PLASMA(new SpherePlasmaPresetExecutor()),
     TEXT_MINECRAFT(new SimpleTextMinecraftPresetExecutor()),
-    TEXT_KGEVERSINCENEWYORK(new SimpleTextKGEverSinceNewYorkPresetExecutor());
+    TEXT_KGEVERSINCENEWYORK(new SimpleTextKGEverSinceNewYorkPresetExecutor()),
+    TEXT_KGEVERSINCENEWYORK_FONTSIZE_EVOLVING(new FontSizeEvolvingTextKGEverSinceNewYorkPresetExecutor()),
+    TEXT_KGEVERSINCENEWYORK_CONTENT_EVOLVING(new ContentEvolvingTextKGEverSinceNewYorkPresetExecutor()),
+    TEXT_KGEVERSINCENEWYORK_ROTATING(new RotatingTextKGEverSinceNewYorkPresetExecutor());
 
 
     private final AAnimationPresetExecutor<?> presetExecutor;

@@ -16,12 +16,13 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
-public class TextBuilder extends AAnimationBuilder<Text> {
+public class TextBuilder extends ARotatingAnimationBuilder<Text> {
 
     public static final String DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL = "directorVector u should not be null";
     public static final String DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL = "directorVector v should not be null";
-    public static final String BASE_STRING_SHOULD_NOT_BE_NULL_OR_EMPTY = "baseString should not be null or empty";
+    public static final String BASE_STRING_SHOULD_NOT_BE_NULL = "baseString should not be null";
     public static final String FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY = "fontFileName should not be null or empty";
+    public static final String FONT_SIZE_SHOULD_NOT_BE_NULL_OR_EMPTY = "fontSize should not be null or empty";
 
     public TextBuilder() {
         super();
@@ -31,8 +32,8 @@ public class TextBuilder extends AAnimationBuilder<Text> {
         animation.setFontFileName("Minecraft.ttf");
         animation.setShowPeriod(new Constant<>(1));
         animation.setTicksDuration(60);
-        animation.setString("Coucou");
-        setScale(0.01, 0.01);
+        animation.setString(new Constant<>("Coucou"));
+        animation.setFontSize(new Constant<>(3.0d));
     }
 
     @Override
@@ -41,15 +42,14 @@ public class TextBuilder extends AAnimationBuilder<Text> {
     }
 
     /********* Line specific setters ***********/
-    public void setString(String string) {
-        checkNotNull(string, BASE_STRING_SHOULD_NOT_BE_NULL_OR_EMPTY);
-        Validate.notEmpty(string, BASE_STRING_SHOULD_NOT_BE_NULL_OR_EMPTY);
+    public void setString(IVariable<String> string) {
+        checkNotNull(string, BASE_STRING_SHOULD_NOT_BE_NULL);
         animation.setString(string);
     }
 
-    public void setScale(double scaleX, double scaleY) {
-        animation.setScaleX(scaleX);
-        animation.setScaleY(scaleY);
+    public void setFontSize(IVariable<Double> fontSize) {
+        checkNotNull(fontSize, FONT_SIZE_SHOULD_NOT_BE_NULL_OR_EMPTY);
+        animation.setFontSize(fontSize);
     }
 
     public void setFontFileName(String fontFileName) {
@@ -88,8 +88,8 @@ public class TextBuilder extends AAnimationBuilder<Text> {
     public Text getAnimation() {
         checkNotNull(animation.getU(), DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
         checkNotNull(animation.getV(), DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
-        checkNotNull(animation.getBaseString(), BASE_STRING_SHOULD_NOT_BE_NULL_OR_EMPTY);
-        Validate.notEmpty(animation.getBaseString(), BASE_STRING_SHOULD_NOT_BE_NULL_OR_EMPTY);
+        checkNotNull(animation.getBaseString(), BASE_STRING_SHOULD_NOT_BE_NULL);
+        checkNotNull(animation.getFontSize(), FONT_SIZE_SHOULD_NOT_BE_NULL_OR_EMPTY);
         checkNotNull(animation.getFontFileName(), FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
         Validate.notEmpty(animation.getFontFileName(), FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
 
