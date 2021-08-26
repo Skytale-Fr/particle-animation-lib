@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.text;
 
+import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import fr.skytale.particleanimlib.animation.parent.task.ARotatingAnimationTask;
 import fr.skytale.ttfparser.TTFAlphabet;
@@ -7,11 +8,21 @@ import fr.skytale.ttfparser.TTFCharacter;
 import fr.skytale.ttfparser.TTFString;
 import fr.skytale.ttfparser.tables.TTFPoint;
 import fr.skytale.ttfparser.tables.glyf.Glyf;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+import xyz.xenondevs.particle.ParticleBuilder;
+import xyz.xenondevs.particle.ParticleEffect;
 
 import java.awt.geom.Point2D;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 public class TextTask extends ARotatingAnimationTask<Text> {
 
@@ -21,11 +32,16 @@ public class TextTask extends ARotatingAnimationTask<Text> {
     Vector startU, startV;
     Vector currentU, currentV;
 
+    boolean hasColor;
+    ParticleTemplate particleTemplate;
+
     public TextTask(Text text) {
         super(text);
-        ttfAlphabet = text.getTTFAlphabet();
+        ttfAlphabet = animation.getTTFAlphabet();
         startU = animation.getU().clone();
         startV = animation.getV().clone();
+        particleTemplate = animation.getMainParticle();
+        hasColor = particleTemplate.getParticleEffect() == ParticleEffect.REDSTONE;
         this.startTask();
     }
 
@@ -44,24 +60,43 @@ public class TextTask extends ARotatingAnimationTask<Text> {
             currentV = rotation.rotateVector(startV);
         }
 
-        String baseString = animation.getBaseString().getCurrentValue(iterationCount);
+        String notParsedString = animation.getBaseString().getCurrentValue(iterationCount);
+        BaseComponent[] components = TextComponent.fromLegacyText(notParsedString, ChatColor.WHITE);
+        String baseString = Arrays.stream(components).map(component -> component.toPlainText()).reduce("", String::concat);
         // The scale factor of 1.3 his to fit a Minecraft block size.
         // So a font size of 10.0 will create an upper case character of 10.0 blocks height.
         double fontSize = animation.getFontSize().getCurrentValue(iterationCount) * 1.3d;
         TTFString ttfString = ttfAlphabet.getString(baseString, fontSize);
 
-        for (int i = 0; i < ttfString.length(); i++) {
-            TTFCharacter ttfCharacter = ttfString.getCharacter(i);
-            Point2D.Double position = ttfString.getPosition(i);
-            Vector vecU = currentU.clone().multiply(position.getX());
-            Vector vecV = currentV.clone().multiply(position.getY());
-            Vector charPadding = vecU.add(vecV);
-            showCharacter(ttfCharacter, charPadding, iterationBaseLocation);
+        int characterIndex = 0;
+        for(BaseComponent component : components) {
+            TextComponent textComponent = (TextComponent) component;
+            String componentCharacters = textComponent.toPlainText();
+            for (int i = 0; i < componentCharacters.length(); i++) {
+                TTFCharacter ttfCharacter = ttfString.getCharacter(characterIndex);
+                Point2D.Double position = ttfString.getPosition(characterIndex);
+                Vector vecU = currentU.clone().multiply(position.getX());
+                Vector vecV = currentV.clone().multiply(position.getY());
+                Vector charPadding = vecU.add(vecV);
+
+                showCharacter(ttfCharacter, charPadding, iterationBaseLocation, component.getColor());
+
+                characterIndex++;
+            }
         }
+
+//        for (int i = 0; i < ttfString.length(); i++) {
+//            TTFCharacter ttfCharacter = ttfString.getCharacter(i);
+//            Point2D.Double position = ttfString.getPosition(i);
+//            Vector vecU = currentU.clone().multiply(position.getX());
+//            Vector vecV = currentV.clone().multiply(position.getY());
+//            Vector charPadding = vecU.add(vecV);
+//            showCharacter(ttfCharacter, charPadding, iterationBaseLocation);
+//        }
 
     }
 
-    private void showCharacter(TTFCharacter character, Vector charPadding, Location iterationBaseLocation) {
+    private void showCharacter(TTFCharacter character, Vector charPadding, Location iterationBaseLocation, ChatColor color) {
         Glyf glyf = character.getGlyf();
         List<List<TTFPoint>> contours = glyf.getContours();
         for (int contourIndex = 0; contourIndex < contours.size(); contourIndex++) {
@@ -75,12 +110,14 @@ public class TextTask extends ARotatingAnimationTask<Text> {
                     point2 = points.get(i + 1);
                 }
 
-                fillLines(point1, point2, charPadding, FILL_LINE_PADDING, iterationBaseLocation);
+                fillLines(point1, point2, charPadding, FILL_LINE_PADDING, iterationBaseLocation, color);
             }
         }
     }
 
-    private void fillLines(TTFPoint point1, TTFPoint point2, Vector charPadding, double padding, Location iterationBaseLocation) {
+    private void fillLines(TTFPoint point1, TTFPoint point2, Vector charPadding, double padding, Location iterationBaseLocation, ChatColor color) {
+        final Collection<? extends Player> viewers = animation.getViewers().getPlayers(iterationBaseLocation);
+
         Vector vec1 = getVectorFromPoint(point1);
         Vector vec2 = getVectorFromPoint(point2);
         Vector vec12 = vec2.clone().subtract(vec1).normalize().multiply(padding);
@@ -88,7 +125,12 @@ public class TextTask extends ARotatingAnimationTask<Text> {
         Location particuleLocation = iterationBaseLocation.clone().add(vec1).add(charPadding);
         Location endLocation = iterationBaseLocation.clone().add(vec2).add(charPadding);
         while (particuleLocation.distance(endLocation) > padding) {
-            showPoint(animation.getPointDefinition(), particuleLocation, iterationBaseLocation);
+            ParticleBuilder particleBuilder = particleTemplate.getParticleBuilder(particuleLocation);
+            if(hasColor) {
+                particleBuilder.setColor(color.getColor());
+            }
+            particleBuilder.display(viewers);
+//            showPoint(animation.getPointDefinition(), particuleLocation, iterationBaseLocation);
             particuleLocation.add(vec12);
         }
     }

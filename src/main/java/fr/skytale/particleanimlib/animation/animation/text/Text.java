@@ -31,8 +31,9 @@ public class Text extends ARotatingAnimation implements IPlaneSubAnimation, ISub
     private IVariable<String> baseString;
     private IVariable<Double> fontSize;
     private String fontFileName;
-    // private FontDecoration fontDecoration
+    // private FontDecoration fontDecoration;
     private TTFAlphabet ttfAlphabet;
+    // private Anchor anchor;
 
     private APointDefinition pointDefinition;
 
