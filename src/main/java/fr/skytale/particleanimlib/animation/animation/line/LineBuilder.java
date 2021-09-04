@@ -88,8 +88,18 @@ public class LineBuilder extends ARotatingAnimationBuilder<Line> {
 
     public void setDirection(IVariable<Vector> direction) {
         checkNotNull(direction, DIRECTION_VECTOR_SHOULD_NOT_BE_NULL);
+
         AnimationDirection animationDirection = AnimationDirection.fromMoveVector(direction);
-        animation.setDirection(animationDirection);
+
+        IVariable<Vector> newPoint2 = new CallbackVariable<>(iterationCount -> {
+            double lengthValue = animation.getLength().getCurrentValue(iterationCount);
+            Vector directionVector = animationDirection.getMoveVector().getCurrentValue(iterationCount).clone();
+            Vector toVector = directionVector.normalize().multiply(lengthValue);
+            Vector newPosition2 = animation.getPoint1().getCurrentValue(iterationCount).clone().add(toVector);
+            return newPosition2.clone();
+        });
+
+        animation.setPoint2(newPoint2);
     }
 
     public void setDirection(Vector direction) {
@@ -116,7 +126,14 @@ public class LineBuilder extends ARotatingAnimationBuilder<Line> {
     }
 
     public void setLength(IVariable<Double> length) {
-        animation.setLength(length);
+        IVariable<Vector> newPoint2 = new CallbackVariable<>(iterationCount -> {
+            double lengthValue = length.getCurrentValue(iterationCount);
+            Vector directionVector = animation.getDirection().getMoveVector().getCurrentValue(iterationCount).clone();
+            Vector toVector = directionVector.normalize().multiply(lengthValue);
+            Vector newPosition2 = animation.getPoint1().getCurrentValue(iterationCount).clone().add(toVector);
+            return newPosition2.clone();
+        });
+        animation.setPoint2(newPoint2);
     }
 
     @Override
