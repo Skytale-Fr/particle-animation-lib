@@ -23,6 +23,8 @@ public class TextBuilder extends ARotatingAnimationBuilder<Text> {
     public static final String BASE_STRING_SHOULD_NOT_BE_NULL = "baseString should not be null";
     public static final String FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY = "fontFileName should not be null or empty";
     public static final String FONT_SIZE_SHOULD_NOT_BE_NULL_OR_EMPTY = "fontSize should not be null or empty";
+    public static final String DETAILS_LEVEL_SHOULD_BE_POSTIIVE_AND_NOT_NULL = "detailsLevel should be positive and not null";
+
 
     public TextBuilder() {
         super();
@@ -34,6 +36,7 @@ public class TextBuilder extends ARotatingAnimationBuilder<Text> {
         animation.setTicksDuration(60);
         animation.setString(new Constant<>("Coucou"));
         animation.setFontSize(new Constant<>(3.0d));
+        animation.setDetailsLevel(new Constant<>(1.0d));
     }
 
     @Override
@@ -50,6 +53,11 @@ public class TextBuilder extends ARotatingAnimationBuilder<Text> {
     public void setFontSize(IVariable<Double> fontSize) {
         checkNotNull(fontSize, FONT_SIZE_SHOULD_NOT_BE_NULL_OR_EMPTY);
         animation.setFontSize(fontSize);
+    }
+
+    public void setDetailsLevel(IVariable<Double> detailsLevel) {
+        checkPositiveAndNotNull(detailsLevel, DETAILS_LEVEL_SHOULD_BE_POSTIIVE_AND_NOT_NULL, true);
+        animation.setDetailsLevel(detailsLevel);
     }
 
     public void setFontFileName(String fontFileName) {
@@ -91,6 +99,7 @@ public class TextBuilder extends ARotatingAnimationBuilder<Text> {
         checkNotNull(animation.getBaseString(), BASE_STRING_SHOULD_NOT_BE_NULL);
         checkNotNull(animation.getFontSize(), FONT_SIZE_SHOULD_NOT_BE_NULL_OR_EMPTY);
         checkNotNull(animation.getFontFileName(), FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
+        checkNotNull(animation.getDetailsLevel(), DETAILS_LEVEL_SHOULD_BE_POSTIIVE_AND_NOT_NULL);
         Validate.notEmpty(animation.getFontFileName(), FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
 
         return super.getAnimation();

@@ -30,6 +30,7 @@ public class Text extends ARotatingAnimation implements IPlaneSubAnimation, ISub
     private Vector v;
     private IVariable<String> baseString;
     private IVariable<Double> fontSize;
+    private IVariable<Double> detailsLevel;
     private String fontFileName;
     // private FontDecoration fontDecoration;
     private TTFAlphabet ttfAlphabet;
@@ -119,6 +120,14 @@ public class Text extends ARotatingAnimation implements IPlaneSubAnimation, ISub
         this.fontSize = fontSize;
     }
 
+    public IVariable<Double> getDetailsLevel() {
+        return detailsLevel;
+    }
+
+    public void setDetailsLevel(IVariable<Double> detailsLevel) {
+        this.detailsLevel = detailsLevel;
+    }
+
     @Override
     public Vector getU() {
         return u;
@@ -169,6 +178,7 @@ public class Text extends ARotatingAnimation implements IPlaneSubAnimation, ISub
         obj.baseString = baseString.copy();
         obj.fontSize = fontSize.copy();
         obj.fontFileName = fontFileName;
+        obj.detailsLevel = detailsLevel.copy();
         obj.u = u.clone();
         obj.v = v.clone();
         obj.pointDefinition = pointDefinition.clone();

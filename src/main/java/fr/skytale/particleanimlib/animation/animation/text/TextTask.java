@@ -60,6 +60,8 @@ public class TextTask extends ARotatingAnimationTask<Text> {
             currentV = rotation.rotateVector(startV);
         }
 
+        double detailsLevel = animation.getDetailsLevel().getCurrentValue(iterationCount);
+
         String notParsedString = animation.getBaseString().getCurrentValue(iterationCount);
         BaseComponent[] components = TextComponent.fromLegacyText(notParsedString, ChatColor.WHITE);
         String baseString = Arrays.stream(components).map(component -> component.toPlainText()).reduce("", String::concat);
@@ -79,7 +81,7 @@ public class TextTask extends ARotatingAnimationTask<Text> {
                 Vector vecV = currentV.clone().multiply(position.getY());
                 Vector charPadding = vecU.add(vecV);
 
-                showCharacter(ttfCharacter, charPadding, iterationBaseLocation, component.getColor());
+                showCharacter(ttfCharacter, charPadding, iterationBaseLocation, component.getColor(), detailsLevel);
 
                 characterIndex++;
             }
@@ -96,11 +98,14 @@ public class TextTask extends ARotatingAnimationTask<Text> {
 
     }
 
-    private void showCharacter(TTFCharacter character, Vector charPadding, Location iterationBaseLocation, ChatColor color) {
+    private void showCharacter(TTFCharacter character, Vector charPadding, Location iterationBaseLocation, ChatColor color, double detailsLevel) {
         Glyf glyf = character.getGlyf();
         List<List<TTFPoint>> contours = glyf.getContours();
         for (int contourIndex = 0; contourIndex < contours.size(); contourIndex++) {
             List<TTFPoint> points = contours.get(contourIndex);
+//            for(TTFPoint point : points) {
+//                displayPoint(point, charPadding, iterationBaseLocation, color);
+//            }
             for (int i = 0; i < points.size(); i++) {
                 TTFPoint point1 = points.get(i);
                 TTFPoint point2;
@@ -110,9 +115,21 @@ public class TextTask extends ARotatingAnimationTask<Text> {
                     point2 = points.get(i + 1);
                 }
 
-                fillLines(point1, point2, charPadding, FILL_LINE_PADDING, iterationBaseLocation, color);
+                fillLines(point1, point2, charPadding, detailsLevel, iterationBaseLocation, color);
             }
         }
+    }
+
+    private void displayPoint(TTFPoint point, Vector charPadding, Location iterationBaseLocation, ChatColor color) {
+        final Collection<? extends Player> viewers = animation.getViewers().getPlayers(iterationBaseLocation);
+
+        Vector vec = getVectorFromPoint(point);
+        Location particleLocation = iterationBaseLocation.clone().add(vec).add(charPadding);
+        ParticleBuilder particleBuilder = particleTemplate.getParticleBuilder(particleLocation);
+        if(hasColor) {
+            particleBuilder.setColor(color.getColor());
+        }
+        particleBuilder.display(viewers);
     }
 
     private void fillLines(TTFPoint point1, TTFPoint point2, Vector charPadding, double padding, Location iterationBaseLocation, ChatColor color) {
@@ -122,16 +139,16 @@ public class TextTask extends ARotatingAnimationTask<Text> {
         Vector vec2 = getVectorFromPoint(point2);
         Vector vec12 = vec2.clone().subtract(vec1).normalize().multiply(padding);
 
-        Location particuleLocation = iterationBaseLocation.clone().add(vec1).add(charPadding);
+        Location particleLocation = iterationBaseLocation.clone().add(vec1).add(charPadding);
         Location endLocation = iterationBaseLocation.clone().add(vec2).add(charPadding);
-        while (particuleLocation.distance(endLocation) > padding) {
-            ParticleBuilder particleBuilder = particleTemplate.getParticleBuilder(particuleLocation);
+        while (particleLocation.distance(endLocation) > padding) {
+            ParticleBuilder particleBuilder = particleTemplate.getParticleBuilder(particleLocation);
             if(hasColor) {
                 particleBuilder.setColor(color.getColor());
             }
             particleBuilder.display(viewers);
 //            showPoint(animation.getPointDefinition(), particuleLocation, iterationBaseLocation);
-            particuleLocation.add(vec12);
+            particleLocation.add(vec12);
         }
     }
 
