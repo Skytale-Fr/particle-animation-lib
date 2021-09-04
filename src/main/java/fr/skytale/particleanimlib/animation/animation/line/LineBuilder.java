@@ -44,13 +44,19 @@ public class LineBuilder extends ARotatingAnimationBuilder<Line> {
         IVariable<Vector> point1 = getVectorVariableFromAPosition(position);
         animation.setPoint1(point1);
     }
+    public void setPoint1(IVariable<Vector> point1) {
+        animation.setPoint1(point1);
+    }
     public void setPoint1AtOrigin() {
         IVariable<Vector> point1 = new Constant<>(new Vector(0, 0, 0));
         animation.setPoint1(point1);
     }
     public void setPoint2(APosition position) {
         IVariable<Vector> point2 = getVectorVariableFromAPosition(position);
-        animation.setPoint1(point2);
+        animation.setPoint2(point2);
+    }
+    public void setPoint2(IVariable<Vector> point2) {
+        animation.setPoint2(point2);
     }
     public void setPoint2AtOrigin() {
         IVariable<Vector> point2 = new Constant<>(new Vector(0, 0, 0));
@@ -88,18 +94,8 @@ public class LineBuilder extends ARotatingAnimationBuilder<Line> {
 
     public void setDirection(IVariable<Vector> direction) {
         checkNotNull(direction, DIRECTION_VECTOR_SHOULD_NOT_BE_NULL);
-
         AnimationDirection animationDirection = AnimationDirection.fromMoveVector(direction);
-
-        IVariable<Vector> newPoint2 = new CallbackVariable<>(iterationCount -> {
-            double lengthValue = animation.getLength().getCurrentValue(iterationCount);
-            Vector directionVector = animationDirection.getMoveVector().getCurrentValue(iterationCount).clone();
-            Vector toVector = directionVector.normalize().multiply(lengthValue);
-            Vector newPosition2 = animation.getPoint1().getCurrentValue(iterationCount).clone().add(toVector);
-            return newPosition2.clone();
-        });
-
-        animation.setPoint2(newPoint2);
+        animation.setDirection(animationDirection);
     }
 
     public void setDirection(Vector direction) {
@@ -126,14 +122,11 @@ public class LineBuilder extends ARotatingAnimationBuilder<Line> {
     }
 
     public void setLength(IVariable<Double> length) {
-        IVariable<Vector> newPoint2 = new CallbackVariable<>(iterationCount -> {
-            double lengthValue = length.getCurrentValue(iterationCount);
-            Vector directionVector = animation.getDirection().getMoveVector().getCurrentValue(iterationCount).clone();
-            Vector toVector = directionVector.normalize().multiply(lengthValue);
-            Vector newPosition2 = animation.getPoint1().getCurrentValue(iterationCount).clone().add(toVector);
-            return newPosition2.clone();
-        });
-        animation.setPoint2(newPoint2);
+        animation.setLength(length);
+    }
+
+    public void setLength(double length) {
+        animation.setLength(new Constant<>(length));
     }
 
     @Override
