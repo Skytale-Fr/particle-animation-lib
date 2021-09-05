@@ -35,19 +35,16 @@ public class LineTask extends ARotatingAnimationTask<Line> {
         Vector vDirection = currentValue.normalize();
 
         Vector point1 = animation.getPoint1().getCurrentValue(iterationCount);
-        Vector point2 = animation.getPoint2().getCurrentValue(iterationCount);
 
         // If there is any rotation
         if(hasRotation && rotationChanged) {
-            Vector lineVector = point2.clone().subtract(point1);
-            lineVector = rotation.rotateVector(lineVector);
-            point2 = point1.clone().add(lineVector);
+            vDirection = rotation.rotateVector(vDirection);
         }
 
         // Maybe this can be improved
         Vector lengthVector = vDirection.clone().multiply(length);
         Location startLocation = iterationBaseLocation.clone().add(point1);
-        Location endLocation = iterationBaseLocation.clone().add(point2);
+        Location endLocation = iterationBaseLocation.clone().add(point1).add(lengthVector);
 
         // Draw the current line from startLocation to endLocation
         drawLine(startLocation, endLocation, step, animation.getPointDefinition());

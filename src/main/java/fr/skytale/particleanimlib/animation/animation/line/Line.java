@@ -25,7 +25,6 @@ public class Line extends ARotatingAnimation implements IDirectionSubAnimation, 
     // Those vectors are relative from the base location
     // of the created animation.
     private IVariable<Vector> point1;
-    private IVariable<Vector> point2;
 
     private IVariable<Integer> nbPoints; // The number of point on the line
     private APointDefinition pointDefinition;
@@ -47,45 +46,21 @@ public class Line extends ARotatingAnimation implements IDirectionSubAnimation, 
 
     public void setPoint1(IVariable<Vector> point1) {
         this.point1 = point1;
-        updateAttributes();
-    }
-
-    public IVariable<Vector> getPoint2() {
-        return point2;
     }
 
     public void setPoint2(IVariable<Vector> point2) {
-        this.point2 = point2;
-        updateAttributes();
-    }
-
-    /**
-     * Updates length and direction attributes
-     */
-    private void updateAttributes() {
-        IVariable<Vector> newDirection = new CallbackVariable<>(iterationCount -> {
-            Vector point1Value = point1.getCurrentValue(iterationCount);
-            Vector point2Value = point2.getCurrentValue(iterationCount);
-            Vector directionVector = point2Value.clone().subtract(point1Value);
-            return directionVector;
+        IVariable<Vector> directionVector = new CallbackVariable<Vector>(iterationCount -> {
+            Vector p1 = this.point1.getCurrentValue(iterationCount).clone();
+            Vector p2 = point2.getCurrentValue(iterationCount).clone();
+            return p2.subtract(p1).normalize();
         });
-        this.direction = AnimationDirection.fromMoveVector(newDirection);
+        this.direction = AnimationDirection.fromMoveVector(directionVector);
 
-        IVariable<Double> newLength = new CallbackVariable<>(iterationCount -> {
-            double length = direction.getMoveVector().getCurrentValue(iterationCount).length();
-            return length;
+        this.length = new CallbackVariable<Double>(iterationCount -> {
+            Vector p1 = this.point1.getCurrentValue(iterationCount).clone();
+            Vector p2 = point2.getCurrentValue(iterationCount).clone();
+            return p2.subtract(p1).length();
         });
-        this.length = newLength;
-    }
-
-    private void updateDirectionAndLength() {
-        IVariable<Vector> newPoint2 = new CallbackVariable<>(iterationCount -> {
-            double lengthValue = this.length.getCurrentValue(iterationCount);
-            Vector directionVector = this.direction.getMoveVector().getCurrentValue(iterationCount).clone();
-            Vector toVector = directionVector.normalize().multiply(lengthValue);
-            return point1.getCurrentValue(iterationCount).clone().add(toVector);
-        });
-        this.point2 = newPoint2;
     }
 
     @Override
@@ -96,7 +71,6 @@ public class Line extends ARotatingAnimation implements IDirectionSubAnimation, 
     @Override
     public void setDirection(AnimationDirection direction) {
         this.direction = direction;
-        updateDirectionAndLength();
     }
 
     public void setDirection(Vector direction) {
@@ -118,7 +92,6 @@ public class Line extends ARotatingAnimation implements IDirectionSubAnimation, 
 
     public void setLength(IVariable<Double> length) {
         this.length = length;
-        updateDirectionAndLength();
     }
 
     @Override
@@ -148,7 +121,6 @@ public class Line extends ARotatingAnimation implements IDirectionSubAnimation, 
     public Line clone() {
         Line obj = (Line) super.clone();
         obj.point1 = point1.copy();
-        obj.point2 = point2.copy();
         obj.direction = direction.clone();
         obj.nbPoints = nbPoints.copy();
         obj.length = length.copy();
