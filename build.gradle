@@ -47,12 +47,30 @@ dependencies {
     // The Spigot API with no shadowing. Requires the OSS repo.
     compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
     implementation 'xyz.xenondevs:particle:1.6.4'
-    implementation 'io.github.classgraph:classgraph:4.8.108'
+    implementation 'io.github.classgraph:classgraph:4.8.114'
     implementation 'commons-io:commons-io:2.8.0'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
     implementation 'org.apache.commons:commons-math3:3.6.1'
     implementation 'com.github.mokiat:java-data-front:2.0.0'
     implementation project(':ttfparser')
+}
+
+tasks.register("updateReadmeVersion") {
+    description = "Updates the version number into the README.md file."
+    doFirst {
+        // Maven
+        ant.replaceregexp(match: '<version>([0-9\\.]+)</version>', replace: "<version>${version}</version>", flags: 'g', byline: true) {
+            fileset(dir: '.', includes: 'README.md')
+        }
+        // Gradle
+        ant.replaceregexp(match: 'fr\\.skytale\\:particle-animation-lib\\:([0-9\\.]+)', replace: "fr.skytale:particle-animation-lib:${version}", flags: 'g', byline: true) {
+            fileset(dir: '.', includes: 'README.md')
+        }
+        println("Updated version number in README.md")
+    }
+}
+compileJava {
+    dependsOn updateReadmeVersion
 }
 
 tasks.withType(Javadoc) {
