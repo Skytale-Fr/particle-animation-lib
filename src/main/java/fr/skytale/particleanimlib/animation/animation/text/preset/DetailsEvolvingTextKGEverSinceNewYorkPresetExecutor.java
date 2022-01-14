@@ -28,7 +28,6 @@ public class DetailsEvolvingTextKGEverSinceNewYorkPresetExecutor extends AAnimat
         textBuilder.setFontSize(new Constant<>(10.0d));
         textBuilder.setFontFileName("KGEverSinceNewYork.ttf");
         textBuilder.setDetailsLevel(new CallbackWithPreviousValueVariable<>(5.0d, (iterationCount, previousValue) -> {
-            System.out.println(previousValue);
             return Math.max(0.2d, previousValue - 0.08d);
         }));
     }
