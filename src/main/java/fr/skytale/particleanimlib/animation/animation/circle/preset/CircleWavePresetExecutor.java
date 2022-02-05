@@ -54,7 +54,7 @@ public class CircleWavePresetExecutor extends AAnimationPresetExecutor<CircleBui
         waveBuilder.setRadiusStep(0.2);
         waveBuilder.setPositiveHeight(false);
         Wave waveAnimation = waveBuilder.getAnimation();
-        circleBuilder.setCallback(result -> {
+        circleBuilder.addAnimationEndedCallback(result -> {
             waveAnimation.show();
         });
     }

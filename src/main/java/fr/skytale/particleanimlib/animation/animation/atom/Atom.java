@@ -70,8 +70,8 @@ public class Atom extends AAnimation implements ISubAnimation {
     }
 
     @Override
-    public void setCallback(AnimationEndedCallback callback) {
-        this.sphere.setCallback(callback);
+    public void addAnimationEndedCallback(AnimationEndedCallback callback) {
+        this.sphere.addAnimationEndedCallback(callback);
     }
 
 

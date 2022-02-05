@@ -58,7 +58,7 @@ public class CircleWaveReversedPresetExecutor extends AAnimationPresetExecutor<C
         //In order to reverse the direction we have to change the positiveHeight parameter of the wave (false -> true)
         waveBuilder.setPositiveHeight(true);
         Wave waveAnimation = waveBuilder.getAnimation();
-        circleBuilder.setCallback(result -> {
+        circleBuilder.addAnimationEndedCallback(result -> {
             waveAnimation.show();
         });
     }

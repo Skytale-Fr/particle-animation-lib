@@ -43,26 +43,26 @@ public class CountdownImagePresetExecutor extends AAnimationPresetExecutor<Image
 
         imageBuilder.setPosition(APosition.fromLocation(originLocation));
         imageBuilder.setImageFileName("race_countdown_1.png");
-        imageBuilder.setCallback(result -> imageGo.show());
+        imageBuilder.addAnimationEndedCallback(result -> imageGo.show());
         Image image1 = imageBuilder.getAnimation();
 
 
         imageBuilder.setPosition(APosition.fromLocation(originLocation));
         imageBuilder.setImageFileName("race_countdown_2.png");
-        imageBuilder.setCallback(result -> image1.show());
+        imageBuilder.addAnimationEndedCallback(result -> image1.show());
         Image image2 = imageBuilder.getAnimation();
 
         imageBuilder.setImageFileName("race_countdown_3.png");
-        imageBuilder.setCallback(result -> image2.show());
+        imageBuilder.addAnimationEndedCallback(result -> image2.show());
         Image image3 = imageBuilder.getAnimation();
 
 
         imageBuilder.setImageFileName("race_countdown_4.png");
-        imageBuilder.setCallback(result -> image3.show());
+        imageBuilder.addAnimationEndedCallback(result -> image3.show());
         Image image4 = imageBuilder.getAnimation();
 
 
         imageBuilder.setImageFileName("race_countdown_5.png");
-        imageBuilder.setCallback(result -> image4.show());
+        imageBuilder.addAnimationEndedCallback(result -> image4.show());
     }
 }

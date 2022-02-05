@@ -114,8 +114,8 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         setShowPeriod(new Constant<>(showPeriod));
     }
 
-    public void setCallback(AnimationEndedCallback callback) {
-        animation.setCallback(callback);
+    public void addAnimationEndedCallback(AnimationEndedCallback callback) {
+        animation.addAnimationEndedCallback(callback);
     }
 
     public T getAnimation() {

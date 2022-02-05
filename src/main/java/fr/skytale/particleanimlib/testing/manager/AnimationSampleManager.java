@@ -52,7 +52,7 @@ public class AnimationSampleManager {
             AAnimationBuilder<?> currentBuilder = initBuilder(player, APosition.fromEntity(player), plugin, preset.name());
             String animationStr = String.format("Showing animation preset \"%s\"", preset.name());
             if (prevBuilder != null) {
-                prevBuilder.setCallback((anim) -> {
+                prevBuilder.addAnimationEndedCallback((anim) -> {
                     Bukkit.getScheduler().runTaskLater(plugin, () -> {
                         player.sendMessage(animationStr);
                         currentBuilder.getAnimation().show();

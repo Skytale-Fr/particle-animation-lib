@@ -9,8 +9,10 @@ import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Supplier;
 
 public abstract class AAnimation implements Cloneable {
 
@@ -19,8 +21,9 @@ public abstract class AAnimation implements Cloneable {
     protected JavaPlugin plugin;
     protected int ticksDuration;
     protected IVariable<Integer> showPeriod;
-    protected AnimationEndedCallback callback;
+    protected Set<AnimationEndedCallback> animationEndedCallbacks = new HashSet<>();
     protected AViewers viewers;
+    protected Supplier<Boolean> stopCondition;
 
     protected static Set<Vector> getLinePoints(Vector point1, Vector point2, double step) {
         double distance = point1.distance(point2);
@@ -79,12 +82,12 @@ public abstract class AAnimation implements Cloneable {
         this.showPeriod = showPeriod;
     }
 
-    public AnimationEndedCallback getCallback() {
-        return callback;
+    public Set<AnimationEndedCallback> getCallbacks() {
+        return animationEndedCallbacks;
     }
 
-    public void setCallback(AnimationEndedCallback callback) {
-        this.callback = callback;
+    public void addAnimationEndedCallback(AnimationEndedCallback callback) {
+        animationEndedCallbacks.add(callback);
     }
 
     public JavaPlugin getPlugin() {
@@ -94,6 +97,13 @@ public abstract class AAnimation implements Cloneable {
     public void setPlugin(JavaPlugin plugin) {
         this.plugin = plugin;
     }
+
+    public void setStopCondition(Supplier<Boolean> stopCondition) { this.setStopCondition(stopCondition, false); }
+    public void setStopCondition(Supplier<Boolean> stopCondition, boolean infiniteTickDuration) {
+        this.stopCondition = stopCondition;
+        if(infiniteTickDuration) this.setTicksDuration(Integer.MAX_VALUE);
+    }
+    public Supplier<Boolean> getStopCondition() { return this.stopCondition; }
 
     @Override
     public AAnimation clone() {
