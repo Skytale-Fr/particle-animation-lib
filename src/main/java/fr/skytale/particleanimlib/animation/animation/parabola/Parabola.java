@@ -18,8 +18,8 @@ public class Parabola extends ARotatingAnimation implements IDirectionSubAnimati
     }
 
     @Override
-    public void show() {
-        new ParabolaTask(this);
+    public ParabolaTask show() {
+        return new ParabolaTask(this);
     }
 
     @Override

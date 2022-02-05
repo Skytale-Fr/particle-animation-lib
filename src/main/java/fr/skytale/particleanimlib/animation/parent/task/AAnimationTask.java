@@ -90,7 +90,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         return iterationCount >= animation.getTicksDuration();
     }
 
-    protected void stopAnimation() {
+    public void stopAnimation() {
         stopAnimation(true);
     }
 
@@ -98,9 +98,9 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         if (taskId != null) {
             Bukkit.getScheduler().cancelTask(taskId);
             taskId = null;
-        }
-        if (runCallback && animation.getCallback() != null) {
-            animation.getCallback().run(animation);
+            if (runCallback && animation.getCallback() != null) {
+                animation.getCallback().run(animation);
+            }
         }
     }
 

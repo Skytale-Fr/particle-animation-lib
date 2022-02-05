@@ -5,6 +5,7 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
@@ -34,7 +35,7 @@ public abstract class AAnimation implements Cloneable {
         return points;
     }
 
-    public abstract void show();
+    public abstract AAnimationTask<? extends AAnimation> show();
 
     /***********GETTERS & SETTERS***********/
 

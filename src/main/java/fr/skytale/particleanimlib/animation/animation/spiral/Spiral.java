@@ -20,8 +20,8 @@ public class Spiral extends ARoundAnimation implements IDirectionSubAnimation, I
     }
 
     @Override
-    public void show() {
-        new SpiralTask(this);
+    public SpiralTask show() {
+        return new SpiralTask(this);
     }
 
     /***********GETTERS & SETTERS***********/
