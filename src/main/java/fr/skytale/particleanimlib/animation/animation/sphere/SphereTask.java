@@ -11,6 +11,10 @@ public class SphereTask extends AAnimationTask<Sphere> {
 
     private Double currentMin;
 
+    private double stepBetweenCircles;
+    private double radius;
+    private double angleBetweenEachPoint;
+
     public SphereTask(Sphere sphere) {
         super(sphere);
 
@@ -49,7 +53,7 @@ public class SphereTask extends AAnimationTask<Sphere> {
         }
 
         Sphere.PropagationType propagationType = animation.getPropagationType();
-        double stepBetweenCircles = (max - min) / animation.getNbCircles().getCurrentValue(iterationCount);
+        stepBetweenCircles = (max - min) / animation.getNbCircles().getCurrentValue(iterationCount);
 
         //Define the vertical limits of the sphere that will be shown
         double currentMax;
@@ -71,8 +75,8 @@ public class SphereTask extends AAnimationTask<Sphere> {
             return;
         }
 
-        double radius = animation.getRadius().getCurrentValue(iterationCount);
-        double angleBetweenEachPoint = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
+        radius = animation.getRadius().getCurrentValue(iterationCount);
+        angleBetweenEachPoint = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
 
         for (double i = currentMin; propagationType == Sphere.PropagationType.BOTTOM_TO_TOP ? i >= currentMax : i <= currentMax; i += stepBetweenCircles) {
             double currentRadius = Math.sin(i) * radius;
@@ -90,4 +94,17 @@ public class SphereTask extends AAnimationTask<Sphere> {
             currentMin += stepBetweenCircles;
         }
     }
+
+    public double getCurrentStepBetweenCircles() {
+        return stepBetweenCircles;
+    }
+
+    public double getCurrentRadius() {
+        return radius;
+    }
+
+    public double getCurrentAngleBetweenEachPoint() {
+        return angleBetweenEachPoint;
+    }
+
 }

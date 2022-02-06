@@ -13,6 +13,14 @@ public class PolygonTask extends AAnimationTask<Polygon> {
 
     Vector currentU, currentV;
 
+    private double radius;
+    private int nbVertices;
+    private double stepAngle;
+    private double distanceBetweenParticles;
+
+    private Vector rotationAxis;
+    private double rotationAngleAlpha;
+
     public PolygonTask(Polygon polygon) {
         super(polygon);
         currentU = animation.getU();
@@ -28,9 +36,9 @@ public class PolygonTask extends AAnimationTask<Polygon> {
             return;
         }
 
-        double radius = animation.getDistanceFromCenterToVertices().getCurrentValue(iterationCount);
-        int nbVertices = animation.getNbVertices().getCurrentValue(iterationCount);
-        double stepAngle = 2 * Math.PI / nbVertices;
+        radius = animation.getDistanceFromCenterToVertices().getCurrentValue(iterationCount);
+        nbVertices = animation.getNbVertices().getCurrentValue(iterationCount);
+        stepAngle = 2 * Math.PI / nbVertices;
 
         ParticleTemplate particleTemplate = animation.getMainParticle();
 
@@ -47,7 +55,7 @@ public class PolygonTask extends AAnimationTask<Polygon> {
 
             vertices.add(particleLocation);
         }
-        double distanceBetweenParticles = animation.getDistanceBetweenPoints().getCurrentValue(iterationCount);
+        distanceBetweenParticles = animation.getDistanceBetweenPoints().getCurrentValue(iterationCount);
 
         //Link each vertices
         drawLine(vertices.get(0), vertices.get(vertices.size() - 1), distanceBetweenParticles);
@@ -57,11 +65,44 @@ public class PolygonTask extends AAnimationTask<Polygon> {
         }
 
         if (animation.getRotationAxis() != null) {
-            Vector rotationAxis = animation.getRotationAxis().getCurrentValue(iterationCount);
-            double rotationAngleAlpha = animation.getRotationAngleAlpha().getCurrentValue(iterationCount);
+            rotationAxis = animation.getRotationAxis().getCurrentValue(iterationCount);
+            rotationAngleAlpha = animation.getRotationAngleAlpha().getCurrentValue(iterationCount);
 
             currentU = new RotatableVector(currentU).rotateAroundAxis(rotationAxis, rotationAngleAlpha);
             currentV = new RotatableVector(currentV).rotateAroundAxis(rotationAxis, rotationAngleAlpha);
         }
     }
+
+    public Vector getCurrentU() {
+        return currentU;
+    }
+
+    public Vector getCurrentV() {
+        return currentV;
+    }
+
+    public double getCurrentRadius() {
+        return radius;
+    }
+
+    public int getCurrentNbVertices() {
+        return nbVertices;
+    }
+
+    public double getCurrentStepAngle() {
+        return stepAngle;
+    }
+
+    public double getCurrentDistanceBetweenParticles() {
+        return distanceBetweenParticles;
+    }
+
+    public Vector getCurrentRotationAxis() {
+        return rotationAxis;
+    }
+
+    public double getCurrentRotationAngleAlpha() {
+        return rotationAngleAlpha;
+    }
+
 }

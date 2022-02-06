@@ -9,10 +9,29 @@ import org.bukkit.util.Vector;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class LightningTask extends AAnimationTask<Lightning> {
+public class
+LightningTask extends AAnimationTask<Lightning> {
 
     private final Random random;
     private LinkedList<PointData> persistentPoints;
+
+    private int nbPoints;
+    private double nbPointsByTicks;
+    private int nbRemainingTicks;
+    private double nbPointsToShow;
+
+    private Location targetLocation;
+    private Vector originToTarget;
+    private Vector originToTargetNormalized;
+
+    private double dispersionAngle;
+
+    private double fromOriginToTargetLength;
+    private double fromOriginToCenterLength;
+    private double minDistanceBetweenLightingAngles;
+    private double maxDistanceBetweenLightingAngles;
+
+    private RotatableVector.Plane2D plane2DNormalToDirection;
 
     public LightningTask(Lightning lightning) {
         super(lightning);
@@ -36,7 +55,7 @@ public class LightningTask extends AAnimationTask<Lightning> {
         }
 
         // --- Stop if no point to show anymore
-        int nbPoints = persistentPoints.size();
+        nbPoints = persistentPoints.size();
         if (nbPoints == 0) {
             stopAnimation();
             return;
@@ -46,9 +65,9 @@ public class LightningTask extends AAnimationTask<Lightning> {
 
         APointDefinition pointDefinition = animation.getPointDefinition();
 
-        double nbPointsByTicks = ((double) persistentPoints.size()) / animation.getTicksDuration();
-        int nbRemainingTicks = animation.getTicksDuration() - iterationCount;
-        double nbPointsToShow = Math.floor(nbPointsByTicks * nbRemainingTicks);
+        nbPointsByTicks = ((double) persistentPoints.size()) / animation.getTicksDuration();
+        nbRemainingTicks = animation.getTicksDuration() - iterationCount;
+        nbPointsToShow = Math.floor(nbPointsByTicks * nbRemainingTicks);
 
         if (pointDefinition.hasSubAnimation()) {
             for (int i = 0; i < nbPointsToShow && i < persistentPoints.size(); i++) {
@@ -71,7 +90,6 @@ public class LightningTask extends AAnimationTask<Lightning> {
     private void initAnimationData(Location iterationBaseLocation) {
         this.persistentPoints = new LinkedList<>();
         //Computing target location
-        Location targetLocation;
         switch (animation.getDirection().getType()) {
             case TARGET_ENTITY:
                 targetLocation = animation.getDirection().getTargetEntity().getLocation().clone();
@@ -88,24 +106,24 @@ public class LightningTask extends AAnimationTask<Lightning> {
                 throw new IllegalStateException("this direction type is not supported");
         }
 
-        Vector originToTarget = targetLocation.toVector().subtract(iterationBaseLocation.toVector());
+        originToTarget = targetLocation.toVector().subtract(iterationBaseLocation.toVector());
 
-        Vector originToTargetNormalized = originToTarget.clone().normalize();
+        originToTargetNormalized = originToTarget.clone().normalize();
 
-        double fromOriginToTargetLength = originToTarget.length();
+        fromOriginToTargetLength = originToTarget.length();
 
-        double fromOriginToCenterLength = fromOriginToTargetLength / 2;
+        fromOriginToCenterLength = fromOriginToTargetLength / 2;
 
-        double minDistanceBetweenLightingAngles = animation.getMinDistanceBetweenLightingAngles();
-        double maxDistanceBetweenLightingAngles = animation.getMaxDistanceBetweenLightingAngles();
+        minDistanceBetweenLightingAngles = animation.getMinDistanceBetweenLightingAngles();
+        maxDistanceBetweenLightingAngles = animation.getMaxDistanceBetweenLightingAngles();
 
-        RotatableVector.Plane2D plane2DNormalToDirection = new RotatableVector(originToTargetNormalized).getPlane();
+        plane2DNormalToDirection = new RotatableVector(originToTargetNormalized).getPlane();
 
 
         //Add first point
         persistentPoints.add(new PointData(iterationBaseLocation.clone(), originToTargetNormalized));
 
-        double dispersionAngle = animation.getDispersionAngle();
+        dispersionAngle = animation.getDispersionAngle();
 
 
         double fromOriginToPreviousPointLength = 0.0;
@@ -172,5 +190,57 @@ public class LightningTask extends AAnimationTask<Lightning> {
             this.pointLocation = pointLocation;
             this.directionToReachPoint = directionToReachPoint;
         }
+    }
+
+    public int getCurrentNbPoints() {
+        return nbPoints;
+    }
+
+    public double getCurrentNbPointsByTicks() {
+        return nbPointsByTicks;
+    }
+
+    public int getCurrentNbRemainingTicks() {
+        return nbRemainingTicks;
+    }
+
+    public double getCurrentNbPointsToShow() {
+        return nbPointsToShow;
+    }
+
+    public Location getCurrentTargetLocation() {
+        return targetLocation;
+    }
+
+    public Vector getCurrentOriginToTarget() {
+        return originToTarget;
+    }
+
+    public Vector getCurrentOriginToTargetNormalized() {
+        return originToTargetNormalized;
+    }
+
+    public double getCurrentDispersionAngle() {
+        return dispersionAngle;
+    }
+
+    public double getCurrentFromOriginToTargetLength() {
+        return fromOriginToTargetLength;
+    }
+
+    public double getCurrentFromOriginToCenterLength() {
+        return fromOriginToCenterLength;
+    }
+
+    public double getCurrentMinDistanceBetweenLightingAngles() {
+        return minDistanceBetweenLightingAngles;
+    }
+
+    public double getCurrentMaxDistanceBetweenLightingAngles() {
+        return maxDistanceBetweenLightingAngles;
+    }
+
+    public RotatableVector.Plane2D getCurrentPlane2DNormalToDirection() {
+        return plane2DNormalToDirection;
     }
 }

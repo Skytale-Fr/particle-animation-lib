@@ -4,6 +4,8 @@ package fr.skytale.particleanimlib.animation.animation.cuboid;
 import fr.skytale.particleanimlib.animation.attribute.position.LocationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.collision.CollisionActionCallback;
+import fr.skytale.particleanimlib.animation.collision.CollisionPredicate;
 import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;

@@ -2,13 +2,12 @@ package fr.skytale.particleanimlib.animation.animation.cuboid.preset;
 
 import fr.skytale.particleanimlib.animation.animation.cuboid.CuboidBuilder;
 import fr.skytale.particleanimlib.animation.animation.cuboid.CuboidTask;
-import fr.skytale.particleanimlib.animation.animation.line.LineBuilder;
-import fr.skytale.particleanimlib.animation.animation.line.LineTask;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
+import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
+import fr.skytale.particleanimlib.animation.attribute.var.VectorPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.collision.CollisionBuilder;
 import fr.skytale.particleanimlib.animation.collision.EntityCollisionPreset;
-import fr.skytale.particleanimlib.animation.collision.ParticleCollisionProcessor;
 import fr.skytale.particleanimlib.animation.collision.SimpleCollisionProcessor;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.Location;
@@ -21,20 +20,21 @@ import org.bukkit.util.Vector;
 
 import java.awt.*;
 
-public class CuboidWithInnerCollisionsPresetExecutor extends AAnimationPresetExecutor<CuboidBuilder> {
+public class CuboidRotatingResizingWithInsideCollisionsPresetExecutor extends AAnimationPresetExecutor<CuboidBuilder> {
 
-    public CuboidWithInnerCollisionsPresetExecutor() {
+    public CuboidRotatingResizingWithInsideCollisionsPresetExecutor() {
         super(CuboidBuilder.class);
     }
 
     @Override
     protected void apply(CuboidBuilder cuboidBuilder, JavaPlugin plugin) {
-        cuboidBuilder.setFromLocationToFirstCorner(new Vector(-4, -4, -4));
-        cuboidBuilder.setFromLocationToSecondCorner(new Vector(4, 4, 4));
+        cuboidBuilder.setRotation(new Constant<>(new Vector(0, 1, 0)), new DoublePeriodicallyEvolvingVariable(Math.toRadians(0), Math.toRadians(1), 0));
+        cuboidBuilder.setFromLocationToFirstCorner(new VectorPeriodicallyEvolvingVariable(new Vector(-3, -3, -3), new Vector(0.05, 0.1, 0.05), 10));
+        cuboidBuilder.setFromLocationToSecondCorner(new VectorPeriodicallyEvolvingVariable(new Vector(3, 3, 3), new Vector(-0.05, -0.1, -0.05), 10));
         cuboidBuilder.setDistanceBetweenPoints(new Constant<>(0.4));
         cuboidBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
-        cuboidBuilder.setTicksDuration(100);
-        cuboidBuilder.setShowPeriod(new Constant<>(3));
+        cuboidBuilder.setTicksDuration(400);
+        cuboidBuilder.setShowPeriod(new Constant<>(1));
         cuboidBuilder.addCollisionHandler(createCollisionBuilder(cuboidBuilder).build());
     }
 
@@ -46,11 +46,7 @@ public class CuboidWithInnerCollisionsPresetExecutor extends AAnimationPresetExe
             return currentIterationBaseLocation.getWorld().getNearbyEntities(currentIterationBaseLocation, 10, 10, 10);
         });
         collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> !entity.getType().equals(EntityType.PLAYER));
-        collisionBuilder.addCollisionProcessor(new SimpleCollisionProcessor<Entity, CuboidTask>((location, animationTask, target) -> {
-            Location min = animationTask.getCurrentCornersLocation().get(CuboidTask.CuboidCorner.LOWER_WEST_NORTH);
-            Location max = animationTask.getCurrentCornersLocation().get(CuboidTask.CuboidCorner.UPPER_EAST_SOUTH);
-            return BoundingBox.of(min, max).contains(target.getBoundingBox());
-        }, (animationTask, target) -> {
+        collisionBuilder.addCollisionProcessor(SimpleCollisionProcessor.useDefault(cuboidBuilder, EntityCollisionPreset.EXACT_BOUNDING_BOX_INSIDE_CUBOID, (animationTask, target) -> {
             if(!(target instanceof LivingEntity)) return -1;
             ((LivingEntity) target).damage(1);
             return 20; // The entity can only take damages every 20 ticks.
@@ -58,5 +54,4 @@ public class CuboidWithInnerCollisionsPresetExecutor extends AAnimationPresetExe
 
         return collisionBuilder;
     }
-
 }

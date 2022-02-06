@@ -8,6 +8,10 @@ import org.bukkit.util.Vector;
 public class CircleTask extends AAnimationTask<Circle> {
     Vector currentU, currentV;
 
+    private double stepAngle;
+    private double radius;
+    private int nbPoints;
+
     public CircleTask(Circle circle) {
         super(circle);
         currentU = animation.getU().clone();
@@ -22,9 +26,9 @@ public class CircleTask extends AAnimationTask<Circle> {
             return;
         }
 
-        double stepAngle = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
-        double radius = animation.getRadius().getCurrentValue(iterationCount);
-        int nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
+        stepAngle = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
+        radius = animation.getRadius().getCurrentValue(iterationCount);
+        nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
 
         for (int pointIndex = 0; pointIndex < nbPoints; pointIndex++) {
             double theta = pointIndex * stepAngle;
@@ -49,4 +53,17 @@ public class CircleTask extends AAnimationTask<Circle> {
             currentV = new RotatableVector(currentV).rotateAroundAxis(rotationAxis, rotationAngleAlpha);
         }
     }
+
+    public double getCurrentStepAngle() {
+        return stepAngle;
+    }
+
+    public double getCurrentRadius() {
+        return radius;
+    }
+
+    public int getCurrentNbPoints() {
+        return nbPoints;
+    }
+
 }

@@ -3,8 +3,8 @@ package fr.skytale.particleanimlib.animation.attribute;
 import fr.skytale.particleanimlib.animation.animation.circle.preset.*;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingWithInnerCollisionsPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidWithInnerCollisionsPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingWithInsideCollisionsPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.epi.preset.SimpleEpiPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.*;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningPresetExecutor;
@@ -40,6 +40,7 @@ import java.util.Locale;
 public enum AnimationPreset {
     //ATOM(new AtomPresetExecutor()),
     CIRCLE(new SimpleCirclePresetExecutor()),
+    CIRCLE_WITH_INSIDE_COLLISIONS(new SimpleCircleWithInsideCollisionsPresetExecutor()),
     CIRCLE_HALF_GROWING(new GrowingHalfCirclePresetExecutor()),
     CIRCLE_ROTATING(new RotatingCirclePresetExecutor()),
     CIRCLE_SUB_ANIM_ROTATING(new SubAnimationCircleRotatingPresetExecutor()),
@@ -52,9 +53,9 @@ public enum AnimationPreset {
     CIRCLE_THEN_WAVE(new CircleWavePresetExecutor()),
     CIRCLE_THEN_WAVE_REVERSED(new CircleWaveReversedPresetExecutor()),
     CUBOID(new CuboidPresetExecutor()),
-    CUBOID_WITH_INNER_COLLISIONS(new CuboidWithInnerCollisionsPresetExecutor()),
+    CUBOID_WITH_INSIDE_COLLISIONS(new CuboidWithInsideCollisionsPresetExecutor()),
     CUBOID_ROTATING_RESIZING(new CuboidRotatingResizingPresetExecutor()),
-    CUBOID_ROTATING_RESIZING_WITH_INNER_COLLISIONS(new CuboidRotatingResizingWithInnerCollisionsPresetExecutor()),
+    CUBOID_ROTATING_RESIZING_WITH_INNER_COLLISIONS(new CuboidRotatingResizingWithInsideCollisionsPresetExecutor()),
     IMAGE_SKYTALE(new SkytaleImagePresetExecutor(), ImagePresetInitializer.class),
     IMAGE_MAGIC_CIRCLE(new MagicCircleImagePresetExecutor(), ImagePresetInitializer.class),
     IMAGE_COUNTDOWN(new CountdownImagePresetExecutor(), ImagePresetInitializer.class),
@@ -83,6 +84,7 @@ public enum AnimationPreset {
     EPI(new SimpleEpiPresetExecutor()),
     NODE(new SimpleNodePresetExecutor()),
     SPHERE(new SpherePresetExecutor()),
+    SPHERE_WITH_INSIDE_COLLISIONS(new SphereWithInsideCollisionsPresetExecutor()),
     SPHERE_PROPAGATION_BOTTOM_TO_TOP(new PropagatingUpSpherePresetExecutor()),
     SPHERE_PROPAGATION_TOP_TO_BOTTOM(new PropagatingDownSpherePresetExecutor()),
     SPHERE_ELECTRIC(new ElectricExplodingSpherePresetExecutor()),

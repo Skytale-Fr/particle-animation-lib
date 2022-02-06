@@ -14,6 +14,8 @@ public class PyramidTask extends AAnimationTask<Pyramid> {
     private final boolean baseDataAreVariable;
     private Vector fromCenterToApex = null;
     private List<Vector> fromCenterToBaseApexList;
+    private Location apex;
+    private int nbBaseApex;
 
     public PyramidTask(Pyramid pyramid) {
         super(pyramid);
@@ -35,7 +37,7 @@ public class PyramidTask extends AAnimationTask<Pyramid> {
         }
 
         // Compute the pyramid apex
-        Location apex = iterationBaseLocation.clone().add(fromCenterToApex);
+        apex = iterationBaseLocation.clone().add(fromCenterToApex);
 
         // Compute each base apex
         List<Location> baseApexList = fromCenterToBaseApexList.stream()
@@ -76,7 +78,7 @@ public class PyramidTask extends AAnimationTask<Pyramid> {
         - the circle
         - the number of points : nbBaseApex
         */
-        int nbBaseApex = animation.getNbBaseApex().getCurrentValue(iterationCount);
+        nbBaseApex = animation.getNbBaseApex().getCurrentValue(iterationCount);
 
         double theta = 2 * Math.PI / nbBaseApex;
 
@@ -89,4 +91,21 @@ public class PyramidTask extends AAnimationTask<Pyramid> {
             fromCenterToBaseApexList.add(rotatableVector);
         }
     }
+
+    public Vector getCurrentFromCenterToApex() {
+        return fromCenterToApex;
+    }
+
+    public List<Vector> getCurrentFromCenterToBaseApexList() {
+        return fromCenterToBaseApexList;
+    }
+
+    public Location getCurrentApex() {
+        return apex;
+    }
+
+    public int getCurrentNbBaseApex() {
+        return nbBaseApex;
+    }
+
 }
