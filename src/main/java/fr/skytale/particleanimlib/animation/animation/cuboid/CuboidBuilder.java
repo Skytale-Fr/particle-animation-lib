@@ -8,7 +8,7 @@ import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBui
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public class CuboidBuilder extends ARotatingAnimationBuilder<Cuboid> {
+public class CuboidBuilder extends ARotatingAnimationBuilder<Cuboid, CuboidTask> {
 
     public CuboidBuilder() {
         super();

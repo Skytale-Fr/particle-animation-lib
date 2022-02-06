@@ -3,8 +3,9 @@ package fr.skytale.particleanimlib.animation.parent.builder;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARoundAnimation;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 
-public abstract class ARoundAnimationBuilder<T extends ARoundAnimation> extends AAnimationBuilder<T> {
+public abstract class ARoundAnimationBuilder<T extends ARoundAnimation, K extends AAnimationTask<T>> extends AAnimationBuilder<T, K> {
 
     public void setRadius(IVariable<Double> radius) {
         checkPositiveAndNotNull(radius, "radius should be positive.", false);

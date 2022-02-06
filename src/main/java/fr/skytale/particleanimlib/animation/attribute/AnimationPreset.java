@@ -123,7 +123,7 @@ public enum AnimationPreset {
         return AnimationPreset.valueOf(name.trim().toUpperCase(Locale.ROOT));
     }
 
-    public Class<? extends AAnimationBuilder<?>> getBuilderClass() {
+    public Class<? extends AAnimationBuilder<?, ?>> getBuilderClass() {
         return presetExecutor.getBuilderClass();
     }
 
@@ -131,7 +131,7 @@ public enum AnimationPreset {
         return presetExecutor;
     }
 
-    public void apply(AAnimationBuilder<?> builder, JavaPlugin plugin) {
+    public void apply(AAnimationBuilder<?, ?> builder, JavaPlugin plugin) {
         presetExecutor.checkCompatibility(builder);
         for (Class<? extends APresetInitializer> presetPrerequisiteClass : presetPrerequisitesClasses) {
             APresetInitializer.initialize(presetPrerequisiteClass, plugin);
@@ -140,7 +140,7 @@ public enum AnimationPreset {
         presetExecutor.applyPreset(builder, plugin);
     }
 
-    public AAnimationBuilder<?> createBuilder(JavaPlugin plugin) {
+    public AAnimationBuilder<?, ?> createBuilder(JavaPlugin plugin) {
         return presetExecutor.createBuilder(plugin);
     }
 }

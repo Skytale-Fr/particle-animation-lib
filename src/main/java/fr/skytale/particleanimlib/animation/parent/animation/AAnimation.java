@@ -5,6 +5,7 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
+import fr.skytale.particleanimlib.animation.collision.CollisionHandler;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
@@ -24,6 +25,7 @@ public abstract class AAnimation implements Cloneable {
     protected Set<AnimationEndedCallback> animationEndedCallbacks = new HashSet<>();
     protected AViewers viewers;
     protected Supplier<Boolean> stopCondition;
+    protected Set<CollisionHandler<?, AAnimationTask<?>>> collisionHandlers = new HashSet<>();
 
     protected static Set<Vector> getLinePoints(Vector point1, Vector point2, double step) {
         double distance = point1.distance(point2);
@@ -104,6 +106,9 @@ public abstract class AAnimation implements Cloneable {
         if(infiniteTickDuration) this.setTicksDuration(Integer.MAX_VALUE);
     }
     public Supplier<Boolean> getStopCondition() { return this.stopCondition; }
+
+    public void addCollisionHandler(CollisionHandler<?, AAnimationTask<?>> collisionHandler) { this.collisionHandlers.add(collisionHandler); }
+    public Set<CollisionHandler<?, AAnimationTask<?>>> getCollisionHandlers() { return collisionHandlers; }
 
     @Override
     public AAnimation clone() {

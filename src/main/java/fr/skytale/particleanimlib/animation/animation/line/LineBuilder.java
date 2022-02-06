@@ -14,7 +14,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
-public class LineBuilder extends ARotatingAnimationBuilder<Line> {
+public class LineBuilder extends ARotatingAnimationBuilder<Line, LineTask> {
 
     public static final String DIRECTION_VECTOR_SHOULD_NOT_BE_NULL = "direction vector should not be null";
     public static final String ENDLOCATION_SHOULD_NOT_BE_NULL = "endLocation should not be null";

@@ -7,16 +7,20 @@ import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
+import fr.skytale.particleanimlib.animation.collision.CollisionHandler;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.BiPredicate;
 
-public abstract class AAnimationBuilder<T extends AAnimation> {
+public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimationTask<T>> {
     public static final String POSITION_SHOULD_NOT_BE_NULL = "Position should not be null";
     public static final String POINT_DEFINITION_SHOULD_NOT_BE_NULL = "Point Definition (or Main particle) should not be null";
 
@@ -109,6 +113,9 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
     }
 
     // --------------------- CHECK SYSTEM ---------------------
+    public void addCollisionHandler(CollisionHandler<?, K> collisionHandler) {
+        animation.addCollisionHandler((CollisionHandler<?, AAnimationTask<?>>) collisionHandler);
+    }
 
     public void setShowPeriod(int showPeriod) {
         setShowPeriod(new Constant<>(showPeriod));

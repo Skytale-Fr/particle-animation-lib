@@ -9,7 +9,7 @@ import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 
 import java.awt.*;
 
-public class LightningBuilder extends AAnimationBuilder<Lightning> {
+public class LightningBuilder extends AAnimationBuilder<Lightning, LightningTask> {
 
     public LightningBuilder() {
         super();

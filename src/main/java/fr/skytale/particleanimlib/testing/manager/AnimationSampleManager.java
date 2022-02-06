@@ -27,7 +27,7 @@ public class AnimationSampleManager {
         return instance;
     }
 
-    public AAnimationBuilder<?> initBuilder(Player player, APosition position, JavaPlugin plugin, String animationSampleName) {
+    public AAnimationBuilder<?, ?> initBuilder(Player player, APosition position, JavaPlugin plugin, String animationSampleName) {
         AnimationPreset animationPreset;
         try {
             animationPreset = AnimationPreset.fromName(animationSampleName);
@@ -35,7 +35,7 @@ public class AnimationSampleManager {
             player.sendMessage(NOT_IMPLEMENTED);
             throw new NotImplementedException(NOT_IMPLEMENTED);
         }
-        AAnimationBuilder<?> builder = animationPreset.getPresetExecutor().createEmptyBuilder();
+        AAnimationBuilder<?, ?> builder = animationPreset.getPresetExecutor().createEmptyBuilder();
         builder.setPosition(position);
         animationPreset.apply(builder, plugin);
         return builder;
@@ -45,11 +45,11 @@ public class AnimationSampleManager {
         List<AnimationPreset> presets = new ArrayList<AnimationPreset>(Arrays.asList(AnimationPreset.values()));
         presets.sort(Comparator.comparingInt(preset -> preset.name().length()));
 
-        AAnimationBuilder<?> prevBuilder = null;
-        AAnimationBuilder<?> firstBuilder = null;
+        AAnimationBuilder<?, ?> prevBuilder = null;
+        AAnimationBuilder<?, ?> firstBuilder = null;
         String firstBuilderStr = null;
         for (AnimationPreset preset : presets) {
-            AAnimationBuilder<?> currentBuilder = initBuilder(player, APosition.fromEntity(player), plugin, preset.name());
+            AAnimationBuilder<?, ?> currentBuilder = initBuilder(player, APosition.fromEntity(player), plugin, preset.name());
             String animationStr = String.format("Showing animation preset \"%s\"", preset.name());
             if (prevBuilder != null) {
                 prevBuilder.addAnimationEndedCallback((anim) -> {

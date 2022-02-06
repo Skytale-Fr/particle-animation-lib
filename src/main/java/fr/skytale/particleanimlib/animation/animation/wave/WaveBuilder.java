@@ -9,7 +9,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import org.bukkit.util.Vector;
 
-public class WaveBuilder extends AAnimationBuilder<Wave> {
+public class WaveBuilder extends AAnimationBuilder<Wave, WaveTask> {
 
     public WaveBuilder() {
         animation.setRadiusStart(1.0);

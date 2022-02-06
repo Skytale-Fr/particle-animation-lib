@@ -6,7 +6,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.ARoundAnimationBuilder;
 
-public class SphereBuilder extends ARoundAnimationBuilder<Sphere> {
+public class SphereBuilder extends ARoundAnimationBuilder<Sphere, SphereTask> {
 
     public SphereBuilder() {
         super();

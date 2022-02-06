@@ -6,7 +6,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
 import org.bukkit.util.Vector;
 
-public class ParabolaBuilder extends ARotatingAnimationBuilder<Parabola> {
+public class ParabolaBuilder extends ARotatingAnimationBuilder<Parabola, ParabolaTask> {
 
 
     public static final String BULLET_LIFETIME_POSITIVE = "bulletLifetime should be strictly positive";

@@ -35,4 +35,5 @@ public class ParticlePointDefinition extends APointDefinition {
         obj.particleTemplate = new ParticleTemplate(particleTemplate);
         return obj;
     }
+
 }

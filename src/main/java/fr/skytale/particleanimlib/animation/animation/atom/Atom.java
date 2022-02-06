@@ -19,11 +19,12 @@ public class Atom extends AAnimation implements ISubAnimation {
     }
 
     @Override
-    public AAnimationTask<? extends AAnimation> show() {
-        sphere.show();
-        circle1.show();
-        circle2.show();
-        return circle3.show();
+    public AtomTask show() {
+//        sphere.show();
+//        circle1.show();
+//        circle2.show();
+//        return circle3.show();
+        return new AtomTask(this);
         // TODO: Re-work Atom animation to have a AtomTask = Having a real Atom animation !!!!!
     }
 
