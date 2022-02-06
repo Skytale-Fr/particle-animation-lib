@@ -122,6 +122,7 @@ public abstract class AAnimation implements Cloneable {
         obj.position = this.position.clone();
         obj.viewers = this.viewers.clone();
         obj.mainParticle = mainParticle == null ? null : new ParticleTemplate(this.mainParticle);
+        obj.collisionHandlers = new HashSet<>(collisionHandlers);
         return obj;
     }
 

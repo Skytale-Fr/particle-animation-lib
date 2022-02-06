@@ -14,9 +14,9 @@ import java.util.function.Function;
 public class CollisionBuilder<T, K extends AAnimationTask> {
 
     private JavaPlugin javaPlugin;
-    private IVariable<Integer> collisionPeriod = new Constant<>(0);
+    private IVariable<Integer> collisionPeriod = new Constant<>(1);
     private Function<K, Collection<T>> collector;
-    private IVariable<Integer> collectorPeriod = new Constant<>(0);
+    private IVariable<Integer> collectorPeriod = new Constant<>(1);
     private Set<BiPredicate<T, K>> filters = new HashSet<>();
     private Set<CollisionProcessor<T, K>> collisionProcessors = new HashSet<>();
 
@@ -37,7 +37,7 @@ public class CollisionBuilder<T, K extends AAnimationTask> {
     // TODO: build() : CollisionHandler<T, K extends AAnimationTask>
     public CollisionHandler<T, K> build() {
         if(this.javaPlugin == null)
-            throw new IllegalStateException("Unable to build the CollisionHandler because you did not provided any JavaPlugin to the builder.");
+            throw new IllegalStateException("Unable to build the CollisionHandler because you did not provided any java plugin to the builder.");
 
         if(this.collector == null)
             throw new IllegalStateException("Unable to build the CollisionHandler because you did not provided any collector function to the builder.");
@@ -46,7 +46,7 @@ public class CollisionBuilder<T, K extends AAnimationTask> {
         this.collisionProcessors.forEach(collisionProcessor -> {
             collisionProcessorsByType.computeIfAbsent(collisionProcessor.getCollisionTestType(), k -> new HashSet<>()).add(collisionProcessor);
         });
-        return new CollisionHandler<>(collisionPeriod, collector, collectorPeriod, filters, collisionProcessorsByType);
+        return new CollisionHandler<>(javaPlugin, collisionPeriod, collector, collectorPeriod, filters, collisionProcessorsByType);
     }
 
 }

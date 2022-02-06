@@ -137,14 +137,15 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     }
 
     public void drawLine(Location point1, Location point2, double step) {
-        double distance = point1.distance(point2);
-        Vector stepVector = point2.toVector().subtract(point1.toVector()).normalize().multiply(step);
-        Location currentLoc = point1.clone();
-        final Collection<? extends Player> players = animation.getViewers().getPlayers(point1);
-        for (double length = 0; length < distance; currentLoc.add(stepVector)) {
-            animation.getMainParticle().getParticleBuilder(currentLoc).display(players);
-            length += step;
-        }
+        drawLine(point1, point2, step, APointDefinition.fromParticleTemplate(animation.getMainParticle()));
+//        double distance = point1.distance(point2);
+//        Vector stepVector = point2.toVector().subtract(point1.toVector()).normalize().multiply(step);
+//        Location currentLoc = point1.clone();
+//        final Collection<? extends Player> players = animation.getViewers().getPlayers(point1);
+//        for (double length = 0; length < distance; currentLoc.add(stepVector)) {
+//            animation.getMainParticle().getParticleBuilder(currentLoc).display(players);
+//            length += step;
+//        }
     }
 
     public void drawLine(Location point1, Location point2, double step, APointDefinition pointDefinition) {
@@ -152,7 +153,8 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         Vector stepVector = point2.toVector().subtract(point1.toVector()).normalize().multiply(step);
         Location currentLoc = point1.clone();
         for (double length = 0; length < distance; currentLoc.add(stepVector)) {
-            pointDefinition.show(animation, currentLoc.clone());
+            showPoint(pointDefinition, currentLoc.clone(), new Vector(0, 0, 0));
+//            pointDefinition.show(animation, currentLoc.clone());
             length += step;
         }
     }

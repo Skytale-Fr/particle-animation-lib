@@ -13,6 +13,7 @@ import java.util.function.Function;
 
 public class CollisionHandler<T, K extends AAnimationTask> {
 
+    private JavaPlugin javaPlugin;
     private IVariable<Integer> collisionPeriod;
     private long lastCollisionTimestamp = 0;
     private Function<K, Collection<T>> collector;
@@ -24,11 +25,13 @@ public class CollisionHandler<T, K extends AAnimationTask> {
     private Collection<T> targetsCollected;
     private Map<T, Integer> noCollisionTicksMap = new HashMap<>();
 
-    public CollisionHandler(IVariable<Integer> collisionPeriod, Function<K, Collection<T>> collector, IVariable<Integer> collectorPeriod, Set<BiPredicate<T, K>> filters, Map<CollisionTestType, Collection<CollisionProcessor<T, K>>> collisionProcessorsByType) {
-        if(this.collisionPeriod == null) throw new IllegalArgumentException("Collision period should not be null.");
-        if(this.collector == null) throw new IllegalArgumentException("Collector should not be null.");
-        if(this.collectorPeriod == null) throw new IllegalArgumentException("Collector period should not be null.");
+    public CollisionHandler(JavaPlugin javaPlugin, IVariable<Integer> collisionPeriod, Function<K, Collection<T>> collector, IVariable<Integer> collectorPeriod, Set<BiPredicate<T, K>> filters, Map<CollisionTestType, Collection<CollisionProcessor<T, K>>> collisionProcessorsByType) {
+        if(javaPlugin == null) throw new IllegalArgumentException("JavaPlugin should not be null.");
+        if(collisionPeriod == null) throw new IllegalArgumentException("Collision period should not be null.");
+        if(collector == null) throw new IllegalArgumentException("Collector should not be null.");
+        if(collectorPeriod == null) throw new IllegalArgumentException("Collector period should not be null.");
 
+        this.javaPlugin = javaPlugin;
         this.collisionPeriod = collisionPeriod;
         this.collector = collector;
         this.collectorPeriod = collectorPeriod;
@@ -39,6 +42,10 @@ public class CollisionHandler<T, K extends AAnimationTask> {
     }
 
     public void collect(int iterationCount, K animationTask) {
+        Bukkit.getScheduler().runTask(javaPlugin, () -> innerCollect(iterationCount, animationTask));
+    }
+
+    private void innerCollect(int iterationCount, K animationTask) {
         int collectorPeriodValue = this.collectorPeriod.getCurrentValue(iterationCount);
         if(iterationCount == 0 || iterationCount % collectorPeriodValue == 0) {
             this.targetsCollected = this.collector.apply(animationTask);
@@ -67,6 +74,10 @@ public class CollisionHandler<T, K extends AAnimationTask> {
     }
 
     public void processCollision(int iterationCount, CollisionTestType collisionTestType, Location location, K animationTask) {
+        Bukkit.getScheduler().runTask(javaPlugin, () -> innerProcessCollision(iterationCount, collisionTestType, location, animationTask));
+    }
+
+    private void innerProcessCollision(int iterationCount, CollisionTestType collisionTestType, Location location, K animationTask) {
         int collisionPeriodValue = this.collisionPeriod.getCurrentValue(iterationCount);
         if(!(iterationCount == 0 || iterationCount % collisionPeriodValue == 0)) return;
 
@@ -76,10 +87,10 @@ public class CollisionHandler<T, K extends AAnimationTask> {
             CollisionPredicate<T, K> collisionTest = collisionProcessor.getCollisionTest();
             CollisionActionCallback<T, K> actionCallback = collisionProcessor.getActionCallback();
             targetsCollected.forEach(target -> {
-                int noCollisionTicks = noCollisionTicksMap.getOrDefault(target, 0);
+                int noCollisionTicks = noCollisionTicksMap.getOrDefault(target, 1);
                 if((iterationCount == 0 || iterationCount % noCollisionTicks == 0) && collisionTest.test(location, animationTask, target)) {
                     noCollisionTicks = actionCallback.run(animationTask, target);
-                    noCollisionTicksMap.put(target, noCollisionTicks);
+                    if(noCollisionTicks >= 0) noCollisionTicksMap.put(target, noCollisionTicks);
                 }
             });
         });

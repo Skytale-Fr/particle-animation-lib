@@ -14,6 +14,8 @@ public class CuboidTask extends ARotatingAnimationTask<Cuboid> {
     public Map<CuboidCorner, Vector> corners;
     public Map<CuboidCorner, Vector> rotatedCorners;
 
+    private Map<CuboidCorner, Location> currentCornersLocation;
+
     public CuboidTask(Cuboid cuboid) {
         super(cuboid);
         startTask();
@@ -43,18 +45,20 @@ public class CuboidTask extends ARotatingAnimationTask<Cuboid> {
         }
 
         //get locations
-        final Map<CuboidCorner, Location> cornersLocation = this.rotatedCorners.entrySet().stream()
+        currentCornersLocation = this.rotatedCorners.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> iterationBaseLocation.clone().add(e.getValue())));
 
         double distanceBetweenPoints = animation.getDistanceBetweenPoints().getCurrentValue(iterationCount);
 
         //Drawing each edge
         CuboidEdge.getEdges().forEach(edge -> {
-            Location firstCorner = cornersLocation.get(edge.firstVertice);
-            Location secondCorner = cornersLocation.get(edge.secondVertice);
+            Location firstCorner = currentCornersLocation.get(edge.firstVertice);
+            Location secondCorner = currentCornersLocation.get(edge.secondVertice);
             drawLine(firstCorner, secondCorner, distanceBetweenPoints);
         });
     }
+
+    public Map<CuboidCorner, Location> getCurrentCornersLocation() { return currentCornersLocation; }
 
     private Map<CuboidCorner, Vector> getCorners() {
         Map<CuboidCorner, Vector> corners = new HashMap<>();
@@ -93,7 +97,7 @@ public class CuboidTask extends ARotatingAnimationTask<Cuboid> {
         return corners;
     }
 
-    private enum CuboidCorner {
+    public enum CuboidCorner {
         UPPER_EAST_SOUTH,
         UPPER_EAST_NORTH,
         UPPER_WEST_SOUTH,
