@@ -19,8 +19,6 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     protected Integer taskId;
     protected int iterationCount;
 
-    protected boolean hasStopCondition;
-
     public AAnimationTask(T animation) {
         //noinspection unchecked
         this.animation = (T) animation.clone();
@@ -28,7 +26,6 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
             throw new IllegalStateException("During execution, position type should not be TRAIL anymore");
         }
         this.iterationCount = 0;
-        this.hasStopCondition = this.animation.getStopCondition() != null;
     }
 
     public static Vector computeRadiusVector(Vector normalVector, double radius) {
@@ -68,7 +65,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     public final void run() {
         // If a stop condition has been set, we need to check this condition
         // and stop the animation if true is returned.
-        if(this.hasStopCondition && this.animation.getStopCondition().get()) {
+        if(this.animation.getStopCondition() != null && this.animation.getStopCondition().get()) {
             stopAnimation(true);
             return;
         }
