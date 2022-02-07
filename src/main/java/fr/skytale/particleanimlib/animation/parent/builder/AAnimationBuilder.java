@@ -114,6 +114,7 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
 
     // --------------------- CHECK SYSTEM ---------------------
     public void addCollisionHandler(CollisionHandler<?, K> collisionHandler) {
+        if(collisionHandler == null) return;
         animation.addCollisionHandler((CollisionHandler<?, AAnimationTask<?>>) collisionHandler);
     }
 
@@ -122,6 +123,7 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
     }
 
     public void addAnimationEndedCallback(AnimationEndedCallback callback) {
+        if(callback == null) return;
         animation.addAnimationEndedCallback(callback);
     }
 

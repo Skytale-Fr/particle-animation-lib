@@ -38,9 +38,12 @@ public class CollisionBuilder<T, K extends AAnimationTask> {
     public CollisionHandler<T, K> build() {
         if(this.javaPlugin == null)
             throw new IllegalStateException("Unable to build the CollisionHandler because you did not provided any java plugin to the builder.");
-
         if(this.collector == null)
             throw new IllegalStateException("Unable to build the CollisionHandler because you did not provided any collector function to the builder.");
+        if(this.collisionPeriod == null)
+            throw new IllegalArgumentException("Collision period should not be null.");
+        if(this.collectorPeriod == null)
+            throw new IllegalArgumentException("Collector period should not be null.");
 
         Map<CollisionTestType, Collection<CollisionProcessor<T, K>>> collisionProcessorsByType = new HashMap<>();
         this.collisionProcessors.forEach(collisionProcessor -> {

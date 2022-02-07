@@ -26,11 +26,6 @@ public class CollisionHandler<T, K extends AAnimationTask> {
     private Map<T, Integer> noCollisionTicksMap = new HashMap<>();
 
     public CollisionHandler(JavaPlugin javaPlugin, IVariable<Integer> collisionPeriod, Function<K, Collection<T>> collector, IVariable<Integer> collectorPeriod, Set<BiPredicate<T, K>> filters, Map<CollisionTestType, Collection<CollisionProcessor<T, K>>> collisionProcessorsByType) {
-        if(javaPlugin == null) throw new IllegalArgumentException("JavaPlugin should not be null.");
-        if(collisionPeriod == null) throw new IllegalArgumentException("Collision period should not be null.");
-        if(collector == null) throw new IllegalArgumentException("Collector should not be null.");
-        if(collectorPeriod == null) throw new IllegalArgumentException("Collector period should not be null.");
-
         this.javaPlugin = javaPlugin;
         this.collisionPeriod = collisionPeriod;
         this.collector = collector;
@@ -47,6 +42,8 @@ public class CollisionHandler<T, K extends AAnimationTask> {
 
     private void innerCollect(int iterationCount, K animationTask) {
         int collectorPeriodValue = this.collectorPeriod.getCurrentValue(iterationCount);
+        if(collectorPeriodValue <= 0)
+            throw new IllegalStateException(String.format("Your are not able to provide a collector period that is lower or equals to 0 (got '%d')", collectorPeriodValue));
         if(iterationCount == 0 || iterationCount % collectorPeriodValue == 0) {
             this.targetsCollected = this.collector.apply(animationTask);
             this.noCollisionTicksMap.clear();
@@ -63,37 +60,29 @@ public class CollisionHandler<T, K extends AAnimationTask> {
         });
     }
 
-    /**
-     * TODO: USEFUL ?
-     * @param iterationCount
-     * @return
-     */
-    public boolean canProcessCollisions(int iterationCount) {
-        int collisionPeriodValue = this.collisionPeriod.getCurrentValue(iterationCount);
-        return iterationCount == 0 || iterationCount % collisionPeriodValue == 0;
-    }
-
     public void processCollision(int iterationCount, CollisionTestType collisionTestType, Location location, K animationTask) {
         Bukkit.getScheduler().runTask(javaPlugin, () -> innerProcessCollision(iterationCount, collisionTestType, location, animationTask));
     }
 
     private void innerProcessCollision(int iterationCount, CollisionTestType collisionTestType, Location location, K animationTask) {
         int collisionPeriodValue = this.collisionPeriod.getCurrentValue(iterationCount);
-        if(!(iterationCount == 0 || iterationCount % collisionPeriodValue == 0)) return;
-
-        Collection<CollisionProcessor<T, K>> collisionProcessors = collisionProcessorsByType.get(collisionTestType);
-        if(collisionProcessors == null) return;
-        collisionProcessors.forEach(collisionProcessor -> {
-            CollisionPredicate<T, K> collisionTest = collisionProcessor.getCollisionTest();
-            CollisionActionCallback<T, K> actionCallback = collisionProcessor.getActionCallback();
-            targetsCollected.forEach(target -> {
-                int noCollisionTicks = noCollisionTicksMap.getOrDefault(target, 1);
-                if((iterationCount == 0 || iterationCount % noCollisionTicks == 0) && collisionTest.test(location, animationTask, target)) {
-                    noCollisionTicks = actionCallback.run(animationTask, target);
-                    if(noCollisionTicks >= 0) noCollisionTicksMap.put(target, noCollisionTicks);
-                }
+        if(collisionPeriodValue <= 0)
+            throw new IllegalStateException(String.format("Your are not able to provide a collision period that is lower or equals to 0 (got '%d')", collisionPeriodValue));
+        if(iterationCount == 0 || iterationCount % collisionPeriodValue == 0) {
+            Collection<CollisionProcessor<T, K>> collisionProcessors = collisionProcessorsByType.get(collisionTestType);
+            if(collisionProcessors == null) return;
+            collisionProcessors.forEach(collisionProcessor -> {
+                CollisionPredicate<T, K> collisionTest = collisionProcessor.getCollisionTest();
+                CollisionActionCallback<T, K> actionCallback = collisionProcessor.getActionCallback();
+                targetsCollected.forEach(target -> {
+                    int noCollisionTicks = noCollisionTicksMap.getOrDefault(target, 0);
+                    if(noCollisionTicks == 0 && collisionTest.test(location, animationTask, target)) {
+                        noCollisionTicks = actionCallback.run(animationTask, target);
+                        if(noCollisionTicks >= 0) noCollisionTicksMap.put(target, noCollisionTicks);
+                    } else noCollisionTicksMap.put(target, noCollisionTicks - 1); // Else we need to update noCollisionTicksMap
+                });
             });
-        });
+        }
     }
 
 }
