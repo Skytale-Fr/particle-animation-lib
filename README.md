@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'fr.skytale:particle-animation-lib:4.8.6'
+  implementation 'fr.skytale:particle-animation-lib:4.8.7'
 }
 ```
 
@@ -40,7 +40,7 @@ dependencies {
   <dependency>
       <groupId>fr.skytale</groupId>
       <artifactId>particle-animation-lib</artifactId>
-      <version>4.8.6</version>
+      <version>4.8.7</version>
   </dependency>
 </dependencies>    
 ```

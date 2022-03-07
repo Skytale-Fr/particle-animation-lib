@@ -7,6 +7,7 @@ import fr.skytale.particleanimlib.animation.animation.image.preset.*;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningSubAnimLightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningSubAnimSpherePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.line.preset.LineHandsOfClockPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.line.preset.LineRotationYPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.line.preset.LineWithPolygonsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.line.preset.SimpleLinePresetExecutor;
@@ -24,6 +25,7 @@ import fr.skytale.particleanimlib.animation.animation.pyramid.preset.SimplePyram
 import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
 import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralADNPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralCastSpellPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.text.preset.*;
 import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExecutor;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
@@ -77,6 +79,7 @@ public enum AnimationPreset {
     SPHERE_PROPAGATION_BOTTOM_TO_TOP(new PropagatingUpSpherePresetExecutor()),
     SPHERE_PROPAGATION_TOP_TO_BOTTOM(new PropagatingDownSpherePresetExecutor()),
     SPHERE_ELECTRIC(new ElectricExplodingSpherePresetExecutor()),
+    SPHERE_ELECTRIC2(new ElectricSpherePresetExecutor()),
     SPHERE_HALF_GROWING(new ExplodingHalfSpherePresetExecutor()),
     SPHERE_SUB_ANIM_POLYGON(new SphereSubAnimPolygonPresetExecutor()),
     SPHERE_SUB_ANIM_POLYGON2(new SphereSubAnimPolygon2PresetExecutor()),
@@ -84,10 +87,12 @@ public enum AnimationPreset {
     SPHERE_SUB_ANIM_SPIRAL_PROPAGATION(new SphereSubAnimSpiralPropagatingUpPresetExecutor()),
     SPIRAL(new SpiralPresetExecutor()),
     SPIRAL_ADN(new SpiralADNPresetExecutor()),
+    SPIRAL_CASTING_SPELL(new SpiralCastSpellPresetExecutor()),
     WAVE(new WavePresetExecutor()),
     LINE(new SimpleLinePresetExecutor()),
     LINE_WITH_POLYGONS(new LineWithPolygonsPresetExecutor()),
     LINE_ROTATING_ALONG_Y(new LineRotationYPresetExecutor()),
+    LINE_HANDS_OF_CLOCK(new LineHandsOfClockPresetExecutor()),
     HELICOPTER(new HelicopterPresetExecutor()),
     SPHERE_PLASMA(new SpherePlasmaPresetExecutor()),
     TEXT_MINECRAFT(new SimpleTextMinecraftPresetExecutor()),
