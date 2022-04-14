@@ -5,6 +5,7 @@ import fr.skytale.particleanimlib.animation.animation.line.LineBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
+import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
@@ -45,9 +46,26 @@ public class LineHandsOfClockPresetExecutor extends AAnimationPresetExecutor<Lin
         lineBuilder1.setLength(new Constant<>(2.0));
         lineBuilder1.setMainParticle(new ParticleTemplate("REDSTONE", new Color(184, 115, 51), null));
         lineBuilder1.setTicksDuration(60*20);
-        lineBuilder1.setShowPeriod(new Constant<>(1));
+        lineBuilder1.setShowPeriod(new Constant<>(2));
         lineBuilder1.setNbPoints(new Constant<>(20));
-        lineBuilder1.setRotation(new Vector(0, 0, 1),Math.PI / 2000);
+        //lineBuilder1.setRotation(new Vector(0, 0, 1),Math.PI / 2000);
 
+
+        lineBuilder1.setRotation(
+                new Vector(0, 0, 1),
+                new CallbackWithPreviousValueVariable<Double>(
+                        0.5*Math.PI,
+                        (iterationCount, previousValue) -> {
+                            if(iterationCount%5==0){
+                                //Move longest hand of the clock each half second
+                                //Since the show period==2, iteration count+=10 each second
+                                return previousValue + Math.PI/30;
+                            }
+                            else{
+                                return previousValue;
+                            }
+                        }
+                )
+        );
     }
 }

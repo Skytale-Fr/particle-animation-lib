@@ -1,20 +1,21 @@
-package fr.skytale.particleanimlib.animation.animation.circle;
+package fr.skytale.particleanimlib.animation.animation.rose;
 
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public class CircleTask extends AAnimationTask<Circle> {
+public class RoseTask extends AAnimationTask<Rose> {
     Vector currentU, currentV;
 
-    public CircleTask(Circle circle) {
-        super(circle);
+    public RoseTask(Rose rose) {
+        super(rose);
         currentU = animation.getU().clone();
         currentV = animation.getV().clone();
         startTask();
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public void show(Location iterationBaseLocation) {
         if (hasDurationEnded()) {
@@ -25,12 +26,15 @@ public class CircleTask extends AAnimationTask<Circle> {
         double stepAngle = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
         double radius = animation.getRadius().getCurrentValue(iterationCount);
         int nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
+        double roseModifier = animation.getRoseModifier().getCurrentValue(iterationCount);
 
         for (int pointIndex = 0; pointIndex < nbPoints; pointIndex++) {
             double theta = pointIndex * stepAngle;
 
-            final double radiusCosTheta = radius * Math.cos(theta);
-            final double radiusSinTheta = radius * Math.sin(theta);
+            double distanceFromCenterToPoint = Math.cos(theta*roseModifier);
+
+            final double radiusCosTheta = radius * Math.cos(theta) * distanceFromCenterToPoint;
+            final double radiusSinTheta = radius * Math.sin(theta) * distanceFromCenterToPoint;
             double x = iterationBaseLocation.getX() + (currentU.getX() * radiusCosTheta) + (currentV.getX() * radiusSinTheta);
             double y = iterationBaseLocation.getY() + (currentU.getY() * radiusCosTheta) + (currentV.getY() * radiusSinTheta);
             double z = iterationBaseLocation.getZ() + (currentU.getZ() * radiusCosTheta) + (currentV.getZ() * radiusSinTheta);

@@ -29,6 +29,28 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation.setViewers(AViewers.fromNearbyPlayers(300));
     }
 
+    protected static void checkNotNull(Object obj, String checkFailureMessage) {
+        if (obj == null) {
+            throw new IllegalArgumentException(checkFailureMessage);
+        }
+    }
+
+    protected static void checkPositive(IVariable<? extends Number> number, String checkFailureMessage, boolean allowZero) {
+        if (number != null && number.isConstant()) {
+            double doubleValue = number.getCurrentValue(0).doubleValue();
+            if (allowZero) {
+                if (doubleValue < 0) throw new IllegalArgumentException(checkFailureMessage);
+            } else {
+                if (doubleValue <= 0) throw new IllegalArgumentException(checkFailureMessage);
+            }
+        }
+    }
+
+    protected static void checkPositiveAndNotNull(IVariable<? extends Number> number, String checkFailureMessage, boolean allowZero) {
+        checkNotNull(number, checkFailureMessage);
+        checkPositive(number, checkFailureMessage, allowZero);
+    }
+
     protected abstract T initAnimation();
 
     public APosition getPosition() {
@@ -69,6 +91,8 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation.setViewers(viewers);
     }
 
+    // --------------------- FINAL BUILD ---------------------
+
     public void setViewers(Collection<? extends Player> viewers) {
         checkNotNull(viewers, "viewers should not be null");
         animation.setViewers(AViewers.fromCustomPlayers(viewers));
@@ -78,11 +102,13 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation.setViewers(AViewers.fromNearbyPlayers(distance));
     }
 
+    // --------------------- APPLY PRESET ---------------------
+
     public void setViewers(BiPredicate<Player, Location> biPredicate) {
         animation.setViewers(AViewers.fromPredicateMatchingPlayers(biPredicate));
     }
 
-    // --------------------- FINAL BUILD ---------------------
+    // --------------------- CHECK SYSTEM ---------------------
 
     public void setShowPeriod(int showPeriod) {
         setShowPeriod(new Constant<>(showPeriod));
@@ -92,13 +118,9 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animation.setCallback(callback);
     }
 
-    // --------------------- APPLY PRESET ---------------------
-
     public T getAnimation() {
         return getAnimation(false);
     }
-
-    // --------------------- CHECK SYSTEM ---------------------
 
     public T getAnimation(boolean trailUsage) {
         checkNotNull(animation.getPosition(), POSITION_SHOULD_NOT_BE_NULL);
@@ -129,28 +151,15 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
         animationPreset.apply(this, plugin);
     }
 
-    protected static void checkNotNull(Object obj, String checkFailureMessage) {
-        if (obj == null) {
-            throw new IllegalArgumentException(checkFailureMessage);
-        }
-    }
-
-    protected static void checkPositive(IVariable<? extends Number> number, String checkFailureMessage, boolean allowZero) {
-        if (number != null && number.isConstant()) {
-            double doubleValue = number.getCurrentValue(0).doubleValue();
-            if (allowZero) {
-                if (doubleValue < 0) throw new IllegalArgumentException(checkFailureMessage);
-            } else {
-                if (doubleValue <= 0) throw new IllegalArgumentException(checkFailureMessage);
-            }
-        }
-    }
-
     protected void checkNotNullOrZero(IVariable<? extends Number> number, String checkFailureMessage) {
+        checkNotNullOrEquals(number, 0, checkFailureMessage);
+    }
+
+    protected void checkNotNullOrEquals(IVariable<? extends Number> number, double forbiddenValue, String checkFailureMessage) {
         checkNotNull(number, checkFailureMessage);
         if (number.isConstant()) {
             double doubleValue = number.getCurrentValue(0).doubleValue();
-            if (doubleValue == 0) {
+            if (doubleValue == forbiddenValue) {
                 throw new IllegalArgumentException(checkFailureMessage);
             }
         }
@@ -168,11 +177,6 @@ public abstract class AAnimationBuilder<T extends AAnimation> {
                 }
             }
         }
-    }
-
-    protected static void checkPositiveAndNotNull(IVariable<? extends Number> number, String checkFailureMessage, boolean allowZero) {
-        checkNotNull(number, checkFailureMessage);
-        checkPositive(number, checkFailureMessage, allowZero);
     }
 
 
