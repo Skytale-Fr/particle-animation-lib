@@ -3,6 +3,7 @@ package fr.skytale.particleanimlib.animation.attribute;
 import fr.skytale.particleanimlib.animation.animation.circle.preset.*;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.epi.preset.SimpleEpiPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.*;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningSubAnimLightningPresetExecutor;
@@ -77,6 +78,7 @@ public enum AnimationPreset {
     PYRAMID_GROWING(new GrowingPyramidPresetExecutor()),
     PYRAMID_GROWING2(new GrowingPyramid2PresetExecutor()),
     ROSE(new SimpleRosePresetExecutor()),
+    EPI(new SimpleEpiPresetExecutor()),
     SPHERE(new SpherePresetExecutor()),
     SPHERE_PROPAGATION_BOTTOM_TO_TOP(new PropagatingUpSpherePresetExecutor()),
     SPHERE_PROPAGATION_TOP_TO_BOTTOM(new PropagatingDownSpherePresetExecutor()),

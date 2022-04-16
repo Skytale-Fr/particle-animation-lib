@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class ParticleAnimLibTest {
 
-    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.ROSE;
+    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.EPI;
     public static TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
     public static boolean DEFAULT_SHOW_ON_CLICK = true;
 
