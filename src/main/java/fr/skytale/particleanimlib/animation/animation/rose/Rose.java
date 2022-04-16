@@ -5,17 +5,20 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.ARotatingRoundAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
 import org.bukkit.util.Vector;
 
-public class Rose extends ARotatingRoundAnimation implements IPlaneSubAnimation, ISubAnimationContainer {
+public class Rose extends ARotatingAnimation implements IPlaneSubAnimation, ISubAnimationContainer {
     private Vector u;
     private Vector v;
     private IVariable<Integer> nbPoints;
     private APointDefinition pointDefinition;
-    private IVariable<Double> roseModifier;
+    private IVariable<Double> roseModifierNumerator;
+    private IVariable<Integer> roseModifierDenominator;
+    protected IVariable<Double> radius;
 
     public Rose() {
     }
@@ -27,12 +30,28 @@ public class Rose extends ARotatingRoundAnimation implements IPlaneSubAnimation,
 
     /***********GETTERS & SETTERS***********/
 
-    public IVariable<Double> getRoseModifier() {
-        return roseModifier;
+    public IVariable<Double> getRadius() {
+        return radius;
     }
 
-    public void setRoseModifier(IVariable<Double> roseModifier) {
-        this.roseModifier = roseModifier;
+    public void setRadius(IVariable<Double> radius) {
+        this.radius = radius;
+    }
+
+    public IVariable<Double> getRoseModifierNumerator() {
+        return roseModifierNumerator;
+    }
+
+    public void setRoseModifierNumerator(IVariable<Double> roseModifierNumerator) {
+        this.roseModifierNumerator = roseModifierNumerator;
+    }
+
+    public IVariable<Integer> getRoseModifierDenominator() {
+        return roseModifierDenominator;
+    }
+
+    public void setRoseModifierDenominator(IVariable<Integer> roseModifierDenominator) {
+        this.roseModifierDenominator = roseModifierDenominator;
     }
 
     @Override
@@ -93,7 +112,9 @@ public class Rose extends ARotatingRoundAnimation implements IPlaneSubAnimation,
         obj.v = v.clone();
         obj.nbPoints = nbPoints.copy();
         obj.pointDefinition = pointDefinition.clone();
-        obj.roseModifier = roseModifier.copy();
+        obj.roseModifierNumerator = roseModifierNumerator.copy();
+        obj.roseModifierDenominator = roseModifierDenominator.copy();
+        obj.radius = radius.copy();
         return obj;
     }
 }

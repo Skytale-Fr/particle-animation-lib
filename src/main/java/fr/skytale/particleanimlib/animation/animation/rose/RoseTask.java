@@ -23,15 +23,31 @@ public class RoseTask extends AAnimationTask<Rose> {
             return;
         }
 
-        double stepAngle = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
         double radius = animation.getRadius().getCurrentValue(iterationCount);
         int nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
-        double roseModifier = animation.getRoseModifier().getCurrentValue(iterationCount);
+        double roseModifierNumerator = animation.getRoseModifierNumerator().getCurrentValue(iterationCount);
+        int roseModifierDenominator = animation.getRoseModifierDenominator().getCurrentValue(iterationCount);
+        double roseModifier = roseModifierNumerator / roseModifierDenominator;
+        double maxTheta;
+        //defining maxTheta according to https://mathworld.wolfram.com/RoseCurve.html
+        // If roseModifier is a rational number, then the curve closes at a computable polar angle.
+        if ((roseModifier * 100000) % 1 == 0) { // if roseModifier is approximately a rational number
+            if ((roseModifierDenominator * roseModifierNumerator) % 2 == 0) {
+                // roseModifierNumerator * roseModifierDenominator is even
+                maxTheta = Math.PI * roseModifierDenominator * 2;
+            } else {
+                // roseModifierNumerator * roseModifierDenominator is odd
+                maxTheta = Math.PI * roseModifierDenominator;
+            }
+        } else {
+            // If roserModifier is an irrational number, the curve never closes.
+            maxTheta = 16 * Math.PI;
+        }
 
-        for (int pointIndex = 0; pointIndex < nbPoints; pointIndex++) {
-            double theta = pointIndex * stepAngle;
+        double stepTheta = maxTheta / nbPoints;
+        for (double theta = 0; theta <= maxTheta; theta += stepTheta) {
 
-            double distanceFromCenterToPoint = Math.cos(theta*roseModifier);
+            double distanceFromCenterToPoint = Math.cos(theta * roseModifier);
 
             final double radiusCosTheta = radius * Math.cos(theta) * distanceFromCenterToPoint;
             final double radiusSinTheta = radius * Math.sin(theta) * distanceFromCenterToPoint;
