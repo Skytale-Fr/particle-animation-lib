@@ -1,15 +1,15 @@
-package fr.skytale.particleanimlib.animation.animation.epi;
+package fr.skytale.particleanimlib.animation.animation.nodes;
 
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public class EpiTask extends AAnimationTask<Epi> {
+public class NodeTask extends AAnimationTask<Node> {
     Vector currentU, currentV;
 
-    public EpiTask(Epi epi) {
-        super(epi);
+    public NodeTask(Node node) {
+        super(node);
         currentU = animation.getU().clone();
         currentV = animation.getV().clone();
         startTask();
@@ -26,29 +26,29 @@ public class EpiTask extends AAnimationTask<Epi> {
         double radius = animation.getRadius().getCurrentValue(iterationCount);
         Double maxRadius = animation.getMaxRadius() != null ? animation.getMaxRadius().getCurrentValue(iterationCount) : null;
         int nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
-        double epiModifierNumerator = animation.getEpiModifierNumerator().getCurrentValue(iterationCount);
-        int epiModifierDenominator = animation.getEpiModifierDenominator().getCurrentValue(iterationCount);
-        double epiModifier = epiModifierNumerator / epiModifierDenominator;
+        double nodeModifierNumerator = animation.getNodeModifierNumerator().getCurrentValue(iterationCount);
+        int nodeModifierDenominator = animation.getNodeModifierDenominator().getCurrentValue(iterationCount);
+        double nodeModifier = nodeModifierNumerator / nodeModifierDenominator;
         double maxTheta;
-        //defining maxTheta according to https://mathworld.wolfram.com/EpiCurve.html
-        // If epiModifier is a rational number, then the curve closes at a computable polar angle.
-        if ((epiModifier * 100000) % 1 == 0) { // if epiModifier is approximately a rational number
-            if ((epiModifierDenominator * epiModifierNumerator) % 2 == 0) {
-                // epiModifierNumerator * epiModifierDenominator is even
-                maxTheta = Math.PI * epiModifierDenominator * 2;
+        //defining maxTheta according to https://mathworld.wolfram.com/NodeCurve.html
+        // If nodeModifier is a rational number, then the curve closes at a computable polar angle.
+        if ((nodeModifier * 100000) % 1 == 0) { // if nodeModifier is approximately a rational number
+            if ((nodeModifierDenominator * nodeModifierNumerator) % 2 == 0) {
+                // nodeModifierNumerator * nodeModifierDenominator is even
+                maxTheta = Math.PI * nodeModifierDenominator * 2;
             } else {
-                // epiModifierNumerator * epiModifierDenominator is odd
-                maxTheta = Math.PI * epiModifierDenominator;
+                // nodeModifierNumerator * nodeModifierDenominator is odd
+                maxTheta = Math.PI * nodeModifierDenominator;
             }
         } else {
-            // If epirModifier is an irrational number, the curve never closes.
+            // If noderModifier is an irrational number, the curve never closes.
             maxTheta = 16 * Math.PI;
         }
 
         double stepTheta = maxTheta / nbPoints;
         for (double theta = 0; theta <= maxTheta; theta += stepTheta) {
 
-            double distanceFromCenterToPoint = 1 / Math.cos(theta * epiModifier);
+            double distanceFromCenterToPoint = 1 / Math.tan(theta * nodeModifier);
 
             final double radiusCosTheta = radius * Math.cos(theta) * distanceFromCenterToPoint;
             final double radiusSinTheta = radius * Math.sin(theta) * distanceFromCenterToPoint;

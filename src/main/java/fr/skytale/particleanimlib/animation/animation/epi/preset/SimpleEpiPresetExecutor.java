@@ -23,7 +23,8 @@ public class SimpleEpiPresetExecutor extends AAnimationPresetExecutor<EpiBuilder
     protected void apply(EpiBuilder epiBuilder, JavaPlugin plugin) {
         epiBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
         epiBuilder.setNbPoints(200);
-        epiBuilder.setRadius(5);
+        epiBuilder.setRadius(3);
+        epiBuilder.setMaxRadius(40);
         epiBuilder.setTicksDuration(3000);
 
         // Defining arbitrary sample values for N = numerator / denominator

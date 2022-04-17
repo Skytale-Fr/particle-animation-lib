@@ -17,7 +17,8 @@ public class Epi extends ARotatingAnimation implements IPlaneSubAnimation, ISubA
     private APointDefinition pointDefinition;
     private IVariable<Double> epiModifierNumerator;
     private IVariable<Integer> epiModifierDenominator;
-    protected IVariable<Double> radius;
+    private IVariable<Double> radius;
+    private IVariable<Double> maxRadius;
 
     public Epi() {
     }
@@ -35,6 +36,14 @@ public class Epi extends ARotatingAnimation implements IPlaneSubAnimation, ISubA
 
     public void setRadius(IVariable<Double> radius) {
         this.radius = radius;
+    }
+
+    public IVariable<Double> getMaxRadius() {
+        return maxRadius;
+    }
+
+    public void setMaxRadius(IVariable<Double> maxRadius) {
+        this.maxRadius = maxRadius;
     }
 
     public IVariable<Double> getEpiModifierNumerator() {
@@ -114,6 +123,7 @@ public class Epi extends ARotatingAnimation implements IPlaneSubAnimation, ISubA
         obj.epiModifierNumerator = epiModifierNumerator.copy();
         obj.epiModifierDenominator = epiModifierDenominator.copy();
         obj.radius = radius.copy();
+        obj.maxRadius = maxRadius != null ? maxRadius.copy() : maxRadius;
         return obj;
     }
 }

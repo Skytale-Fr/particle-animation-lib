@@ -12,6 +12,7 @@ import fr.skytale.particleanimlib.animation.animation.line.preset.LineHandsOfClo
 import fr.skytale.particleanimlib.animation.animation.line.preset.LineRotationYPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.line.preset.LineWithPolygonsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.line.preset.SimpleLinePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.nodes.preset.SimpleNodePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.obj.preset.*;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPlayerAimPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPresetExecutor;
@@ -79,6 +80,7 @@ public enum AnimationPreset {
     PYRAMID_GROWING2(new GrowingPyramid2PresetExecutor()),
     ROSE(new SimpleRosePresetExecutor()),
     EPI(new SimpleEpiPresetExecutor()),
+    NODE(new SimpleNodePresetExecutor()),
     SPHERE(new SpherePresetExecutor()),
     SPHERE_PROPAGATION_BOTTOM_TO_TOP(new PropagatingUpSpherePresetExecutor()),
     SPHERE_PROPAGATION_TOP_TO_BOTTOM(new PropagatingDownSpherePresetExecutor()),
