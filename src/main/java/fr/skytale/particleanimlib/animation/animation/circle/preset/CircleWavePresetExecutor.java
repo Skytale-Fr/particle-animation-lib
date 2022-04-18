@@ -3,21 +3,14 @@ package fr.skytale.particleanimlib.animation.animation.circle.preset;
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.animation.wave.Wave;
 import fr.skytale.particleanimlib.animation.animation.wave.WaveBuilder;
-import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
-import fr.skytale.particleanimlib.animation.attribute.var.Constant;
-import fr.skytale.particleanimlib.animation.attribute.var.LocationPeriodicallyEvolvingVariable;
-import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-
-import java.awt.*;
 
 public class CircleWavePresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -32,9 +25,9 @@ public class CircleWavePresetExecutor extends AAnimationPresetExecutor<CircleBui
         circleBuilder.setNbPoints(10, true);
         circleBuilder.setRadius(new CallbackWithPreviousValueVariable<>(3.0, (iterationCount, previousValue) -> {
             if (iterationCount < halfCircleDuration)
-                return previousValue - Math.sin(iterationCount) - (5/halfCircleDuration);
+                return previousValue - Math.sin(iterationCount) - (5 / halfCircleDuration);
             else
-                return previousValue + Math.sin(halfCircleDuration - (iterationCount % halfCircleDuration)) + (5/halfCircleDuration);
+                return previousValue + Math.sin(halfCircleDuration - (iterationCount % halfCircleDuration)) + (5 / halfCircleDuration);
         }));
         circleBuilder.setMainParticle(new ParticleTemplate("FIREWORKS_SPARK", null, null));
         circleBuilder.setTicksDuration(halfCircleDuration * 2);

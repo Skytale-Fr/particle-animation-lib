@@ -18,7 +18,7 @@ public class RotatingCirclePresetExecutor extends AAnimationPresetExecutor<Circl
         AnimationPreset.CIRCLE.apply(circleBuilder, plugin);
         circleBuilder.setTicksDuration(400);
         circleBuilder.setRotation(
-                new CallbackWithPreviousValueVariable<Vector>(
+                new CallbackWithPreviousValueVariable<>(
                         new Vector(0, 1, 0),
                         (iterationCount, previousValue) -> previousValue.add(new Vector(Math.random() / 4, Math.random() / 4, Math.random() / 4)).normalize()
                 ),

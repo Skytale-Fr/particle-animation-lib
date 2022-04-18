@@ -242,6 +242,251 @@ TrailTask trailTask=trailBuilder.getTrail().getTrailTask();
 > You can save the TrailTask (cache it within an attribute) in order to be able to add the trail to other players later.
 > You can also change the parameters of the Trail and its animation(s) before creating another task from it.
 
+## Animations and parameters
+
+### Common parameters
+
+#### position
+
+> Where the animation will take place. It's the center of the animation.
+
+```java
+builder.setPosition(APosition position)
+```
+
+##### Exemples
+
+> It can be a fixed location
+
+```java
+builder.setPosition(APosition.fromLocation(new Location(world, x, y, z)));
+```
+
+> It can be a moving location
+
+```java
+builder.setPosition(APosition.fromLocation(new CallbackWithPreviousValueVariable<>(
+        new Location(world, x, y, z), //Start location
+        (iterationCount, previousValue) -> previousValue.add(0, 1, 0)//How the location evolves over time
+)));
+```
+
+> It can be an entity location
+
+```json
+builder.setPosition(APosition.fromEntity(player));
+```
+
+> It can be a position relative to an entity location
+
+```json
+builder.setPosition(APosition.fromEntity(player, new CallbackVariable<>(iterationCount -> 
+        player.getLocation().getDirection().normalize().multiply(2) // two blocks in front of the player
+)));
+```
+
+#### ticksDuration
+
+> Duration of the animation in ticks.
+> In minecraft, a second correspond to 20 ticks if the server works without slowdowns. 
+
+```java
+builder.setTicksDuration(int ticksDuration)
+```
+
+##### Example
+
+> In order for the animation to last 10s.
+
+```java
+builder.setTicksDuration(200);
+```
+
+#### plugin
+
+> The plugin calling the animation
+
+```java
+builder.setPlugin(JavaPlugin plugin)
+```
+
+##### Example
+
+> If you have direct access to the plugin class instance.
+
+```java
+builder.setPlugin(myPlugin);
+```
+
+> Else you should implement the Singleton design pattern.
+
+```java
+builder.setPlugin(MyPlugin.getInstance());
+```
+
+#### showPeriod
+
+> The time interval between each time the particles of the animation will be shown
+> Since most Minecraft particles last more than 1 tick, it is useless to show the particles every tick.
+> Showing the particles every tick may also require a gigantic network usage.
+
+```java
+builder.setShowPeriod(IVariable<Integer> showPeriod)
+```
+
+##### Examples
+
+> The animation particles will be shown every 3 tick
+
+```java
+builder.setShowPeriod(3);
+```
+
+> This period can also evolve over time.
+
+```java
+builder.setShowPeriod(new CallbackVariable<>(iterationCount ->
+        iterationCount > 60 ? 2 : 3 // the animations particles will be shown every 3 tick during 3 seconds. Then they will be shown every 2 tick.
+));
+```
+
+#### callback
+
+> some code that will be called when the animation ends
+> This can be used to chain animations.
+
+```java
+builder.setCallback(AnimationEndedCallback callback)
+```
+
+##### Exemple
+
+> Send a message to everyone when the animation ends.
+
+```java
+builder.setCallback(animationEnding ->
+        Bukkit.broadcastMessage("The animation " + animationEnding.getClass().getSimpleName() + " ended."
+));
+```
+
+#### viewers
+
+> Who will see the particles.
+> This is important to reduce network usage.
+
+```java
+builder.setViewers(AViewers viewers)
+```
+
+##### Example
+
+> See it only for players located at less than 50 blocks
+
+```java
+builder.setViewers(AViewers.fromNearbyPlayers(50));
+```
+
+> See it only for player in the same world
+
+```java
+builder.setViewers(AViewers.fromWorldPlayers());
+```
+
+> See it only for specified players
+
+```java
+Collection<Player> players = new ArrayList<>();
+players.add(player1);
+players.add(player2);
+circleBuilder.setViewers(AViewers.fromCustomPlayers(players));
+```
+
+> Only sneeking or low life player will see it
+
+```java
+circleBuilder.setViewers(AViewers.fromPredicateMatchingPlayers((player, location) -> 
+    player.isSneaking() || player.getHealth() < 2 
+));
+```
+
+#### rotation
+
+> Rotates the animation over time
+> Each rotation will be of an angle rotationAngleAlpha
+> Each rotation will be performed around the axis
+> 
+> This parameter is available on most animations but not all
+
+```java
+setRotation(IVariable<Vector> axis, IVariable<Double> rotationAngleAlpha
+```
+
+##### Example
+
+> Simply rotating
+
+```java
+builder.setRotation(
+        new Vector(0, 1, 0),
+        Math.PI / 10
+);
+```
+
+> Accelerating rotation
+
+```java
+builder.setRotation(
+        new Constant<>(new Vector(0, 1, 0)),
+        new DoublePeriodicallyEvolvingVariable(Math.toRadians(0), Math.toRadians(1), 0) //
+);
+```
+
+> Randomized rotation axis
+
+```java
+builder.setRotation(
+        new CallbackWithPreviousValueVariable<Vector>(
+                new Vector(0, 1, 0),
+                (iterationCount, previousValue) -> previousValue.add(new Vector(Math.random() / 4, Math.random() / 4, Math.random() / 4)).normalize()
+        ),
+        Math.PI / 10
+);
+```
+
+### Animation specific parameters
+
+#### Line
+
+##### Example
+
+#### Circle
+
+#### Cuboid
+
+#### Sphere
+
+#### Parabola
+
+#### Lighting
+
+#### Spiral
+
+#### Wave
+
+#### Atom
+
+#### Image
+
+#### Obj
+
+#### Text
+
+#### Rose
+
+#### Epi
+
+#### Nodes
+
 ## Contribute
 
 * First init git submodules :
