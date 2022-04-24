@@ -32,11 +32,22 @@ public class LineHandsOfClockPresetExecutor extends AAnimationPresetExecutor<Lin
         lineBuilder2.setLength(new Constant<>(3.0d));
         lineBuilder2.setMainParticle(new ParticleTemplate("REDSTONE", new Color(184, 115, 51), null));
         lineBuilder2.setTicksDuration(60*20);
-        lineBuilder2.setShowPeriod(new Constant<>(1));
+        lineBuilder2.setShowPeriod(new Constant<>(2));
         lineBuilder2.setNbPoints(new Constant<>(30));
         lineBuilder2.setPosition(lineBuilder1.getPosition());
         lineBuilder2.setJavaPlugin(plugin);
-        lineBuilder2.setRotation(new Vector(0, 0, 1),Math.PI / 500);
+        lineBuilder2.setRotation(
+                new Vector(0, 0, 1),
+                new CallbackVariable<>( iterationCount -> {
+                    if(iterationCount%10==0){
+                        return Math.PI/48;
+                    }
+                    else{
+                        return Math.PI*2;
+                    }
+                }
+                )
+        );
         Line minute_hand = lineBuilder2.getAnimation();
         minute_hand.show();
 
@@ -48,23 +59,17 @@ public class LineHandsOfClockPresetExecutor extends AAnimationPresetExecutor<Lin
         lineBuilder1.setTicksDuration(60*20);
         lineBuilder1.setShowPeriod(new Constant<>(2));
         lineBuilder1.setNbPoints(new Constant<>(20));
-        //lineBuilder1.setRotation(new Vector(0, 0, 1),Math.PI / 2000);
-
 
         lineBuilder1.setRotation(
                 new Vector(0, 0, 1),
-                new CallbackWithPreviousValueVariable<Double>(
-                        0.5*Math.PI,
-                        (iterationCount, previousValue) -> {
-                            if(iterationCount%5==0){
-                                //Move longest hand of the clock each half second
-                                //Since the show period==2, iteration count+=10 each second
-                                return previousValue + Math.PI/30;
-                            }
-                            else{
-                                return previousValue;
-                            }
+                new CallbackVariable<>( iterationCount -> {
+                        if(iterationCount%40==0){
+                            return Math.PI/12;
                         }
+                        else{
+                            return Math.PI*2;
+                        }
+                    }
                 )
         );
     }
