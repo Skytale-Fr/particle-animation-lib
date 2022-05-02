@@ -11,21 +11,61 @@ import java.util.*;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 
+/**
+ * A collision handler is something that will be used by the library
+ * to perform collisions (checks, callbacks) with a lot of customization.<br />
+ * If you want to create a CollisionHandler, you may want to use
+ * the CollisionBuilder.
+ * @see CollisionBuilder
+ * @param <T> The type of target you want to perform collisions on
+ * @param <K> The type of animation task you want to plug this collision handler to
+ */
 public class CollisionHandler<T, K extends AAnimationTask> {
 
+    /**
+     * A reference to the JavaPlugin, mainly used to register
+     * synchronous task to be able to do API calls.
+     */
     private JavaPlugin javaPlugin;
+    /**
+     * The collision period is ----- TODO Define with Ben ??? ---- <br />
+     *
+     * <b>/!\ This value will always be capped (minimum) at 1 /!\</b>
+     */
     private IVariable<Integer> collisionPeriod;
-    private long lastCollisionTimestamp = 0;
+    /**
+     * The collector function. This function will be called to collect the
+     * potential targets around the animation that would be checked for potential collisions.
+     */
     private Function<K, Collection<T>> collector;
+    /**
+     * The collector period represents how often the collector will be called.
+     * By default, it will be set to 1, to be called every tick.<br />
+     * <b>/!\ This value will always be capped (minimum) at 1 /!\</b>
+     */
     private IVariable<Integer> collectorPeriod;
-    private long lastCollectorTimestamp = 0;
+    /**
+     * A set of filters that will be applied to the targets collected (after every calls of the collector).
+     */
     private Set<BiPredicate<T, K>> filters;
+    /**
+     * All the registered processors stored by their CollisionTestType to ensure optimisation access.
+     * @see CollisionProcessor
+     */
     private Map<CollisionTestType, Collection<CollisionProcessor<T, K>>> collisionProcessorsByType;
 
+    /**
+     * A cache variable to store collected targets after the calls of the collector.
+     */
     private Collection<T> targetsCollected;
+    /**
+     * A cache variable to remember the "no collision ticks" of a target.<br />
+     * This value represents how many ticks a target can't be part of the collision process
+     * since the last time it collides.
+     */
     private Map<T, Integer> noCollisionTicksMap = new HashMap<>();
 
-    public CollisionHandler(JavaPlugin javaPlugin, IVariable<Integer> collisionPeriod, Function<K, Collection<T>> collector, IVariable<Integer> collectorPeriod, Set<BiPredicate<T, K>> filters, Map<CollisionTestType, Collection<CollisionProcessor<T, K>>> collisionProcessorsByType) {
+    protected CollisionHandler(JavaPlugin javaPlugin, IVariable<Integer> collisionPeriod, Function<K, Collection<T>> collector, IVariable<Integer> collectorPeriod, Set<BiPredicate<T, K>> filters, Map<CollisionTestType, Collection<CollisionProcessor<T, K>>> collisionProcessorsByType) {
         this.javaPlugin = javaPlugin;
         this.collisionPeriod = collisionPeriod;
         this.collector = collector;
@@ -36,10 +76,24 @@ public class CollisionHandler<T, K extends AAnimationTask> {
         if(this.collisionProcessorsByType == null) this.collisionProcessorsByType = new HashMap<>();
     }
 
+    /**
+     * Calls the collector and store the collected targets.<br />
+     *
+     * <b>/!\ Careful /!\</b><br />
+     * This method calls an inner class method to provide access to Bukkit API calls
+     * by calling it synchronously.
+     * @param iterationCount The iteration count of the current animation task
+     * @param animationTask The animation task calling the method
+     */
     public void collect(int iterationCount, K animationTask) {
         Bukkit.getScheduler().runTask(javaPlugin, () -> innerCollect(iterationCount, animationTask));
     }
 
+    /**
+     * Calls the collector and store the collected targets.
+     * @param iterationCount The iteration count of the current animation task
+     * @param animationTask The animation task calling the method
+     */
     private void innerCollect(int iterationCount, K animationTask) {
         int collectorPeriodValue = this.collectorPeriod.getCurrentValue(iterationCount);
         if(collectorPeriodValue <= 0)
@@ -53,6 +107,10 @@ public class CollisionHandler<T, K extends AAnimationTask> {
         }
     }
 
+    /**
+     * Apply registered filters to the collected targets.
+     * @param animationTask The animation task calling the method
+     */
     private void applyFilters(K animationTask) {
         if(this.targetsCollected == null) return;
         this.filters.forEach(filter -> {
@@ -60,10 +118,29 @@ public class CollisionHandler<T, K extends AAnimationTask> {
         });
     }
 
+    /**
+     * Process collisions checks on previously collected targets (for every registered collision processors).<br />
+     *
+     * <b>/!\ Careful /!\</b><br />
+     * This method calls an inner class method to provide access to Bukkit API calls
+     * by calling it synchronously.
+     * @param iterationCount The iteration count of the current animation task
+     * @param collisionTestType The type of the collision called (see location param)
+     * @param location The location of the process (PER_PARTICLE: the location of the particle, MAIN_POSITION: the location of the animation)
+     * @param animationTask The animation task calling the method
+     */
     public void processCollision(int iterationCount, CollisionTestType collisionTestType, Location location, K animationTask) {
         Bukkit.getScheduler().runTask(javaPlugin, () -> innerProcessCollision(iterationCount, collisionTestType, location, animationTask));
     }
 
+    /**
+     * Process collisions checks on previously collected targets (for every registered collision processors).
+     *
+     * @param iterationCount The iteration count of the current animation task
+     * @param collisionTestType The type of the collision called (see location param)
+     * @param location The location of the process (PER_PARTICLE: the location of the particle, MAIN_POSITION: the location of the animation)
+     * @param animationTask The animation task calling the method
+     */
     private void innerProcessCollision(int iterationCount, CollisionTestType collisionTestType, Location location, K animationTask) {
         int collisionPeriodValue = this.collisionPeriod.getCurrentValue(iterationCount);
         if(collisionPeriodValue <= 0)
