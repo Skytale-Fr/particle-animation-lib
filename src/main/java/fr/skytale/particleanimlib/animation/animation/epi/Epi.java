@@ -24,8 +24,8 @@ public class Epi extends ARotatingAnimation implements IPlaneSubAnimation, ISubA
     }
 
     @Override
-    public void show() {
-        new EpiTask(this);
+    public EpiTask show() {
+        return new EpiTask(this);
     }
 
     /***********GETTERS & SETTERS***********/

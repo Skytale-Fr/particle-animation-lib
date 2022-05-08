@@ -24,8 +24,8 @@ public class Node extends ARotatingAnimation implements IPlaneSubAnimation, ISub
     }
 
     @Override
-    public void show() {
-        new NodeTask(this);
+    public NodeTask show() {
+        return new NodeTask(this);
     }
 
     /***********GETTERS & SETTERS***********/

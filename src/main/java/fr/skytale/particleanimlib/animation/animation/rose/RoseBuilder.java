@@ -10,7 +10,7 @@ import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBui
 import fr.skytale.particleanimlib.animation.parent.builder.ARotatingRoundAnimationBuilder;
 import org.bukkit.util.Vector;
 
-public class RoseBuilder extends ARotatingAnimationBuilder<Rose> {
+public class RoseBuilder extends ARotatingAnimationBuilder<Rose, RoseTask> {
 
     public static final String DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL = "directorVector u should not be null";
     public static final String DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL = "directorVector v should not be null";
