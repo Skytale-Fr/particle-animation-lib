@@ -33,8 +33,8 @@ public class Line extends ARotatingAnimation implements IDirectionSubAnimation, 
     }
 
     @Override
-    public void show() {
-        new LineTask(this);
+    public LineTask show() {
+        return new LineTask(this);
     }
 
 

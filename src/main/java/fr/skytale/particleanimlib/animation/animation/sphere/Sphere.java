@@ -22,8 +22,8 @@ public class Sphere extends ARoundAnimation implements ISubAnimation, ISubAnimat
     }
 
     @Override
-    public void show() {
-        new SphereTask(this);
+    public SphereTask show() {
+        return new SphereTask(this);
     }
 
     /***********GETTERS & SETTERS***********/

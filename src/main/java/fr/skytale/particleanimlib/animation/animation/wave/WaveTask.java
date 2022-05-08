@@ -16,6 +16,11 @@ public class WaveTask extends AAnimationTask<Wave> {
 
     private double currentRadius;
 
+    private Vector currentVerticalPositionInXYZRef;
+    private Vector currentVerticalPositionInUVWRef;
+    private double stepAngle;
+    private int nbPoints;
+
     public WaveTask(Wave wave) {
         super(wave);
 
@@ -44,20 +49,20 @@ public class WaveTask extends AAnimationTask<Wave> {
         }
 
         // Computing the vertical coordinate of the wave's current circle
-        Vector currentVerticalPositionInXYZRef = new Vector(
+        currentVerticalPositionInXYZRef = new Vector(
                 0,
                 ((2 * Math.exp(intermediateCachedResult * currentRadius) * Math.sin(currentRadius)) + 1) * (animation.getPositiveHeight() ? 1 : - 1),
                 0);
 
         // Passing to the XYZ geometric lair
-        Vector currentVerticalPositionInUVWRef = rotation.rotateVector(currentVerticalPositionInXYZRef);
+        currentVerticalPositionInUVWRef = rotation.rotateVector(currentVerticalPositionInXYZRef);
 
         // Applying this to the iteration base Location
         iterationBaseLocation.add(currentVerticalPositionInUVWRef);
 
 
-        double stepAngle = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
-        int nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
+        stepAngle = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
+        nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
 
         ParticleTemplate particleTemplate = animation.getMainParticle();
 
@@ -80,4 +85,25 @@ public class WaveTask extends AAnimationTask<Wave> {
 
         currentRadius += animation.getRadiusStep().getCurrentValue(iterationCount);
     }
+
+    public double getCurrentRadius() {
+        return currentRadius;
+    }
+
+    public Vector getCurrentVerticalPositionInXYZRef() {
+        return currentVerticalPositionInXYZRef;
+    }
+
+    public Vector getCurrentVerticalPositionInUVWRef() {
+        return currentVerticalPositionInUVWRef;
+    }
+
+    public double getCurrentStepAngle() {
+        return stepAngle;
+    }
+
+    public int getCurrentNbPoints() {
+        return nbPoints;
+    }
+
 }

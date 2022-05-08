@@ -13,6 +13,10 @@ import java.util.Set;
 public class ParabolaTask extends ARotatingAnimationTask<Parabola> {
 
     private Set<BulletData> bullets;
+    private Vector direction;
+    private int bulletShootPeriod;
+    private int finalFreq;
+    private Vector gravity;
 
     public ParabolaTask(Parabola parabola) {
         super(parabola);
@@ -27,13 +31,13 @@ public class ParabolaTask extends ARotatingAnimationTask<Parabola> {
     }
 
     private void fireBullet(boolean rotationChanged, Location iterationBaseLocation) {
-        Vector direction = animation.getDirection().getMoveVector().getCurrentValue(iterationCount);
+        direction = animation.getDirection().getMoveVector().getCurrentValue(iterationCount);
 
         if (rotationChanged) {
             direction = rotation.rotateVector(direction.clone());
 
         }
-        int bulletShootPeriod = animation.getBulletShootPeriod().getCurrentValue(iterationCount);
+        bulletShootPeriod = animation.getBulletShootPeriod().getCurrentValue(iterationCount);
         if (bulletShootPeriod == 0 || iterationCount % bulletShootPeriod == 0) {
             BulletData bulletData = new BulletData();
             bulletData.location = iterationBaseLocation.toVector();
@@ -45,8 +49,8 @@ public class ParabolaTask extends ARotatingAnimationTask<Parabola> {
 
     private void updateBullets(Location iterationBaseLocation) {
         int freq = animation.getShowPeriod().getCurrentValue(iterationCount);
-        final int finalFreq = freq == 0 ? 1 : freq;
-        Vector gravity = animation.getGravity().getCurrentValue(iterationCount);
+        finalFreq = freq == 0 ? 1 : freq;
+        gravity = animation.getGravity().getCurrentValue(iterationCount);
         final Collection<? extends Player> players = animation.getViewers().getPlayers(iterationBaseLocation);
         bullets.removeIf(bulletData -> {
             if (bulletData.lifetime == 0) {
@@ -69,6 +73,26 @@ public class ParabolaTask extends ARotatingAnimationTask<Parabola> {
         public Vector location;
         public Vector velocity;
         public int lifetime;
+    }
+
+    public Set<BulletData> getCurrentBullets() {
+        return bullets;
+    }
+
+    public Vector getCurrentDirection() {
+        return direction;
+    }
+
+    public int getCurrentBulletShootPeriod() {
+        return bulletShootPeriod;
+    }
+
+    public int getCurrentFinalFreq() {
+        return finalFreq;
+    }
+
+    public Vector getCurrentGravity() {
+        return gravity;
     }
 
 }

@@ -69,9 +69,9 @@ public class Image extends ARotatingAnimation implements IPlaneSubAnimation {
     /******** Methods ********/
 
     @Override
-    public void show() {
+    public ImageTask show() {
         init();
-        new ImageTask(this);
+        return new ImageTask(this);
     }
 
     protected void init() {

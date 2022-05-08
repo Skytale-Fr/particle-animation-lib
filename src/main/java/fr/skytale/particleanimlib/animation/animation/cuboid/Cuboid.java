@@ -15,8 +15,8 @@ public class Cuboid extends ARotatingAnimation implements ISubAnimation {
     }
 
     @Override
-    public void show() {
-        new CuboidTask(this);
+    public CuboidTask show() {
+        return new CuboidTask(this);
     }
 
     /***********GETTERS & SETTERS***********/

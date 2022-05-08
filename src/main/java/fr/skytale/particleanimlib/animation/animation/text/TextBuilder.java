@@ -16,7 +16,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
-public class TextBuilder extends ARotatingAnimationBuilder<Text> {
+public class TextBuilder extends ARotatingAnimationBuilder<Text, TextTask> {
 
     public static final String DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL = "directorVector u should not be null";
     public static final String DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL = "directorVector v should not be null";

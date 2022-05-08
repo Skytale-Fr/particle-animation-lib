@@ -6,7 +6,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 
-public class AtomBuilder extends AAnimationBuilder<Atom> {
+public class AtomBuilder extends AAnimationBuilder<Atom, AtomTask> {
     private Atom atom;
 
     public AtomBuilder() {

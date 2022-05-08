@@ -3,9 +3,10 @@ package fr.skytale.particleanimlib.animation.parent.builder;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.util.Vector;
 
-public abstract class ARotatingAnimationBuilder<T extends ARotatingAnimation> extends AAnimationBuilder<T> {
+public abstract class ARotatingAnimationBuilder<T extends ARotatingAnimation, K extends AAnimationTask<T>> extends AAnimationBuilder<T, K> {
 
     public void setRotation(IVariable<Vector> axis, IVariable<Double> rotationAngleAlpha) {
         animation.setRotationAxis(axis);

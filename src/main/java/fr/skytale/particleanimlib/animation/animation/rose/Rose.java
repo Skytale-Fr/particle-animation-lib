@@ -24,8 +24,8 @@ public class Rose extends ARotatingAnimation implements IPlaneSubAnimation, ISub
     }
 
     @Override
-    public void show() {
-        new RoseTask(this);
+    public RoseTask show() {
+        return new RoseTask(this);
     }
 
     /***********GETTERS & SETTERS***********/

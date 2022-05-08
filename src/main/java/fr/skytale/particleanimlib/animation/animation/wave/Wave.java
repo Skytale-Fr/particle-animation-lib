@@ -20,8 +20,8 @@ public class Wave extends AAnimation implements IPlaneSubAnimation {
     }
 
     @Override
-    public void show() {
-        new WaveTask(this);
+    public WaveTask show() {
+        return new WaveTask(this);
     }
 
     /***********GETTERS & SETTERS***********/

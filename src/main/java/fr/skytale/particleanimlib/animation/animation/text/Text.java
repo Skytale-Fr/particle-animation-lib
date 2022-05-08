@@ -42,9 +42,9 @@ public class Text extends ARotatingAnimation implements IPlaneSubAnimation, ISub
     }
 
     @Override
-    public void show() {
+    public TextTask show() {
         init();
-        new TextTask(this);
+        return new TextTask(this);
     }
 
     protected void init() {

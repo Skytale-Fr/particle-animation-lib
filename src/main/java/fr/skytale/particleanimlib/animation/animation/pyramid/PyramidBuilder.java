@@ -5,7 +5,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import org.bukkit.util.Vector;
 
-public class PyramidBuilder extends AAnimationBuilder<Pyramid> {
+public class PyramidBuilder extends AAnimationBuilder<Pyramid, PyramidTask> {
 
     public PyramidBuilder() {
         super();

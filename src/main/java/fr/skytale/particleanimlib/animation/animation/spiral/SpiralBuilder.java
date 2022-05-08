@@ -8,7 +8,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.ARoundAnimationBuilder;
 import org.bukkit.util.Vector;
 
-public class SpiralBuilder extends ARoundAnimationBuilder<Spiral> {
+public class SpiralBuilder extends ARoundAnimationBuilder<Spiral, SpiralTask> {
 
     public SpiralBuilder() {
         super();

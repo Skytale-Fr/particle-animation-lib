@@ -15,8 +15,8 @@ public class Pyramid extends AAnimation implements ISubAnimation {
     private IVariable<Double> distanceBetweenParticles;
 
     @Override
-    public void show() {
-        new PyramidTask(this);
+    public PyramidTask show() {
+        return new PyramidTask(this);
     }
 
     public IVariable<Vector> getFromCenterToApex() {

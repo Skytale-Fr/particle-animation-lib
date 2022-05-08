@@ -9,7 +9,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
 import org.bukkit.util.Vector;
 
-public class NodeBuilder extends ARotatingAnimationBuilder<Node> {
+public class NodeBuilder extends ARotatingAnimationBuilder<Node, NodeTask> {
 
     public static final String DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL = "directorVector u should not be null";
     public static final String DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL = "directorVector v should not be null";

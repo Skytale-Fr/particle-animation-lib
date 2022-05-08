@@ -87,9 +87,9 @@ public class Obj extends ARotatingAnimation {
     /******** public Methods ********/
 
     @Override
-    public void show() {
+    public ObjTask show() {
         init();
-        new ObjTask(this);
+        return new ObjTask(this);
     }
 
     /******** Getters & Setters ********/

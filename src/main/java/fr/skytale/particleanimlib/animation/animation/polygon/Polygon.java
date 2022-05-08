@@ -17,8 +17,8 @@ public class Polygon extends ARotatingAnimation implements IPlaneSubAnimation {
     }
 
     @Override
-    public void show() {
-        new PolygonTask(this);
+    public PolygonTask show() {
+        return new PolygonTask(this);
     }
 
     /***********GETTERS & SETTERS***********/
