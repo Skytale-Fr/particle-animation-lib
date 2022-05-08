@@ -8,10 +8,7 @@ import fr.skytale.particleanimlib.animation.animation.image.preset.*;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningSubAnimLightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningSubAnimSpherePresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.line.preset.LineHandsOfClockPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.line.preset.LineRotationYPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.line.preset.LineWithPolygonsPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.line.preset.SimpleLinePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.line.preset.*;
 import fr.skytale.particleanimlib.animation.animation.nodes.preset.SimpleNodePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.obj.preset.*;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPlayerAimPresetExecutor;
@@ -99,6 +96,7 @@ public enum AnimationPreset {
     LINE_WITH_POLYGONS(new LineWithPolygonsPresetExecutor()),
     LINE_ROTATING_ALONG_Y(new LineRotationYPresetExecutor()),
     LINE_HANDS_OF_CLOCK(new LineHandsOfClockPresetExecutor()),
+    LINE_HANDS_OF_CLOCK2(new LineHandsOfClock2PresetExecutor()),
     HELICOPTER(new HelicopterPresetExecutor()),
     SPHERE_PLASMA(new SpherePlasmaPresetExecutor()),
     TEXT_MINECRAFT(new SimpleTextMinecraftPresetExecutor()),
