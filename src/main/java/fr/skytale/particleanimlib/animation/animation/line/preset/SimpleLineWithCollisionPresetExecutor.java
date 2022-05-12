@@ -71,7 +71,6 @@ public class SimpleLineWithCollisionPresetExecutor extends AAnimationPresetExecu
     private CollisionBuilder<Entity, LineTask> createCollisionBuilder(LineBuilder lineBuilder) {
         CollisionBuilder<Entity, LineTask> collisionBuilder = new CollisionBuilder<>();
         collisionBuilder.setJavaPlugin(lineBuilder.getJavaPlugin());
-        collisionBuilder.setCollisionPeriod(new Constant<>(5));
         collisionBuilder.setPotentialCollidingTargetsCollector(lineTask -> {
             Location currentIterationBaseLocation = lineTask.getCurrentIterationBaseLocation();
             return currentIterationBaseLocation.getWorld().getNearbyEntities(currentIterationBaseLocation, 10, 10, 10);
