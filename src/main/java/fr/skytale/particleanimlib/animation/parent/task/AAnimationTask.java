@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.parent.task;
 
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.DirectionSubAnimPointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
@@ -132,6 +133,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
             if (runCallback && !animation.getCallbacks().isEmpty()) {
                 animation.getCallbacks().forEach(animationEndedCallback -> animationEndedCallback.run(animation));
             }
+//            animation.getCollisionHandlers().forEach(CollisionHandler::clearTimestamps);
         }
     }
 

@@ -72,6 +72,7 @@ public class CollisionHandler<T, K extends AAnimationTask> {
      */
     private Map<T, Integer> updateTimestampsMap = new HashMap<>();
     private Map<T, Integer> lastValidateTestTimestampsMap = new HashMap<>();
+    private AAnimationTask<?> runner = null;
 
     protected CollisionHandler(JavaPlugin javaPlugin, IVariable<Integer> collisionPeriod, Function<K, Collection<T>> collector, IVariable<Integer> collectorPeriod, Set<BiPredicate<T, K>> filters, Map<CollisionTestType, Collection<CollisionProcessor<T, K>>> collisionProcessorsByType) {
         this.javaPlugin = javaPlugin;
@@ -115,6 +116,11 @@ public class CollisionHandler<T, K extends AAnimationTask> {
         }
     }
 
+    public void clearTimestamps() {
+        this.updateTimestampsMap.clear();
+        this.lastValidateTestTimestampsMap.clear();
+    }
+
     /**
      * Apply registered filters to the collected targets.
      * @param animationTask The animation task calling the method
@@ -138,6 +144,11 @@ public class CollisionHandler<T, K extends AAnimationTask> {
      * @param animationTask The animation task calling the method
      */
     public void processCollision(int iterationCount, CollisionTestType collisionTestType, Location location, K animationTask) {
+        if(runner == null || runner.hasDurationEnded())
+        {
+            clearTimestamps();
+            runner = animationTask;
+        }
         Bukkit.getScheduler().runTask(javaPlugin, () -> innerProcessCollision(iterationCount, collisionTestType, location, animationTask));
     }
 
@@ -164,24 +175,25 @@ public class CollisionHandler<T, K extends AAnimationTask> {
                     // How many ticks before the target can be part of the collision process:
                     int noCollisionTicks = noCollisionTicksMap.getOrDefault(target, 0);
                     // The last iteration count when the 'noCollisionTicks' has been decreased:
-                    int lastUpdateIterationCount = updateTimestampsMap.getOrDefault(target, 0);
+                    int lastUpdateIterationCount = updateTimestampsMap.getOrDefault(target, -1);
                     // The last iteration count when the collision test has been validate:
-                    int lastValidateTestIterationCount = lastValidateTestTimestampsMap.getOrDefault(target, 0);
+                    int lastValidateTestIterationCount = lastValidateTestTimestampsMap.getOrDefault(target, -1);
                     // The two previous values help us to check if (for PER_PARTICLE collision tests) there is not
                     // more the one update / action callback per iteration count.
-                    if (lastValidateTestIterationCount == iterationCount) return;
+                    if (lastValidateTestIterationCount >= runner.getIterationCount()) return;
+                    System.out.println(noCollisionTicksMap);
 
                     if(noCollisionTicks <= 0 && collisionTest.test(location, animationTask, target)) {
                         noCollisionTicks = actionCallback.run(animationTask, target);
                         if(noCollisionTicks >= 0) {
-                            lastValidateTestTimestampsMap.put(target, iterationCount);
+                            lastValidateTestTimestampsMap.put(target, runner.getIterationCount());
                             noCollisionTicksMap.put(target, noCollisionTicks);
                         }
-                    } else if (lastUpdateIterationCount != iterationCount) {
+                    } else if (animationTask == runner && lastUpdateIterationCount < runner.getIterationCount()) {
                         // Else we need to update noCollisionTicksMap
                         // When updating this map, we need to subtract not 1, but the number of ticks between every animation show() call
                         noCollisionTicksMap.put(target, Math.max(noCollisionTicks - animationShowPeriod * collisionPeriodValue, 0));
-                        updateTimestampsMap.put(target, iterationCount);
+                        updateTimestampsMap.put(target, runner.getIterationCount());
                     }
                 });
             });
