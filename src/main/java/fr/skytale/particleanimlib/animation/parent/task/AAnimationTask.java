@@ -29,6 +29,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     protected APosition currentPosition;
     protected Location currentIterationBaseLocation;
+    protected int tickDuration;
     protected int currentShowPeriod;
 
     public AAnimationTask(T animation) {
@@ -71,6 +72,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     }
 
     protected final void startTask() {
+        tickDuration = animation.getTicksDuration();
         this.taskId = Bukkit.getScheduler().runTaskTimerAsynchronously(animation.getPlugin(), this, 0, 0).getTaskId();
     }
 
@@ -120,6 +122,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     public int getIterationCount() { return iterationCount; }
     public Location getCurrentIterationBaseLocation() { return currentIterationBaseLocation; }
+    public int getTickDuration() { return tickDuration; }
     public int getCurrentShowPeriod() { return currentShowPeriod; }
 
     public void stopAnimation() {

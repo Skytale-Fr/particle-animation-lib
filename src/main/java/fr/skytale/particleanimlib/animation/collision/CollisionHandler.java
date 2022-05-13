@@ -144,12 +144,18 @@ public class CollisionHandler<T, K extends AAnimationTask> {
      * @param animationTask The animation task calling the method
      */
     public void processCollision(int iterationCount, CollisionTestType collisionTestType, Location location, K animationTask) {
+        int runnerIterationCount = 0;
         if(runner == null || runner.hasDurationEnded())
         {
             clearTimestamps();
-            runner = animationTask;
+            runner = null;
+            if (animationTask.getIterationCount() == 0) {
+                runner = animationTask;
+                runnerIterationCount = runner.getIterationCount();
+            }
         }
-        Bukkit.getScheduler().runTask(javaPlugin, () -> innerProcessCollision(iterationCount, collisionTestType, location, animationTask));
+        int finalRunnerIterationCount = runnerIterationCount;
+        Bukkit.getScheduler().runTask(javaPlugin, () -> innerProcessCollision(finalRunnerIterationCount, collisionTestType, location, animationTask));
     }
 
     /**
@@ -180,20 +186,24 @@ public class CollisionHandler<T, K extends AAnimationTask> {
                     int lastValidateTestIterationCount = lastValidateTestTimestampsMap.getOrDefault(target, -1);
                     // The two previous values help us to check if (for PER_PARTICLE collision tests) there is not
                     // more the one update / action callback per iteration count.
-                    if (lastValidateTestIterationCount >= runner.getIterationCount()) return;
-                    System.out.println(noCollisionTicksMap);
+                    if (lastValidateTestIterationCount >= iterationCount) return;
+//                    System.out.println(iterationCount + " " + noCollisionTicksMap + " " + updateTimestampsMap);
+
+                    if (animationTask == runner && lastUpdateIterationCount < iterationCount) {
+                        // Else we need to update noCollisionTicksMap
+                        // When updating this map, we need to subtract not 1, but the number of ticks between every animation show() call
+                        int ticksPassed = Math.max(animationTask.getTickDuration() > 1 ? animationShowPeriod : 1, 1) * collisionPeriodValue;
+                        noCollisionTicks =  Math.max(noCollisionTicks - ticksPassed, 0);
+                        noCollisionTicksMap.put(target, noCollisionTicks);
+                        updateTimestampsMap.put(target, iterationCount);
+                    }
 
                     if(noCollisionTicks <= 0 && collisionTest.test(location, animationTask, target)) {
                         noCollisionTicks = actionCallback.run(animationTask, target);
                         if(noCollisionTicks >= 0) {
-                            lastValidateTestTimestampsMap.put(target, runner.getIterationCount());
+                            lastValidateTestTimestampsMap.put(target, iterationCount);
                             noCollisionTicksMap.put(target, noCollisionTicks);
                         }
-                    } else if (animationTask == runner && lastUpdateIterationCount < runner.getIterationCount()) {
-                        // Else we need to update noCollisionTicksMap
-                        // When updating this map, we need to subtract not 1, but the number of ticks between every animation show() call
-                        noCollisionTicksMap.put(target, Math.max(noCollisionTicks - animationShowPeriod * collisionPeriodValue, 0));
-                        updateTimestampsMap.put(target, runner.getIterationCount());
                     }
                 });
             });

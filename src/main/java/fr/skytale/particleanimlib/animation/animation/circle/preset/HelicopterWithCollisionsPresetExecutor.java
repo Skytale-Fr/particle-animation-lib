@@ -45,7 +45,7 @@ public class HelicopterWithCollisionsPresetExecutor extends AAnimationPresetExec
         circleBuilder.setDirectorVectorsFromOrientation(ORIENTATION, 1);
         circleBuilder.setNbPoints(PROPELLER_COUNT, true);
         circleBuilder.setRadius(0.01);
-        circleBuilder.setRotation(new Vector(0, 1, 0), Math.PI / 8);
+        circleBuilder.setRotation(new Vector(0, 1, 0), Math.PI / 12);
         circleBuilder.setPointDefinition(APointDefinition.fromSubAnim(lineBuilder.getAnimation(), 10.0d));
         circleBuilder.setTicksDuration(100);
         circleBuilder.setShowPeriod(new Constant<>(3));
