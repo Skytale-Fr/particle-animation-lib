@@ -144,6 +144,7 @@ public class CollisionHandler<T, K extends AAnimationTask> {
      * @param animationTask The animation task calling the method
      */
     public void processCollision(int iterationCount, CollisionTestType collisionTestType, Location location, K animationTask) {
+        // Update runner and fetch its iteration count
         int runnerIterationCount = 0;
         if(runner == null || runner.hasDurationEnded())
         {
@@ -153,22 +154,34 @@ public class CollisionHandler<T, K extends AAnimationTask> {
                 runner = animationTask;
                 runnerIterationCount = runner.getIterationCount();
             }
-        }
+        } else runnerIterationCount = runner.getIterationCount();
         int finalRunnerIterationCount = runnerIterationCount;
-        Bukkit.getScheduler().runTask(javaPlugin, () -> innerProcessCollision(finalRunnerIterationCount, collisionTestType, location, animationTask));
+
+        // Compute recursive showPeriod
+        int showPeriod = 1;
+        AAnimationTask<?> currentAnimationTask = animationTask;
+        while (currentAnimationTask != null)
+        {
+            if (currentAnimationTask.getTickDuration() > 1)
+                showPeriod *= currentAnimationTask.getCurrentShowPeriod();
+            currentAnimationTask = currentAnimationTask.getParentTask();
+        }
+        final int finalShowPeriod = showPeriod;
+
+        Bukkit.getScheduler().runTask(javaPlugin, () -> innerProcessCollision(finalRunnerIterationCount, finalShowPeriod, collisionTestType, location, animationTask));
     }
 
     /**
      * Process collisions checks on previously collected targets (for every registered collision processors).
      *
      * @param iterationCount The iteration count of the current animation task
+     * @param showPeriod The recursive show period of the current animation task (multiplied by the show period of every parent)
      * @param collisionTestType The type of the collision called (see location param)
      * @param location The location of the process (PER_PARTICLE: the location of the particle, MAIN_POSITION: the location of the animation)
      * @param animationTask The animation task calling the method
      */
-    private void innerProcessCollision(int iterationCount, CollisionTestType collisionTestType, Location location, K animationTask) {
+    private void innerProcessCollision(int iterationCount, int showPeriod, CollisionTestType collisionTestType, Location location, K animationTask) {
         int collisionPeriodValue = this.collisionPeriod.getCurrentValue(iterationCount);
-        int animationShowPeriod = animationTask.getCurrentShowPeriod();
         if(collisionPeriodValue <= 0)
             throw new IllegalStateException(String.format("Your are not able to provide a collision period that is lower or equals to 0 (got '%d')", collisionPeriodValue));
         if(iterationCount == 0 || iterationCount % collisionPeriodValue == 0) {
@@ -187,12 +200,9 @@ public class CollisionHandler<T, K extends AAnimationTask> {
                     // The two previous values help us to check if (for PER_PARTICLE collision tests) there is not
                     // more the one update / action callback per iteration count.
                     if (lastValidateTestIterationCount >= iterationCount) return;
-//                    System.out.println(iterationCount + " " + noCollisionTicksMap + " " + updateTimestampsMap);
-
                     if (animationTask == runner && lastUpdateIterationCount < iterationCount) {
-                        // Else we need to update noCollisionTicksMap
                         // When updating this map, we need to subtract not 1, but the number of ticks between every animation show() call
-                        int ticksPassed = Math.max(animationTask.getTickDuration() > 1 ? animationShowPeriod : 1, 1) * collisionPeriodValue;
+                        int ticksPassed = showPeriod * collisionPeriodValue;
                         noCollisionTicks =  Math.max(noCollisionTicks - ticksPassed, 0);
                         noCollisionTicksMap.put(target, noCollisionTicks);
                         updateTimestampsMap.put(target, iterationCount);

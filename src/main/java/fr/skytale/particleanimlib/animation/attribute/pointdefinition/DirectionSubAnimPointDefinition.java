@@ -6,6 +6,7 @@ import fr.skytale.particleanimlib.animation.attribute.projectiledirection.Animat
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -41,12 +42,12 @@ public class DirectionSubAnimPointDefinition extends SubAnimPointDefinition {
 
     @Override
     @Deprecated
-    public void show(AAnimation animation, Location loc) {
-        show(animation, loc, new Vector(0, 1, 0));
+    public void show(AAnimation animation, Location loc, AAnimationTask<?> parentTask) {
+        show(animation, loc, new Vector(0, 1, 0), parentTask);
     }
 
     @Override
-    public void show(AAnimation animation, Location loc, Vector v) {
+    public void show(AAnimation animation, Location loc, Vector v, AAnimationTask<?> parentTask) {
         IDirectionSubAnimation newSubAnimation = (IDirectionSubAnimation) subAnimation.clone();
         newSubAnimation.setPosition(APosition.fromLocation(loc));
         newSubAnimation.setDirection(AnimationDirection.fromMoveVector(
@@ -54,7 +55,7 @@ public class DirectionSubAnimPointDefinition extends SubAnimPointDefinition {
                         .normalize()
                         .multiply(speed)
         ));
-        newSubAnimation.show();
+        newSubAnimation.show().setParentTask(parentTask);
     }
 
     @Override

@@ -19,6 +19,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
+    protected AAnimationTask<?> parentTask;
     protected T animation;
 
     //Evolving variables
@@ -129,6 +130,9 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         stopAnimation(true);
     }
 
+    public void setParentTask(AAnimationTask<?> parentTask) { this.parentTask = parentTask; }
+    public AAnimationTask<?> getParentTask() { return this.parentTask; }
+
     protected void stopAnimation(boolean runCallback) {
         if (taskId != null) {
             Bukkit.getScheduler().cancelTask(taskId);
@@ -168,9 +172,9 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     public void showPoint(APointDefinition pointDefinition, Location pointLocation, Vector pointDirection) {
         if (pointDefinition.getShowMethodParameters() == APointDefinition.ShowMethodParameters.LOCATION) {
-            pointDefinition.show(animation, pointLocation);
+            pointDefinition.show(animation, pointLocation, this);
         } else {
-            pointDefinition.show(animation, pointLocation, pointDirection);
+            pointDefinition.show(animation, pointLocation, pointDirection, this);
         }
 
         this.animation.getCollisionHandlers().forEach(collisionHandler -> {
