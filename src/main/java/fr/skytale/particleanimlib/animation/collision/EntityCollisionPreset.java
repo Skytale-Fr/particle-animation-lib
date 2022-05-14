@@ -10,6 +10,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
+import java.util.Arrays;
+
 /**
  * This class extends CollisionPreset to implements entity collision presets.
  * @param <K> The type of animation task you want to plug this collision preset to

@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.parent.task;
 
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.DirectionSubAnimPointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
@@ -18,6 +19,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
+    protected AAnimationTask<?> parentTask;
     protected T animation;
 
     //Evolving variables
@@ -28,6 +30,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     protected APosition currentPosition;
     protected Location currentIterationBaseLocation;
+    protected int tickDuration;
     protected int currentShowPeriod;
 
     public AAnimationTask(T animation) {
@@ -70,6 +73,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     }
 
     protected final void startTask() {
+        tickDuration = animation.getTicksDuration();
         this.taskId = Bukkit.getScheduler().runTaskTimerAsynchronously(animation.getPlugin(), this, 0, 0).getTaskId();
     }
 
@@ -119,11 +123,15 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     public int getIterationCount() { return iterationCount; }
     public Location getCurrentIterationBaseLocation() { return currentIterationBaseLocation; }
+    public int getTickDuration() { return tickDuration; }
     public int getCurrentShowPeriod() { return currentShowPeriod; }
 
     public void stopAnimation() {
         stopAnimation(true);
     }
+
+    public void setParentTask(AAnimationTask<?> parentTask) { this.parentTask = parentTask; }
+    public AAnimationTask<?> getParentTask() { return this.parentTask; }
 
     protected void stopAnimation(boolean runCallback) {
         if (taskId != null) {
@@ -132,6 +140,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
             if (runCallback && !animation.getCallbacks().isEmpty()) {
                 animation.getCallbacks().forEach(animationEndedCallback -> animationEndedCallback.run(animation));
             }
+//            animation.getCollisionHandlers().forEach(CollisionHandler::clearTimestamps);
         }
     }
 
@@ -163,9 +172,9 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     public void showPoint(APointDefinition pointDefinition, Location pointLocation, Vector pointDirection) {
         if (pointDefinition.getShowMethodParameters() == APointDefinition.ShowMethodParameters.LOCATION) {
-            pointDefinition.show(animation, pointLocation);
+            pointDefinition.show(animation, pointLocation, this);
         } else {
-            pointDefinition.show(animation, pointLocation, pointDirection);
+            pointDefinition.show(animation, pointLocation, pointDirection, this);
         }
 
         this.animation.getCollisionHandlers().forEach(collisionHandler -> {

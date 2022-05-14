@@ -45,7 +45,7 @@ public class HelicopterWithCollisionsPresetExecutor extends AAnimationPresetExec
         circleBuilder.setDirectorVectorsFromOrientation(ORIENTATION, 1);
         circleBuilder.setNbPoints(PROPELLER_COUNT, true);
         circleBuilder.setRadius(0.01);
-        circleBuilder.setRotation(new Vector(0, 1, 0), Math.PI / 10);
+        circleBuilder.setRotation(new Vector(0, 1, 0), Math.PI / 12);
         circleBuilder.setPointDefinition(APointDefinition.fromSubAnim(lineBuilder.getAnimation(), 10.0d));
         circleBuilder.setTicksDuration(100);
         circleBuilder.setShowPeriod(new Constant<>(3));
@@ -62,7 +62,7 @@ public class HelicopterWithCollisionsPresetExecutor extends AAnimationPresetExec
         collisionBuilder.addCollisionProcessor(ParticleCollisionProcessor.useDefault(lineBuilder, EntityCollisionPreset.EXACT_BOUNDING_BOX, (animationTask, target) -> {
             if(!(target instanceof LivingEntity)) return -1;
             ((LivingEntity) target).damage(1);
-            return 20; // The entity can only take damages every 20 ticks.
+            return 40; // The entity can only take damages every 20 ticks.
         }));
 
         return collisionBuilder;

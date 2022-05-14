@@ -5,8 +5,11 @@ import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
+
+import javax.naming.ldap.PagedResultsControl;
 
 public class PlaneSubAnimPointDefinition extends SubAnimPointDefinition {
 
@@ -31,22 +34,22 @@ public class PlaneSubAnimPointDefinition extends SubAnimPointDefinition {
     }
 
     @Override
-    public void show(AAnimation animation, Location loc) {
+    public void show(AAnimation animation, Location loc, AAnimationTask<?> parentTask) {
         IPlaneSubAnimation newSubAnimation = (IPlaneSubAnimation) subAnimation.clone();
         newSubAnimation.setPosition(APosition.fromLocation(loc));
-        newSubAnimation.show();
+        newSubAnimation.show().setParentTask(parentTask);
     }
 
     @Override
-    public void show(AAnimation animation, Location loc, Vector fromCenterToPoint) {
+    public void show(AAnimation animation, Location loc, Vector fromCenterToPoint, AAnimationTask<?> parentTask) {
         if (this.showMethodParameters == ShowMethodParameters.LOCATION_AND_DIRECTION) {
             RotatableVector.Plane2D plane = new RotatableVector(fromCenterToPoint).getPlane(loc);
             subAnimation.setPosition(APosition.fromLocation(loc));
             subAnimation.setU(plane.u);
             subAnimation.setV(plane.v);
-            subAnimation.show();
+            subAnimation.show().setParentTask(parentTask);
         } else {
-            show(animation, loc);
+            show(animation, loc, parentTask);
         }
     }
 

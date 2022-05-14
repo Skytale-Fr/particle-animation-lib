@@ -9,6 +9,7 @@ import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -54,9 +55,22 @@ public abstract class APointDefinition implements Cloneable {
         return hasSubAnimation;
     }
 
-    public abstract void show(AAnimation animation, Location loc);
+    /**
+     * Creates a clone and shows the sub animation
+     * @param animation The animation to show
+     * @param loc The location to show the animation
+     * @param parentTask The animation task that calls this method
+     */
+    public abstract void show(AAnimation animation, Location loc, AAnimationTask<?> parentTask);
 
-    public abstract void show(AAnimation animation, Location loc, Vector fromCenterToPoint);
+    /**
+     * Creates a clone and shows the sub animation
+     * @param animation The animation to show
+     * @param loc The location to show the animation
+     * @param fromCenterToPoint Can be used to set an animation's direction
+     * @param parentTask The animation task that calls this method
+     */
+    public abstract void show(AAnimation animation, Location loc, Vector fromCenterToPoint, AAnimationTask<?> parentTask);
 
     @Override
     public APointDefinition clone() {

@@ -64,6 +64,15 @@ public class CollisionHandler<T, K extends AAnimationTask> {
      * since the last time it collides.
      */
     private Map<T, Integer> noCollisionTicksMap = new HashMap<>();
+    /**
+     * A cache variable to remember when all the maps have been modified.
+     * This is helpful for PER_PARTICLE collisions tests. As those tests will be called
+     * more than once per iteration count, the value stored in 'noCollisionTicksMap' will be more than once per iteration count.
+     * (Where MAIN_PARTICLE collisions tests are only raised once per iteration count with 'currentIterationBaseLocation' of the animation)
+     */
+    private Map<T, Integer> updateTimestampsMap = new HashMap<>();
+    private Map<T, Integer> lastValidateTestTimestampsMap = new HashMap<>();
+    private AAnimationTask<?> runner = null;
 
     protected CollisionHandler(JavaPlugin javaPlugin, IVariable<Integer> collisionPeriod, Function<K, Collection<T>> collector, IVariable<Integer> collectorPeriod, Set<BiPredicate<T, K>> filters, Map<CollisionTestType, Collection<CollisionProcessor<T, K>>> collisionProcessorsByType) {
         this.javaPlugin = javaPlugin;
@@ -100,11 +109,16 @@ public class CollisionHandler<T, K extends AAnimationTask> {
             throw new IllegalStateException(String.format("Your are not able to provide a collector period that is lower or equals to 0 (got '%d')", collectorPeriodValue));
         if(iterationCount == 0 || iterationCount % collectorPeriodValue == 0) {
             this.targetsCollected = this.collector.apply(animationTask);
-            this.noCollisionTicksMap.clear();
+            noCollisionTicksMap.values().removeIf(noCollisionTicks -> noCollisionTicks <= 0);
 
             // If we have collected all the targets, we need to process all the registered filters.
             applyFilters(animationTask);
         }
+    }
+
+    public void clearTimestamps() {
+        this.updateTimestampsMap.clear();
+        this.lastValidateTestTimestampsMap.clear();
     }
 
     /**
@@ -130,18 +144,43 @@ public class CollisionHandler<T, K extends AAnimationTask> {
      * @param animationTask The animation task calling the method
      */
     public void processCollision(int iterationCount, CollisionTestType collisionTestType, Location location, K animationTask) {
-        Bukkit.getScheduler().runTask(javaPlugin, () -> innerProcessCollision(iterationCount, collisionTestType, location, animationTask));
+        // Update runner and fetch its iteration count
+        int runnerIterationCount = 0;
+        if(runner == null || runner.hasDurationEnded())
+        {
+            clearTimestamps();
+            runner = null;
+            if (animationTask.getIterationCount() == 0) {
+                runner = animationTask;
+                runnerIterationCount = runner.getIterationCount();
+            }
+        } else runnerIterationCount = runner.getIterationCount();
+        int finalRunnerIterationCount = runnerIterationCount;
+
+        // Compute recursive showPeriod
+        int showPeriod = 1;
+        AAnimationTask<?> currentAnimationTask = animationTask;
+        while (currentAnimationTask != null)
+        {
+            if (currentAnimationTask.getTickDuration() > 1)
+                showPeriod *= currentAnimationTask.getCurrentShowPeriod();
+            currentAnimationTask = currentAnimationTask.getParentTask();
+        }
+        final int finalShowPeriod = showPeriod;
+
+        Bukkit.getScheduler().runTask(javaPlugin, () -> innerProcessCollision(finalRunnerIterationCount, finalShowPeriod, collisionTestType, location, animationTask));
     }
 
     /**
      * Process collisions checks on previously collected targets (for every registered collision processors).
      *
      * @param iterationCount The iteration count of the current animation task
+     * @param showPeriod The recursive show period of the current animation task (multiplied by the show period of every parent)
      * @param collisionTestType The type of the collision called (see location param)
      * @param location The location of the process (PER_PARTICLE: the location of the particle, MAIN_POSITION: the location of the animation)
      * @param animationTask The animation task calling the method
      */
-    private void innerProcessCollision(int iterationCount, CollisionTestType collisionTestType, Location location, K animationTask) {
+    private void innerProcessCollision(int iterationCount, int showPeriod, CollisionTestType collisionTestType, Location location, K animationTask) {
         int collisionPeriodValue = this.collisionPeriod.getCurrentValue(iterationCount);
         if(collisionPeriodValue <= 0)
             throw new IllegalStateException(String.format("Your are not able to provide a collision period that is lower or equals to 0 (got '%d')", collisionPeriodValue));
@@ -152,11 +191,30 @@ public class CollisionHandler<T, K extends AAnimationTask> {
                 CollisionPredicate<T, K> collisionTest = collisionProcessor.getCollisionTest();
                 CollisionActionCallback<T, K> actionCallback = collisionProcessor.getActionCallback();
                 targetsCollected.forEach(target -> {
+                    // How many ticks before the target can be part of the collision process:
                     int noCollisionTicks = noCollisionTicksMap.getOrDefault(target, 0);
-                    if(noCollisionTicks == 0 && collisionTest.test(location, animationTask, target)) {
+                    // The last iteration count when the 'noCollisionTicks' has been decreased:
+                    int lastUpdateIterationCount = updateTimestampsMap.getOrDefault(target, -1);
+                    // The last iteration count when the collision test has been validate:
+                    int lastValidateTestIterationCount = lastValidateTestTimestampsMap.getOrDefault(target, -1);
+                    // The two previous values help us to check if (for PER_PARTICLE collision tests) there is not
+                    // more the one update / action callback per iteration count.
+                    if (lastValidateTestIterationCount >= iterationCount) return;
+                    if (animationTask == runner && lastUpdateIterationCount < iterationCount) {
+                        // When updating this map, we need to subtract not 1, but the number of ticks between every animation show() call
+                        int ticksPassed = showPeriod * collisionPeriodValue;
+                        noCollisionTicks =  Math.max(noCollisionTicks - ticksPassed, 0);
+                        noCollisionTicksMap.put(target, noCollisionTicks);
+                        updateTimestampsMap.put(target, iterationCount);
+                    }
+
+                    if(noCollisionTicks <= 0 && collisionTest.test(location, animationTask, target)) {
                         noCollisionTicks = actionCallback.run(animationTask, target);
-                        if(noCollisionTicks >= 0) noCollisionTicksMap.put(target, noCollisionTicks);
-                    } else noCollisionTicksMap.put(target, noCollisionTicks - 1); // Else we need to update noCollisionTicksMap
+                        if(noCollisionTicks >= 0) {
+                            lastValidateTestTimestampsMap.put(target, iterationCount);
+                            noCollisionTicksMap.put(target, noCollisionTicks);
+                        }
+                    }
                 });
             });
         }
