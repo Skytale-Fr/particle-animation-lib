@@ -3,8 +3,8 @@ package fr.skytale.particleanimlib.animation.attribute;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 
 @FunctionalInterface
-public interface AnimationStopCondition {
+public interface AnimationStopCondition<T extends AAnimationTask<?>> {
 
-    public boolean canStop(AAnimationTask<?> animationTask);
+    public boolean canStop(T animationTask);
 
 }

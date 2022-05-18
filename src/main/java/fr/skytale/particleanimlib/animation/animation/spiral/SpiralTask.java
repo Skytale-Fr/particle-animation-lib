@@ -168,18 +168,6 @@ public class SpiralTask extends AAnimationTask<Spiral> {
         showPoint(pointData.pointDefinition, pointData.pointLocation, pointData.fromCenterToPoint);
     }
 
-    public static class PointData {
-        public APointDefinition pointDefinition;
-        public Location pointLocation;
-        public Vector fromCenterToPoint;
-
-        public PointData(APointDefinition pointDefinition, Location pointLocation, Vector fromCenterToPoint) {
-            this.pointDefinition = pointDefinition;
-            this.pointLocation = pointLocation;
-            this.fromCenterToPoint = fromCenterToPoint;
-        }
-    }
-
     public Vector getCurrentEntityRelativeLocation() {
         return entityRelativeLocation;
     }
@@ -228,4 +216,35 @@ public class SpiralTask extends AAnimationTask<Spiral> {
         return spiralParticlesGapAngle;
     }
 
+    @Override
+    public String toString() {
+        return "SpiralTask{" +
+                "followEntity=" + followEntity +
+                ", trailPointsPerIteration=" + trailPointsPerIteration +
+                ", entityRelativeLocation=" + entityRelativeLocation +
+                ", absoluteLocation=" + absoluteLocation +
+                ", spiralParticlesChangingAngle=" + spiralParticlesChangingAngle +
+                ", currentIterationPoints=" + currentIterationPoints +
+                ", animationCurrentLocation=" + animationCurrentLocation +
+                ", nbTrailingParticles=" + nbTrailingParticles +
+                ", directorVector=" + directorVector +
+                ", radius=" + radius +
+                ", radiusVector=" + radiusVector +
+                ", firstSpiralParticleLocationBeforeRotation=" + firstSpiralParticleLocationBeforeRotation +
+                ", nbSpirals=" + nbSpirals +
+                ", spiralParticlesGapAngle=" + spiralParticlesGapAngle +
+                '}';
+    }
+
+    public static class PointData {
+        public APointDefinition pointDefinition;
+        public Location pointLocation;
+        public Vector fromCenterToPoint;
+
+        public PointData(APointDefinition pointDefinition, Location pointLocation, Vector fromCenterToPoint) {
+            this.pointDefinition = pointDefinition;
+            this.pointLocation = pointLocation;
+            this.fromCenterToPoint = fromCenterToPoint;
+        }
+    }
 }

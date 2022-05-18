@@ -1,22 +1,15 @@
 package fr.skytale.particleanimlib.animation.parent.task;
 
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.DirectionSubAnimPointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
-import fr.skytale.particleanimlib.animation.collision.CollisionHandler;
 import fr.skytale.particleanimlib.animation.collision.CollisionTestType;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     protected AAnimationTask<?> parentTask;
@@ -93,7 +86,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
         // If a stop condition has been set, we need to check this condition
         // and stop the animation if true is returned.
-        if(this.animation.getStopCondition() != null && this.animation.getStopCondition().canStop(this)) {
+        if (iterationCount > 0 && this.animation.getStopCondition() != null && this.animation.getStopCondition().canStop(this)) {
             stopAnimation(true);
             return;
         }
@@ -121,17 +114,33 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         return iterationCount >= animation.getTicksDuration();
     }
 
-    public int getIterationCount() { return iterationCount; }
-    public Location getCurrentIterationBaseLocation() { return currentIterationBaseLocation; }
-    public int getTickDuration() { return tickDuration; }
-    public int getCurrentShowPeriod() { return currentShowPeriod; }
+    public int getIterationCount() {
+        return iterationCount;
+    }
+
+    public Location getCurrentIterationBaseLocation() {
+        return currentIterationBaseLocation;
+    }
+
+    public int getTickDuration() {
+        return tickDuration;
+    }
+
+    public int getCurrentShowPeriod() {
+        return currentShowPeriod;
+    }
 
     public void stopAnimation() {
         stopAnimation(true);
     }
 
-    public void setParentTask(AAnimationTask<?> parentTask) { this.parentTask = parentTask; }
-    public AAnimationTask<?> getParentTask() { return this.parentTask; }
+    public AAnimationTask<?> getParentTask() {
+        return this.parentTask;
+    }
+
+    public void setParentTask(AAnimationTask<?> parentTask) {
+        this.parentTask = parentTask;
+    }
 
     protected void stopAnimation(boolean runCallback) {
         if (taskId != null) {

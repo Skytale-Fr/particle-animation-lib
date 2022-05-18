@@ -94,8 +94,8 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
         animation.setViewers(viewers);
     }
 
-    public void setStopCondition(AnimationStopCondition stopCondition) { this.setStopCondition(stopCondition, false); }
-    public void setStopCondition(AnimationStopCondition stopCondition, boolean infiniteTickDuration) {
+    public void setStopCondition(AnimationStopCondition<K> stopCondition) { this.setStopCondition(stopCondition, false); }
+    public void setStopCondition(AnimationStopCondition<K> stopCondition, boolean infiniteTickDuration) {
         animation.setStopCondition(stopCondition, infiniteTickDuration);
     }
 
