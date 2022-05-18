@@ -78,13 +78,6 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     }
 
     public final void run() {
-        // If a stop condition has been set, we need to check this condition
-        // and stop the animation if true is returned.
-        if(this.animation.getStopCondition() != null && this.animation.getStopCondition().get()) {
-            stopAnimation(true);
-            return;
-        }
-
         APosition currentPosition = animation.getPosition();
 
         //Computing current animation location
@@ -97,6 +90,13 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
         //We only show at the specified frequency
         currentShowPeriod = animation.getShowPeriod().getCurrentValue(iterationCount);
+
+        // If a stop condition has been set, we need to check this condition
+        // and stop the animation if true is returned.
+        if(this.animation.getStopCondition() != null && this.animation.getStopCondition().canStop(this)) {
+            stopAnimation(true);
+            return;
+        }
 
         this.animation.getCollisionHandlers().forEach(collisionHandler -> {
             collisionHandler.collect(iterationCount, this);
