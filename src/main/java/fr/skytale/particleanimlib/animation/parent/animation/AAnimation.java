@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.parent.animation;
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationEndedCallback;
+import fr.skytale.particleanimlib.animation.attribute.AnimationStopCondition;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
@@ -24,7 +25,7 @@ public abstract class AAnimation implements Cloneable {
     protected IVariable<Integer> showPeriod;
     protected Set<AnimationEndedCallback> animationEndedCallbacks = new HashSet<>();
     protected AViewers viewers;
-    protected Supplier<Boolean> stopCondition;
+    protected AnimationStopCondition stopCondition;
     protected Set<CollisionHandler<?, AAnimationTask<?>>> collisionHandlers = new HashSet<>();
 
     protected static Set<Vector> getLinePoints(Vector point1, Vector point2, double step) {
@@ -100,12 +101,12 @@ public abstract class AAnimation implements Cloneable {
         this.plugin = plugin;
     }
 
-    public void setStopCondition(Supplier<Boolean> stopCondition) { this.setStopCondition(stopCondition, false); }
-    public void setStopCondition(Supplier<Boolean> stopCondition, boolean infiniteTickDuration) {
+    public void setStopCondition(AnimationStopCondition stopCondition) { this.setStopCondition(stopCondition, false); }
+    public void setStopCondition(AnimationStopCondition stopCondition, boolean infiniteTickDuration) {
         this.stopCondition = stopCondition;
         if(infiniteTickDuration) this.setTicksDuration(Integer.MAX_VALUE);
     }
-    public Supplier<Boolean> getStopCondition() { return this.stopCondition; }
+    public AnimationStopCondition getStopCondition() { return this.stopCondition; }
 
     public void addCollisionHandler(CollisionHandler<?, AAnimationTask<?>> collisionHandler) { this.collisionHandlers.add(collisionHandler); }
     public Set<CollisionHandler<?, AAnimationTask<?>>> getCollisionHandlers() { return collisionHandlers; }
@@ -122,6 +123,7 @@ public abstract class AAnimation implements Cloneable {
         obj.position = this.position.clone();
         obj.viewers = this.viewers.clone();
         obj.mainParticle = mainParticle == null ? null : new ParticleTemplate(this.mainParticle);
+        obj.stopCondition = this.stopCondition;
         obj.collisionHandlers = new HashSet<>(collisionHandlers);
         return obj;
     }

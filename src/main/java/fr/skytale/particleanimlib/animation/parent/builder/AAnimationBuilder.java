@@ -2,6 +2,7 @@ package fr.skytale.particleanimlib.animation.parent.builder;
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationEndedCallback;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
+import fr.skytale.particleanimlib.animation.attribute.AnimationStopCondition;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
@@ -93,6 +94,11 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
     public void setViewers(AViewers viewers) {
         checkNotNull(viewers, "viewers should not be null");
         animation.setViewers(viewers);
+    }
+
+    public void setStopCondition(AnimationStopCondition stopCondition) { this.setStopCondition(stopCondition, false); }
+    public void setStopCondition(AnimationStopCondition stopCondition, boolean infiniteTickDuration) {
+        animation.setStopCondition(stopCondition, infiniteTickDuration);
     }
 
     // --------------------- FINAL BUILD ---------------------
