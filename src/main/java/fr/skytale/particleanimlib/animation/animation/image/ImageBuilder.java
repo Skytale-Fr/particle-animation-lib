@@ -8,7 +8,7 @@ import org.bukkit.util.Vector;
 
 import java.awt.*;
 
-public class ImageBuilder extends ARotatingAnimationBuilder<Image> {
+public class ImageBuilder extends ARotatingAnimationBuilder<Image, ImageTask> {
 
     public ImageBuilder() {
         super();

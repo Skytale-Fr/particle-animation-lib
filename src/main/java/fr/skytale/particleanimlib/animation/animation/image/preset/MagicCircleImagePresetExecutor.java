@@ -48,7 +48,7 @@ public class MagicCircleImagePresetExecutor extends AAnimationPresetExecutor<Ima
 
         imageBuilder.setTicksDuration(1);
         imageBuilder.setShowPeriod(1);
-        imageBuilder.setCallback(result -> {
+        imageBuilder.addAnimationEndedCallback(result -> {
             extImage.show();
             midImage.show();
             inImage.show();

@@ -8,6 +8,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARotatingRoundAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.util.Vector;
 
 public class Circle extends ARotatingRoundAnimation implements IPlaneSubAnimation, ISubAnimationContainer {
@@ -20,8 +21,8 @@ public class Circle extends ARotatingRoundAnimation implements IPlaneSubAnimatio
     }
 
     @Override
-    public void show() {
-        new CircleTask(this);
+    public CircleTask show() {
+        return new CircleTask(this);
     }
 
     /***********GETTERS & SETTERS***********/

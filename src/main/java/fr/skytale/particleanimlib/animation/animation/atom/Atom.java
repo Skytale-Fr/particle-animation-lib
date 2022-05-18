@@ -1,10 +1,12 @@
 package fr.skytale.particleanimlib.animation.animation.atom;
 
 
+import fr.skytale.particleanimlib.animation.animation.circle.CircleTask;
 import fr.skytale.particleanimlib.animation.attribute.AnimationEndedCallback;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 
 public class Atom extends AAnimation implements ISubAnimation {
     private AAnimation sphere;
@@ -17,11 +19,13 @@ public class Atom extends AAnimation implements ISubAnimation {
     }
 
     @Override
-    public void show() {
-        sphere.show();
-        circle1.show();
-        circle2.show();
-        circle3.show();
+    public AtomTask show() {
+//        sphere.show();
+//        circle1.show();
+//        circle2.show();
+//        return circle3.show();
+        return new AtomTask(this);
+        // TODO: Re-work Atom animation to have a AtomTask = Having a real Atom animation !!!!!
     }
 
     /***********GETTERS & SETTERS***********/
@@ -67,8 +71,8 @@ public class Atom extends AAnimation implements ISubAnimation {
     }
 
     @Override
-    public void setCallback(AnimationEndedCallback callback) {
-        this.sphere.setCallback(callback);
+    public void addAnimationEndedCallback(AnimationEndedCallback callback) {
+        this.sphere.addAnimationEndedCallback(callback);
     }
 
 

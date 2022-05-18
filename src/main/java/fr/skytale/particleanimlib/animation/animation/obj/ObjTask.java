@@ -40,4 +40,8 @@ public class ObjTask extends ARotatingAnimationTask<Obj> {
         });
     }
 
+    public Set<Vector> getCurrentImagePixels() {
+        return currentImagePixels;
+    }
+
 }

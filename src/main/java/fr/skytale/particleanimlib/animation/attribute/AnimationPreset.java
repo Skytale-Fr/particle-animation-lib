@@ -3,6 +3,8 @@ package fr.skytale.particleanimlib.animation.attribute;
 import fr.skytale.particleanimlib.animation.animation.circle.preset.*;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingWithInsideCollisionsPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.epi.preset.SimpleEpiPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.*;
 import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningPresetExecutor;
@@ -24,8 +26,8 @@ import fr.skytale.particleanimlib.animation.animation.pyramid.preset.SimplePyram
 import fr.skytale.particleanimlib.animation.animation.rose.preset.SimpleRosePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
 import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralADNPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralCastSpellPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.text.preset.*;
 import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExecutor;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
@@ -38,6 +40,7 @@ import java.util.Locale;
 public enum AnimationPreset {
     //ATOM(new AtomPresetExecutor()),
     CIRCLE(new SimpleCirclePresetExecutor()),
+    CIRCLE_WITH_INSIDE_COLLISIONS(new SimpleCircleWithInsideCollisionsPresetExecutor()),
     CIRCLE_HALF_GROWING(new GrowingHalfCirclePresetExecutor()),
     CIRCLE_ROTATING(new RotatingCirclePresetExecutor()),
     CIRCLE_SUB_ANIM_ROTATING(new SubAnimationCircleRotatingPresetExecutor()),
@@ -50,7 +53,9 @@ public enum AnimationPreset {
     CIRCLE_THEN_WAVE(new CircleWavePresetExecutor()),
     CIRCLE_THEN_WAVE_REVERSED(new CircleWaveReversedPresetExecutor()),
     CUBOID(new CuboidPresetExecutor()),
+    CUBOID_WITH_INSIDE_COLLISIONS(new CuboidWithInsideCollisionsPresetExecutor()),
     CUBOID_ROTATING_RESIZING(new CuboidRotatingResizingPresetExecutor()),
+    CUBOID_ROTATING_RESIZING_WITH_INNER_COLLISIONS(new CuboidRotatingResizingWithInsideCollisionsPresetExecutor()),
     IMAGE_SKYTALE(new SkytaleImagePresetExecutor(), ImagePresetInitializer.class),
     IMAGE_MAGIC_CIRCLE(new MagicCircleImagePresetExecutor(), ImagePresetInitializer.class),
     IMAGE_COUNTDOWN(new CountdownImagePresetExecutor(), ImagePresetInitializer.class),
@@ -79,6 +84,7 @@ public enum AnimationPreset {
     EPI(new SimpleEpiPresetExecutor()),
     NODE(new SimpleNodePresetExecutor()),
     SPHERE(new SpherePresetExecutor()),
+    SPHERE_WITH_INSIDE_COLLISIONS(new SphereWithInsideCollisionsPresetExecutor()),
     SPHERE_PROPAGATION_BOTTOM_TO_TOP(new PropagatingUpSpherePresetExecutor()),
     SPHERE_PROPAGATION_TOP_TO_BOTTOM(new PropagatingDownSpherePresetExecutor()),
     SPHERE_ELECTRIC(new ElectricExplodingSpherePresetExecutor()),
@@ -93,11 +99,13 @@ public enum AnimationPreset {
     SPIRAL_CASTING_SPELL(new SpiralCastSpellPresetExecutor()),
     WAVE(new WavePresetExecutor()),
     LINE(new SimpleLinePresetExecutor()),
+    LINE_WITH_COLLISIONS(new SimpleLineWithCollisionPresetExecutor()),
     LINE_WITH_POLYGONS(new LineWithPolygonsPresetExecutor()),
     LINE_ROTATING_ALONG_Y(new LineRotationYPresetExecutor()),
     LINE_HANDS_OF_CLOCK(new LineHandsOfClockPresetExecutor()),
     LINE_HANDS_OF_CLOCK2(new LineHandsOfClock2PresetExecutor()),
     HELICOPTER(new HelicopterPresetExecutor()),
+    HELICOPTER_WITH_COLLISIONS(new HelicopterWithCollisionsPresetExecutor()),
     SPHERE_PLASMA(new SpherePlasmaPresetExecutor()),
     TEXT_MINECRAFT(new SimpleTextMinecraftPresetExecutor()),
     TEXT_KGEVERSINCENEWYORK(new SimpleTextKGEverSinceNewYorkPresetExecutor()),
@@ -123,7 +131,7 @@ public enum AnimationPreset {
         return AnimationPreset.valueOf(name.trim().toUpperCase(Locale.ROOT));
     }
 
-    public Class<? extends AAnimationBuilder<?>> getBuilderClass() {
+    public Class<? extends AAnimationBuilder<?, ?>> getBuilderClass() {
         return presetExecutor.getBuilderClass();
     }
 
@@ -131,7 +139,7 @@ public enum AnimationPreset {
         return presetExecutor;
     }
 
-    public void apply(AAnimationBuilder<?> builder, JavaPlugin plugin) {
+    public void apply(AAnimationBuilder<?, ?> builder, JavaPlugin plugin) {
         presetExecutor.checkCompatibility(builder);
         for (Class<? extends APresetInitializer> presetPrerequisiteClass : presetPrerequisitesClasses) {
             APresetInitializer.initialize(presetPrerequisiteClass, plugin);
@@ -140,7 +148,7 @@ public enum AnimationPreset {
         presetExecutor.applyPreset(builder, plugin);
     }
 
-    public AAnimationBuilder<?> createBuilder(JavaPlugin plugin) {
+    public AAnimationBuilder<?, ?> createBuilder(JavaPlugin plugin) {
         return presetExecutor.createBuilder(plugin);
     }
 }

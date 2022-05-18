@@ -1,8 +1,12 @@
 package fr.skytale.particleanimlib.animation.parent.task;
 
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.DirectionSubAnimPointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.collision.CollisionHandler;
+import fr.skytale.particleanimlib.animation.collision.CollisionTestType;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -10,14 +14,24 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
+    protected AAnimationTask<?> parentTask;
     protected T animation;
 
     //Evolving variables
     protected Integer taskId;
     protected int iterationCount;
+
+    protected boolean hasStopCondition;
+
+    protected APosition currentPosition;
+    protected Location currentIterationBaseLocation;
+    protected int tickDuration;
+    protected int currentShowPeriod;
 
     public AAnimationTask(T animation) {
         //noinspection unchecked
@@ -59,27 +73,44 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     }
 
     protected final void startTask() {
+        tickDuration = animation.getTicksDuration();
         this.taskId = Bukkit.getScheduler().runTaskTimerAsynchronously(animation.getPlugin(), this, 0, 0).getTaskId();
     }
 
     public final void run() {
+        // If a stop condition has been set, we need to check this condition
+        // and stop the animation if true is returned.
+        if(this.animation.getStopCondition() != null && this.animation.getStopCondition().get()) {
+            stopAnimation(true);
+            return;
+        }
 
-        APosition position = animation.getPosition();
+        APosition currentPosition = animation.getPosition();
 
         //Computing current animation location
-        Location iterationBaseLocation;
-        if (position.getType() == APosition.Type.ENTITY) {
-            iterationBaseLocation = position.getMovingEntity().getLocation().clone()
-                    .add(position.getRelativeLocation().getCurrentValue(iterationCount).clone());
+        if (currentPosition.getType() == APosition.Type.ENTITY) {
+            currentIterationBaseLocation = currentPosition.getMovingEntity().getLocation().clone()
+                    .add(currentPosition.getRelativeLocation().getCurrentValue(iterationCount).clone());
         } else {
-            iterationBaseLocation = position.getLocation().getCurrentValue(iterationCount).clone();
+            currentIterationBaseLocation = currentPosition.getLocation().getCurrentValue(iterationCount).clone();
         }
 
         //We only show at the specified frequency
-        Integer showPeriod = animation.getShowPeriod().getCurrentValue(iterationCount);
-        if (showPeriod == 0 || iterationCount % showPeriod == 0) {
-            show(iterationBaseLocation);
+        currentShowPeriod = animation.getShowPeriod().getCurrentValue(iterationCount);
+
+        this.animation.getCollisionHandlers().forEach(collisionHandler -> {
+            collisionHandler.collect(iterationCount, this);
+        });
+
+        if (currentShowPeriod == 0 || iterationCount % currentShowPeriod == 0) {
+            show(currentIterationBaseLocation);
         }
+
+        this.animation.getCollisionHandlers().forEach(collisionHandler -> {
+            collisionHandler.processCollision(iterationCount, CollisionTestType.MAIN_PARTICLE, currentIterationBaseLocation, this);
+        });
+
+
         iterationCount++;
     }
 
@@ -90,29 +121,31 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         return iterationCount >= animation.getTicksDuration();
     }
 
-    protected void stopAnimation() {
+    public int getIterationCount() { return iterationCount; }
+    public Location getCurrentIterationBaseLocation() { return currentIterationBaseLocation; }
+    public int getTickDuration() { return tickDuration; }
+    public int getCurrentShowPeriod() { return currentShowPeriod; }
+
+    public void stopAnimation() {
         stopAnimation(true);
     }
+
+    public void setParentTask(AAnimationTask<?> parentTask) { this.parentTask = parentTask; }
+    public AAnimationTask<?> getParentTask() { return this.parentTask; }
 
     protected void stopAnimation(boolean runCallback) {
         if (taskId != null) {
             Bukkit.getScheduler().cancelTask(taskId);
             taskId = null;
-        }
-        if (runCallback && animation.getCallback() != null) {
-            animation.getCallback().run(animation);
+            if (runCallback && !animation.getCallbacks().isEmpty()) {
+                animation.getCallbacks().forEach(animationEndedCallback -> animationEndedCallback.run(animation));
+            }
+//            animation.getCollisionHandlers().forEach(CollisionHandler::clearTimestamps);
         }
     }
 
     public void drawLine(Location point1, Location point2, double step) {
-        double distance = point1.distance(point2);
-        Vector stepVector = point2.toVector().subtract(point1.toVector()).normalize().multiply(step);
-        Location currentLoc = point1.clone();
-        final Collection<? extends Player> players = animation.getViewers().getPlayers(point1);
-        for (double length = 0; length < distance; currentLoc.add(stepVector)) {
-            animation.getMainParticle().getParticleBuilder(currentLoc).display(players);
-            length += step;
-        }
+        drawLine(point1, point2, step, APointDefinition.fromParticleTemplate(animation.getMainParticle()));
     }
 
     public void drawLine(Location point1, Location point2, double step, APointDefinition pointDefinition) {
@@ -120,7 +153,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         Vector stepVector = point2.toVector().subtract(point1.toVector()).normalize().multiply(step);
         Location currentLoc = point1.clone();
         for (double length = 0; length < distance; currentLoc.add(stepVector)) {
-            pointDefinition.show(animation, currentLoc.clone());
+            showPoint(pointDefinition, currentLoc.clone(), new Vector(0, 0, 0));
             length += step;
         }
     }
@@ -139,10 +172,16 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     public void showPoint(APointDefinition pointDefinition, Location pointLocation, Vector pointDirection) {
         if (pointDefinition.getShowMethodParameters() == APointDefinition.ShowMethodParameters.LOCATION) {
-            pointDefinition.show(animation, pointLocation);
+            pointDefinition.show(animation, pointLocation, this);
         } else {
-            pointDefinition.show(animation, pointLocation, pointDirection);
+            pointDefinition.show(animation, pointLocation, pointDirection, this);
         }
+
+        this.animation.getCollisionHandlers().forEach(collisionHandler -> {
+            collisionHandler.processCollision(iterationCount, CollisionTestType.PER_PARTICLE, pointLocation, this);
+        });
+
     }
+
 
 }

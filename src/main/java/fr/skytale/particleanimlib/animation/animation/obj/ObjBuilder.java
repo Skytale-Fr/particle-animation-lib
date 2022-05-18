@@ -5,7 +5,7 @@ import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBui
 
 import java.awt.*;
 
-public class ObjBuilder extends ARotatingAnimationBuilder<Obj> {
+public class ObjBuilder extends ARotatingAnimationBuilder<Obj, ObjTask> {
 
     public ObjBuilder() {
         super();

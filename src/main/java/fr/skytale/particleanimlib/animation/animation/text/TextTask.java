@@ -28,12 +28,16 @@ public class TextTask extends ARotatingAnimationTask<Text> {
 
     private static final double FILL_LINE_PADDING = 0.2;
 
-    TTFAlphabet ttfAlphabet;
-    Vector startU, startV;
-    Vector currentU, currentV;
+    private TTFAlphabet ttfAlphabet;
+    private Vector startU, startV;
+    private Vector currentU, currentV;
 
-    boolean hasColor;
-    ParticleTemplate particleTemplate;
+    private boolean hasColor;
+    private ParticleTemplate particleTemplate;
+    private double detailsLevel;
+    private String notParsedString;
+    private String baseString;
+    private double fontSize;
 
     public TextTask(Text text) {
         super(text);
@@ -60,14 +64,14 @@ public class TextTask extends ARotatingAnimationTask<Text> {
             currentV = rotation.rotateVector(startV);
         }
 
-        double detailsLevel = animation.getDetailsLevel().getCurrentValue(iterationCount);
+        detailsLevel = animation.getDetailsLevel().getCurrentValue(iterationCount);
 
-        String notParsedString = animation.getBaseString().getCurrentValue(iterationCount);
+        notParsedString = animation.getBaseString().getCurrentValue(iterationCount);
         BaseComponent[] components = TextComponent.fromLegacyText(notParsedString, ChatColor.WHITE);
-        String baseString = Arrays.stream(components).map(component -> component.toPlainText()).reduce("", String::concat);
+        baseString = Arrays.stream(components).map(component -> component.toPlainText()).reduce("", String::concat);
         // The scale factor of 1.3 his to fit a Minecraft block size.
         // So a font size of 10.0 will create an upper case character of 10.0 blocks height.
-        double fontSize = animation.getFontSize().getCurrentValue(iterationCount) * 1.3d;
+        fontSize = animation.getFontSize().getCurrentValue(iterationCount) * 1.3d;
         TTFString ttfString = ttfAlphabet.getString(baseString, fontSize);
 
         int characterIndex = 0;
@@ -159,6 +163,46 @@ public class TextTask extends ARotatingAnimationTask<Text> {
         Vector vecV = currentV.clone().multiply(y);
         Vector vec = vecU.add(vecV);
         return vec;
+    }
+
+    public Vector getCurrentStartU() {
+        return startU;
+    }
+
+    public Vector getCurrentStartV() {
+        return startV;
+    }
+
+    public Vector getCurrentU() {
+        return currentU;
+    }
+
+    public Vector getCurrentV() {
+        return currentV;
+    }
+
+    public boolean hasColor() {
+        return hasColor;
+    }
+
+    public ParticleTemplate getParticleTemplate() {
+        return particleTemplate;
+    }
+
+    public double getCurrentDetailsLevel() {
+        return detailsLevel;
+    }
+
+    public String getCurrentNotParsedString() {
+        return notParsedString;
+    }
+
+    public String getCurrentBaseString() {
+        return baseString;
+    }
+
+    public double getCurrentFontSize() {
+        return fontSize;
     }
 
 }

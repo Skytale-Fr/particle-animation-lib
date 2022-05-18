@@ -5,11 +5,15 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
+import fr.skytale.particleanimlib.animation.collision.CollisionHandler;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Supplier;
 
 public abstract class AAnimation implements Cloneable {
 
@@ -18,8 +22,10 @@ public abstract class AAnimation implements Cloneable {
     protected JavaPlugin plugin;
     protected int ticksDuration;
     protected IVariable<Integer> showPeriod;
-    protected AnimationEndedCallback callback;
+    protected Set<AnimationEndedCallback> animationEndedCallbacks = new HashSet<>();
     protected AViewers viewers;
+    protected Supplier<Boolean> stopCondition;
+    protected Set<CollisionHandler<?, AAnimationTask<?>>> collisionHandlers = new HashSet<>();
 
     protected static Set<Vector> getLinePoints(Vector point1, Vector point2, double step) {
         double distance = point1.distance(point2);
@@ -34,7 +40,7 @@ public abstract class AAnimation implements Cloneable {
         return points;
     }
 
-    public abstract void show();
+    public abstract AAnimationTask<? extends AAnimation> show();
 
     /***********GETTERS & SETTERS***********/
 
@@ -78,12 +84,12 @@ public abstract class AAnimation implements Cloneable {
         this.showPeriod = showPeriod;
     }
 
-    public AnimationEndedCallback getCallback() {
-        return callback;
+    public Set<AnimationEndedCallback> getCallbacks() {
+        return animationEndedCallbacks;
     }
 
-    public void setCallback(AnimationEndedCallback callback) {
-        this.callback = callback;
+    public void addAnimationEndedCallback(AnimationEndedCallback callback) {
+        animationEndedCallbacks.add(callback);
     }
 
     public JavaPlugin getPlugin() {
@@ -93,6 +99,16 @@ public abstract class AAnimation implements Cloneable {
     public void setPlugin(JavaPlugin plugin) {
         this.plugin = plugin;
     }
+
+    public void setStopCondition(Supplier<Boolean> stopCondition) { this.setStopCondition(stopCondition, false); }
+    public void setStopCondition(Supplier<Boolean> stopCondition, boolean infiniteTickDuration) {
+        this.stopCondition = stopCondition;
+        if(infiniteTickDuration) this.setTicksDuration(Integer.MAX_VALUE);
+    }
+    public Supplier<Boolean> getStopCondition() { return this.stopCondition; }
+
+    public void addCollisionHandler(CollisionHandler<?, AAnimationTask<?>> collisionHandler) { this.collisionHandlers.add(collisionHandler); }
+    public Set<CollisionHandler<?, AAnimationTask<?>>> getCollisionHandlers() { return collisionHandlers; }
 
     @Override
     public AAnimation clone() {
@@ -106,6 +122,7 @@ public abstract class AAnimation implements Cloneable {
         obj.position = this.position.clone();
         obj.viewers = this.viewers.clone();
         obj.mainParticle = mainParticle == null ? null : new ParticleTemplate(this.mainParticle);
+        obj.collisionHandlers = new HashSet<>(collisionHandlers);
         return obj;
     }
 

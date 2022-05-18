@@ -55,4 +55,12 @@ public class ImageTask extends ARotatingAnimationTask<Image> {
         }));
     }
 
+    public boolean hasColor() {
+        return hasColor;
+    }
+
+    public HashMap<Vector, Color> getCurrentImagePixels() {
+        return currentImagePixels;
+    }
+
 }

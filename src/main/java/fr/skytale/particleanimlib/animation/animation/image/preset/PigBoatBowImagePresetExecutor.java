@@ -46,7 +46,7 @@ public class PigBoatBowImagePresetExecutor extends AAnimationPresetExecutor<Imag
         Image imageBow = imageBuilder.getAnimation();
 
         imageBuilder.setImageFileName("boat.png");
-        imageBuilder.setCallback(result -> imageBow.show());
+        imageBuilder.addAnimationEndedCallback(result -> imageBow.show());
         Image imageBoat = imageBuilder.getAnimation();
 
 
@@ -68,6 +68,6 @@ public class PigBoatBowImagePresetExecutor extends AAnimationPresetExecutor<Imag
                 //41->100 (60) : rotation acceleration
             else return previousValue + stepAngle;
         }));
-        imageBuilder.setCallback(result -> imageBoat.show());
+        imageBuilder.addAnimationEndedCallback(result -> imageBoat.show());
     }
 }

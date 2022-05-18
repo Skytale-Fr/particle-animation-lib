@@ -51,7 +51,7 @@ public class SpiralADNPresetExecutor extends AAnimationPresetExecutor<SpiralBuil
         Spiral spiral = spiralBuilder.getAnimation();
 
         spiralBuilder.setTicksDuration(1);
-        spiralBuilder.setCallback(result -> {
+        spiralBuilder.addAnimationEndedCallback(result -> {
             spiral.show();
             polygon.show();
         });

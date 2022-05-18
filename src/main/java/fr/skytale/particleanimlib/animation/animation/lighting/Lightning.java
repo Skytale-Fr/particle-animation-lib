@@ -24,8 +24,8 @@ public class Lightning extends AAnimation implements IDirectionSubAnimation, ISu
     }
 
     @Override
-    public void show() {
-        new LightningTask(this);
+    public LightningTask show() {
+        return new LightningTask(this);
     }
 
     /***********GETTERS & SETTERS***********/

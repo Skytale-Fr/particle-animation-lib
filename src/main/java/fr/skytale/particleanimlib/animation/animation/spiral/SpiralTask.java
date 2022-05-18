@@ -20,6 +20,14 @@ public class SpiralTask extends AAnimationTask<Spiral> {
     private Location absoluteLocation;
     private double spiralParticlesChangingAngle;
     private Set<PointData> currentIterationPoints;
+    private Location animationCurrentLocation;
+    private int nbTrailingParticles;
+    private Vector directorVector;
+    private double radius;
+    private Vector radiusVector;
+    private Location firstSpiralParticleLocationBeforeRotation;
+    private Integer nbSpirals;
+    private double spiralParticlesGapAngle;
 
     public SpiralTask(Spiral spiral) {
         super(spiral);
@@ -40,8 +48,6 @@ public class SpiralTask extends AAnimationTask<Spiral> {
         }
 
         // --- Computing the current animation location
-        Location animationCurrentLocation;
-
         if (followEntity) {
             /* If the spiral follows an entity, its current location (animationCurrentLocation) will be :
                 animation.getPosition().getMovingEntity().getLocation()
@@ -72,7 +78,7 @@ public class SpiralTask extends AAnimationTask<Spiral> {
             stopAnimation(false);
 
         // --- Display trailing particles
-        Integer nbTrailingParticles = animation.getNbTrailingParticles().getCurrentValue(iterationCount);
+        nbTrailingParticles = animation.getNbTrailingParticles().getCurrentValue(iterationCount);
         displayTrail(nbTrailingParticles);
 
         // --- Reinitialize the Set that contains this iteration particles
@@ -83,15 +89,15 @@ public class SpiralTask extends AAnimationTask<Spiral> {
 
 
         //Calculating radiusVector
-        Vector directorVector = nextMoveData.move.clone().normalize();
-        double radius = animation.getRadius().getCurrentValue(iterationCount);
-        Vector radiusVector = computeRadiusVector(directorVector, radius);
+        directorVector = nextMoveData.move.clone().normalize();
+        radius = animation.getRadius().getCurrentValue(iterationCount);
+        radiusVector = computeRadiusVector(directorVector, radius);
 
         //Calculating each spiral particle locations
-        Location firstSpiralParticleLocationBeforeRotation = animationCurrentLocation.clone().add(radiusVector);
+        firstSpiralParticleLocationBeforeRotation = animationCurrentLocation.clone().add(radiusVector);
 
-        Integer nbSpirals = animation.getNbSpiral().getCurrentValue(iterationCount);
-        double spiralParticlesGapAngle = 2 * Math.PI / nbSpirals;
+        nbSpirals = animation.getNbSpiral().getCurrentValue(iterationCount);
+        spiralParticlesGapAngle = 2 * Math.PI / nbSpirals;
         for (int i = 0; i < nbSpirals; i++) {
             double currentSpiralParticleAngle = i * spiralParticlesGapAngle + spiralParticlesChangingAngle;
             Location currentSpiralParticleLocation = rotateAroundAxis(firstSpiralParticleLocationBeforeRotation, directorVector, animationCurrentLocation, currentSpiralParticleAngle);
@@ -173,4 +179,53 @@ public class SpiralTask extends AAnimationTask<Spiral> {
             this.fromCenterToPoint = fromCenterToPoint;
         }
     }
+
+    public Vector getCurrentEntityRelativeLocation() {
+        return entityRelativeLocation;
+    }
+
+    public Location getCurrentAbsoluteLocation() {
+        return absoluteLocation;
+    }
+
+    public double getCurrentSpiralParticlesChangingAngle() {
+        return spiralParticlesChangingAngle;
+    }
+
+    public Set<PointData> getCurrentCurrentIterationPoints() {
+        return currentIterationPoints;
+    }
+
+    public Location getCurrentAnimationCurrentLocation() {
+        return animationCurrentLocation;
+    }
+
+    public int getCurrentNbTrailingParticles() {
+        return nbTrailingParticles;
+    }
+
+    public Vector getCurrentDirectorVector() {
+        return directorVector;
+    }
+
+    public double getCurrentRadius() {
+        return radius;
+    }
+
+    public Vector getCurrentRadiusVector() {
+        return radiusVector;
+    }
+
+    public Location getCurrentFirstSpiralParticleLocationBeforeRotation() {
+        return firstSpiralParticleLocationBeforeRotation;
+    }
+
+    public Integer getCurrentNbSpirals() {
+        return nbSpirals;
+    }
+
+    public double getCurrentSpiralParticlesGapAngle() {
+        return spiralParticlesGapAngle;
+    }
+
 }

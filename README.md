@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'fr.skytale:particle-animation-lib:4.9.0'
+  implementation 'fr.skytale:particle-animation-lib:4.9.1'
 }
 ```
 
@@ -40,7 +40,7 @@ dependencies {
   <dependency>
       <groupId>fr.skytale</groupId>
       <artifactId>particle-animation-lib</artifactId>
-      <version>4.9.0</version>
+      <version>4.9.1</version>
   </dependency>
 </dependencies>    
 ```
@@ -486,6 +486,150 @@ builder.setRotation(
 #### Epi
 
 #### Nodes
+=======
+
+## Add collisions to your animations
+
+You are also able to add collisions to your animations.
+
+### Collision types
+
+You can see those checks from two angles:
+
+- **PER_PARTICLE**: Collision checks for every particle (with their associated locations).
+  - Example: For a sphere, you can check if a particle of the animation hits an entity.
+- **MAIN_POSITION**: Collision checks at the animation level (only once for the animation main location).
+  - Example: For a sphere, you can check if an entity is in the sphere.
+
+### Create your first collision builder
+
+A collision builder is a class that will help you to create a CollisionHandler that will be used
+by the ParticleAnimLib to perform your collision checks. Here is a simple example to construct your first handler:
+
+````java
+SphereBuilder sphereBuilder = // ... create and setup your sphere builder
+
+// A CollisionBuilder needs the target you want to interact with, and the related animation task.
+// Here we are plugging our collisions in a sphere animation,
+// and we want to interact with entities.        
+CollisionBuilder<Entity, SphereTask> collisionBuilder = new CollisionBuilder<>();
+collisionBuilder.setJavaPlugin(lineBuilder.getJavaPlugin());
+// The following lambda will be called when the animation needs to know
+// which targets (here entities) you want to check their potential collisions.
+collisionBuilder.setPotentialCollidingTargetsCollector(sphereTask -> {
+    // So here, we need to fetch the location of the sphere animation (center)
+    Location currentIterationBaseLocation = sphereTask.getCurrentIterationBaseLocation();
+    // And get the nearby entities (we use a 10,10,10 bounding box around because the sphere's radius is around 6).
+    return currentIterationBaseLocation.getWorld().getNearbyEntities(currentIterationBaseLocation, 10, 10, 10);
+});
+// The following lambdas will be called after the collector to filter the collected targets.
+// As an example, we don't want to collect entities that are players to avoid hurting the animation launcher.
+collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> !entity.getType().equals(EntityType.PLAYER));
+
+// Here comes the hard part. In this simple exemple, we want to check collisions between an
+// entity's bounding box and the location of a particle of the animation.
+// So we need to use the ParticleCollisionProcessor (type := PER_PARTICLE) to handle this type of behavior.
+// Then we are using a default collision preset (already programmed) for entities and their bounding box.
+// Finally we provide the action callback called when the provided collision predicate returns true.
+// This lambda needs to return an integer that represents a tick duration: will be decrement every ticks
+// and since this value is greater than 0, the target can no longer be part of the action callback process.
+collisionBuilder.addCollisionProcessor(ParticleCollisionProcessor.useDefault(lineBuilder, EntityCollisionPreset.EXACT_BOUNDING_BOX, (animationTask, target) -> {
+    if(!(target instanceof LivingEntity)) return 0; // If the target isn't a living entity, we reject it.
+    ((LivingEntity) target).damage(1); // Otherwise we put damage to the living entity.
+    return 20; // The entity can only take damages every 20 ticks (every 1 second if the server is at 20 TPS).
+}));
+
+// Finally we register our built collision handler to our animation.
+sphereBuilder.addCollisionHandler(collisionBuilder.build());
+````
+
+## Sub animations collisions
+
+We can take the simple example of a sphere that has a sub animation of lines
+(so there would be lines going from the center to the original particles location of the sphere).
+Here we want to check if the particles off every sub line animations collides with entities.
+
+````java
+SphereBuilder sphereBuilder = // ... create and setup your sphere builder
+LineBuilder lienBuilder = // ... create and setup your line builder
+sphereBuilder.setPointDefinition(APointDefinition.fromSubAnim(lineBuilder.getAnimation()));
+
+CollisionBuilder collisionBuilder = // ... create and setup your collision builder
+
+// To fit the above example, you need to add your built collision handler to the sub animation:
+lineBuilder.addCollisionHandler(collisionBuilder.build());
+````
+
+## More complexes examples
+
+#### Example 1: Check if an entity is inside the sphere
+Here we want to check if an entity is inside a sphere shown with the ParticleAnimLib.
+This way, we want to keep computation simple and only check if the center of the entity's bounding box
+is in the sphere. There is already a collision preset for entities and for sphere animations to match our problem:
+
+````java
+SphereBuilder sphereBuilder = new SphereBuilder();
+sphereBuilder.setPosition(/* set your position */);
+sphereBuilder.setJavaPlugin(/* set your java plugin*/);
+sphereBuilder.setRadius(4);
+sphereBuilder.setNbCircles(8);
+sphereBuilder.setAngleBetweenEachPoint(Math.PI / 4);
+sphereBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
+sphereBuilder.setSphereType(Sphere.Type.FULL);
+sphereBuilder.setTicksDuration(100);
+sphereBuilder.setShowPeriod(5);
+
+CollisionBuilder<Entity, SphereTask> collisionBuilder = new CollisionBuilder<>();
+collisionBuilder.setJavaPlugin(sphereBuilder.getJavaPlugin());
+collisionBuilder.setPotentialCollidingTargetsCollector(lineTask -> {
+  Location currentIterationBaseLocation = lineTask.getCurrentIterationBaseLocation();
+  return currentIterationBaseLocation.getWorld().getNearbyEntities(currentIterationBaseLocation, 10, 10, 10);
+});
+collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> !entity.getType().equals(EntityType.PLAYER));
+// EntityCollisionPreset.TARGET_CENTER_INSIDE_SPHERE is the collision preset that we want to use.
+// (don't mind to check by userself how this collision test has been made).
+collisionBuilder.addCollisionProcessor(SimpleCollisionProcessor.useDefault(sphereBuilder, EntityCollisionPreset.TARGET_CENTER_INSIDE_SPHERE, (animationTask, target) -> {
+  if(!(target instanceof LivingEntity)) return -1;
+  ((LivingEntity) target).damage(1);
+  return 20; // The entity can only take damages every 20 ticks.
+}));
+
+sphereBuilder.addCollisionHandler(collisionBuilder.build());
+````
+
+#### Example 2: Check if an entity is inside a circle
+
+````java
+CircleBuilder circleBuilder = new CircleBuilder();
+circleBuilder.setPosition(/* set your position */);
+circleBuilder.setJavaPlugin(/* set your java plugin*/);
+circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+circleBuilder.setNbPoints(20, true);
+circleBuilder.setRadius(4);
+circleBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
+circleBuilder.setTicksDuration(100);
+circleBuilder.setShowPeriod(new Constant<>(1));
+
+CollisionBuilder<Entity, CircleTask> collisionBuilder = new CollisionBuilder<>();
+collisionBuilder.setJavaPlugin(circleBuilder.getJavaPlugin());
+collisionBuilder.setPotentialCollidingTargetsCollector(lineTask -> {
+  Location currentIterationBaseLocation = lineTask.getCurrentIterationBaseLocation();
+  return currentIterationBaseLocation.getWorld().getNearbyEntities(currentIterationBaseLocation, 10, 10, 10);
+});
+collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> !entity.getType().equals(EntityType.PLAYER));
+// So here we are using the SimpleCollisionProcessor (type := MAIN_POSITION).
+// This way, the following processor will be performed only once per animation show and get provided with
+// the animation's main location (here the center of the circle).
+// And we are also using the EntityCollisionPreset.TARGET_CENTER_INSIDE_CIRCLE collision preset that match perfectly or problem.
+// (don't mind to check by userself how this collision test has been made).
+collisionBuilder.addCollisionProcessor(SimpleCollisionProcessor.useDefault(circleBuilder, EntityCollisionPreset.TARGET_CENTER_INSIDE_CIRCLE, (animationTask, target) -> {
+  if(!(target instanceof LivingEntity)) return -1;
+  ((LivingEntity) target).damage(1);
+  return 20; // The entity can only take damages every 20 ticks.
+}));
+
+circleBuilder.addCollisionHandler(collisionBuilder.build());
+````
 
 ## Contribute
 

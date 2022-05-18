@@ -12,6 +12,14 @@ import org.bukkit.util.Vector;
 
 public class LineTask extends ARotatingAnimationTask<Line> {
 
+    private int nbPoints;
+    private double length;
+    private double step;
+
+    private Vector directionVector;
+    private Location startLocation;
+    private Location endLocation;
+
     public LineTask(Line line) {
         super(line);
         this.startTask();
@@ -24,30 +32,54 @@ public class LineTask extends ARotatingAnimationTask<Line> {
             return;
         }
 
-        int nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
-        double length = animation.getLength().getCurrentValue(iterationCount);
-        double step = 1.0D / nbPoints * length; // Compute the step used in the drawLine method below
+        nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
+        length = animation.getLength().getCurrentValue(iterationCount);
+        step = 1.0D / nbPoints * length; // Compute the step used in the drawLine method below
 
         // Get the current direction
         AnimationDirection direction = animation.getDirection();
         IVariable<Vector> moveVector = direction.getMoveVector();
         Vector currentValue = moveVector.getCurrentValue(iterationCount);
-        Vector vDirection = currentValue.normalize();
+        directionVector = currentValue.normalize();
 
         Vector point1 = animation.getPoint1().getCurrentValue(iterationCount);
 
         // If there is any rotation
         if(hasRotation && rotationChanged) {
-            vDirection = rotation.rotateVector(vDirection);
+            directionVector = rotation.rotateVector(directionVector);
         }
 
         // Maybe this can be improved
-        Vector lengthVector = vDirection.clone().multiply(length);
-        Location startLocation = iterationBaseLocation.clone().add(point1);
-        Location endLocation = iterationBaseLocation.clone().add(point1).add(lengthVector);
+        Vector lengthVector = directionVector.clone().multiply(length);
+        startLocation = iterationBaseLocation.clone().add(point1);
+        endLocation = iterationBaseLocation.clone().add(point1).add(lengthVector);
 
         // Draw the current line from startLocation to endLocation
         drawLine(startLocation, endLocation, step, animation.getPointDefinition());
+    }
+
+    public int getCurrentNbPoints() {
+        return nbPoints;
+    }
+
+    public double getCurrentLength() {
+        return length;
+    }
+
+    public double getCurrentStep() {
+        return step;
+    }
+
+    public Vector getCurrentDirectionVector() {
+        return directionVector;
+    }
+
+    public Location getCurrentStartLocation() {
+        return startLocation;
+    }
+
+    public Location getCurrentEndLocation() {
+        return endLocation;
     }
 
 }
