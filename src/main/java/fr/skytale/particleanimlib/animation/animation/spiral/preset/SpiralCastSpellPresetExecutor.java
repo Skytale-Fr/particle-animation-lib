@@ -1,19 +1,16 @@
 package fr.skytale.particleanimlib.animation.animation.spiral.preset;
 
+import fr.skytale.particleanimlib.animation.animation.sphere.Sphere;
+import fr.skytale.particleanimlib.animation.animation.sphere.SphereBuilder;
 import fr.skytale.particleanimlib.animation.animation.spiral.SpiralBuilder;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.position.APosition;
-import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
-import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
-import fr.skytale.particleanimlib.animation.attribute.var.IntegerPeriodicallyEvolvingVariable;
-import fr.skytale.particleanimlib.animation.attribute.var.VectorPeriodicallyEvolvingVariable;
-import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.animation.spiral.SpiralTask;
+import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
 
-import java.awt.*;
+import java.sql.SQLOutput;
 
 public class SpiralCastSpellPresetExecutor extends AAnimationPresetExecutor<SpiralBuilder> {
 
@@ -23,37 +20,26 @@ public class SpiralCastSpellPresetExecutor extends AAnimationPresetExecutor<Spir
 
     @Override
     protected void apply(SpiralBuilder spiralBuilder, JavaPlugin plugin) {
+        spiralBuilder.applyPreset(AnimationPreset.SPIRAL, plugin);
+        spiralBuilder.setTicksDuration(60 * 20);
+        Entity targetEntity = spiralBuilder.getAnimation().getDirection().getTargetEntity();
+        if (targetEntity != null) {
+            spiralBuilder.setStopCondition(animationTask -> {
+                Location iterationBaseLocation = ((SpiralTask) animationTask).getCurrentAbsoluteLocation();
+                return targetEntity.getLocation().distance(iterationBaseLocation) < 0.5;
+            });
 
-        APosition position = spiralBuilder.getPosition();
-        APosition.Type type = position.getType();
-        AnimationDirection direction = null;
-        switch (type) {
-            case ENTITY: {
-                // Follow the entity's looking direction
-                Entity entity = position.getMovingEntity();
-                IVariable<Vector> player_direction = new CallbackVariable<>(iterationCount -> {
-                    return entity.getLocation().clone().getDirection();
-                });
-                Vector evolution = player_direction.copy().getCurrentValue(0);
-                evolution = new Vector(evolution.getX()/10,evolution.getY()/10,evolution.getZ()/10);
+            SphereBuilder sphereBuilder = new SphereBuilder();
+            sphereBuilder.setPosition(spiralBuilder.getPosition());
+            sphereBuilder.setJavaPlugin(spiralBuilder.getJavaPlugin());
+            sphereBuilder.applyPreset(AnimationPreset.SPHERE_ELECTRIC, plugin);
+            sphereBuilder.setTicksDuration(20);
+            sphereBuilder.setShowPeriod(1);
 
-                direction = AnimationDirection.fromMoveVector(new VectorPeriodicallyEvolvingVariable(player_direction.getCurrentValue(0), evolution, 0));
-                break;
-            }
-            default: {
-                direction = AnimationDirection.fromMoveVector(new VectorPeriodicallyEvolvingVariable(new Vector(0, 0.1, 0), new Vector(0, 0.01, 0), 0));
-                break;
-            }
+            Sphere sphere = sphereBuilder.getAnimation();
+            sphere.addAnimationEndedCallback(animationEnding -> {
+                sphere.show();
+            });
         }
-
-        spiralBuilder.setRadius(2);
-        spiralBuilder.setNbSpiral(3);
-        spiralBuilder.setAngleBetweenEachPoint(Math.PI / 24);
-        spiralBuilder.setNbTrailingParticles(3);
-        spiralBuilder.setCentralPointDefinition(new ParticleTemplate("REDSTONE", new Color(0, 0, 255), null));
-        spiralBuilder.setMainParticle(new ParticleTemplate("FIREWORKS_SPARK", null, null));
-        spiralBuilder.setDirection(direction);
-        spiralBuilder.setTicksDuration(200);
-        spiralBuilder.setShowPeriod(2);
     }
 }
