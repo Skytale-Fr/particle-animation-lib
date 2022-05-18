@@ -4,6 +4,7 @@ import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class AnimationLibTabCompleter implements TabCompleter {
 
-    public static final List<String> FIRST_PARAMS = Arrays.asList("event", "showall", "type", "trail");
+    public static final List<String> FIRST_PARAMS = Arrays.asList("event", "showall", "type", "trail", "target");
 
     ParticleAnimLibTest particleAnimLibTest;
 
@@ -41,6 +42,16 @@ public class AnimationLibTabCompleter implements TabCompleter {
             return this.particleAnimLibTest.getTrailNames().stream()
                     .filter(typeStr -> typeStr.startsWith(args[1]))
                     .collect(Collectors.toList());
+        }
+
+        if(args.length == 2 && args[0].equals("target")){
+            if (sender instanceof Player ){
+                Player player =  (Player) sender;
+                player.getWorld().getPlayers().stream()
+                        .map(player1 -> player1.getName())
+                        .filter(playerNameStr -> playerNameStr.startsWith(args[1]))
+                        .collect(Collectors.toList());
+            }
         }
         return null;
     }

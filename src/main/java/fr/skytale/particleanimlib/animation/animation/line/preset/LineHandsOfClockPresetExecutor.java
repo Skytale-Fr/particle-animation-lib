@@ -71,7 +71,7 @@ public class LineHandsOfClockPresetExecutor extends AAnimationPresetExecutor<Lin
         lineBuilder1.setNbPoints(1);
         lineBuilder1.setTicksDuration(1);
         lineBuilder1.setShowPeriod(0);
-        lineBuilder1.setCallback(animationEnding -> {
+        lineBuilder1.addAnimationEndedCallback(animationEnding -> {
             mainHand.show();
             minuteHand.show();
         });

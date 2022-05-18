@@ -101,7 +101,7 @@ If you activated the testing system, you will be able to use the following featu
     * `/panim showall`: Show all the animations.
     * `/panim trail`: Show the selected trail animation (or the default one) when you move
     * `/panim trail <TrailType>`: Select the trail animation to be shown
-
+    * `/panim target <player` : Add player as a target for searching animation
 ## Add animations to your plugin
 
 ### 1. Create a builder

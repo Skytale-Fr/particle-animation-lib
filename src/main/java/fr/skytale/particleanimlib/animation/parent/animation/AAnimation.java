@@ -11,10 +11,8 @@ import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Supplier;
 
 public abstract class AAnimation implements Cloneable {
 

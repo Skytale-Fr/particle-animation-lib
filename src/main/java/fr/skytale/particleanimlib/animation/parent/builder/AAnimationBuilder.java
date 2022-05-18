@@ -17,8 +17,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.BiPredicate;
 
 public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimationTask<T>> {

@@ -121,6 +121,10 @@ public class LineBuilder extends ARotatingAnimationBuilder<Line, LineTask> {
         animation.setNbPoints(nbPoints);
     }
 
+    public void setNbPoints(int nbPoints) {
+        animation.setNbPoints(new Constant<>(nbPoints));
+    }
+
     public void setLength(IVariable<Double> length) {
         animation.setLength(length);
     }
