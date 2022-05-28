@@ -41,6 +41,7 @@ public enum AnimationPreset {
     //ATOM(new AtomPresetExecutor()),
     CIRCLE(new SimpleCirclePresetExecutor()),
     CIRCLE_WITH_INSIDE_COLLISIONS(new SimpleCircleWithInsideCollisionsPresetExecutor()),
+    CIRCLE_ROTATING_WITH_INSIDE_COLLISIONS(new RotatingCircleWithInsideCollisionsPresetExecutor()),
     CIRCLE_HALF_GROWING(new GrowingHalfCirclePresetExecutor()),
     CIRCLE_ROTATING(new RotatingCirclePresetExecutor()),
     CIRCLE_SUB_ANIM_ROTATING(new SubAnimationCircleRotatingPresetExecutor()),

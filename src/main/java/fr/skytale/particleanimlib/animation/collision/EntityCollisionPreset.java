@@ -5,10 +5,15 @@ import fr.skytale.particleanimlib.animation.animation.cuboid.CuboidTask;
 import fr.skytale.particleanimlib.animation.animation.sphere.SphereTask;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
+import org.apache.commons.math3.geometry.Point;
+import org.apache.commons.math3.geometry.euclidean.threed.Euclidean3D;
+import org.apache.commons.math3.geometry.euclidean.threed.Plane;
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
+import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.Arrays;
 
@@ -58,14 +63,22 @@ public class EntityCollisionPreset<K extends AAnimationTask<? extends AAnimation
      * The verification is made with the center of the entity's bounding box and the 2d plan of the circle. This way, the check isn't exact.
      */
     public static final EntityCollisionPreset<CircleTask> TARGET_CENTER_INSIDE_CIRCLE = new EntityCollisionPreset<>((location, animationTask, target) -> {
+        Location iterationBaseLocation = animationTask.getCurrentIterationBaseLocation();
         Vector sphereCenter = animationTask.getCurrentIterationBaseLocation().toVector();
-        Vector targetCenter = target.getBoundingBox().getCenter();
-        double radius = animationTask.getCurrentRadius();
-        Vector paddingVector = new Vector(radius, 0, radius);
-        double distance = Math.hypot(targetCenter.getX() - sphereCenter.getX(), targetCenter.getZ() - sphereCenter.getZ());
-        return distance <= radius && target.getBoundingBox().overlaps(
-                BoundingBox.of(sphereCenter.clone().subtract(paddingVector), sphereCenter.clone().add(paddingVector))
-        );
+        BoundingBox targetBoundingBox = target.getBoundingBox();
+        Vector targetCenter = targetBoundingBox.getCenter();
+        Vector3D targetCenterVector3D = new Vector3D(targetCenter.getX(), targetCenter.getY(), targetCenter.getZ());
+
+        Vector u = animationTask.getCurrentAbsoluteU();
+        Vector v = animationTask.getCurrentAbsoluteV();
+
+        Plane circlePlane = new Plane(new Vector3D(iterationBaseLocation.getX(), iterationBaseLocation.getY(), iterationBaseLocation.getZ()), new Vector3D(u.getX(), u.getY(), u.getZ()), new Vector3D(v.getX(), v.getY(), v.getZ()));
+        Point<Euclidean3D> projectedPoint = circlePlane.project(targetCenterVector3D);
+
+        double radius = Math.sqrt(Math.pow(targetBoundingBox.getWidthX(), 2) + Math.pow(targetBoundingBox.getWidthZ(), 2) + Math.pow(targetBoundingBox.getHeight(), 2));
+
+        double distance = projectedPoint.distance(targetCenterVector3D);
+        return Math.abs(distance - radius) <= 0.2d;
     });
 
     /**
@@ -74,6 +87,42 @@ public class EntityCollisionPreset<K extends AAnimationTask<? extends AAnimation
      */
     public EntityCollisionPreset(CollisionPredicate<Entity, K> collisionPredicate) {
         super(collisionPredicate);
+    }
+
+    /**
+     * Compute a generic version of an entity collision preset to check if an entity is inside a sphere.
+     * The computation is based on the given sphere radius and on the animation current iteration base location.
+     * @param sphereRadius The radius of the sphere
+     * @return
+     */
+    public static EntityCollisionPreset<?> compilePresetForGenericInsideSphere(double sphereRadius) {
+        return new EntityCollisionPreset<>((location, animationTask, target) -> {
+            double radius = sphereRadius;
+            Vector sphereCenter = animationTask.getCurrentIterationBaseLocation().toVector();
+            Vector targetCenter = target.getBoundingBox().getCenter();
+            return targetCenter.isInSphere(sphereCenter, radius);
+        });
+    }
+
+    /**
+     * Compute a generic version of an entity collision preset to check if an entity is inside a cube.
+     * The computation is based on the given corners by computing the LOWER_WEST_NORTH and UPPER_EAST_SOUTH corners.
+     * @param firstCorner The first corner of the cube
+     * @param secondCorner The second corner of the cube
+     * @return
+     */
+    public static EntityCollisionPreset<?> compilePresetForGenericInsideCube(Location firstCorner, Location secondCorner) {
+        return new EntityCollisionPreset<>((location, animationTask, target) -> {
+            Location min = new Location(firstCorner.getWorld(),
+                    Math.min(firstCorner.getX(), secondCorner.getX()),
+                    Math.min(firstCorner.getY(), secondCorner.getY()),
+                    Math.min(firstCorner.getZ(), secondCorner.getZ()));
+            Location max = new Location(firstCorner.getWorld(),
+                    Math.max(firstCorner.getX(), secondCorner.getX()),
+                    Math.max(firstCorner.getY(), secondCorner.getY()),
+                    Math.max(firstCorner.getZ(), secondCorner.getZ()));
+            return BoundingBox.of(min, max).contains(target.getBoundingBox());
+        });
     }
 
 }

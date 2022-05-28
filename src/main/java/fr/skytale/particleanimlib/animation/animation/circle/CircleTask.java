@@ -66,4 +66,20 @@ public class CircleTask extends AAnimationTask<Circle> {
         return nbPoints;
     }
 
+    public Vector getCurrentRelativeU() {
+        return currentU;
+    }
+
+    public Vector getCurrentRelativeV() {
+        return currentV;
+    }
+
+    public Vector getCurrentAbsoluteU() {
+        return currentIterationBaseLocation.toVector().add(currentU);
+    }
+
+    public Vector getCurrentAbsoluteV() {
+        return currentIterationBaseLocation.toVector().add(currentV);
+    }
+
 }
