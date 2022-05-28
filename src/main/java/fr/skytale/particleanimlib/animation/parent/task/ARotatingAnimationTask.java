@@ -14,7 +14,21 @@ public abstract class ARotatingAnimationTask<T extends ARotatingAnimation> exten
     protected Vector currentRotationAxis;
     protected Double currentRotationAngle;
 
-    public ARotatingAnimationTask(T animation) {
+    protected ARotatingAnimationTask(T animation, Vector u, Vector v) {
+        super(animation);
+
+        this.rotation = new PARotation(u, v);
+        this.hasRotation = animation.getRotationAxis() != null && animation.getRotationAngleAlpha() != null;
+        this.hasChangingRotationAxis = hasRotation && !animation.getRotationAxis().isConstant();
+        this.hasChangingRotationAngle = hasRotation && !animation.getRotationAngleAlpha().isConstant();
+        if (hasRotation) {
+            this.currentRotationAngle = animation.getRotationAngleAlpha().getCurrentValue(iterationCount);
+            this.currentRotationAxis = animation.getRotationAxis().getCurrentValue(iterationCount).normalize();
+            this.rotation.rotate(currentRotationAxis, currentRotationAngle);
+        }
+    }
+
+    protected ARotatingAnimationTask(T animation) {
         super(animation);
         this.hasRotation = animation.getRotationAxis() != null && animation.getRotationAngleAlpha() != null;
         this.hasChangingRotationAxis = hasRotation && !animation.getRotationAxis().isConstant();

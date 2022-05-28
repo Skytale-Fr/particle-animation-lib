@@ -29,6 +29,8 @@ import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralADNPre
 import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralCastSpellPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.text.preset.*;
+import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.RotatingTorusSolenoidPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.TorusSolenoidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExecutor;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
@@ -114,7 +116,9 @@ public enum AnimationPreset {
     TEXT_KGEVERSINCENEWYORK_CONTENT_EVOLVING(new ContentEvolvingTextKGEverSinceNewYorkPresetExecutor()),
     TEXT_KGEVERSINCENEWYORK_ROTATING(new RotatingTextKGEverSinceNewYorkPresetExecutor()),
     TEXT_KGEVERSINCENEWYORK_RAINBOW(new RainbowTextKGEverSinceNewYorkPresetExecutor()),
-    TEXT_KGEVERSINCENEWYORK_DETAILSLEVEL_EVOLVING(new DetailsEvolvingTextKGEverSinceNewYorkPresetExecutor());
+    TEXT_KGEVERSINCENEWYORK_DETAILSLEVEL_EVOLVING(new DetailsEvolvingTextKGEverSinceNewYorkPresetExecutor()),
+    TORUS_SOLENOID(new TorusSolenoidPresetExecutor()),
+    TORUS_SOLENOID_ROTATING(new RotatingTorusSolenoidPresetExecutor());
 
 
     private final AAnimationPresetExecutor<?> presetExecutor;

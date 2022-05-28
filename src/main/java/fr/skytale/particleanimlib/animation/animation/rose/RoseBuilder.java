@@ -7,25 +7,14 @@ import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APo
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
-import fr.skytale.particleanimlib.animation.parent.builder.ARotatingRoundAnimationBuilder;
 import org.bukkit.util.Vector;
 
 public class RoseBuilder extends ARotatingAnimationBuilder<Rose, RoseTask> {
 
     public static final String DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL = "directorVector u should not be null";
     public static final String DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL = "directorVector v should not be null";
-    public static final String FULL_ROSE_ANGLE_BETWEEN_EACH_POINT_ERROR_MESSAGE = "To do a fullRose, nbPoints and angleBetweenEachPoint should have related values.\n" +
-            "In order to automatically compute nbPoints value, angleBetweenEachPoint have to be a constant.\n" +
-            "Else you will have to compute the nbPoints evolving value yourself.\n" +
-            "Reminder (for a full rose) : nbPoints = (int) Math.round(2 * Math.PI / angleBetweenEachPoint)";
-    public static final String FULL_ROSE_NB_POINTS_ERROR_MESSAGE = "To do a fullRose, nbPoints and angleBetweenEachPoint should have related values.\n" +
-            "In order to automatically compute angleBetweenEachPoint value, nbPoints have to be a constant.\n" +
-            "Else you will have to compute the angleBetweenEachPoint evolving value yourself.\n" +
-            "Reminder (for a full rose) :\n" +
-            "angleBetweenEachPoint = 2 * Math.PI / nbPoints" +
-            "nbPoints = (int) Math.round(2 * Math.PI / angleBetweenEachPoint)";
-    private static final String ROSE_MODIFIER_MUST_NOT_BE_NULL_OR_EQUAL_TO_0 = "roseModifier must not be NULL or equal to 0.";
-    private static final String ROSE_MODIFIER_MUST_NOT_BE_EQUAL_TO_1 = "roseModifier must not be equal to 1 because it would have draw a simple circle.";
+    private static final String ROSE_MODIFIER_DENOMINATOR_MUST_NOT_BE_NULL_OR_EQUAL_TO_0 = "roseModifierDenominator must not be NULL or equal to 0.";
+    private static final String ROSE_MODIFIER_NUMERATOR_MUST_NOT_BE_NULL = "roseModifierNumerator must not be equal to 1 because it would have draw a simple circle.";
 
     public RoseBuilder() {
         super();
@@ -111,8 +100,8 @@ public class RoseBuilder extends ARotatingAnimationBuilder<Rose, RoseTask> {
         checkPositiveAndNotNull(animation.getRadius(), "radius should be positive.", false);
         checkNotNull(animation.getU(), DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
         checkNotNull(animation.getV(), DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
-        checkNotNullOrZero(animation.getRoseModifierDenominator(), ROSE_MODIFIER_MUST_NOT_BE_NULL_OR_EQUAL_TO_0);
-        checkNotNull(animation.getRoseModifierNumerator(),"ROSE_MODIFIER_NUMERATOR_MUST_NOT_BE_NULL");
+        checkNotNullOrZero(animation.getRoseModifierDenominator(), ROSE_MODIFIER_DENOMINATOR_MUST_NOT_BE_NULL_OR_EQUAL_TO_0);
+        checkNotNull(animation.getRoseModifierNumerator(),ROSE_MODIFIER_NUMERATOR_MUST_NOT_BE_NULL);
         checkPositiveAndNotNull(animation.getNbPoints(), "nbPoints should be positive", false);
         return super.getAnimation();
     }
