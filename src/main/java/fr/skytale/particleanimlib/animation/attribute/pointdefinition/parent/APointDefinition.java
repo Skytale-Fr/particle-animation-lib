@@ -1,10 +1,7 @@
 package fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.DirectionSubAnimPointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.LocationSubAnimPointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.PlaneSubAnimPointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.*;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
@@ -45,6 +42,10 @@ public abstract class APointDefinition implements Cloneable {
 
     public static DirectionSubAnimPointDefinition fromSubAnim(IDirectionSubAnimation directionAnimation, double speed, DirectionVectorModifierCallback vectorModifierCallback) {
         return new DirectionSubAnimPointDefinition(directionAnimation, speed, vectorModifierCallback);
+    }
+
+    public static CallbackPointDefinition fromCallback(PointShowCallback pointShowCallback) {
+        return new CallbackPointDefinition(pointShowCallback);
     }
 
     public ShowMethodParameters getShowMethodParameters() {
