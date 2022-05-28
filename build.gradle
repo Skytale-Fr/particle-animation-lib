@@ -43,11 +43,11 @@ repositories {
 
 
 dependencies {
-    implementation 'org.jetbrains:annotations:19.0.0'
+    implementation 'org.jetbrains:annotations:23.0.0'
     // The Spigot API with no shadowing. Requires the OSS repo.
     compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
     implementation 'xyz.xenondevs:particle:1.7.1'
-    implementation 'io.github.classgraph:classgraph:4.8.114'
+    implementation 'io.github.classgraph:classgraph:4.8.146'
     implementation 'commons-io:commons-io:2.8.0'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
     implementation 'org.apache.commons:commons-math3:3.6.1'
