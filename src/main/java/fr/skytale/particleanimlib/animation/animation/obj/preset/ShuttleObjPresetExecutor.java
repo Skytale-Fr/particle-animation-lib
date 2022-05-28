@@ -25,7 +25,7 @@ public class ShuttleObjPresetExecutor extends AAnimationPresetExecutor<ObjBuilde
         objBuilder.setObjFileName("shuttle.obj");
         objBuilder.setScale(3);
         objBuilder.setDistanceBetweenParticles(1);
-        objBuilder.setMinAngleBetweenFaces(Math.toRadians(5));
+        objBuilder.setMinAngleBetweenFaces(Math.toRadians(0.0000000001));
 
         objBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         objBuilder.setTicksDuration(400);
