@@ -9,6 +9,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.collision.CollisionBuilder;
 import fr.skytale.particleanimlib.animation.collision.EntityCollisionPreset;
+import fr.skytale.particleanimlib.animation.collision.EntityFilters;
 import fr.skytale.particleanimlib.animation.collision.SimpleCollisionProcessor;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.Location;
@@ -41,7 +42,7 @@ public class RotatingCircleWithInsideCollisionsPresetExecutor extends AAnimation
             Location currentIterationBaseLocation = lineTask.getCurrentIterationBaseLocation();
             return currentIterationBaseLocation.getWorld().getNearbyEntities(currentIterationBaseLocation, 10, 10, 10);
         });
-        collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> !entity.getType().equals(EntityType.PLAYER));
+        collisionBuilder.addPotentialCollidingTargetsFilter((EntityFilters.isNotType(EntityType.PLAYER)));
         collisionBuilder.addCollisionProcessor(SimpleCollisionProcessor.useDefault(circleBuilder, EntityCollisionPreset.TARGET_CENTER_INSIDE_CIRCLE, (animationTask, target) -> {
             if(!(target instanceof LivingEntity)) return -1;
             ((LivingEntity) target).damage(1);

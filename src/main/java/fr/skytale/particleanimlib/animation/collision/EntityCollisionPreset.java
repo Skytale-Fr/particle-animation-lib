@@ -65,6 +65,7 @@ public class EntityCollisionPreset<K extends AAnimationTask<? extends AAnimation
     public static final EntityCollisionPreset<CircleTask> TARGET_CENTER_INSIDE_CIRCLE = new EntityCollisionPreset<>((location, animationTask, target) -> {
         Location iterationBaseLocation = animationTask.getCurrentIterationBaseLocation();
         Vector sphereCenter = animationTask.getCurrentIterationBaseLocation().toVector();
+        Vector3D sphereCenterVector3D = new Vector3D(sphereCenter.getX(), sphereCenter.getY(), sphereCenter.getZ());
         BoundingBox targetBoundingBox = target.getBoundingBox();
         Vector targetCenter = targetBoundingBox.getCenter();
         Vector3D targetCenterVector3D = new Vector3D(targetCenter.getX(), targetCenter.getY(), targetCenter.getZ());
@@ -75,10 +76,14 @@ public class EntityCollisionPreset<K extends AAnimationTask<? extends AAnimation
         Plane circlePlane = new Plane(new Vector3D(iterationBaseLocation.getX(), iterationBaseLocation.getY(), iterationBaseLocation.getZ()), new Vector3D(u.getX(), u.getY(), u.getZ()), new Vector3D(v.getX(), v.getY(), v.getZ()));
         Point<Euclidean3D> projectedPoint = circlePlane.project(targetCenterVector3D);
 
+        // If the projected point isn't in the circle
+        if (projectedPoint.distance(sphereCenterVector3D) >= animationTask.getCurrentRadius()) return false;
+
         double radius = Math.sqrt(Math.pow(targetBoundingBox.getWidthX(), 2) + Math.pow(targetBoundingBox.getWidthZ(), 2) + Math.pow(targetBoundingBox.getHeight(), 2));
 
         double distance = projectedPoint.distance(targetCenterVector3D);
-        return Math.abs(distance - radius) <= 0.2d;
+        // If the projected point is close to the entity
+        return Math.abs(distance - radius) <= 0.1d;
     });
 
     /**
