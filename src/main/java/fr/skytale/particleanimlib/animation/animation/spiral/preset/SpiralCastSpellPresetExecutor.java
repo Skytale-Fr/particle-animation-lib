@@ -5,10 +5,14 @@ import fr.skytale.particleanimlib.animation.animation.spiral.SpiralBuilder;
 import fr.skytale.particleanimlib.animation.animation.spiral.SpiralTask;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
+import fr.skytale.particleanimlib.animation.attribute.var.VectorPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 public class SpiralCastSpellPresetExecutor extends AAnimationPresetExecutor<SpiralBuilder> {
 
@@ -37,6 +41,11 @@ public class SpiralCastSpellPresetExecutor extends AAnimationPresetExecutor<Spir
             spiralBuilder.addAnimationEndedCallback(animationEnding -> {
                 sphereBuilder.getAnimation().show();
             });
+        }
+        else{
+            //If there is no target, the spell is casted forward
+            Vector entityDirection = spiralBuilder.getPosition().getMovingEntity().getLocation().getDirection();
+            spiralBuilder.setDirection(AnimationDirection.fromMoveVector(entityDirection));
         }
     }
 }
