@@ -6,6 +6,7 @@ import fr.skytale.particleanimlib.trail.parent.ATrailPresetExecutor;
 import fr.skytale.particleanimlib.trail.preset.CircleTrailPresetExecutor;
 import fr.skytale.particleanimlib.trail.preset.CloudTrailPresetExecutor;
 import fr.skytale.particleanimlib.trail.preset.CuboidTrailPresetExecutor;
+import fr.skytale.particleanimlib.trail.preset.PotionTrailPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Locale;
@@ -13,6 +14,7 @@ import java.util.Locale;
 public enum TrailPreset {
     CIRCLE_MOVING_UP(new CircleTrailPresetExecutor()),
     CLOUD(new CloudTrailPresetExecutor()),
+    POTION(new PotionTrailPresetExecutor()),
     ROTATING_CUBOID(new CuboidTrailPresetExecutor()),
     //SKYTALE(new SkytaleImageTrailPresetExecutor(), ImagePresetInitializer.class),
     ;

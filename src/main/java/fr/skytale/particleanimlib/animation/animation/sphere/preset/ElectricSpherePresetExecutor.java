@@ -18,11 +18,12 @@ public class ElectricSpherePresetExecutor extends AAnimationPresetExecutor<Spher
     protected void apply(SphereBuilder sphereBuilder, JavaPlugin plugin) {
         /*sphereBuilder.setRadius(2);//iterationCount -> Math.sin(iterationCount / 2.0 + 2.0) / 4.0 + iterationCount / 20.0 + 0.15));
         sphereBuilder.setNbCircles(8);*/
-        sphereBuilder.setRadius(new CallbackVariable<>(iterationCount -> iterationCount%3==0 ? 0.7 : (iterationCount%3==1 ? 1.0 : 1.3)));//iterationCount -> Math.sin(iterationCount / 2.0 + 2.0) / 4.0 + iterationCount / 20.0 + 0.15));
+        sphereBuilder.setRadius(new CallbackVariable<>(iterationCount -> iterationCount%3==0 ? 1.0 : (iterationCount%3==1 ? 1.3 : 1.6)));//iterationCount -> Math.sin(iterationCount / 2.0 + 2.0) / 4.0 + iterationCount / 20.0 + 0.15));
         sphereBuilder.setNbCircles(new CallbackVariable<>(iterationCount -> iterationCount%3==0 ? 3 : (iterationCount%3==1 ? 5 : 3)));
 
         sphereBuilder.setAngleBetweenEachPoint(new CallbackVariable<>(iterationCount -> iterationCount%3==2 ? Math.toRadians(130) : Math.toRadians(30)));
-        sphereBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(244, 208, 63 ), null));
+        //sphereBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(244, 208, 63 ), null));
+        sphereBuilder.setMainParticle(new ParticleTemplate("END_ROD", null, null,1,0.05f));
         sphereBuilder.setTicksDuration(100);
         sphereBuilder.setShowPeriod(4);
     }
