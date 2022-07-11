@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.rose.preset;
 
-import fr.skytale.particleanimlib.animation.animation.line.LineBuilder;
+import fr.skytale.particleanimlib.animation.animation.epi.Epi;
+import fr.skytale.particleanimlib.animation.animation.epi.EpiBuilder;
 import fr.skytale.particleanimlib.animation.animation.rose.Rose;
 import fr.skytale.particleanimlib.animation.animation.rose.RoseBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
@@ -12,22 +13,22 @@ import org.bukkit.util.Vector;
 import java.awt.*;
 
 
-public class DoubleRotatingRosesPresetExecutor extends AAnimationPresetExecutor<RoseBuilder> {
+public class RotatingRoseInsideEpiPresetExecutor extends AAnimationPresetExecutor<RoseBuilder> {
 
-    public DoubleRotatingRosesPresetExecutor() {
+    public RotatingRoseInsideEpiPresetExecutor() {
         super(RoseBuilder.class);
     }
 
     @Override
     protected void apply(RoseBuilder roseBuilder, JavaPlugin plugin) {
 
-        //First rose
-        RoseBuilder roseBuilder1 = new RoseBuilder();
+        //Rose
+        RoseBuilder roseBuilder1 = new RoseBuilder();       //TODO y'a un pb donc obligé de créer un autre builder au lieu d'utiliser roseBuilder - comme si pb de clonage
         roseBuilder1.setDirectorVectors(new Vector(0, 0, 1), new Vector(1, 0, 0));
-        roseBuilder1.setNbPoints(300);
-        roseBuilder1.setRadius(5);
+        roseBuilder1.setNbPoints(200);
+        roseBuilder1.setRadius(3);
         roseBuilder1.setRoseModifierNumerator(3d);
-        roseBuilder1.setRoseModifierDenominator(2);
+        roseBuilder1.setRoseModifierDenominator(4);
         roseBuilder1.setTicksDuration(20*10);
         roseBuilder1.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255,0,0), null));
         roseBuilder1.setShowPeriod(new Constant<>(3));
@@ -35,32 +36,32 @@ public class DoubleRotatingRosesPresetExecutor extends AAnimationPresetExecutor<
         roseBuilder1.setPosition(roseBuilder.getPosition());
         roseBuilder1.setRotation(new Vector(0,1,0), new Constant<>(Math.PI/210));
 
-        Rose firstRose = roseBuilder1.getAnimation();
+        Rose rose = roseBuilder1.getAnimation();
 
-        //Second rose
-        RoseBuilder roseBuilder2 = new RoseBuilder();
-        roseBuilder2.setDirectorVectors(new Vector(0, 0, 1), new Vector(1, 0, 0));
-        roseBuilder2.setNbPoints(300);
-        roseBuilder2.setRadius(5);
-        roseBuilder2.setRoseModifierNumerator(3d);
-        roseBuilder2.setRoseModifierDenominator(2);
-        roseBuilder2.setTicksDuration(20*10);
-        roseBuilder2.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255,0,0), null));
-        roseBuilder2.setShowPeriod(new Constant<>(3));
-        roseBuilder2.setJavaPlugin(plugin);
-        roseBuilder2.setPosition(roseBuilder.getPosition());
-        roseBuilder2.setRotation(new Vector(0,1,0), new Constant<>(-Math.PI/200));
+        //Epi
+        EpiBuilder epiBuilder = new EpiBuilder();
+        epiBuilder.setDirectorVectors(new Vector(0, 0, 1), new Vector(1, 0, 0));
+        epiBuilder.setNbPoints(200);
+        epiBuilder.setRadius(3);
+        epiBuilder.setEpiModifierNumerator(2d);
+        epiBuilder.setEpiModifierDenominator(5);
+        epiBuilder.setTicksDuration(20*10);
+        epiBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255,0,0), null));
+        epiBuilder.setShowPeriod(new Constant<>(3));
+        epiBuilder.setJavaPlugin(plugin);
+        epiBuilder.setPosition(roseBuilder.getPosition());
+        epiBuilder.setRotation(new Vector(0,1,0), new Constant<>(-Math.PI/200));
 
-        Rose secondRose = roseBuilder2.getAnimation();
+        Epi epi = epiBuilder.getAnimation();
 
-        //Builder to merge the two roses
+        //Builder to merge the two animations
         roseBuilder.setNbPoints(1);
         roseBuilder.setRadius(0.1d);
         roseBuilder.setTicksDuration(1);
         roseBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255,0,0), null));
         roseBuilder.addAnimationEndedCallback( result ->{
-            firstRose.show();
-            secondRose.show();
+            rose.show();
+            epi.show();
         });
 
 //        roseBuilder.setDirectorVectors(new Vector(0, 0, 1), new Vector(1, 0, 0));

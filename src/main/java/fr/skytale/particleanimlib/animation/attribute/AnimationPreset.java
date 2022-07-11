@@ -94,7 +94,7 @@ public enum AnimationPreset {
     PYRAMID_GROWING(new GrowingPyramidPresetExecutor()),
     PYRAMID_GROWING2(new GrowingPyramid2PresetExecutor()),
     ROSE(new SimpleRosePresetExecutor()),
-    ROSE_DOUBLE_ROTATING(new DoubleRotatingRosesPresetExecutor()),
+    ROSE_INSIDE_EPI_ROTATING(new RotatingRoseInsideEpiPresetExecutor()),
     SPHERE(new SpherePresetExecutor()),
     SPHERE_ELECTRIC(new ElectricExplodingSpherePresetExecutor()),
     SPHERE_ELECTRIC2(new ElectricSpherePresetExecutor()),
