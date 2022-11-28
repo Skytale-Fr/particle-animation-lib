@@ -59,4 +59,18 @@ public class PARotation {
                 rotatedVector3D.getZ());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PARotation that = (PARotation) o;
+
+        return Rotation.distance(this.rotation, that.rotation) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return rotation != null ? rotation.hashCode() : 0;
+    }
 }

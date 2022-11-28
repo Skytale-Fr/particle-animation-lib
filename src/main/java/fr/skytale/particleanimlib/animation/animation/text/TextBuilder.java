@@ -29,8 +29,7 @@ public class TextBuilder extends ARotatingAnimationBuilder<Text, TextTask> {
     public TextBuilder() {
         super();
         // Default values
-        animation.setU(new Vector(1, 0, 0));
-        animation.setV(new Vector(0, 1, 0));
+        animation.setRotation(new Vector(1, 0, 0),new Vector(0, 1, 0));
         animation.setFontFileName("Minecraft.ttf");
         animation.setShowPeriod(new Constant<>(1));
         animation.setTicksDuration(60);
@@ -69,8 +68,7 @@ public class TextBuilder extends ARotatingAnimationBuilder<Text, TextTask> {
     public void setDirectorVectors(Vector u, Vector v) {
         checkNotNull(u, DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
         checkNotNull(v, DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
-        animation.setU(u);
-        animation.setV(v);
+        animation.setRotation(u,v);
     }
 
     public void setDirectorVectorsFromOrientation(Orientation direction, double length) {
@@ -79,8 +77,7 @@ public class TextBuilder extends ARotatingAnimationBuilder<Text, TextTask> {
 
     public void setDirectorVectorsFromNormalVector(Vector normal) {
         RotatableVector.Plane2D plane = new RotatableVector(normal).getPlane();
-        animation.setU(plane.u);
-        animation.setV(plane.v);
+        setDirectorVectors(plane.u,plane.v);
     }
 
     public void setPointDefinition(APointDefinition pointDefinition) {
@@ -94,8 +91,6 @@ public class TextBuilder extends ARotatingAnimationBuilder<Text, TextTask> {
 
     @Override
     public Text getAnimation() {
-        checkNotNull(animation.getU(), DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
-        checkNotNull(animation.getV(), DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
         checkNotNull(animation.getBaseString(), BASE_STRING_SHOULD_NOT_BE_NULL);
         checkNotNull(animation.getFontSize(), FONT_SIZE_SHOULD_NOT_BE_NULL_OR_EMPTY);
         checkNotNull(animation.getFontFileName(), FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);

@@ -7,12 +7,11 @@ import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APo
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
 import org.bukkit.util.Vector;
 
-public class Epi extends ARotatingAnimation implements IPlaneSubAnimation, ISubAnimationContainer {
-    private Vector u;
-    private Vector v;
+public class Epi extends ARotatingAnimation implements ISubAnimation, ISubAnimationContainer {
     private IVariable<Integer> nbPoints;
     private APointDefinition pointDefinition;
     private IVariable<Double> epiModifierNumerator;
@@ -62,26 +61,6 @@ public class Epi extends ARotatingAnimation implements IPlaneSubAnimation, ISubA
         this.epiModifierDenominator = epiModifierDenominator;
     }
 
-    @Override
-    public Vector getU() {
-        return u;
-    }
-
-    @Override
-    public void setU(Vector u) {
-        this.u = u;
-    }
-
-    @Override
-    public Vector getV() {
-        return v;
-    }
-
-    @Override
-    public void setV(Vector v) {
-        this.v = v;
-    }
-
     public IVariable<Integer> getNbPoints() {
         return nbPoints;
     }
@@ -116,8 +95,6 @@ public class Epi extends ARotatingAnimation implements IPlaneSubAnimation, ISubA
     @Override
     public Epi clone() {
         Epi obj = (Epi) super.clone();
-        obj.u = u.clone();
-        obj.v = v.clone();
         obj.nbPoints = nbPoints.copy();
         obj.pointDefinition = pointDefinition.clone();
         obj.epiModifierNumerator = epiModifierNumerator.copy();

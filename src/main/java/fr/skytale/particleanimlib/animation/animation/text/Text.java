@@ -11,6 +11,7 @@ import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
 import fr.skytale.ttfparser.TTFAlphabet;
 import fr.skytale.ttfparser.TTFParser;
@@ -22,12 +23,10 @@ import java.io.File;
 import java.net.URL;
 import java.nio.file.Path;
 
-public class Text extends ARotatingAnimation implements IPlaneSubAnimation, ISubAnimationContainer {
+public class Text extends ARotatingAnimation implements ISubAnimation, ISubAnimationContainer {
 
     public static final String FONTS_FOLDER = "fonts";
 
-    private Vector u;
-    private Vector v;
     private IVariable<String> baseString;
     private IVariable<Double> fontSize;
     private IVariable<Double> detailsLevel;
@@ -128,25 +127,7 @@ public class Text extends ARotatingAnimation implements IPlaneSubAnimation, ISub
         this.detailsLevel = detailsLevel;
     }
 
-    @Override
-    public Vector getU() {
-        return u;
-    }
-
-    @Override
-    public void setU(Vector u) {
-        this.u = u;
-    }
-
-    @Override
-    public Vector getV() {
-        return v;
-    }
-
-    @Override
-    public void setV(Vector v) {
-        this.v = v;
-    }
+    
 
     @Override
     public APointDefinition getPointDefinition() {
@@ -179,8 +160,6 @@ public class Text extends ARotatingAnimation implements IPlaneSubAnimation, ISub
         obj.fontSize = fontSize.copy();
         obj.fontFileName = fontFileName;
         obj.detailsLevel = detailsLevel.copy();
-        obj.u = u.clone();
-        obj.v = v.clone();
         obj.pointDefinition = pointDefinition.clone();
         return obj;
     }

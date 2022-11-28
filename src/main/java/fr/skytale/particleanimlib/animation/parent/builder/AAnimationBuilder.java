@@ -1,20 +1,18 @@
 package fr.skytale.particleanimlib.animation.parent.builder;
 
-import fr.skytale.particleanimlib.animation.attribute.AnimationEndedCallback;
-import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
-import fr.skytale.particleanimlib.animation.attribute.AnimationStopCondition;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.*;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import fr.skytale.particleanimlib.animation.collision.CollisionHandler;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 import java.util.Collection;
 import java.util.function.BiPredicate;
@@ -60,16 +58,50 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
         return animation.getPosition();
     }
 
-    /********* Generic AAnimation attributes setters ***********/
-
-    // --------------------- Attributes ---------------------
     public void setPosition(APosition position) {
         checkNotNull(position, POSITION_SHOULD_NOT_BE_NULL);
         animation.setPosition(position);
     }
 
+    /********* Generic AAnimation attributes setters ***********/
+
+    // --------------------- Attributes ---------------------
+    public void setRotation(IVariable<PARotation> rotation) {
+        animation.setRotation(rotation);
+    }
+
+    public void setRotation(PARotation rotation) {
+        setRotation(new Constant<>(rotation));
+    }
+
+    public void setRotation(IVariable<Vector> axis, IVariable<Double> rotationAngleAlpha) {
+        //TODO construire une IVariable a partir de axis & rotationAngleAlpha puis appeller setRotation(IVariable) ds cette methode
+    }
+
+    public void setRotation(Vector axis, IVariable<Double> rotationAngleAlpha) {
+        setRotation(new Constant<>(axis), rotationAngleAlpha);
+    }
+
+    public void setRotation(IVariable<Vector> axis, double rotationAngleAlpha) {
+        setRotation(axis, new Constant<>(rotationAngleAlpha));
+    }
+
+    public void setRotation(Vector axis, double rotationAngleAlpha) {
+        setRotation(new Constant<>(axis), new Constant<>(rotationAngleAlpha));
+    }
+
     public void setMainParticle(ParticleTemplate mainParticle) {
-        animation.setMainParticle(mainParticle);
+        checkNotNull(mainParticle, "Main particle should not be null");
+        animation.setPointDefinition(APointDefinition.fromParticleTemplate(mainParticle));
+    }
+
+    public void setPointDefinition(APointDefinition pointDefinition) {
+        checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
+        animation.setPointDefinition(pointDefinition);
+    }
+
+    public void setPointDefinition(ParticleTemplate particleTemplate) {
+        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
     }
 
     public JavaPlugin getJavaPlugin() {
@@ -94,7 +126,10 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
         animation.setViewers(viewers);
     }
 
-    public void setStopCondition(AnimationStopCondition<K> stopCondition) { this.setStopCondition(stopCondition, false); }
+    public void setStopCondition(AnimationStopCondition<K> stopCondition) {
+        this.setStopCondition(stopCondition, false);
+    }
+
     public void setStopCondition(AnimationStopCondition<K> stopCondition, boolean infiniteTickDuration) {
         animation.setStopCondition(stopCondition, infiniteTickDuration);
     }
@@ -118,7 +153,7 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
 
     // --------------------- CHECK SYSTEM ---------------------
     public void addCollisionHandler(CollisionHandler<?, K> collisionHandler) {
-        if(collisionHandler == null) return;
+        if (collisionHandler == null) return;
         animation.addCollisionHandler((CollisionHandler<?, AAnimationTask<?>>) collisionHandler);
     }
 
@@ -127,7 +162,7 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
     }
 
     public void addAnimationEndedCallback(AnimationEndedCallback callback) {
-        if(callback == null) return;
+        if (callback == null) return;
         animation.addAnimationEndedCallback(callback);
     }
 
@@ -146,11 +181,8 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
 
             }
         }
-        if (animation instanceof ISubAnimationContainer) {
-            checkNotNull(((ISubAnimationContainer) animation).getPointDefinition(), POINT_DEFINITION_SHOULD_NOT_BE_NULL);
-        } else {
-            checkNotNull(animation.getMainParticle(), "Main particle should not be null");
-        }
+
+        checkNotNull(animation.getPointDefinition(), POINT_DEFINITION_SHOULD_NOT_BE_NULL);
         checkNotNull(animation.getPlugin(), "The plugin should be defined");
         checkNotNull(animation.getViewers(), "viewers should not be null");
         if (animation.getTicksDuration() <= 0) {

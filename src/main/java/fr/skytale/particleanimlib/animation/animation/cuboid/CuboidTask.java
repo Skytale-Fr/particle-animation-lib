@@ -27,7 +27,7 @@ public class CuboidTask extends ARotatingAnimationTask<Cuboid> {
 
         boolean cornersUpdated = false;
         //recalculate corners if required
-        if (corners == null || animation.getFromLocationToFirstCorner().willChange(iterationCount) || animation.getFromLocationToSecondCorner().willChange(iterationCount)) {
+        if (corners == null || animation.getFromLocationToFirstCorner().mayChange(iterationCount) || animation.getFromLocationToSecondCorner().mayChange(iterationCount)) {
             this.corners = getCorners();
             cornersUpdated = true;
         }

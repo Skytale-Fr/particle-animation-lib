@@ -1,85 +1,54 @@
 package fr.skytale.particleanimlib.animation.animation.circle;
 
-import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
+import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
-import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public class CircleTask extends AAnimationTask<Circle> {
-    Vector currentU, currentV;
+import java.util.ArrayList;
+import java.util.List;
 
-    private double stepAngle;
+public class CircleTask extends AAnimationTask<Circle> {
+    private double angleBetweenEachPoint;
     private double radius;
     private int nbPoints;
 
     public CircleTask(Circle circle) {
         super(circle);
-        currentU = animation.getU().clone();
-        currentV = animation.getV().clone();
         startTask();
     }
 
     @Override
-    public void show(Location iterationBaseLocation) {
-        if (hasDurationEnded()) {
-            stopAnimation();
-            return;
-        }
+    protected boolean hasAnimationPointsChanged() {
+        IVariable.ChangeResult<Double> angleBetweenEachPointChangeResult = animation.getAngleBetweenEachPoint().willChange(iterationCount, angleBetweenEachPoint);
+        angleBetweenEachPoint = angleBetweenEachPointChangeResult.getNewValue();
+        IVariable.ChangeResult<Double> radiusChangeResult = animation.getRadius().willChange(iterationCount, radius);
+        radius = radiusChangeResult.getNewValue();
+        IVariable.ChangeResult<Integer> nbPointsChangeResult = animation.getNbPoints().willChange(iterationCount, nbPoints);
+        nbPoints = nbPointsChangeResult.getNewValue();
 
-        stepAngle = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
-        radius = animation.getRadius().getCurrentValue(iterationCount);
-        nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
+        return angleBetweenEachPointChangeResult.hasChanged() || radiusChangeResult.hasChanged() || nbPointsChangeResult.hasChanged();
+    }
+
+    @Override
+    protected List<Vector> computeAnimationPoints() {
+        List<Vector> animationPoints = new ArrayList<>();
 
         for (int pointIndex = 0; pointIndex < nbPoints; pointIndex++) {
-            double theta = pointIndex * stepAngle;
+            double theta = pointIndex * angleBetweenEachPoint;
 
             final double radiusCosTheta = radius * Math.cos(theta);
             final double radiusSinTheta = radius * Math.sin(theta);
-            double x = iterationBaseLocation.getX() + (currentU.getX() * radiusCosTheta) + (currentV.getX() * radiusSinTheta);
-            double y = iterationBaseLocation.getY() + (currentU.getY() * radiusCosTheta) + (currentV.getY() * radiusSinTheta);
-            double z = iterationBaseLocation.getZ() + (currentU.getZ() * radiusCosTheta) + (currentV.getZ() * radiusSinTheta);
+            double x = U.getX() * radiusCosTheta + V.getX() * radiusSinTheta;
+            double y = U.getY() * radiusCosTheta + V.getY() * radiusSinTheta;
+            double z = U.getZ() * radiusCosTheta + V.getZ() * radiusSinTheta;
 
-            Location particleLocation = new Location(iterationBaseLocation.getWorld(), x, y, z);
-
-            showPoint(animation.getPointDefinition(), particleLocation, iterationBaseLocation);
-
+            animationPoints.add(new Vector(x, y, z));
         }
 
-        if (animation.getRotationAxis() != null) {
-            Vector rotationAxis = animation.getRotationAxis().getCurrentValue(iterationCount);
-            double rotationAngleAlpha = animation.getRotationAngleAlpha().getCurrentValue(iterationCount);
-
-            currentU = new RotatableVector(currentU).rotateAroundAxis(rotationAxis, rotationAngleAlpha);
-            currentV = new RotatableVector(currentV).rotateAroundAxis(rotationAxis, rotationAngleAlpha);
-        }
-    }
-
-    public double getCurrentStepAngle() {
-        return stepAngle;
+        return animationPoints;
     }
 
     public double getCurrentRadius() {
         return radius;
     }
-
-    public int getCurrentNbPoints() {
-        return nbPoints;
-    }
-
-    public Vector getCurrentRelativeU() {
-        return currentU;
-    }
-
-    public Vector getCurrentRelativeV() {
-        return currentV;
-    }
-
-    public Vector getCurrentAbsoluteU() {
-        return currentIterationBaseLocation.toVector().add(currentU);
-    }
-
-    public Vector getCurrentAbsoluteV() {
-        return currentIterationBaseLocation.toVector().add(currentV);
-    }
-
 }

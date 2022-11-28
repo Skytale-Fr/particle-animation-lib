@@ -27,8 +27,7 @@ public class EpiBuilder extends ARotatingAnimationBuilder<Epi, EpiTask> {
 
     public EpiBuilder() {
         super();
-        animation.setU(new Vector(1, 0, 0));
-        animation.setV(new Vector(0, 1, 0));
+        animation.setRotation(new Vector(1, 0, 0),new Vector(0, 1, 0));
         animation.setRadius(new Constant<>(3.0));
         animation.setEpiModifierNumerator(new Constant<>(3d));
         animation.setEpiModifierDenominator(new Constant<>(2));
@@ -64,8 +63,7 @@ public class EpiBuilder extends ARotatingAnimationBuilder<Epi, EpiTask> {
     public void setDirectorVectors(Vector u, Vector v) {
         checkNotNull(u, DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
         checkNotNull(v, DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
-        animation.setU(u);
-        animation.setV(v);
+        animation.setRotation(u,v);
     }
 
     public void setDirectorVectorsFromOrientation(Orientation direction, double length) {
@@ -74,8 +72,7 @@ public class EpiBuilder extends ARotatingAnimationBuilder<Epi, EpiTask> {
 
     public void setDirectorVectorsFromNormalVector(Vector normal) {
         RotatableVector.Plane2D plane = new RotatableVector(normal).getPlane();
-        animation.setU(plane.u);
-        animation.setV(plane.v);
+        setDirectorVectors(plane.u,plane.v);
     }
 
 
@@ -116,8 +113,6 @@ public class EpiBuilder extends ARotatingAnimationBuilder<Epi, EpiTask> {
     @Override
     public Epi getAnimation() {
         checkPositiveAndNotNull(animation.getRadius(), "radius should be positive.", false);
-        checkNotNull(animation.getU(), DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
-        checkNotNull(animation.getV(), DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
         checkNotNullOrZero(animation.getEpiModifierDenominator(), EPI_MODIFIER_MUST_NOT_BE_NULL_OR_EQUAL_TO_0);
         checkNotNull(animation.getEpiModifierNumerator(),"EPI_MODIFIER_NUMERATOR_MUST_NOT_BE_NULL");
         checkPositiveAndNotNull(animation.getNbPoints(), "nbPoints should be positive", false);

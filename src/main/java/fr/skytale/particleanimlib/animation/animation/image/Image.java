@@ -1,8 +1,10 @@
 package fr.skytale.particleanimlib.animation.animation.image;
 
 
+import fr.skytale.particleanimlib.animation.attribute.PARotation;
 import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
@@ -15,14 +17,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
-public class Image extends ARotatingAnimation implements IPlaneSubAnimation {
+public class Image extends ARotatingAnimation implements ISubAnimation {
 
     public static final String IMAGES_FOLDER = "images";
     /******** Attributes ********/
 
     //Starting plane
-    private Vector u;
-    private Vector v;
     //Image file name
     private String imageFileName;
     private HashMap<Vector, Color> imagePixels;
@@ -85,6 +85,10 @@ public class Image extends ARotatingAnimation implements IPlaneSubAnimation {
         hasColor = mainParticle.getParticleEffect() == ParticleEffect.REDSTONE;
 
         try {
+            PARotation rotation = getRotation().getCurrentValue(0);
+            Vector u = rotation.rotateVector(new Vector(1, 0, 0));
+            Vector v = rotation.rotateVector(new Vector(0, 1, 0));
+
             BufferedImage bufferedImage = ImageIO.read(getImageFile(plugin, imageFileName));
             int height = bufferedImage.getHeight();
             int width = bufferedImage.getWidth();
@@ -111,27 +115,7 @@ public class Image extends ARotatingAnimation implements IPlaneSubAnimation {
         }
     }
 
-    @Override
-    public Vector getV() {
-        return v;
-    }
-
-    @Override
-    public void setV(Vector v) {
-        this.v = v;
-    }
-
-    @Override
-    public Vector getU() {
-        return u;
-    }
-
     /******** Getters & Setters ********/
-
-    @Override
-    public void setU(Vector u) {
-        this.u = u;
-    }
 
     public String getImageFileName() {
         return imageFileName;
@@ -153,8 +137,6 @@ public class Image extends ARotatingAnimation implements IPlaneSubAnimation {
     @Override
     public Image clone() {
         Image obj = (Image) super.clone();
-        obj.u = u.clone();
-        obj.v = v.clone();
         obj.imagePixels = imagePixels == null ? null : (HashMap<Vector, Color>) imagePixels.entrySet().stream()
                 .collect(Collectors.toMap(e -> e.getKey().clone(), e -> new Color(e.getValue().getRGB())));
         ;

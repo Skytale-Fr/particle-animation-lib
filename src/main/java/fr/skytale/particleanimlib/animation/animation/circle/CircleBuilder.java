@@ -1,15 +1,16 @@
 package fr.skytale.particleanimlib.animation.animation.circle;
 
 import fr.skytale.particleanimlib.animation.attribute.Orientation;
+import fr.skytale.particleanimlib.animation.attribute.PARotation;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.builder.ARotatingRoundAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.builder.ARoundAnimationBuilder;
 import org.bukkit.util.Vector;
 
-public class CircleBuilder extends ARotatingRoundAnimationBuilder<Circle, CircleTask> {
+public class CircleBuilder extends ARoundAnimationBuilder<Circle, CircleTask> {
 
     public static final String DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL = "directorVector u should not be null";
     public static final String DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL = "directorVector v should not be null";
@@ -26,8 +27,7 @@ public class CircleBuilder extends ARotatingRoundAnimationBuilder<Circle, Circle
 
     public CircleBuilder() {
         super();
-        animation.setU(new Vector(1, 0, 0));
-        animation.setV(new Vector(0, 1, 0));
+        animation.setRotation(new Vector(1, 0, 0),new Vector(0, 1, 0));
         animation.setRadius(new Constant<>(3.0));
         animation.setShowPeriod(new Constant<>(1));
         animation.setTicksDuration(60);
@@ -43,8 +43,7 @@ public class CircleBuilder extends ARotatingRoundAnimationBuilder<Circle, Circle
     public void setDirectorVectors(Vector u, Vector v) {
         checkNotNull(u, DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
         checkNotNull(v, DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
-        animation.setU(u);
-        animation.setV(v);
+        animation.setRotation(u,v);
     }
 
     public void setDirectorVectorsFromOrientation(Orientation direction, double length) {
@@ -53,8 +52,7 @@ public class CircleBuilder extends ARotatingRoundAnimationBuilder<Circle, Circle
 
     public void setDirectorVectorsFromNormalVector(Vector normal) {
         RotatableVector.Plane2D plane = new RotatableVector(normal).getPlane();
-        animation.setU(plane.u);
-        animation.setV(plane.v);
+        setDirectorVectors(plane.u,plane.v);
     }
 
     public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint, boolean fullCircle) {
@@ -102,8 +100,6 @@ public class CircleBuilder extends ARotatingRoundAnimationBuilder<Circle, Circle
 
     @Override
     public Circle getAnimation() {
-        checkNotNull(animation.getU(), DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
-        checkNotNull(animation.getV(), DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
         checkPositiveAndNotNull(animation.getNbPoints(), "nbPoints should be positive", false);
         return super.getAnimation();
     }

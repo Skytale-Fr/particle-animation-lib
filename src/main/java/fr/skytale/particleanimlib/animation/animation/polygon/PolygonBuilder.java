@@ -14,8 +14,7 @@ public class PolygonBuilder extends ARotatingAnimationBuilder<Polygon, PolygonTa
 
     public PolygonBuilder() {
         super();
-        animation.setU(new Vector(1, 0, 0));
-        animation.setV(new Vector(0, 1, 0));
+        animation.setRotation(new Vector(1, 0, 0),new Vector(0, 1, 0));
         animation.setDistanceFromCenterToVertices(new Constant<>(4.0));
         animation.setDistanceBetweenPoints(new Constant<>(0.3));
         animation.setNbVertices(new Constant<>(8));
@@ -32,8 +31,7 @@ public class PolygonBuilder extends ARotatingAnimationBuilder<Polygon, PolygonTa
     public void setDirectorVectors(Vector u, Vector v) {
         checkNotNull(u, DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
         checkNotNull(v, DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
-        animation.setU(u);
-        animation.setV(v);
+        animation.setRotation(u,v);
     }
 
     public void setDirectorVectorsFromOrientation(Orientation direction, double length) {
@@ -42,8 +40,7 @@ public class PolygonBuilder extends ARotatingAnimationBuilder<Polygon, PolygonTa
 
     public void setDirectorVectorsFromNormalVector(Vector normal) {
         RotatableVector.Plane2D plane = new RotatableVector(normal).getPlane();
-        animation.setU(plane.u);
-        animation.setV(plane.v);
+        setDirectorVectors(plane.u,plane.v);
     }
 
     public void setNbVertices(IVariable<Integer> nbVertices) {
@@ -76,8 +73,6 @@ public class PolygonBuilder extends ARotatingAnimationBuilder<Polygon, PolygonTa
 
     @Override
     public Polygon getAnimation() {
-        checkNotNull(animation.getU(), DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
-        checkNotNull(animation.getV(), DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
         checkNotNull(animation.getNbVertices(), "nbVertices should not be null");
         checkSuperior(animation.getNbVertices(), new Constant<>(3), "nbVertices should be at least 3", true);
         checkNotNull(animation.getDistanceBetweenPoints(), "distanceBetweenPoints must not be null");

@@ -137,7 +137,7 @@ public abstract class APeriodicallyEvolvingVariable<T> implements IVariable<T> {
      * @return true if this variable will change for this iteration count
      */
     @Override
-    public boolean willChange(int iterationCount) {
+    public boolean mayChange(int iterationCount) {
         return (changePeriod == 0 || iterationCount % changePeriod == 0);
     }
 

@@ -2,12 +2,16 @@ package fr.skytale.particleanimlib.animation.parent.animation;
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationEndedCallback;
 import fr.skytale.particleanimlib.animation.attribute.AnimationStopCondition;
+import fr.skytale.particleanimlib.animation.attribute.PARotation;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import fr.skytale.particleanimlib.animation.collision.CollisionHandler;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
+import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
@@ -17,7 +21,7 @@ import java.util.Set;
 public abstract class AAnimation implements Cloneable {
 
     protected APosition position;
-    protected ParticleTemplate mainParticle;
+    protected APointDefinition pointDefinition;
     protected JavaPlugin plugin;
     protected int ticksDuration;
     protected IVariable<Integer> showPeriod;
@@ -25,6 +29,7 @@ public abstract class AAnimation implements Cloneable {
     protected AViewers viewers;
     protected AnimationStopCondition stopCondition;
     protected Set<CollisionHandler<?, AAnimationTask<?>>> collisionHandlers = new HashSet<>();
+    protected IVariable<PARotation> rotation;
 
     protected static Set<Vector> getLinePoints(Vector point1, Vector point2, double step) {
         double distance = point1.distance(point2);
@@ -51,12 +56,12 @@ public abstract class AAnimation implements Cloneable {
         this.position = position;
     }
 
-    public ParticleTemplate getMainParticle() {
-        return mainParticle;
+    public APointDefinition getPointDefinition() {
+        return pointDefinition;
     }
 
-    public void setMainParticle(ParticleTemplate mainParticle) {
-        this.mainParticle = mainParticle;
+    public void setPointDefinition(APointDefinition pointDefinition) {
+        this.pointDefinition = pointDefinition;
     }
 
     public AViewers getViewers() {
@@ -109,6 +114,18 @@ public abstract class AAnimation implements Cloneable {
     public void addCollisionHandler(CollisionHandler<?, AAnimationTask<?>> collisionHandler) { this.collisionHandlers.add(collisionHandler); }
     public Set<CollisionHandler<?, AAnimationTask<?>>> getCollisionHandlers() { return collisionHandlers; }
 
+    public IVariable<PARotation> getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(IVariable<PARotation> rotation) {
+        this.rotation = rotation;
+    }
+
+    public void setRotation(Vector u, Vector v) {
+         setRotation(new Constant<>(new PARotation(u,v)));
+    }
+
     @Override
     public AAnimation clone() {
         AAnimation obj = null;
@@ -120,9 +137,10 @@ public abstract class AAnimation implements Cloneable {
         assert obj != null;
         obj.position = this.position.clone();
         obj.viewers = this.viewers.clone();
-        obj.mainParticle = mainParticle == null ? null : new ParticleTemplate(this.mainParticle);
+        obj.pointDefinition = pointDefinition.clone();
         obj.stopCondition = this.stopCondition;
         obj.collisionHandlers = new HashSet<>(collisionHandlers);
+        obj.rotation = this.rotation.copy();
         return obj;
     }
 

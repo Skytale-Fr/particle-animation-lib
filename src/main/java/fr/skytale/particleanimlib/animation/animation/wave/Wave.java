@@ -4,13 +4,12 @@ package fr.skytale.particleanimlib.animation.animation.wave;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 import org.bukkit.util.Vector;
 
-public class Wave extends AAnimation implements IPlaneSubAnimation {
+public class Wave extends AAnimation implements ISubAnimation {
     protected IVariable<Double> angleBetweenEachPoint;
     protected double radiusStart;
-    private Vector u;
-    private Vector v;
     private IVariable<Integer> nbPoints;
     private double radiusMax;
     private IVariable<Double> radiusStep;
@@ -25,26 +24,6 @@ public class Wave extends AAnimation implements IPlaneSubAnimation {
     }
 
     /***********GETTERS & SETTERS***********/
-
-    @Override
-    public Vector getU() {
-        return u;
-    }
-
-    @Override
-    public void setU(Vector u) {
-        this.u = u;
-    }
-
-    @Override
-    public Vector getV() {
-        return v;
-    }
-
-    @Override
-    public void setV(Vector v) {
-        this.v = v;
-    }
 
     public IVariable<Integer> getNbPoints() {
         return nbPoints;
@@ -97,8 +76,6 @@ public class Wave extends AAnimation implements IPlaneSubAnimation {
     @Override
     public Wave clone() {
         Wave obj = (Wave) super.clone();
-        obj.u = u.clone();
-        obj.v = v.clone();
         obj.angleBetweenEachPoint = angleBetweenEachPoint.copy();
         obj.nbPoints = nbPoints.copy();
         obj.radiusStep = radiusStep.copy();

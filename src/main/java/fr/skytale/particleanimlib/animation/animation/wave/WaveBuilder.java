@@ -32,8 +32,7 @@ public class WaveBuilder extends AAnimationBuilder<Wave, WaveTask> {
     public void setDirectorVectors(Vector u, Vector v) {
         checkNotNull(u, CircleBuilder.DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
         checkNotNull(v, CircleBuilder.DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
-        animation.setU(u);
-        animation.setV(v);
+        animation.setRotation(u,v);
     }
 
     public void setDirectorVectorsFromOrientation(Orientation direction, double length) {
@@ -42,8 +41,7 @@ public class WaveBuilder extends AAnimationBuilder<Wave, WaveTask> {
 
     public void setDirectorVectorsFromNormalVector(Vector normal) {
         RotatableVector.Plane2D plane = new RotatableVector(normal).getPlane();
-        animation.setU(plane.u);
-        animation.setV(plane.v);
+        setDirectorVectors(plane.u,plane.v);
     }
 
     public void setRadiusStart(double radiusStart) {
@@ -118,8 +116,6 @@ public class WaveBuilder extends AAnimationBuilder<Wave, WaveTask> {
 
     @Override
     public Wave getAnimation() {
-        checkNotNull(animation.getU(), CircleBuilder.DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
-        checkNotNull(animation.getV(), CircleBuilder.DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
         if (animation.getRadiusStart() <= 0) {
             throw new IllegalArgumentException("RadiusStart should be positive.");
         }

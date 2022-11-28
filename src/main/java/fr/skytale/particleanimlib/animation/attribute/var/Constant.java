@@ -74,7 +74,7 @@ public class Constant<T> implements IVariable<T> {
      * @return true if this variable will change for this iteration count
      */
     @Override
-    public boolean willChange(int iterationCount) {
+    public boolean mayChange(int iterationCount) {
         return false;
     }
 }
