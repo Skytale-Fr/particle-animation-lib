@@ -5,15 +5,11 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
-import org.bukkit.util.Vector;
 
-public class Epi extends ARotatingAnimation implements ISubAnimation, ISubAnimationContainer {
+public class Epi extends AAnimation implements ISubAnimation{
     private IVariable<Integer> nbPoints;
-    private APointDefinition pointDefinition;
     private IVariable<Double> epiModifierNumerator;
     private IVariable<Integer> epiModifierDenominator;
     private IVariable<Double> radius;
@@ -70,33 +66,9 @@ public class Epi extends ARotatingAnimation implements ISubAnimation, ISubAnimat
     }
 
     @Override
-    public APointDefinition getPointDefinition() {
-        return pointDefinition;
-    }
-
-    @Override
-    public void setPointDefinition(APointDefinition pointDefinition) {
-        this.pointDefinition = pointDefinition;
-    }
-
-    @Override
-    public ParticleTemplate getMainParticle() {
-        if (this.pointDefinition instanceof ParticlePointDefinition) {
-            return ((ParticlePointDefinition) pointDefinition).getParticleTemplate();
-        }
-        throw new IllegalStateException("ParticleTemplate is not defined since this animation PointDefinition defines a sub animation");
-    }
-
-    @Override
-    public void setMainParticle(ParticleTemplate mainParticle) {
-        setPointDefinition(APointDefinition.fromParticleTemplate(mainParticle));
-    }
-
-    @Override
     public Epi clone() {
         Epi obj = (Epi) super.clone();
         obj.nbPoints = nbPoints.copy();
-        obj.pointDefinition = pointDefinition.clone();
         obj.epiModifierNumerator = epiModifierNumerator.copy();
         obj.epiModifierDenominator = epiModifierDenominator.copy();
         obj.radius = radius.copy();

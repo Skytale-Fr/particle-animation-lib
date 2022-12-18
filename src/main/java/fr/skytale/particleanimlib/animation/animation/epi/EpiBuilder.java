@@ -6,10 +6,10 @@ import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import org.bukkit.util.Vector;
 
-public class EpiBuilder extends ARotatingAnimationBuilder<Epi, EpiTask> {
+public class EpiBuilder extends AAnimationBuilder<Epi, EpiTask> {
 
     public static final String DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL = "directorVector u should not be null";
     public static final String DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL = "directorVector v should not be null";
@@ -75,7 +75,6 @@ public class EpiBuilder extends ARotatingAnimationBuilder<Epi, EpiTask> {
         setDirectorVectors(plane.u,plane.v);
     }
 
-
     public void setNbPoints(int nbPoints) {
         setNbPoints(new Constant<>(nbPoints));
     }
@@ -83,15 +82,6 @@ public class EpiBuilder extends ARotatingAnimationBuilder<Epi, EpiTask> {
     public void setNbPoints(IVariable<Integer> nbPoints) {
         animation.setNbPoints(nbPoints);
         checkPositiveAndNotNull(nbPoints, "nbPoints should be positive", false);
-    }
-
-    public void setPointDefinition(APointDefinition pointDefinition) {
-        checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
-        animation.setPointDefinition(pointDefinition);
-    }
-
-    public void setPointDefinition(ParticleTemplate particleTemplate) {
-        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
     }
 
     public void setEpiModifierNumerator(IVariable<Double> epiModifierNumerator){

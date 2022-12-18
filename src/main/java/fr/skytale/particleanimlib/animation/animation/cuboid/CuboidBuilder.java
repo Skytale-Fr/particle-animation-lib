@@ -4,21 +4,17 @@ package fr.skytale.particleanimlib.animation.animation.cuboid;
 import fr.skytale.particleanimlib.animation.attribute.position.LocationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.collision.CollisionActionCallback;
-import fr.skytale.particleanimlib.animation.collision.CollisionPredicate;
-import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public class CuboidBuilder extends ARotatingAnimationBuilder<Cuboid, CuboidTask> {
+public class CuboidBuilder extends AAnimationBuilder<Cuboid, CuboidTask> {
 
     public CuboidBuilder() {
         super();
         animation.setDistanceBetweenPoints(new Constant<>(0.5));
         animation.setShowPeriod(new Constant<>(0));
         animation.setTicksDuration(60);
-        animation.setRotationAxis(null);
-        animation.setRotationAngleAlpha(null);
     }
 
     @Override

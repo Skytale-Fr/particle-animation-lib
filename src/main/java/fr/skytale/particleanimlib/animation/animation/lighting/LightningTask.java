@@ -80,7 +80,7 @@ LightningTask extends AAnimationTask<Lightning> {
                 PointData previousValue = persistentPoints.get(0);
                 for (int i = 1; i < nbPointsToShow && i < persistentPoints.size(); i++) {
                     PointData currentValue = persistentPoints.get(i);
-                    drawLine(previousValue.pointLocation.clone(), currentValue.pointLocation.clone(), distanceBetweenParticles, pointDefinition.clone());
+                    getLinePoints(previousValue.pointLocation.clone(), currentValue.pointLocation.clone(), distanceBetweenParticles, pointDefinition.clone());
                     previousValue = currentValue;
                 }
             }

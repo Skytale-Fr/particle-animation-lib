@@ -53,13 +53,13 @@ public class PyramidTask extends AAnimationTask<Pyramid> {
         double distanceBetweenParticles = animation.getDistanceBetweenParticles().getCurrentValue(iterationCount);
 
         //Link base apexes together
-        drawLine(baseApexList.get(0), baseApexList.get(baseApexList.size() - 1), distanceBetweenParticles);
+        getLinePoints(baseApexList.get(0), baseApexList.get(baseApexList.size() - 1), distanceBetweenParticles);
         for (int i = 0; i < baseApexList.size() - 1; i++) {
-            drawLine(baseApexList.get(i), baseApexList.get(i + 1), distanceBetweenParticles);
+            getLinePoints(baseApexList.get(i), baseApexList.get(i + 1), distanceBetweenParticles);
         }
 
         //Link base apexes with the main apex.
-        baseApexList.forEach(baseApex -> drawLine(baseApex, apex, distanceBetweenParticles));
+        baseApexList.forEach(baseApex -> getLinePoints(baseApex, apex, distanceBetweenParticles));
     }
 
     private void computePyramidBasicData() {

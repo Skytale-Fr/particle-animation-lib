@@ -1,11 +1,12 @@
 package fr.skytale.particleanimlib.animation.animation.cuboid;
 
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 import org.bukkit.util.Vector;
 
-public class Cuboid extends ARotatingAnimation implements ISubAnimation {
+public class Cuboid extends AAnimation implements ISubAnimation {
 
     private IVariable<Vector> fromLocationToFirstCorner;
     private IVariable<Vector> fromLocationToSecondCorner;

@@ -1,18 +1,39 @@
 package fr.skytale.particleanimlib.animation.animation.epi;
 
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
+import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
+import java.util.List;
+
 public class EpiTask extends AAnimationTask<Epi> {
-    Vector currentU, currentV;
+    @CheckIfChanged ({class=})
+    private Integer nbPoints;
+    private Double epiModifierNumerator;
+    private Integer epiModifierDenominator;
+    private Double radius;
+    private Double maxRadius;
+
 
     public EpiTask(Epi epi) {
         super(epi);
-        currentU = animation.getU().clone();
-        currentV = animation.getV().clone();
         startTask();
+    }
+
+    @Override
+    protected boolean hasAnimationPointsChanged() {
+        IVariable.ChangeResult<Integer> nbPointsChangeResult = animation.getNbPoints().willChange(iterationCount, nbPoints);
+        nbPoints = nbPointsChangeResult.getNewValue();
+        IVariable.ChangeResult<Integer> nbPointChangeResult = hasAttributeChanged(nbPoints, animation.getNbPoints());
+
+        return angleBetweenEachPointChangeResult.hasChanged() || radiusChangeResult.hasChanged() || nbPointsChangeResult.hasChanged();
+    }
+
+    @Override
+    protected List<Vector> computeAnimationPoints() {
+        return null;
     }
 
     @SuppressWarnings("DuplicatedCode")

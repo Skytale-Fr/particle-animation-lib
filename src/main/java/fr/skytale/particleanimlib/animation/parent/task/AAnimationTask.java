@@ -11,8 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
@@ -243,14 +242,18 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     }
 
 
-    public void drawLine(Location point1, Location point2, double step, APointDefinition pointDefinition) {
+    public List<Vector> getLinePoints(Vector point1, Vector point2, double step) {
         double distance = point1.distance(point2);
-        Vector stepVector = point2.toVector().subtract(point1.toVector()).normalize().multiply(step);
-        Location currentLoc = point1.clone();
+        Vector stepVector = point2.subtract(point1).normalize().multiply(step);
+        Vector currentLoc = point1.clone();
+
+        List<Vector> linePoints = new ArrayList<>();
         for (double length = 0; length < distance; currentLoc.add(stepVector)) {
-            showPoint(pointDefinition, currentLoc.clone(), new Vector(0, 0, 0));
+            linePoints.add(currentLoc.clone());
             length += step;
         }
+        linePoints.add(point2.clone());
+        return linePoints;
     }
 
     public Location rotateAroundAxis(Location point, Vector axis, Location pointAxis, double angle) {
@@ -278,7 +281,9 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     }
 
-
-
+    protected <T> IVariable.ChangeResult<T> hasAttributeChanged(T previousValue, IVariable<T> animationAttribute) {
+        IVariable.ChangeResult<T> changeResult = animationAttribute.willChange(iterationCount, previousValue);
+        return changeResult;
+    }
 
 }

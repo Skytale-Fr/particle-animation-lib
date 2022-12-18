@@ -58,10 +58,10 @@ public class PolygonTask extends AAnimationTask<Polygon> {
         distanceBetweenParticles = animation.getDistanceBetweenPoints().getCurrentValue(iterationCount);
 
         //Link each vertices
-        drawLine(vertices.get(0), vertices.get(vertices.size() - 1), distanceBetweenParticles);
+        getLinePoints(vertices.get(0), vertices.get(vertices.size() - 1), distanceBetweenParticles);
 
         for (int i = 0; i < vertices.size() - 1; i++) {
-            drawLine(vertices.get(i), vertices.get(i + 1), distanceBetweenParticles);
+            getLinePoints(vertices.get(i), vertices.get(i + 1), distanceBetweenParticles);
         }
 
         if (animation.getRotationAxis() != null) {

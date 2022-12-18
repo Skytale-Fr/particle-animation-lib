@@ -3,6 +3,7 @@ package fr.skytale.particleanimlib.animation.parent.builder;
 import fr.skytale.particleanimlib.animation.attribute.*;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
@@ -28,6 +29,7 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
         animation.setShowPeriod(new Constant<>(0));
         animation.setTicksDuration(60);
         animation.setViewers(AViewers.fromNearbyPlayers(300));
+        animation.setRotation(new Constant<>(PARotation.DEFAULT_ROTATION));
     }
 
     protected static void checkNotNull(Object obj, String checkFailureMessage) {
@@ -75,7 +77,15 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
     }
 
     public void setRotation(IVariable<Vector> axis, IVariable<Double> rotationAngleAlpha) {
-        //TODO construire une IVariable a partir de axis & rotationAngleAlpha puis appeller setRotation(IVariable) ds cette methode
+        IVariable<PARotation> rotation = new CallbackWithPreviousValueVariable<>(PARotation.DEFAULT_ROTATION,(iterationCount, previousValue) -> {
+            Vector axisCurrentValue = axis.getCurrentValue(iterationCount);
+            Double rotationAngleAlphaCurrentValue = rotationAngleAlpha.getCurrentValue(iterationCount);
+
+            PARotation newRotation = new PARotation(previousValue);
+            newRotation.rotate(axisCurrentValue,rotationAngleAlphaCurrentValue);
+            return newRotation;
+        });
+        setRotation(rotation);
     }
 
     public void setRotation(Vector axis, IVariable<Double> rotationAngleAlpha) {

@@ -1,21 +1,16 @@
 package fr.skytale.particleanimlib.animation.animation.cuboid;
 
-import fr.skytale.particleanimlib.animation.parent.task.ARotatingAnimationTask;
-import org.bukkit.Location;
+import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.util.Vector;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
-public class CuboidTask extends ARotatingAnimationTask<Cuboid> {
+public class CuboidTask extends AAnimationTask<Cuboid> {
 
-    public Map<CuboidCorner, Vector> corners;
-    public Map<CuboidCorner, Vector> rotatedCorners;
-
-    private Map<CuboidCorner, Location> currentCornersLocation;
-    private double distanceBetweenPoints;
+    private Vector fromLocationToFirstCorner;
+    private Vector fromLocationToSecondCorner;
+    private Double distanceBetweenPoints;
 
     public CuboidTask(Cuboid cuboid) {
         super(cuboid);
@@ -23,60 +18,41 @@ public class CuboidTask extends ARotatingAnimationTask<Cuboid> {
     }
 
     @Override
-    public void showRotated(boolean rotationChanged, Location iterationBaseLocation) {
+    protected boolean hasAnimationPointsChanged() {
+        IVariable.ChangeResult<Vector> fromLocationToFirstCornerChangeResult = animation.getFromLocationToFirstCorner().willChange(iterationCount, fromLocationToFirstCorner);
+        fromLocationToFirstCorner = fromLocationToFirstCornerChangeResult.getNewValue();
+        IVariable.ChangeResult<Vector> fromLocationToSecondCornerChangeResult = animation.getFromLocationToSecondCorner().willChange(iterationCount, fromLocationToSecondCorner);
+        fromLocationToSecondCorner = fromLocationToSecondCornerChangeResult.getNewValue();
+        IVariable.ChangeResult<Double> distanceBetweenPointsChangeResult = animation.getDistanceBetweenPoints().willChange(iterationCount, distanceBetweenPoints);
+        distanceBetweenPoints = distanceBetweenPointsChangeResult.getNewValue();
 
-        boolean cornersUpdated = false;
-        //recalculate corners if required
-        if (corners == null || animation.getFromLocationToFirstCorner().mayChange(iterationCount) || animation.getFromLocationToSecondCorner().mayChange(iterationCount)) {
-            this.corners = getCorners();
-            cornersUpdated = true;
-        }
-
-        //rotate each corners according to the rotations accumulated since the first iteration (which are saved in this.rotation) if required
-        if (hasRotation) {
-            if (rotatedCorners == null || cornersUpdated || rotationChanged) {
-                this.rotatedCorners = this.corners.entrySet().stream()
-                        .collect(Collectors.toMap(
-                                Map.Entry::getKey,
-                                e -> this.rotation.rotateVector(e.getValue())
-                        ));
-            }
-        } else {
-            this.rotatedCorners = corners;
-        }
-
-        //get locations
-        currentCornersLocation = this.rotatedCorners.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, e -> iterationBaseLocation.clone().add(e.getValue())));
-
-        distanceBetweenPoints = animation.getDistanceBetweenPoints().getCurrentValue(iterationCount);
-
-        //Drawing each edge
-        CuboidEdge.getEdges().forEach(edge -> {
-            Location firstCorner = currentCornersLocation.get(edge.firstVertice);
-            Location secondCorner = currentCornersLocation.get(edge.secondVertice);
-            drawLine(firstCorner, secondCorner, distanceBetweenPoints);
-        });
+        return fromLocationToFirstCornerChangeResult.hasChanged() || fromLocationToSecondCornerChangeResult.hasChanged() || distanceBetweenPointsChangeResult.hasChanged();
     }
 
-    public Map<CuboidCorner, Location> getCurrentCornersLocation() { return currentCornersLocation; }
+    @Override
+    protected List<Vector> computeAnimationPoints() {
+        Map<CuboidCorner, Vector> corners = getCorners();
+        List<Vector> points = new ArrayList<>();
 
-    public double getCurrentDistanceBetweenPoints() {
-        return distanceBetweenPoints;
+        //Collecting each edge points
+        CuboidEdge.getEdges().forEach(edge -> {
+            Vector firstCorner = corners.get(edge.firstVertice);
+            Vector secondCorner = corners.get(edge.secondVertice);
+            points.addAll(getLinePoints(firstCorner, secondCorner, distanceBetweenPoints));
+
+        });
+        return points;
     }
 
     private Map<CuboidCorner, Vector> getCorners() {
         Map<CuboidCorner, Vector> corners = new HashMap<>();
 
-        Vector firstCorner = animation.getFromLocationToFirstCorner().getCurrentValue(iterationCount);
-        Vector secondCorner = animation.getFromLocationToSecondCorner().getCurrentValue(iterationCount);
-
-        double x1 = firstCorner.getX();
-        double y1 = firstCorner.getY();
-        double z1 = firstCorner.getZ();
-        double x2 = secondCorner.getX();
-        double y2 = secondCorner.getY();
-        double z2 = secondCorner.getZ();
+        double x1 = fromLocationToFirstCorner.getX();
+        double y1 = fromLocationToFirstCorner.getY();
+        double z1 = fromLocationToFirstCorner.getZ();
+        double x2 = fromLocationToSecondCorner.getX();
+        double y2 = fromLocationToSecondCorner.getY();
+        double z2 = fromLocationToSecondCorner.getZ();
 
         double xMin, yMin, zMin, xMax, yMax, zMax;
 
@@ -133,23 +109,19 @@ public class CuboidTask extends ARotatingAnimationTask<Cuboid> {
         private static HashSet<CuboidEdge> initEdges() {
             HashSet<CuboidEdge> edgeSet = new HashSet<>();
 
-            //UPPER EDGES
-            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_EAST_NORTH, CuboidCorner.UPPER_EAST_SOUTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_WEST_NORTH, CuboidCorner.UPPER_WEST_SOUTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_WEST_SOUTH, CuboidCorner.UPPER_EAST_SOUTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_SOUTH, CuboidCorner.LOWER_WEST_NORTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_EAST_SOUTH, CuboidCorner.UPPER_EAST_NORTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_NORTH, CuboidCorner.LOWER_EAST_NORTH));
             edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_EAST_NORTH, CuboidCorner.UPPER_WEST_NORTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_EAST_SOUTH, CuboidCorner.UPPER_WEST_SOUTH));
-
-            //LOWER EDGES
             edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_NORTH, CuboidCorner.LOWER_EAST_SOUTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_NORTH, CuboidCorner.LOWER_WEST_SOUTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_NORTH, CuboidCorner.LOWER_WEST_NORTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_SOUTH, CuboidCorner.LOWER_WEST_SOUTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_WEST_NORTH, CuboidCorner.UPPER_WEST_SOUTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_SOUTH, CuboidCorner.LOWER_WEST_NORTH));
 
-            //SIDE EDGES
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_NORTH, CuboidCorner.UPPER_EAST_NORTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_NORTH, CuboidCorner.UPPER_WEST_NORTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_SOUTH, CuboidCorner.UPPER_EAST_SOUTH));
             edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_SOUTH, CuboidCorner.UPPER_WEST_SOUTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_EAST_NORTH, CuboidCorner.LOWER_EAST_NORTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_SOUTH, CuboidCorner.UPPER_EAST_SOUTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_WEST_NORTH, CuboidCorner.LOWER_WEST_NORTH));
 
             return edgeSet;
         }

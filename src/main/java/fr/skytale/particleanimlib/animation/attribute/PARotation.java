@@ -6,7 +6,7 @@ import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.bukkit.util.Vector;
 
 public class PARotation {
-
+    public static final PARotation DEFAULT_ROTATION = new PARotation();
     private Rotation rotation;
 
     public PARotation(Vector axis, double radianAngle) {
@@ -27,11 +27,15 @@ public class PARotation {
     }
 
     public PARotation(Rotation rotation) {
-        this.rotation = rotation;
+        this.rotation = new Rotation(rotation.getQ0(), rotation.getQ1(),rotation.getQ2(),rotation.getQ3(),false);
     }
 
     public PARotation() {
         this.rotation = Rotation.IDENTITY;
+    }
+
+    public PARotation(PARotation paRotation){
+        this(paRotation.rotation);
     }
 
     public void rotate(Rotation additionalRotation) {
