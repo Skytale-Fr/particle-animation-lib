@@ -1,14 +1,12 @@
 package fr.skytale.particleanimlib.animation.animation.epi;
 
 
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 
-public class Epi extends AAnimation implements ISubAnimation{
+public class Epi extends AAnimation implements ISubAnimation {
+
     private IVariable<Integer> nbPoints;
     private IVariable<Double> epiModifierNumerator;
     private IVariable<Integer> epiModifierDenominator;
@@ -21,6 +19,17 @@ public class Epi extends AAnimation implements ISubAnimation{
     @Override
     public EpiTask show() {
         return new EpiTask(this);
+    }
+
+    @Override
+    public Epi clone() {
+        Epi obj = (Epi) super.clone();
+        obj.nbPoints = nbPoints.copy();
+        obj.epiModifierNumerator = epiModifierNumerator.copy();
+        obj.epiModifierDenominator = epiModifierDenominator.copy();
+        obj.radius = radius.copy();
+        obj.maxRadius = maxRadius != null ? maxRadius.copy() : maxRadius;
+        return obj;
     }
 
     /***********GETTERS & SETTERS***********/
@@ -63,16 +72,5 @@ public class Epi extends AAnimation implements ISubAnimation{
 
     public void setNbPoints(IVariable<Integer> nbPoints) {
         this.nbPoints = nbPoints;
-    }
-
-    @Override
-    public Epi clone() {
-        Epi obj = (Epi) super.clone();
-        obj.nbPoints = nbPoints.copy();
-        obj.epiModifierNumerator = epiModifierNumerator.copy();
-        obj.epiModifierDenominator = epiModifierDenominator.copy();
-        obj.radius = radius.copy();
-        obj.maxRadius = maxRadius != null ? maxRadius.copy() : maxRadius;
-        return obj;
     }
 }

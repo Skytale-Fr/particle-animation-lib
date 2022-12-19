@@ -2,33 +2,34 @@ package fr.skytale.particleanimlib.animation.animation.epi;
 
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.parent.animation.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class EpiTask extends AAnimationTask<Epi> {
-    @CheckIfChanged ({class=})
+    @IVariableCurrentValue
     private Integer nbPoints;
+
+    @IVariableCurrentValue
     private Double epiModifierNumerator;
+
+    @IVariableCurrentValue
     private Integer epiModifierDenominator;
+
+    @IVariableCurrentValue
     private Double radius;
+
+    @IVariableCurrentValue
     private Double maxRadius;
 
 
     public EpiTask(Epi epi) {
         super(epi);
         startTask();
-    }
-
-    @Override
-    protected boolean hasAnimationPointsChanged() {
-        IVariable.ChangeResult<Integer> nbPointsChangeResult = animation.getNbPoints().willChange(iterationCount, nbPoints);
-        nbPoints = nbPointsChangeResult.getNewValue();
-        IVariable.ChangeResult<Integer> nbPointChangeResult = hasAttributeChanged(nbPoints, animation.getNbPoints());
-
-        return angleBetweenEachPointChangeResult.hasChanged() || radiusChangeResult.hasChanged() || nbPointsChangeResult.hasChanged();
     }
 
     @Override
@@ -49,6 +50,10 @@ public class EpiTask extends AAnimationTask<Epi> {
         int nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
         double epiModifierNumerator = animation.getEpiModifierNumerator().getCurrentValue(iterationCount);
         int epiModifierDenominator = animation.getEpiModifierDenominator().getCurrentValue(iterationCount);
+
+
+
+
         double epiModifier = epiModifierNumerator / epiModifierDenominator;
         double maxTheta;
         //defining maxTheta according to https://mathworld.wolfram.com/EpiCurve.html

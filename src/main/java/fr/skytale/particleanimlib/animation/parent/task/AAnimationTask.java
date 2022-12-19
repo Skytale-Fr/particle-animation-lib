@@ -7,18 +7,48 @@ import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.collision.CollisionTestType;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.IVariableCurrentValue;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
-    public static final Vector U = new Vector(1,0,0);
-    public static final Vector V = new Vector(0,0,1);
-    public static final Vector W = new Vector(0,1,0);
+    public static final Vector U = new Vector(1, 0, 0);
+    public static final Vector V = new Vector(0, 0, 1);
+    public static final Vector W = new Vector(0, 1, 0);
+    protected AAnimationTask<?> parentTask;
+    protected T animation;
+    protected Set<AnimationTaskTrackedField<?>> trackedFieldsData;
+    //Evolving variables
+    protected Integer taskId;
+    protected int iterationCount;
+    protected Location currentIterationBaseLocation;
+    protected int tickDuration;
+    protected int currentShowPeriod;
+    protected PARotation currentRotation;
+    protected Vector currentU;
+    protected Vector currentV;
+    protected Vector currentW;
+    protected List<Vector> animationPoints;
+    protected List<Vector> rotatedAnimationPoints;
+
+    public AAnimationTask(T animation) {
+        //noinspection unchecked
+        this.animation = (T) animation.clone();
+        if (this.animation.getPosition().getType() == APosition.Type.TRAIL) {
+            throw new IllegalStateException("During execution, position type should not be TRAIL anymore");
+        }
+        this.iterationCount = 0;
+        buildFieldsData();
+    }
 
     public static Vector computeRadiusVector(Vector normalVector, double radius) {
         /*Let directorVector=(a,b,c).
@@ -50,39 +80,6 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         return radiusVector.normalize().multiply(radius);
     }
 
-    protected AAnimationTask<?> parentTask;
-    protected T animation;
-
-    //Evolving variables
-    protected Integer taskId;
-    protected int iterationCount;
-
-    protected boolean hasStopCondition;
-
-    protected APosition currentPosition;
-    protected Location currentIterationBaseLocation;
-    protected int tickDuration;
-    protected int currentShowPeriod;
-
-    protected PARotation currentRotation;
-    protected Vector currentU;
-    protected Vector currentV;
-    protected Vector currentW;
-    protected List<Vector> animationPoints;
-
-    protected List<Vector> rotatedAnimationPoints;
-
-    public AAnimationTask(T animation) {
-        //noinspection unchecked
-        this.animation = (T) animation.clone();
-        if (this.animation.getPosition().getType() == APosition.Type.TRAIL) {
-            throw new IllegalStateException("During execution, position type should not be TRAIL anymore");
-        }
-        this.iterationCount = 0;
-    }
-
-    protected abstract boolean hasAnimationPointsChanged();
-
     protected abstract List<Vector> computeAnimationPoints();
 
     protected final void startTask() {
@@ -98,20 +95,20 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
         // If a stop condition has been set, we need to check this condition
         // and stop the animation if true is returned.
-        if  (shouldStop()) {
+        if (shouldStop()) {
             stopAnimation(true);
             return;
         }
 
         // Recomputing animationPoints if needed
-        if (hasAnimationPointsChanged()){
+        if (hasAnimationPointsChanged()) {
             animationPoints = computeAnimationPoints();
         }
 
         IVariable.ChangeResult<PARotation> rotationChangeResult = animation.getRotation().willChange(iterationCount, currentRotation);
 
         // Rotating animation if needed
-        if(rotationChangeResult.hasChanged()){
+        if (rotationChangeResult.hasChanged()) {
             currentRotation = rotationChangeResult.getNewValue();
             rotatedAnimationPoints = animationPoints.stream()
                     .map(pointVector -> currentRotation.rotateVector(pointVector))
@@ -155,15 +152,15 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         }
     }
 
-    protected final void show(Location iterationBaseLocation){
+    protected final void show(Location iterationBaseLocation) {
 
         rotatedAnimationPoints.stream()
                 // Computing each point location according to iterationBaseLocation
                 .map(rotatedAnimationPoint -> new Location(
-                        iterationBaseLocation.getWorld(),
-                        iterationBaseLocation.getX()+rotatedAnimationPoint.getX(),
-                        iterationBaseLocation.getY()+rotatedAnimationPoint.getY(),
-                        iterationBaseLocation.getZ()+rotatedAnimationPoint.getZ()
+                                iterationBaseLocation.getWorld(),
+                                iterationBaseLocation.getX() + rotatedAnimationPoint.getX(),
+                                iterationBaseLocation.getY() + rotatedAnimationPoint.getY(),
+                                iterationBaseLocation.getZ() + rotatedAnimationPoint.getZ()
                         )
                 )
                 // Showing each point
@@ -281,9 +278,77 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     }
 
-    protected <T> IVariable.ChangeResult<T> hasAttributeChanged(T previousValue, IVariable<T> animationAttribute) {
-        IVariable.ChangeResult<T> changeResult = animationAttribute.willChange(iterationCount, previousValue);
-        return changeResult;
+    private boolean hasAnimationPointsChanged() {
+        boolean hasChanged = false;
+
+        for (AnimationTaskTrackedField<?> animationTaskTrackedField : trackedFieldsData) {
+            if (animationTaskTrackedField.checkIfChangedAndUpdate(iterationCount)) {
+                hasChanged = true;
+            }
+        }
+        return hasChanged;
+    }
+
+    private void buildFieldsData() {
+        final Field[] animFields = animation.getClass().getFields();
+        //Find fields that must always contain the updated value of the IVariable inside the Task instance
+        for (Field taskField : this.getClass().getFields()) {
+            IVariableCurrentValue iVariableCurrentValueAnnotation = taskField.getAnnotation(IVariableCurrentValue.class);
+            if (iVariableCurrentValueAnnotation != null) {
+                // Allow overriding the related animation field name in the IVariableCurrentValue annotation
+                // Else takes the same field name.
+                String animFieldName = iVariableCurrentValueAnnotation.animationIVariableFieldName();
+                if (animFieldName == null || animFieldName.equals("")) {
+                    animFieldName = taskField.getName();
+                }
+                boolean foundCorrespondingAnimField = false;
+                for (Field animField : animFields) {
+                    if (animField.getName().equals(animFieldName)) {
+                        foundCorrespondingAnimField = true;
+                        if (!animField.getType().isInstance(IVariable.class)) {
+                            throw new IllegalStateException("The field " + taskField.getName() + " of the AAnimationTask " + this.getClass().getSimpleName() + " references a field " + animFieldName + " of the AAnimation " + animation.getClass().getSimpleName() + ". This relation is not allowed because the AAnimation field is not an IVariable.");
+                        }
+                        animField.setAccessible(true);
+                        taskField.setAccessible(true);
+                        try {
+                            this.trackedFieldsData.add(AnimationTaskTrackedField.getFrom((IVariable<?>) animField.get(animation), this, taskField));
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                if (!foundCorrespondingAnimField) {
+                    throw new IllegalStateException("The field " + taskField.getName() + " of the AAnimationTask " + this.getClass().getSimpleName() + " references a field " + animFieldName + " of the AAnimation " + animation.getClass().getSimpleName() + ". This relation is not allowed because the AAnimation field does not exist.");
+                }
+            }
+        }
+    }
+
+    private static class AnimationTaskTrackedField<T> {
+        public static <U> AnimationTaskTrackedField<U> getFrom(IVariable<U> iVariable, AAnimationTask<?> task, Field taskField) {
+            return new AnimationTaskTrackedField<>(iVariable, task, taskField);
+        }
+        private final Field taskField;
+        private final AAnimationTask<?> task;
+        private final IVariable<T> iVariable;
+        private T fieldPreviousValue = null;
+
+        public AnimationTaskTrackedField(IVariable<T> iVariable, AAnimationTask<?> task, Field taskField) {
+            this.iVariable = iVariable;
+            this.task = task;
+            this.taskField = taskField;
+        }
+
+        public boolean checkIfChangedAndUpdate(int iterationCount) {
+            IVariable.ChangeResult<T> changeResult = iVariable.willChange(iterationCount, fieldPreviousValue);
+            fieldPreviousValue = changeResult.getNewValue();
+            try {
+                taskField.set(task, fieldPreviousValue);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            return changeResult.hasChanged();
+        }
     }
 
 }

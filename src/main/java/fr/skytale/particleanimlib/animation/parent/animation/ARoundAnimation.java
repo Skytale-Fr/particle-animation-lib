@@ -32,4 +32,5 @@ public abstract class ARoundAnimation extends AAnimation {
         obj.angleBetweenEachPoint = angleBetweenEachPoint.copy();
         return obj;
     }
+
 }

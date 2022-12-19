@@ -2,7 +2,6 @@ package fr.skytale.particleanimlib.animation.animation.cuboid;
 
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 import org.bukkit.util.Vector;
 
@@ -18,6 +17,15 @@ public class Cuboid extends AAnimation implements ISubAnimation {
     @Override
     public CuboidTask show() {
         return new CuboidTask(this);
+    }
+
+    @Override
+    public Cuboid clone() {
+        Cuboid obj = (Cuboid) super.clone();
+        obj.fromLocationToFirstCorner = fromLocationToFirstCorner.copy();
+        obj.fromLocationToSecondCorner = fromLocationToSecondCorner.copy();
+        obj.distanceBetweenPoints = distanceBetweenPoints.copy();
+        return obj;
     }
 
     /***********GETTERS & SETTERS***********/
@@ -44,14 +52,5 @@ public class Cuboid extends AAnimation implements ISubAnimation {
 
     public void setDistanceBetweenPoints(IVariable<Double> distanceBetweenPoints) {
         this.distanceBetweenPoints = distanceBetweenPoints;
-    }
-
-    @Override
-    public Cuboid clone() {
-        Cuboid obj = (Cuboid) super.clone();
-        obj.fromLocationToFirstCorner = fromLocationToFirstCorner.copy();
-        obj.fromLocationToSecondCorner = fromLocationToSecondCorner.copy();
-        obj.distanceBetweenPoints = distanceBetweenPoints.copy();
-        return obj;
     }
 }

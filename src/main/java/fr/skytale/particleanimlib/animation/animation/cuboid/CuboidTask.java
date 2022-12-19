@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.cuboid;
 
-import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.parent.animation.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.util.Vector;
 
@@ -8,25 +8,18 @@ import java.util.*;
 
 public class CuboidTask extends AAnimationTask<Cuboid> {
 
-    private Vector fromLocationToFirstCorner;
-    private Vector fromLocationToSecondCorner;
+    @IVariableCurrentValue(animationIVariableFieldName = "fromLocationToFirstCorner")
+    private Vector fromCenterToFirstCorner;
+
+    @IVariableCurrentValue(animationIVariableFieldName = "fromLocationToSecondCorner")
+    private Vector fromCenterToOppositeCorner;
+
+    @IVariableCurrentValue
     private Double distanceBetweenPoints;
 
     public CuboidTask(Cuboid cuboid) {
         super(cuboid);
         startTask();
-    }
-
-    @Override
-    protected boolean hasAnimationPointsChanged() {
-        IVariable.ChangeResult<Vector> fromLocationToFirstCornerChangeResult = animation.getFromLocationToFirstCorner().willChange(iterationCount, fromLocationToFirstCorner);
-        fromLocationToFirstCorner = fromLocationToFirstCornerChangeResult.getNewValue();
-        IVariable.ChangeResult<Vector> fromLocationToSecondCornerChangeResult = animation.getFromLocationToSecondCorner().willChange(iterationCount, fromLocationToSecondCorner);
-        fromLocationToSecondCorner = fromLocationToSecondCornerChangeResult.getNewValue();
-        IVariable.ChangeResult<Double> distanceBetweenPointsChangeResult = animation.getDistanceBetweenPoints().willChange(iterationCount, distanceBetweenPoints);
-        distanceBetweenPoints = distanceBetweenPointsChangeResult.getNewValue();
-
-        return fromLocationToFirstCornerChangeResult.hasChanged() || fromLocationToSecondCornerChangeResult.hasChanged() || distanceBetweenPointsChangeResult.hasChanged();
     }
 
     @Override
@@ -45,14 +38,15 @@ public class CuboidTask extends AAnimationTask<Cuboid> {
     }
 
     private Map<CuboidCorner, Vector> getCorners() {
-        Map<CuboidCorner, Vector> corners = new HashMap<>();
 
-        double x1 = fromLocationToFirstCorner.getX();
-        double y1 = fromLocationToFirstCorner.getY();
-        double z1 = fromLocationToFirstCorner.getZ();
-        double x2 = fromLocationToSecondCorner.getX();
-        double y2 = fromLocationToSecondCorner.getY();
-        double z2 = fromLocationToSecondCorner.getZ();
+        Map<CuboidCorner, Vector> corners = new EnumMap<>(CuboidCorner.class);
+
+        double x1 = fromCenterToFirstCorner.getX();
+        double y1 = fromCenterToFirstCorner.getY();
+        double z1 = fromCenterToFirstCorner.getZ();
+        double x2 = fromCenterToOppositeCorner.getX();
+        double y2 = fromCenterToOppositeCorner.getY();
+        double z2 = fromCenterToOppositeCorner.getZ();
 
         double xMin, yMin, zMin, xMax, yMax, zMax;
 
@@ -90,7 +84,7 @@ public class CuboidTask extends AAnimationTask<Cuboid> {
     }
 
     private static class CuboidEdge {
-        private static HashSet<CuboidEdge> edges;
+        private static Set<CuboidEdge> edges;
         public final CuboidCorner firstVertice;
         public final CuboidCorner secondVertice;
 
@@ -99,14 +93,14 @@ public class CuboidTask extends AAnimationTask<Cuboid> {
             this.secondVertice = secondVertice;
         }
 
-        public static HashSet<CuboidEdge> getEdges() {
+        public static Set<CuboidEdge> getEdges() {
             if (edges == null) {
                 edges = initEdges();
             }
             return edges;
         }
 
-        private static HashSet<CuboidEdge> initEdges() {
+        private static Set<CuboidEdge> initEdges() {
             HashSet<CuboidEdge> edgeSet = new HashSet<>();
 
             edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_WEST_SOUTH, CuboidCorner.UPPER_EAST_SOUTH));
