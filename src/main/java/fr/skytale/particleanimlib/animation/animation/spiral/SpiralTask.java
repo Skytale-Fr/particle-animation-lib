@@ -4,6 +4,7 @@ import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APo
 import fr.skytale.particleanimlib.animation.attribute.position.APosition;
 import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
+import fr.skytale.particleanimlib.animation.parent.task.AnimationTaskUtils;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -91,7 +92,7 @@ public class SpiralTask extends AAnimationTask<Spiral> {
         //Calculating radiusVector
         directorVector = nextMoveData.move.clone().normalize();
         radius = animation.getRadius().getCurrentValue(iterationCount);
-        radiusVector = computeRadiusVector(directorVector, radius);
+        radiusVector = AnimationTaskUtils.computeRadiusVector(directorVector, radius);
 
         //Calculating each spiral particle locations
         firstSpiralParticleLocationBeforeRotation = animationCurrentLocation.clone().add(radiusVector);

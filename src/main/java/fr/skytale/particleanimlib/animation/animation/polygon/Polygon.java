@@ -1,13 +1,10 @@
 package fr.skytale.particleanimlib.animation.animation.polygon;
 
-
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
-import org.bukkit.util.Vector;
 
-public class Polygon extends ARotatingAnimation implements ISubAnimation {
+public class Polygon extends AAnimation implements ISubAnimation {
     private IVariable<Integer> nbVertices;
     private IVariable<Double> distanceFromCenterToVertices;
     private IVariable<Double> distanceBetweenPoints;
@@ -18,6 +15,15 @@ public class Polygon extends ARotatingAnimation implements ISubAnimation {
     @Override
     public PolygonTask show() {
         return new PolygonTask(this);
+    }
+
+    @Override
+    public Polygon clone() {
+        Polygon obj = (Polygon) super.clone();
+        obj.nbVertices = nbVertices.copy();
+        obj.distanceBetweenPoints = distanceBetweenPoints.copy();
+        obj.distanceFromCenterToVertices = distanceFromCenterToVertices.copy();
+        return obj;
     }
 
     /***********GETTERS & SETTERS***********/
@@ -44,14 +50,5 @@ public class Polygon extends ARotatingAnimation implements ISubAnimation {
 
     public void setDistanceFromCenterToVertices(IVariable<Double> distanceFromCenterToVertices) {
         this.distanceFromCenterToVertices = distanceFromCenterToVertices;
-    }
-
-    @Override
-    public Polygon clone() {
-        Polygon obj = (Polygon) super.clone();
-        obj.nbVertices = nbVertices.copy();
-        obj.distanceBetweenPoints = distanceBetweenPoints.copy();
-        obj.distanceFromCenterToVertices = distanceFromCenterToVertices.copy();
-        return obj;
     }
 }

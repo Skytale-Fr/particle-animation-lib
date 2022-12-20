@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
+import java.awt.*;
 import java.util.Collection;
 import java.util.function.BiPredicate;
 
@@ -30,6 +31,8 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
         animation.setTicksDuration(60);
         animation.setViewers(AViewers.fromNearbyPlayers(300));
         animation.setRotation(new Constant<>(PARotation.DEFAULT_ROTATION));
+        animation.setPointDefinition(APointDefinition.fromParticleTemplate(
+                new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null)));
     }
 
     protected static void checkNotNull(Object obj, String checkFailureMessage) {

@@ -7,10 +7,9 @@ import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APo
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARoundAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
 
 
-public class Sphere extends ARoundAnimation implements ISubAnimation, ISubAnimationContainer {
+public class Sphere extends ARoundAnimation implements ISubAnimation {
 
     private IVariable<Integer> nbCircles;
     private PropagationType propagationType = null;
@@ -24,6 +23,16 @@ public class Sphere extends ARoundAnimation implements ISubAnimation, ISubAnimat
     @Override
     public SphereTask show() {
         return new SphereTask(this);
+    }
+
+    @Override
+    public APointDefinition getPointDefinition() {
+        return pointDefinition;
+    }
+
+    @Override
+    public void setPointDefinition(APointDefinition pointDefinition) {
+        this.pointDefinition = pointDefinition;
     }
 
     /***********GETTERS & SETTERS***********/
@@ -58,29 +67,6 @@ public class Sphere extends ARoundAnimation implements ISubAnimation, ISubAnimat
 
     public void setSphereType(Type type) {
         this.type = type;
-    }
-
-    @Override
-    public APointDefinition getPointDefinition() {
-        return pointDefinition;
-    }
-
-    @Override
-    public void setPointDefinition(APointDefinition pointDefinition) {
-        this.pointDefinition = pointDefinition;
-    }
-
-    @Override
-    public ParticleTemplate getMainParticle() {
-        if (this.pointDefinition instanceof ParticlePointDefinition) {
-            return ((ParticlePointDefinition) pointDefinition).getParticleTemplate();
-        }
-        throw new IllegalStateException("ParticleTemplate is not defined since this animation PointDefinition defines a sub animation");
-    }
-
-    @Override
-    public void setMainParticle(ParticleTemplate mainParticle) {
-        setPointDefinition(APointDefinition.fromParticleTemplate(mainParticle));
     }
 
     @Override

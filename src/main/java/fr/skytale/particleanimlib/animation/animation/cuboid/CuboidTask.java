@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.cuboid;
 
-import fr.skytale.particleanimlib.animation.parent.animation.IVariableCurrentValue;
+import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
+import fr.skytale.particleanimlib.animation.attribute.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.util.Vector;
 
@@ -23,9 +24,9 @@ public class CuboidTask extends AAnimationTask<Cuboid> {
     }
 
     @Override
-    protected List<Vector> computeAnimationPoints() {
+    protected List<AnimationPointData> computeAnimationPoints() {
         Map<CuboidCorner, Vector> corners = getCorners();
-        List<Vector> points = new ArrayList<>();
+        List<AnimationPointData> points = new ArrayList<>();
 
         //Collecting each edge points
         CuboidEdge.getEdges().forEach(edge -> {

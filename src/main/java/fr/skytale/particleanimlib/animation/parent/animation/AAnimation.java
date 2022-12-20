@@ -27,7 +27,7 @@ public abstract class AAnimation implements Cloneable {
     protected IVariable<Integer> showPeriod;
     protected Set<AnimationEndedCallback> animationEndedCallbacks = new HashSet<>();
     protected AViewers viewers;
-    protected AnimationStopCondition stopCondition;
+    protected AnimationStopCondition<?> stopCondition;
     protected Set<CollisionHandler<?, AAnimationTask<?>>> collisionHandlers = new HashSet<>();
     protected IVariable<PARotation> rotation;
 

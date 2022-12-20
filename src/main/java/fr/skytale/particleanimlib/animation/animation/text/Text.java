@@ -4,26 +4,16 @@ package fr.skytale.particleanimlib.animation.animation.text;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
-import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
 import fr.skytale.ttfparser.TTFAlphabet;
 import fr.skytale.ttfparser.TTFParser;
-import fr.skytale.ttfparser.TTFString;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
 
 import java.io.File;
-import java.net.URL;
-import java.nio.file.Path;
 
-public class Text extends ARotatingAnimation implements ISubAnimation, ISubAnimationContainer {
+public class Text extends AAnimation implements ISubAnimation {
 
     public static final String FONTS_FOLDER = "fonts";
 
@@ -35,26 +25,7 @@ public class Text extends ARotatingAnimation implements ISubAnimation, ISubAnima
     private TTFAlphabet ttfAlphabet;
     // private Anchor anchor;
 
-    private APointDefinition pointDefinition;
-
     public Text() {
-    }
-
-    @Override
-    public TextTask show() {
-        init();
-        return new TextTask(this);
-    }
-
-    protected void init() {
-        if(ttfAlphabet != null) {
-            // Already initialized.
-            return;
-        }
-
-        File fontFile = getFontFile();
-        TTFParser ttfParser = new TTFParser(fontFile);
-        ttfAlphabet = ttfParser.parse();
     }
 
     public static File getFontsDirectory(JavaPlugin plugin) {
@@ -88,19 +59,38 @@ public class Text extends ARotatingAnimation implements ISubAnimation, ISubAnima
         return fontFile;
     }
 
+    @Override
+    public TextTask show() {
+        init();
+        return new TextTask(this);
+    }
+
+    @Override
+    public Text clone() {
+        Text obj = (Text) super.clone();
+        obj.ttfAlphabet = ttfAlphabet == null ? null : ttfAlphabet; // Clone a TTFAlphabet seems to be weird (there is only getters).
+        obj.baseString = baseString.copy();
+        obj.fontSize = fontSize.copy();
+        obj.fontFileName = fontFileName;
+        obj.detailsLevel = detailsLevel.copy();
+        return obj;
+    }
+
+    protected void init() {
+        if (ttfAlphabet != null) {
+            // Already initialized.
+            return;
+        }
+
+        File fontFile = getFontFile();
+        TTFParser ttfParser = new TTFParser(fontFile);
+        ttfAlphabet = ttfParser.parse();
+    }
+
     /***********GETTERS & SETTERS***********/
 
     public TTFAlphabet getTTFAlphabet() {
         return ttfAlphabet;
-    }
-    public IVariable<String> getBaseString() { return baseString; }
-
-    public void setString(IVariable<String> string) {
-        this.baseString = string;
-    }
-
-    public File getFontFile() {
-        return getFontFile(plugin, fontFileName);
     }
 
     public String getFontFileName() {
@@ -109,6 +99,18 @@ public class Text extends ARotatingAnimation implements ISubAnimation, ISubAnima
 
     public void setFontFileName(String fontFileName) {
         this.fontFileName = fontFileName;
+    }
+
+    public File getFontFile() {
+        return getFontFile(plugin, fontFileName);
+    }
+
+    public IVariable<String> getBaseString() {
+        return baseString;
+    }
+
+    public void setString(IVariable<String> string) {
+        this.baseString = string;
     }
 
     public IVariable<Double> getFontSize() {
@@ -125,43 +127,6 @@ public class Text extends ARotatingAnimation implements ISubAnimation, ISubAnima
 
     public void setDetailsLevel(IVariable<Double> detailsLevel) {
         this.detailsLevel = detailsLevel;
-    }
-
-    
-
-    @Override
-    public APointDefinition getPointDefinition() {
-        return pointDefinition;
-    }
-
-    @Override
-    public void setPointDefinition(APointDefinition pointDefinition) {
-        this.pointDefinition = pointDefinition;
-    }
-
-    @Override
-    public ParticleTemplate getMainParticle() {
-        if (this.pointDefinition instanceof ParticlePointDefinition) {
-            return ((ParticlePointDefinition) pointDefinition).getParticleTemplate();
-        }
-        throw new IllegalStateException("ParticleTemplate is not defined since this animation PointDefinition defines a sub animation");
-    }
-
-    @Override
-    public void setMainParticle(ParticleTemplate mainParticle) {
-        setPointDefinition(APointDefinition.fromParticleTemplate(mainParticle));
-    }
-
-    @Override
-    public Text clone() {
-        Text obj = (Text) super.clone();
-        obj.ttfAlphabet = ttfAlphabet == null ? null : ttfAlphabet; // Clone a TTFAlphabet seems to be weird (there is only getters).
-        obj.baseString = baseString.copy();
-        obj.fontSize = fontSize.copy();
-        obj.fontFileName = fontFileName;
-        obj.detailsLevel = detailsLevel.copy();
-        obj.pointDefinition = pointDefinition.clone();
-        return obj;
     }
 
 }

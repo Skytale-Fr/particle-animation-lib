@@ -1,11 +1,8 @@
 package fr.skytale.particleanimlib.animation.animation.obj;
 
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 
-import java.awt.*;
-
-public class ObjBuilder extends ARotatingAnimationBuilder<Obj, ObjTask> {
+public class ObjBuilder extends AAnimationBuilder<Obj, ObjTask> {
 
     public ObjBuilder() {
         super();
@@ -13,14 +10,24 @@ public class ObjBuilder extends ARotatingAnimationBuilder<Obj, ObjTask> {
         animation.setDistanceBetweenParticles(0.5);
         animation.setMinAngleBetweenFaces(Math.toRadians(20));
         animation.setMinFaceArea(1);
-        animation.setRotationAxis(null);
-        animation.setRotationAngleAlpha(null);
-        animation.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
     }
 
     @Override
     protected Obj initAnimation() {
         return new Obj();
+    }
+
+    @Override
+    public Obj getAnimation() {
+        if (animation.getScale() <= 0)
+            throw new IllegalArgumentException("scale must be strictly positive.");
+        if (animation.getDistanceBetweenParticles() <= 0)
+            throw new IllegalArgumentException("distanceBetweenParticles must be strictly positive.");
+        if (animation.getMinAngleBetweenFaces() <= 0)
+            throw new IllegalArgumentException("minAngleBetweenFaces must be strictly positive.");
+        if (animation.getMinFaceArea() < 0)
+            throw new IllegalArgumentException("minFaceArea must be positive.");
+        return super.getAnimation();
     }
 
     /********* Obj specific setters ***********/
@@ -51,19 +58,5 @@ public class ObjBuilder extends ARotatingAnimationBuilder<Obj, ObjTask> {
 
     public void setObjFileName(String imageFileName) {
         animation.setObjFileName(imageFileName);
-    }
-
-
-    @Override
-    public Obj getAnimation() {
-        if (animation.getScale() <= 0)
-            throw new IllegalArgumentException("scale must be strictly positive.");
-        if (animation.getDistanceBetweenParticles() <= 0)
-            throw new IllegalArgumentException("distanceBetweenParticles must be strictly positive.");
-        if (animation.getMinAngleBetweenFaces() <= 0)
-            throw new IllegalArgumentException("minAngleBetweenFaces must be strictly positive.");
-        if (animation.getMinFaceArea() < 0)
-            throw new IllegalArgumentException("minFaceArea must be positive.");
-        return super.getAnimation();
     }
 }

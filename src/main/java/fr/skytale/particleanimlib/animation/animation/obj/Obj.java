@@ -2,24 +2,16 @@ package fr.skytale.particleanimlib.animation.animation.obj;
 
 
 import com.mokiat.data.front.parser.*;
-import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
-import org.apache.commons.math3.geometry.Space;
-import org.apache.commons.math3.geometry.euclidean.threed.Euclidean3D;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.apache.commons.math3.geometry.euclidean.threed.Plane;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import org.apache.commons.math3.geometry.euclidean.twod.PolygonsSet;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.geometry.euclidean.twod.hull.ConvexHull2D;
-import org.apache.commons.math3.geometry.euclidean.twod.hull.ConvexHullGenerator2D;
-import org.apache.commons.math3.geometry.hull.ConvexHull;
-import org.apache.commons.math3.geometry.partitioning.BSPTree;
-import org.apache.commons.math3.geometry.partitioning.Region;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -31,7 +23,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Obj extends ARotatingAnimation {
+public class Obj extends AAnimation {
 
     /******** Static Attributes ********/
 
@@ -43,8 +35,6 @@ public class Obj extends ARotatingAnimation {
     private double scale;
     private double minAngleBetweenFaces;
     private double minFaceArea;
-    //Computed the first time show() is executed
-    private Set<Vector> objPixels;
 
     /******** Constructor ********/
 
@@ -88,8 +78,13 @@ public class Obj extends ARotatingAnimation {
 
     @Override
     public ObjTask show() {
-        init();
         return new ObjTask(this);
+    }
+
+    @Override
+    public Obj clone() {
+        Obj obj = (Obj) super.clone();
+        return obj;
     }
 
     /******** Getters & Setters ********/
@@ -100,7 +95,6 @@ public class Obj extends ARotatingAnimation {
 
     public void setObjFileName(String objFileName) {
         this.objFileName = objFileName;
-        this.objPixels = null;
     }
 
     public double getDistanceBetweenParticles() {
@@ -109,7 +103,6 @@ public class Obj extends ARotatingAnimation {
 
     public void setDistanceBetweenParticles(double distanceBetweenParticles) {
         this.distanceBetweenParticles = distanceBetweenParticles;
-        this.objPixels = null;
     }
 
     public double getScale() {
@@ -118,7 +111,6 @@ public class Obj extends ARotatingAnimation {
 
     public void setScale(double scale) {
         this.scale = scale;
-        this.objPixels = null;
     }
 
     public double getMinAngleBetweenFaces() {
@@ -127,7 +119,6 @@ public class Obj extends ARotatingAnimation {
 
     public void setMinAngleBetweenFaces(double minAngleBetweenFaces) {
         this.minAngleBetweenFaces = minAngleBetweenFaces;
-        this.objPixels = null;
     }
 
     public double getMinFaceArea() {
@@ -136,30 +127,14 @@ public class Obj extends ARotatingAnimation {
 
     public void setMinFaceArea(double minFaceArea) {
         this.minFaceArea = minFaceArea;
-        this.objPixels = null;
-    }
-
-    public Set<Vector> getObjPixels() {
-        return objPixels;
-    }
-
-    @Override
-    public Obj clone() {
-        Obj obj = (Obj) super.clone();
-        obj.objPixels = objPixels == null ? null : objPixels.stream().map(Vector::clone).collect(Collectors.toSet());
-        return obj;
     }
 
     /******** Private or protected methods ********/
 
-    private void init() {
-        if (objPixels != null) {
-            //Already initialized
-            return;
-        }
+    public List<Vector> getObjPoints() {
 
         //Load obj
-        objPixels = new HashSet<>();
+        List<Vector> objPixels = new ArrayList<>();
 
         try (InputStream in = new FileInputStream(getObjFile(plugin, objFileName))) {
             final OBJModel model = parseObj(in);
@@ -181,11 +156,12 @@ public class Obj extends ARotatingAnimation {
             changeReferential(segments, center);
 
             // 6. get each points
-            buildPoints(segments);
+            buildPoints(objPixels, segments);
 
         } catch (IOException e) {
             throw new IllegalArgumentException("The obj could not be read", e);
         }
+        return objPixels;
     }
 
     private void scale(Set<Segment> segments) {
@@ -195,7 +171,7 @@ public class Obj extends ARotatingAnimation {
         });
     }
 
-    private void buildPoints(Set<Segment> segments) {
+    private void buildPoints(List<Vector> objPixels, Set<Segment> segments) {
         segments.forEach(segment -> objPixels.addAll(
                 getLinePoints(
                         new Vector(

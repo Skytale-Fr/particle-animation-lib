@@ -1,5 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.polygon;
 
+import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
+import fr.skytale.particleanimlib.animation.attribute.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
@@ -11,98 +13,43 @@ import java.util.List;
 
 public class PolygonTask extends AAnimationTask<Polygon> {
 
-    Vector currentU, currentV;
-
-    private double radius;
+    @IVariableCurrentValue
     private int nbVertices;
-    private double stepAngle;
-    private double distanceBetweenParticles;
 
-    private Vector rotationAxis;
-    private double rotationAngleAlpha;
+    @IVariableCurrentValue(animationIVariableFieldName = "distanceFromCenterToVertices")
+    private double radius;
+
+    @IVariableCurrentValue
+    private double distanceBetweenPoints;
 
     public PolygonTask(Polygon polygon) {
         super(polygon);
-        currentU = animation.getU();
-        currentV = animation.getV();
-
         startTask();
     }
 
     @Override
-    public void show(Location iterationBaseLocation) {
-        if (hasDurationEnded()) {
-            stopAnimation();
-            return;
-        }
-
-        radius = animation.getDistanceFromCenterToVertices().getCurrentValue(iterationCount);
-        nbVertices = animation.getNbVertices().getCurrentValue(iterationCount);
-        stepAngle = 2 * Math.PI / nbVertices;
-
-        ParticleTemplate particleTemplate = animation.getMainParticle();
-
-        List<Location> vertices = new ArrayList<>();
+    protected List<AnimationPointData> computeAnimationPoints() {
+        List<AnimationPointData> animationPointsData = new ArrayList<>();
+        double stepAngle = 2 * Math.PI / nbVertices;
+        List<Vector> vertices = new ArrayList<>();
 
         for (int pointIndex = 0; pointIndex < nbVertices; pointIndex++) {
             double theta = pointIndex * stepAngle;
 
-            double x = iterationBaseLocation.getX() + (currentU.getX() * radius * Math.cos(theta)) + (currentV.getX() * radius * Math.sin(theta));
-            double y = iterationBaseLocation.getY() + (currentU.getY() * radius * Math.cos(theta)) + (currentV.getY() * radius * Math.sin(theta));
-            double z = iterationBaseLocation.getZ() + (currentU.getZ() * radius * Math.cos(theta)) + (currentV.getZ() * radius * Math.sin(theta));
+            double x = (currentU.getX() * radius * Math.cos(theta)) + (currentV.getX() * radius * Math.sin(theta));
+            double y = (currentU.getY() * radius * Math.cos(theta)) + (currentV.getY() * radius * Math.sin(theta));
+            double z = (currentU.getZ() * radius * Math.cos(theta)) + (currentV.getZ() * radius * Math.sin(theta));
 
-            Location particleLocation = new Location(iterationBaseLocation.getWorld(), x, y, z);
-
-            vertices.add(particleLocation);
+            vertices.add(new Vector(x, y, z));
         }
-        distanceBetweenParticles = animation.getDistanceBetweenPoints().getCurrentValue(iterationCount);
 
         //Link each vertices
-        getLinePoints(vertices.get(0), vertices.get(vertices.size() - 1), distanceBetweenParticles);
+        animationPointsData.addAll(getLinePoints(vertices.get(0), vertices.get(vertices.size() - 1), distanceBetweenPoints));
 
         for (int i = 0; i < vertices.size() - 1; i++) {
-            getLinePoints(vertices.get(i), vertices.get(i + 1), distanceBetweenParticles);
+            animationPointsData.addAll(getLinePoints(vertices.get(i), vertices.get(i + 1), distanceBetweenPoints));
         }
-
-        if (animation.getRotationAxis() != null) {
-            rotationAxis = animation.getRotationAxis().getCurrentValue(iterationCount);
-            rotationAngleAlpha = animation.getRotationAngleAlpha().getCurrentValue(iterationCount);
-
-            currentU = new RotatableVector(currentU).rotateAroundAxis(rotationAxis, rotationAngleAlpha);
-            currentV = new RotatableVector(currentV).rotateAroundAxis(rotationAxis, rotationAngleAlpha);
-        }
-    }
-
-    public Vector getCurrentU() {
-        return currentU;
-    }
-
-    public Vector getCurrentV() {
-        return currentV;
-    }
-
-    public double getCurrentRadius() {
-        return radius;
-    }
-
-    public int getCurrentNbVertices() {
-        return nbVertices;
-    }
-
-    public double getCurrentStepAngle() {
-        return stepAngle;
-    }
-
-    public double getCurrentDistanceBetweenParticles() {
-        return distanceBetweenParticles;
-    }
-
-    public Vector getCurrentRotationAxis() {
-        return rotationAxis;
-    }
-
-    public double getCurrentRotationAngleAlpha() {
-        return rotationAngleAlpha;
+        return animationPointsData;
     }
 
 }

@@ -4,19 +4,13 @@ import fr.skytale.particleanimlib.animation.attribute.Orientation;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.position.APosition;
-import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
-import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
-import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
 import org.apache.commons.lang.Validate;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
-public class TextBuilder extends ARotatingAnimationBuilder<Text, TextTask> {
+public class TextBuilder extends AAnimationBuilder<Text, TextTask> {
 
     public static final String DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL = "directorVector u should not be null";
     public static final String DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL = "directorVector v should not be null";
@@ -29,7 +23,7 @@ public class TextBuilder extends ARotatingAnimationBuilder<Text, TextTask> {
     public TextBuilder() {
         super();
         // Default values
-        animation.setRotation(new Vector(1, 0, 0),new Vector(0, 1, 0));
+        animation.setRotation(new Vector(1, 0, 0), new Vector(0, 1, 0));
         animation.setFontFileName("Minecraft.ttf");
         animation.setShowPeriod(new Constant<>(1));
         animation.setTicksDuration(60);
@@ -41,6 +35,26 @@ public class TextBuilder extends ARotatingAnimationBuilder<Text, TextTask> {
     @Override
     protected Text initAnimation() {
         return new Text();
+    }
+
+    public void setPointDefinition(APointDefinition pointDefinition) {
+        checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
+        animation.setPointDefinition(pointDefinition);
+    }
+
+    public void setPointDefinition(ParticleTemplate particleTemplate) {
+        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
+    }
+
+    @Override
+    public Text getAnimation() {
+        checkNotNull(animation.getBaseString(), BASE_STRING_SHOULD_NOT_BE_NULL);
+        checkNotNull(animation.getFontSize(), FONT_SIZE_SHOULD_NOT_BE_NULL_OR_EMPTY);
+        checkNotNull(animation.getFontFileName(), FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
+        checkNotNull(animation.getDetailsLevel(), DETAILS_LEVEL_SHOULD_BE_POSTIIVE_AND_NOT_NULL);
+        Validate.notEmpty(animation.getFontFileName(), FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
+
+        return super.getAnimation();
     }
 
     /********* Line specific setters ***********/
@@ -68,7 +82,7 @@ public class TextBuilder extends ARotatingAnimationBuilder<Text, TextTask> {
     public void setDirectorVectors(Vector u, Vector v) {
         checkNotNull(u, DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
         checkNotNull(v, DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
-        animation.setRotation(u,v);
+        animation.setRotation(u, v);
     }
 
     public void setDirectorVectorsFromOrientation(Orientation direction, double length) {
@@ -77,26 +91,6 @@ public class TextBuilder extends ARotatingAnimationBuilder<Text, TextTask> {
 
     public void setDirectorVectorsFromNormalVector(Vector normal) {
         RotatableVector.Plane2D plane = new RotatableVector(normal).getPlane();
-        setDirectorVectors(plane.u,plane.v);
-    }
-
-    public void setPointDefinition(APointDefinition pointDefinition) {
-        checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
-        animation.setPointDefinition(pointDefinition);
-    }
-
-    public void setPointDefinition(ParticleTemplate particleTemplate) {
-        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
-    }
-
-    @Override
-    public Text getAnimation() {
-        checkNotNull(animation.getBaseString(), BASE_STRING_SHOULD_NOT_BE_NULL);
-        checkNotNull(animation.getFontSize(), FONT_SIZE_SHOULD_NOT_BE_NULL_OR_EMPTY);
-        checkNotNull(animation.getFontFileName(), FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
-        checkNotNull(animation.getDetailsLevel(), DETAILS_LEVEL_SHOULD_BE_POSTIIVE_AND_NOT_NULL);
-        Validate.notEmpty(animation.getFontFileName(), FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
-
-        return super.getAnimation();
+        setDirectorVectors(plane.u, plane.v);
     }
 }

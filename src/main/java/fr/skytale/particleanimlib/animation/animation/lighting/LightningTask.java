@@ -9,8 +9,7 @@ import org.bukkit.util.Vector;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class
-LightningTask extends AAnimationTask<Lightning> {
+public class LightningTask extends AAnimationTask<Lightning> {
 
     private final Random random;
     private LinkedList<PointData> persistentPoints;

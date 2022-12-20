@@ -1,4 +1,4 @@
-package fr.skytale.particleanimlib.animation.parent.animation;
+package fr.skytale.particleanimlib.animation.attribute;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface IVariableCurrentValue {
     String animationIVariableFieldName() default "";
+    boolean updatePointsIfChange() default true;
 }

@@ -4,13 +4,14 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import fr.skytale.particleanimlib.animation.parent.builder.ARoundAnimationBuilder;
 
-public class SphereBuilder extends ARoundAnimationBuilder<Sphere, SphereTask> {
+public class SphereBuilder extends AAnimationBuilder<Sphere, SphereTask> {
 
     public SphereBuilder() {
         super();
-        animation.setNbCircles(new Constant<Integer>(10));
+        animation.setNbCircles(new Constant<>(10));
         animation.setRadius(new Constant<>(2.0));
         animation.setAngleBetweenEachPoint(new Constant<>(Math.toRadians(30)));
         animation.setSphereType(Sphere.Type.FULL);

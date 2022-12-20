@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.epi;
 
-import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.animation.IVariableCurrentValue;
+import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
+import fr.skytale.particleanimlib.animation.attribute.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.util.Vector;
 
@@ -30,8 +30,8 @@ public class EpiTask extends AAnimationTask<Epi> {
     }
 
     @Override
-    protected List<Vector> computeAnimationPoints() {
-        List<Vector> animationPoints = new ArrayList<>();
+    protected List<AnimationPointData> computeAnimationPoints() {
+        List<AnimationPointData> animationPoints = new ArrayList<>();
         double epiModifier = epiModifierNumerator / epiModifierDenominator; //TODO CODE DUPLIQUE AVEC ROSE ET NODE
         double maxTheta;
         //defining maxTheta according to https://mathworld.wolfram.com/EpiCurve.html
@@ -63,7 +63,7 @@ public class EpiTask extends AAnimationTask<Epi> {
             Vector particleLocation = new Vector(x, y, z);
 
             if (maxRadius == null || maxRadius >= particleLocation.length()) {
-                animationPoints.add(particleLocation);
+                animationPoints.add(new AnimationPointData(particleLocation));
             }
         }
 

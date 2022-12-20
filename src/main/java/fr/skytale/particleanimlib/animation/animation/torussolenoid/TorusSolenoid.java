@@ -1,20 +1,12 @@
 package fr.skytale.particleanimlib.animation.animation.torussolenoid;
 
 
-import fr.skytale.particleanimlib.animation.animation.rose.RoseTask;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
-import org.bukkit.util.Vector;
 
-public class TorusSolenoid extends ARotatingAnimation implements ISubAnimation, ISubAnimationContainer {
+public class TorusSolenoid extends AAnimation implements ISubAnimation {
     private IVariable<Integer> nbPoints;
-    private APointDefinition pointDefinition;
     private IVariable<Double> torusSolenoidModifierNumerator;
     private IVariable<Integer> torusSolenoidModifierDenominator;
     private IVariable<Double> torusRadius;
@@ -29,16 +21,14 @@ public class TorusSolenoid extends ARotatingAnimation implements ISubAnimation, 
     }
 
     @Override
-    public ParticleTemplate getMainParticle() {
-        if (this.pointDefinition instanceof ParticlePointDefinition) {
-            return ((ParticlePointDefinition) pointDefinition).getParticleTemplate();
-        }
-        throw new IllegalStateException("ParticleTemplate is not defined since this animation PointDefinition defines a sub animation");
-    }
-
-    @Override
-    public void setMainParticle(ParticleTemplate mainParticle) {
-        setPointDefinition(APointDefinition.fromParticleTemplate(mainParticle));
+    public TorusSolenoid clone() {
+        TorusSolenoid obj = (TorusSolenoid) super.clone();
+        obj.nbPoints = nbPoints.copy();
+        obj.torusSolenoidModifierNumerator = torusSolenoidModifierNumerator.copy();
+        obj.torusSolenoidModifierDenominator = torusSolenoidModifierDenominator.copy();
+        obj.torusRadius = torusRadius.copy();
+        obj.solenoidRadius = solenoidRadius.copy();
+        return obj;
     }
 
     /***********GETTERS & SETTERS***********/
@@ -75,35 +65,11 @@ public class TorusSolenoid extends ARotatingAnimation implements ISubAnimation, 
         this.torusSolenoidModifierDenominator = torusSolenoidModifierDenominator;
     }
 
-    
-
     public IVariable<Integer> getNbPoints() {
         return nbPoints;
     }
 
     public void setNbPoints(IVariable<Integer> nbPoints) {
         this.nbPoints = nbPoints;
-    }
-
-    @Override
-    public APointDefinition getPointDefinition() {
-        return pointDefinition;
-    }
-
-    @Override
-    public void setPointDefinition(APointDefinition pointDefinition) {
-        this.pointDefinition = pointDefinition;
-    }
-
-    @Override
-    public TorusSolenoid clone() {
-        TorusSolenoid obj = (TorusSolenoid) super.clone();
-        obj.nbPoints = nbPoints.copy();
-        obj.pointDefinition = pointDefinition.clone();
-        obj.torusSolenoidModifierNumerator = torusSolenoidModifierNumerator.copy();
-        obj.torusSolenoidModifierDenominator = torusSolenoidModifierDenominator.copy();
-        obj.solenoidRadius = solenoidRadius.copy();
-        obj.torusRadius = torusRadius.copy();
-        return obj;
     }
 }

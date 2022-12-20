@@ -9,11 +9,11 @@ import org.bukkit.util.Vector;
 
 public class Wave extends AAnimation implements ISubAnimation {
     protected IVariable<Double> angleBetweenEachPoint;
+    protected IVariable<Integer> nbPoints;
+    protected IVariable<Double> radiusStep;
     protected double radiusStart;
-    private IVariable<Integer> nbPoints;
-    private double radiusMax;
-    private IVariable<Double> radiusStep;
-    private boolean positiveHeight;
+    protected double radiusMax;
+    protected boolean positiveHeight;
 
     public Wave() {
     }
@@ -25,28 +25,20 @@ public class Wave extends AAnimation implements ISubAnimation {
 
     /***********GETTERS & SETTERS***********/
 
+    public IVariable<Double> getAngleBetweenEachPoint() {
+        return angleBetweenEachPoint;
+    }
+
+    public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint) {
+        this.angleBetweenEachPoint = angleBetweenEachPoint;
+    }
+
     public IVariable<Integer> getNbPoints() {
         return nbPoints;
     }
 
     public void setNbPoints(IVariable<Integer> nbPoints) {
         this.nbPoints = nbPoints;
-    }
-
-    public double getRadiusMax() {
-        return radiusMax;
-    }
-
-    public void setRadiusMax(double radiusMax) {
-        this.radiusMax = radiusMax;
-    }
-
-    public double getRadiusStart() {
-        return radiusStart;
-    }
-
-    public void setRadiusStart(double radiusStart) {
-        this.radiusStart = radiusStart;
     }
 
     public IVariable<Double> getRadiusStep() {
@@ -57,12 +49,20 @@ public class Wave extends AAnimation implements ISubAnimation {
         this.radiusStep = radiusStep;
     }
 
-    public IVariable<Double> getAngleBetweenEachPoint() {
-        return angleBetweenEachPoint;
+    public double getRadiusStart() {
+        return radiusStart;
     }
 
-    public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint) {
-        this.angleBetweenEachPoint = angleBetweenEachPoint;
+    public void setRadiusStart(double radiusStart) {
+        this.radiusStart = radiusStart;
+    }
+
+    public double getRadiusMax() {
+        return radiusMax;
+    }
+
+    public void setRadiusMax(double radiusMax) {
+        this.radiusMax = radiusMax;
     }
 
     public boolean getPositiveHeight() {

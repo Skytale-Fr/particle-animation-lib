@@ -9,12 +9,11 @@ import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
 import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimationContainer;
 
-public class Lightning extends AAnimation implements IDirectionSubAnimation, ISubAnimationContainer {
+public class Lightning extends AAnimation implements IDirectionSubAnimation {
 
-    private AnimationDirection direction;
-    private APointDefinition pointDefinition;
-    private double dispersionAngle;
     private IVariable<Double> distanceBetweenPoints;
+    private AnimationDirection direction;
+    private double dispersionAngle;
     private double minDistanceBetweenLightingAngles;
     private double maxDistanceBetweenLightingAngles;
     private double maxDistance;
@@ -88,19 +87,6 @@ public class Lightning extends AAnimation implements IDirectionSubAnimation, ISu
 
     public void setMaxDistance(double maxDistance) {
         this.maxDistance = maxDistance;
-    }
-
-    @Override
-    public ParticleTemplate getMainParticle() {
-        if (this.pointDefinition instanceof ParticlePointDefinition) {
-            return ((ParticlePointDefinition) pointDefinition).getParticleTemplate();
-        }
-        throw new IllegalStateException("ParticleTemplate is not defined since this animation PointDefinition defines a sub animation");
-    }
-
-    @Override
-    public void setMainParticle(ParticleTemplate mainParticle) {
-        setPointDefinition(APointDefinition.fromParticleTemplate(mainParticle));
     }
 
     public boolean isConvergeToTarget() {

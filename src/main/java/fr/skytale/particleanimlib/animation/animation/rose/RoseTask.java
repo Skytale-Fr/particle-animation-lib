@@ -1,32 +1,35 @@
 package fr.skytale.particleanimlib.animation.animation.rose;
 
-import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
+import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
+import fr.skytale.particleanimlib.animation.attribute.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
-import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RoseTask extends AAnimationTask<Rose> {
-    Vector currentU, currentV;
+
+    @IVariableCurrentValue
+    private Integer nbPoints;
+
+    @IVariableCurrentValue
+    private Double roseModifierNumerator;
+
+    @IVariableCurrentValue
+    private Integer roseModifierDenominator;
+
+    @IVariableCurrentValue
+    private Double radius;
 
     public RoseTask(Rose rose) {
         super(rose);
-        currentU = animation.getU().clone();
-        currentV = animation.getV().clone();
         startTask();
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
-    public void show(Location iterationBaseLocation) {
-        if (hasDurationEnded()) {
-            stopAnimation();
-            return;
-        }
-
-        double radius = animation.getRadius().getCurrentValue(iterationCount);
-        int nbPoints = animation.getNbPoints().getCurrentValue(iterationCount);
-        double roseModifierNumerator = animation.getRoseModifierNumerator().getCurrentValue(iterationCount);
-        int roseModifierDenominator = animation.getRoseModifierDenominator().getCurrentValue(iterationCount);
+    protected List<AnimationPointData> computeAnimationPoints() {
+        List<AnimationPointData> animationPointsData = new ArrayList<>();
         double roseModifier = roseModifierNumerator / roseModifierDenominator;
         double maxTheta;
         //defining maxTheta according to https://mathworld.wolfram.com/RoseCurve.html
@@ -51,22 +54,12 @@ public class RoseTask extends AAnimationTask<Rose> {
 
             final double radiusCosTheta = radius * Math.cos(theta) * distanceFromCenterToPoint;
             final double radiusSinTheta = radius * Math.sin(theta) * distanceFromCenterToPoint;
-            double x = iterationBaseLocation.getX() + (currentU.getX() * radiusCosTheta) + (currentV.getX() * radiusSinTheta);
-            double y = iterationBaseLocation.getY() + (currentU.getY() * radiusCosTheta) + (currentV.getY() * radiusSinTheta);
-            double z = iterationBaseLocation.getZ() + (currentU.getZ() * radiusCosTheta) + (currentV.getZ() * radiusSinTheta);
+            double x = (U.getX() * radiusCosTheta) + (V.getX() * radiusSinTheta);
+            double y = (U.getY() * radiusCosTheta) + (V.getY() * radiusSinTheta);
+            double z = (U.getZ() * radiusCosTheta) + (V.getZ() * radiusSinTheta);
 
-            Location particleLocation = new Location(iterationBaseLocation.getWorld(), x, y, z);
-
-            showPoint(animation.getPointDefinition(), particleLocation, iterationBaseLocation);
-
+            animationPointsData.add(new AnimationPointData(new Vector(x, y, z)));
         }
-
-        if (animation.getRotationAxis() != null) {
-            Vector rotationAxis = animation.getRotationAxis().getCurrentValue(iterationCount);
-            double rotationAngleAlpha = animation.getRotationAngleAlpha().getCurrentValue(iterationCount);
-
-            currentU = new RotatableVector(currentU).rotateAroundAxis(rotationAxis, rotationAngleAlpha);
-            currentV = new RotatableVector(currentV).rotateAroundAxis(rotationAxis, rotationAngleAlpha);
-        }
+        return animationPointsData;
     }
 }

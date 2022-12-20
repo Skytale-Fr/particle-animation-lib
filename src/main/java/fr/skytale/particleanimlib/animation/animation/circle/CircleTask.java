@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.circle;
 
-import fr.skytale.particleanimlib.animation.parent.animation.IVariableCurrentValue;
+import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
+import fr.skytale.particleanimlib.animation.attribute.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.util.Vector;
 
@@ -24,8 +25,8 @@ public class CircleTask extends AAnimationTask<Circle> {
     }
 
     @Override
-    protected List<Vector> computeAnimationPoints() {
-        List<Vector> animationPoints = new ArrayList<>();
+    protected List<AnimationPointData> computeAnimationPoints() {
+        List<AnimationPointData> animationPoints = new ArrayList<>();
         for (int pointIndex = 0; pointIndex < nbPoints; pointIndex++) {
             double theta = pointIndex * angleBetweenEachPoint;
 
@@ -35,7 +36,7 @@ public class CircleTask extends AAnimationTask<Circle> {
             double y = U.getY() * radiusCosTheta + V.getY() * radiusSinTheta;
             double z = U.getZ() * radiusCosTheta + V.getZ() * radiusSinTheta;
 
-            animationPoints.add(new Vector(x, y, z));
+            animationPoints.add(new AnimationPointData(new Vector(x, y, z)));
         }
 
         return animationPoints;

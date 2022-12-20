@@ -6,10 +6,10 @@ import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import org.bukkit.util.Vector;
 
-public class RoseBuilder extends ARotatingAnimationBuilder<Rose, RoseTask> {
+public class RoseBuilder extends AAnimationBuilder<Rose, RoseTask> {
 
     public static final String DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL = "directorVector u should not be null";
     public static final String DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL = "directorVector v should not be null";
@@ -18,7 +18,7 @@ public class RoseBuilder extends ARotatingAnimationBuilder<Rose, RoseTask> {
 
     public RoseBuilder() {
         super();
-        animation.setRotation(new Vector(1, 0, 0),new Vector(0, 1, 0));
+        animation.setRotation(new Vector(1, 0, 0), new Vector(0, 1, 0));
         animation.setRadius(new Constant<>(3.0));
         animation.setRoseModifierNumerator(new Constant<>(3d));
         animation.setRoseModifierDenominator(new Constant<>(2));
@@ -30,6 +30,24 @@ public class RoseBuilder extends ARotatingAnimationBuilder<Rose, RoseTask> {
     @Override
     protected Rose initAnimation() {
         return new Rose();
+    }
+
+    public void setPointDefinition(APointDefinition pointDefinition) {
+        checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
+        animation.setPointDefinition(pointDefinition);
+    }
+
+    public void setPointDefinition(ParticleTemplate particleTemplate) {
+        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
+    }
+
+    @Override
+    public Rose getAnimation() {
+        checkPositiveAndNotNull(animation.getRadius(), "radius should be positive.", false);
+        checkNotNullOrZero(animation.getRoseModifierDenominator(), ROSE_MODIFIER_DENOMINATOR_MUST_NOT_BE_NULL_OR_EQUAL_TO_0);
+        checkNotNull(animation.getRoseModifierNumerator(), ROSE_MODIFIER_NUMERATOR_MUST_NOT_BE_NULL);
+        checkPositiveAndNotNull(animation.getNbPoints(), "nbPoints should be positive", false);
+        return super.getAnimation();
     }
 
     /********* Rose specific setters ***********/
@@ -45,7 +63,7 @@ public class RoseBuilder extends ARotatingAnimationBuilder<Rose, RoseTask> {
     public void setDirectorVectors(Vector u, Vector v) {
         checkNotNull(u, DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
         checkNotNull(v, DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
-        animation.setRotation(u,v);
+        animation.setRotation(u, v);
     }
 
     public void setDirectorVectorsFromOrientation(Orientation direction, double length) {
@@ -54,9 +72,8 @@ public class RoseBuilder extends ARotatingAnimationBuilder<Rose, RoseTask> {
 
     public void setDirectorVectorsFromNormalVector(Vector normal) {
         RotatableVector.Plane2D plane = new RotatableVector(normal).getPlane();
-        setDirectorVectors(plane.u,plane.v);
+        setDirectorVectors(plane.u, plane.v);
     }
-
 
     public void setNbPoints(int nbPoints) {
         setNbPoints(new Constant<>(nbPoints));
@@ -67,37 +84,19 @@ public class RoseBuilder extends ARotatingAnimationBuilder<Rose, RoseTask> {
         checkPositiveAndNotNull(nbPoints, "nbPoints should be positive", false);
     }
 
-    public void setPointDefinition(APointDefinition pointDefinition) {
-        checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
-        animation.setPointDefinition(pointDefinition);
-    }
-
-    public void setPointDefinition(ParticleTemplate particleTemplate) {
-        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
-    }
-
-    public void setRoseModifierNumerator(IVariable<Double> roseModifierNumerator){
+    public void setRoseModifierNumerator(IVariable<Double> roseModifierNumerator) {
         animation.setRoseModifierNumerator(roseModifierNumerator);
     }
 
-    public void setRoseModifierNumerator(double roseModifierNumerator){
+    public void setRoseModifierNumerator(double roseModifierNumerator) {
         setRoseModifierNumerator(new Constant<>(roseModifierNumerator));
     }
 
-    public void setRoseModifierDenominator(IVariable<Integer> roseModifierDenominator){
+    public void setRoseModifierDenominator(IVariable<Integer> roseModifierDenominator) {
         animation.setRoseModifierDenominator(roseModifierDenominator);
     }
 
-    public void setRoseModifierDenominator(int roseModifierDenominator){
+    public void setRoseModifierDenominator(int roseModifierDenominator) {
         setRoseModifierDenominator(new Constant<>(roseModifierDenominator));
-    }
-
-    @Override
-    public Rose getAnimation() {
-        checkPositiveAndNotNull(animation.getRadius(), "radius should be positive.", false);
-        checkNotNullOrZero(animation.getRoseModifierDenominator(), ROSE_MODIFIER_DENOMINATOR_MUST_NOT_BE_NULL_OR_EQUAL_TO_0);
-        checkNotNull(animation.getRoseModifierNumerator(),ROSE_MODIFIER_NUMERATOR_MUST_NOT_BE_NULL);
-        checkPositiveAndNotNull(animation.getNbPoints(), "nbPoints should be positive", false);
-        return super.getAnimation();
     }
 }

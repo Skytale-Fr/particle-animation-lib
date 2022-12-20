@@ -6,10 +6,10 @@ import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import org.bukkit.util.Vector;
 
-public class NodeBuilder extends ARotatingAnimationBuilder<Node, NodeTask> {
+public class NodeBuilder extends AAnimationBuilder<Node, NodeTask> {
 
     public static final String DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL = "directorVector u should not be null";
     public static final String DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL = "directorVector v should not be null";
@@ -27,7 +27,7 @@ public class NodeBuilder extends ARotatingAnimationBuilder<Node, NodeTask> {
 
     public NodeBuilder() {
         super();
-        animation.setRotation(new Vector(1, 0, 0),new Vector(0, 1, 0));
+        animation.setRotation(new Vector(1, 0, 0), new Vector(0, 1, 0));
         animation.setRadius(new Constant<>(3.0));
         animation.setNodeModifierNumerator(new Constant<>(3d));
         animation.setNodeModifierDenominator(new Constant<>(2));
@@ -39,6 +39,24 @@ public class NodeBuilder extends ARotatingAnimationBuilder<Node, NodeTask> {
     @Override
     protected Node initAnimation() {
         return new Node();
+    }
+
+    public void setPointDefinition(APointDefinition pointDefinition) {
+        checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
+        animation.setPointDefinition(pointDefinition);
+    }
+
+    public void setPointDefinition(ParticleTemplate particleTemplate) {
+        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
+    }
+
+    @Override
+    public Node getAnimation() {
+        checkPositiveAndNotNull(animation.getRadius(), "radius should be positive.", false);
+        checkNotNullOrZero(animation.getNodeModifierDenominator(), NODE_MODIFIER_MUST_NOT_BE_NULL_OR_EQUAL_TO_0);
+        checkNotNull(animation.getNodeModifierNumerator(), "NODE_MODIFIER_NUMERATOR_MUST_NOT_BE_NULL");
+        checkPositiveAndNotNull(animation.getNbPoints(), "nbPoints should be positive", false);
+        return super.getAnimation();
     }
 
     /********* Node specific setters ***********/
@@ -63,7 +81,7 @@ public class NodeBuilder extends ARotatingAnimationBuilder<Node, NodeTask> {
     public void setDirectorVectors(Vector u, Vector v) {
         checkNotNull(u, DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
         checkNotNull(v, DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
-        animation.setRotation(u,v);
+        animation.setRotation(u, v);
     }
 
     public void setDirectorVectorsFromOrientation(Orientation direction, double length) {
@@ -72,9 +90,8 @@ public class NodeBuilder extends ARotatingAnimationBuilder<Node, NodeTask> {
 
     public void setDirectorVectorsFromNormalVector(Vector normal) {
         RotatableVector.Plane2D plane = new RotatableVector(normal).getPlane();
-        setDirectorVectors(plane.u,plane.v);
+        setDirectorVectors(plane.u, plane.v);
     }
-
 
     public void setNbPoints(int nbPoints) {
         setNbPoints(new Constant<>(nbPoints));
@@ -85,37 +102,19 @@ public class NodeBuilder extends ARotatingAnimationBuilder<Node, NodeTask> {
         checkPositiveAndNotNull(nbPoints, "nbPoints should be positive", false);
     }
 
-    public void setPointDefinition(APointDefinition pointDefinition) {
-        checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
-        animation.setPointDefinition(pointDefinition);
-    }
-
-    public void setPointDefinition(ParticleTemplate particleTemplate) {
-        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
-    }
-
-    public void setNodeModifierNumerator(IVariable<Double> nodeModifierNumerator){
+    public void setNodeModifierNumerator(IVariable<Double> nodeModifierNumerator) {
         animation.setNodeModifierNumerator(nodeModifierNumerator);
     }
 
-    public void setNodeModifierNumerator(double nodeModifierNumerator){
+    public void setNodeModifierNumerator(double nodeModifierNumerator) {
         setNodeModifierNumerator(new Constant<>(nodeModifierNumerator));
     }
 
-    public void setNodeModifierDenominator(IVariable<Integer> nodeModifierDenominator){
+    public void setNodeModifierDenominator(IVariable<Integer> nodeModifierDenominator) {
         animation.setNodeModifierDenominator(nodeModifierDenominator);
     }
 
-    public void setNodeModifierDenominator(int nodeModifierDenominator){
+    public void setNodeModifierDenominator(int nodeModifierDenominator) {
         setNodeModifierDenominator(new Constant<>(nodeModifierDenominator));
-    }
-
-    @Override
-    public Node getAnimation() {
-        checkPositiveAndNotNull(animation.getRadius(), "radius should be positive.", false);
-        checkNotNullOrZero(animation.getNodeModifierDenominator(), NODE_MODIFIER_MUST_NOT_BE_NULL_OR_EQUAL_TO_0);
-        checkNotNull(animation.getNodeModifierNumerator(),"NODE_MODIFIER_NUMERATOR_MUST_NOT_BE_NULL");
-        checkPositiveAndNotNull(animation.getNbPoints(), "nbPoints should be positive", false);
-        return super.getAnimation();
     }
 }
