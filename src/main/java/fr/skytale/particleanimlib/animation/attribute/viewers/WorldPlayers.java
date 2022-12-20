@@ -1,7 +1,5 @@
 package fr.skytale.particleanimlib.animation.attribute.viewers;
 
-import fr.skytale.particleanimlib.animation.attribute.var.Constant;
-import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

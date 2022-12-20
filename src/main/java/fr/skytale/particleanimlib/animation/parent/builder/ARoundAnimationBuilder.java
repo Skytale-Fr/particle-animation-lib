@@ -16,19 +16,19 @@ public abstract class ARoundAnimationBuilder<T extends ARoundAnimation, K extend
         setRadius(new Constant<>(radius));
     }
 
-    public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint) {
-        checkAngleBetweenEachPoint(angleBetweenEachPoint);
-        animation.setAngleBetweenEachPoint(angleBetweenEachPoint);
+    public void setNbPoints(IVariable<Integer> nbPoints) {
+        checkPositiveAndNotNull(nbPoints, "nbPoints should be positive", false);
+        animation.setNbPoints(nbPoints);
     }
 
-    public void setAngleBetweenEachPoint(double angleBetweenEachPoint) {
-        setAngleBetweenEachPoint(new Constant<>(angleBetweenEachPoint));
+    public void setNbPoints(int nbPoints) {
+        setNbPoints(new Constant<>(nbPoints));
     }
 
     @Override
     public T getAnimation() {
         checkPositiveAndNotNull(animation.getRadius(), "radius should be positive.", false);
-        checkAngleBetweenEachPoint(animation.getAngleBetweenEachPoint());
+        checkPositiveAndNotNull(animation.getNbPoints(), "nbPoints should be positive", false);
         return super.getAnimation();
     }
 

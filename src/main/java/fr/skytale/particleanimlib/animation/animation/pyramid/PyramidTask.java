@@ -1,16 +1,14 @@
 package fr.skytale.particleanimlib.animation.animation.pyramid;
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
-import fr.skytale.particleanimlib.animation.attribute.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
+import fr.skytale.particleanimlib.animation.attribute.annotation.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import fr.skytale.particleanimlib.animation.parent.task.AnimationTaskUtils;
-import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PyramidTask extends AAnimationTask<Pyramid> {
 
@@ -35,7 +33,7 @@ public class PyramidTask extends AAnimationTask<Pyramid> {
     protected List<AnimationPointData> computeAnimationPoints() {
         List<Vector> fromCenterToBaseApexList = computeBaseApexList();
 
-        return drawLines(fromCenterToBaseApexList, fromCenterToApex);
+        return getLinesPoints(fromCenterToBaseApexList, fromCenterToApex);
     }
 
     private List<Vector> computeBaseApexList() {
@@ -60,25 +58,39 @@ public class PyramidTask extends AAnimationTask<Pyramid> {
         fromCenterToBaseApexList.add(radiusVector);
 
         for (int i = 1; i < nbBaseApex; i++) {
-            RotatableVector rotatableVector = new RotatableVector(radiusVector);
-            rotatableVector.rotateAroundAxis(normalVector, theta * i);
-            fromCenterToBaseApexList.add(rotatableVector);
+            fromCenterToBaseApexList.add(
+                    new RotatableVector(radiusVector)
+                            .rotateAroundAxis(normalVector, theta * i)
+            );
         }
 
         return fromCenterToBaseApexList;
     }
 
-    private List<AnimationPointData> drawLines(List<Vector> baseApexList, Vector apex) {
-        List<AnimationPointData> animationPoints = new ArrayList<>();
+    private List<AnimationPointData> getLinesPoints(List<Vector> baseApexList, Vector apex) {
 
         //Link base apexes together
-        animationPoints.addAll(getLinePoints(baseApexList.get(0), baseApexList.get(baseApexList.size() - 1), distanceBetweenParticles));
+        List<AnimationPointData> animationPoints = new ArrayList<>(AnimationTaskUtils.getLinePoints(
+                baseApexList.get(0),
+                baseApexList.get(baseApexList.size() - 1),
+                distanceBetweenParticles
+        ));
         for (int i = 0; i < baseApexList.size() - 1; i++) {
-            animationPoints.addAll(getLinePoints(baseApexList.get(i), baseApexList.get(i + 1), distanceBetweenParticles));
+            animationPoints.addAll(AnimationTaskUtils.getLinePoints(
+                            baseApexList.get(i),
+                            baseApexList.get(i + 1),
+                            distanceBetweenParticles
+            ));
         }
 
         //Link base apexes with the main apex.
-        baseApexList.forEach(baseApex -> animationPoints.addAll(getLinePoints(baseApex, apex, distanceBetweenParticles)));
+        baseApexList.forEach(baseApex ->
+                animationPoints.addAll(AnimationTaskUtils.getLinePoints(
+                        baseApex,
+                        apex,
+                        distanceBetweenParticles
+                ))
+        );
 
         return animationPoints;
     }

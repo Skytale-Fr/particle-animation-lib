@@ -1,9 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.nodes;
 
 import fr.skytale.particleanimlib.animation.attribute.Orientation;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
@@ -13,11 +11,13 @@ public class NodeBuilder extends AAnimationBuilder<Node, NodeTask> {
 
     public static final String DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL = "directorVector u should not be null";
     public static final String DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL = "directorVector v should not be null";
-    public static final String FULL_NODE_ANGLE_BETWEEN_EACH_POINT_ERROR_MESSAGE = "To do a fullNode, nbPoints and angleBetweenEachPoint should have related values.\n" +
+    public static final String FULL_NODE_ANGLE_BETWEEN_EACH_POINT_ERROR_MESSAGE =
+            "To do a fullNode, nbPoints and angleBetweenEachPoint should have related values.\n" +
             "In order to automatically compute nbPoints value, angleBetweenEachPoint have to be a constant.\n" +
             "Else you will have to compute the nbPoints evolving value yourself.\n" +
             "Reminder (for a full node) : nbPoints = (int) Math.round(2 * Math.PI / angleBetweenEachPoint)";
-    public static final String FULL_NODE_NB_POINTS_ERROR_MESSAGE = "To do a fullNode, nbPoints and angleBetweenEachPoint should have related values.\n" +
+    public static final String FULL_NODE_NB_POINTS_ERROR_MESSAGE =
+            "To do a fullNode, nbPoints and angleBetweenEachPoint should have related values.\n" +
             "In order to automatically compute angleBetweenEachPoint value, nbPoints have to be a constant.\n" +
             "Else you will have to compute the angleBetweenEachPoint evolving value yourself.\n" +
             "Reminder (for a full node) :\n" +
@@ -27,7 +27,6 @@ public class NodeBuilder extends AAnimationBuilder<Node, NodeTask> {
 
     public NodeBuilder() {
         super();
-        animation.setRotation(new Vector(1, 0, 0), new Vector(0, 1, 0));
         animation.setRadius(new Constant<>(3.0));
         animation.setNodeModifierNumerator(new Constant<>(3d));
         animation.setNodeModifierDenominator(new Constant<>(2));
@@ -39,15 +38,6 @@ public class NodeBuilder extends AAnimationBuilder<Node, NodeTask> {
     @Override
     protected Node initAnimation() {
         return new Node();
-    }
-
-    public void setPointDefinition(APointDefinition pointDefinition) {
-        checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
-        animation.setPointDefinition(pointDefinition);
-    }
-
-    public void setPointDefinition(ParticleTemplate particleTemplate) {
-        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
     }
 
     @Override
@@ -76,21 +66,6 @@ public class NodeBuilder extends AAnimationBuilder<Node, NodeTask> {
 
     public void setMaxRadius(double maxRadius) {
         setMaxRadius(new Constant<>(maxRadius));
-    }
-
-    public void setDirectorVectors(Vector u, Vector v) {
-        checkNotNull(u, DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
-        checkNotNull(v, DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
-        animation.setRotation(u, v);
-    }
-
-    public void setDirectorVectorsFromOrientation(Orientation direction, double length) {
-        setDirectorVectors(direction.getU(length), direction.getV(length));
-    }
-
-    public void setDirectorVectorsFromNormalVector(Vector normal) {
-        RotatableVector.Plane2D plane = new RotatableVector(normal).getPlane();
-        setDirectorVectors(plane.u, plane.v);
     }
 
     public void setNbPoints(int nbPoints) {

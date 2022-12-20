@@ -1,13 +1,10 @@
 package fr.skytale.particleanimlib.animation.animation.image.preset;
 
 import fr.skytale.particleanimlib.animation.animation.image.ImageBuilder;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-
-import java.awt.*;
 
 public class SkytaleImagePresetExecutor extends AAnimationPresetExecutor<ImageBuilder> {
 
@@ -17,12 +14,11 @@ public class SkytaleImagePresetExecutor extends AAnimationPresetExecutor<ImageBu
 
     @Override
     protected void apply(ImageBuilder imageBuilder, JavaPlugin plugin) {
-        imageBuilder.setRotation(new Constant<>(new Vector(0, 1, 0)), new Constant<>(Math.PI / 20));
-        imageBuilder.setDirectorVectors(new Vector(0, 0, 0.2), new Vector(0, 0.2, 0));
+        imageBuilder.setDirectorVectorsAndRotation(
+                new Vector(0, 0, 1), new Vector(0, -1, 0),
+                new Vector(0, 1, 0), Math.PI / 20f);
         imageBuilder.setImageFileName("skytale.png");
-
-        imageBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
-        imageBuilder.setTicksDuration(400);
+        imageBuilder.setTicksDuration(40);
         imageBuilder.setShowPeriod(new Constant<>(2));
     }
 }

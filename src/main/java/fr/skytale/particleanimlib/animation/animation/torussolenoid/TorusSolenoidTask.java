@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.torussolenoid;
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
-import fr.skytale.particleanimlib.animation.attribute.IVariableCurrentValue;
+import fr.skytale.particleanimlib.animation.attribute.annotation.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.util.Vector;
 

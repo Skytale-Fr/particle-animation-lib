@@ -1,7 +1,9 @@
 package fr.skytale.particleanimlib.testing;
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
-import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.attribute.position.animationposition.OnEntityAnimationPosition;
+import fr.skytale.particleanimlib.animation.attribute.position.animationposition.RelativeToEntityAnimationPosition;
+import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.testing.attribute.AnimationLibPlayerData;
 import fr.skytale.particleanimlib.testing.command.AnimationLibCommand;
@@ -22,7 +24,7 @@ import java.util.UUID;
 
 public class ParticleAnimLibTest {
 
-    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.TORUS_SOLENOID_ROTATING;
+    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.IMAGE_PIG_BOAT_BOW;
     public static TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
     public static boolean DEFAULT_SHOW_ON_CLICK = true;
 
@@ -72,10 +74,15 @@ public class ParticleAnimLibTest {
     }
 
     public void buildAndShowAnimation(Player player) {
-        buildAndShowAnimation(player, APosition.fromEntity(player, new Constant<>(player.getEyeLocation().toVector().subtract(player.getLocation().toVector()))));
+        buildAndShowAnimation(
+                player,
+                new RelativeToEntityAnimationPosition(
+                        player,
+                        new Constant<>(player.getEyeLocation().toVector().subtract(player.getLocation().toVector()))
+                ));
     }
 
-    public void buildAndShowAnimation(Player player, APosition position) {
+    public void buildAndShowAnimation(Player player, AAnimationPosition position) {
         AnimationLibPlayerData playerData = getPlayerData(player);
         if (!playerData.isShowAnimationOnClick()) return;
         AnimationSampleManager.getInstance().initBuilder(player, position, plugin, playerData.getAnimationType()).getAnimation().show();

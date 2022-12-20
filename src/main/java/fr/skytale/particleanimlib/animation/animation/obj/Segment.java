@@ -11,6 +11,7 @@ public class Segment {
     private Vector3D a;
     private Vector3D b;
     private List<Face> relatedFaces;
+
     public Segment(Vector3D a, Vector3D b, Face face) {
         this.a = a;
         this.b = b;
@@ -39,17 +40,17 @@ public class Segment {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(a, b) + Objects.hash(b, a);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Segment segment = (Segment) o;
         return (a.equals(segment.a) && b.equals(segment.b))
-                || (a.equals(segment.b) && b.equals(segment.a));
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(a, b) + Objects.hash(b, a);
+               || (a.equals(segment.b) && b.equals(segment.a));
     }
 
     public static class Face {

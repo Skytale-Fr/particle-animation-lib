@@ -1,9 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.text;
 
 import fr.skytale.particleanimlib.animation.attribute.Orientation;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
@@ -23,7 +21,6 @@ public class TextBuilder extends AAnimationBuilder<Text, TextTask> {
     public TextBuilder() {
         super();
         // Default values
-        animation.setRotation(new Vector(1, 0, 0), new Vector(0, 1, 0));
         animation.setFontFileName("Minecraft.ttf");
         animation.setShowPeriod(new Constant<>(1));
         animation.setTicksDuration(60);
@@ -35,15 +32,6 @@ public class TextBuilder extends AAnimationBuilder<Text, TextTask> {
     @Override
     protected Text initAnimation() {
         return new Text();
-    }
-
-    public void setPointDefinition(APointDefinition pointDefinition) {
-        checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
-        animation.setPointDefinition(pointDefinition);
-    }
-
-    public void setPointDefinition(ParticleTemplate particleTemplate) {
-        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
     }
 
     @Override
@@ -77,20 +65,5 @@ public class TextBuilder extends AAnimationBuilder<Text, TextTask> {
         checkNotNull(fontFileName, FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
         Validate.notEmpty(fontFileName, FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
         animation.setFontFileName(fontFileName);
-    }
-
-    public void setDirectorVectors(Vector u, Vector v) {
-        checkNotNull(u, DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
-        checkNotNull(v, DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
-        animation.setRotation(u, v);
-    }
-
-    public void setDirectorVectorsFromOrientation(Orientation direction, double length) {
-        setDirectorVectors(direction.getU(length), direction.getV(length));
-    }
-
-    public void setDirectorVectorsFromNormalVector(Vector normal) {
-        RotatableVector.Plane2D plane = new RotatableVector(normal).getPlane();
-        setDirectorVectors(plane.u, plane.v);
     }
 }

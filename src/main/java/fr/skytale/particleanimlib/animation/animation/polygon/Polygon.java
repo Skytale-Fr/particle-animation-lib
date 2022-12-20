@@ -2,9 +2,8 @@ package fr.skytale.particleanimlib.animation.animation.polygon;
 
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 
-public class Polygon extends AAnimation implements ISubAnimation {
+public class Polygon extends AAnimation {
     private IVariable<Integer> nbVertices;
     private IVariable<Double> distanceFromCenterToVertices;
     private IVariable<Double> distanceBetweenPoints;

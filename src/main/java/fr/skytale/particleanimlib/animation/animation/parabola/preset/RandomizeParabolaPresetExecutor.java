@@ -8,6 +8,8 @@ import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
+import xyz.xenondevs.particle.ParticleEffect;
+import xyz.xenondevs.particle.data.color.RegularColor;
 
 import java.awt.*;
 
@@ -25,11 +27,12 @@ public class RandomizeParabolaPresetExecutor extends AAnimationPresetExecutor<Pa
         parabolaBuilder.setRotation(
                 new CallbackWithPreviousValueVariable<>(
                         new Vector(1, 1, 1),
-                        (iterationCount, previousValue) -> previousValue.add(new Vector(Math.random() / 20, Math.random() / 20, Math.random() / 20)).normalize()
+                        (iterationCount, previousValue) -> previousValue.add(new Vector(
+                                Math.random() / 20, Math.random() / 20, Math.random() / 20)).normalize()
                 ),
                 Math.PI / 10
         );
-        parabolaBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 0, 0), null));
+        parabolaBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, new Color(255, 0, 0)));
         parabolaBuilder.setTicksDuration(100);
         parabolaBuilder.setShowPeriod(new Constant<>(3));
     }

@@ -1,9 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.torussolenoid;
 
 import fr.skytale.particleanimlib.animation.attribute.Orientation;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
@@ -18,7 +16,6 @@ public class TorusSolenoidBuilder extends AAnimationBuilder<TorusSolenoid, Torus
 
     public TorusSolenoidBuilder() {
         super();
-        animation.setRotation(new Vector(1, 0, 0), new Vector(0, 1, 0));
         animation.setSolenoidRadius(new Constant<>(3.0));
         animation.setTorusRadius(new Constant<>(3.0));
         animation.setTorusSolenoidModifierNumerator(new Constant<>(3d));
@@ -31,15 +28,6 @@ public class TorusSolenoidBuilder extends AAnimationBuilder<TorusSolenoid, Torus
     @Override
     protected TorusSolenoid initAnimation() {
         return new TorusSolenoid();
-    }
-
-    public void setPointDefinition(APointDefinition pointDefinition) {
-        checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
-        animation.setPointDefinition(pointDefinition);
-    }
-
-    public void setPointDefinition(ParticleTemplate particleTemplate) {
-        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
     }
 
     @Override
@@ -69,21 +57,6 @@ public class TorusSolenoidBuilder extends AAnimationBuilder<TorusSolenoid, Torus
 
     public void setSolenoidRadius(double solenoidRadius) {
         setSolenoidRadius(new Constant<>(solenoidRadius));
-    }
-
-    public void setDirectorVectors(Vector u, Vector v) {
-        checkNotNull(u, DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
-        checkNotNull(v, DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
-        animation.setRotation(u, v);
-    }
-
-    public void setDirectorVectorsFromOrientation(Orientation direction, double length) {
-        setDirectorVectors(direction.getU(length), direction.getV(length));
-    }
-
-    public void setDirectorVectorsFromNormalVector(Vector normal) {
-        RotatableVector.Plane2D plane = new RotatableVector(normal).getPlane();
-        setDirectorVectors(plane.u, plane.v);
     }
 
     public void setNbPoints(int nbPoints) {

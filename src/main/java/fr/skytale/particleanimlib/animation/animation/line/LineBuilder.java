@@ -1,36 +1,29 @@
 package fr.skytale.particleanimlib.animation.animation.line;
 
-import fr.skytale.particleanimlib.animation.attribute.Orientation;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.position.APosition;
-import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
+import fr.skytale.particleanimlib.animation.attribute.position.animationposition.LocatedAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
-import org.apache.commons.lang.Validate;
+import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
-public class LineBuilder extends ARotatingAnimationBuilder<Line, LineTask> {
+import java.util.Objects;
 
-    public static final String DIRECTION_VECTOR_SHOULD_NOT_BE_NULL = "direction vector should not be null";
-    public static final String ENDLOCATION_SHOULD_NOT_BE_NULL = "endLocation should not be null";
-    public static final String POSITION_SHOULD_BE_SET = "Animation position should be set";
-    public static final String NBPOINTS_SHOULD_NOT_BE_NULL_OR_LOWER_THAN_ZERO = "nbPoints should not be null or lower than zero";
-    public static final String LENGTH_SHOULD_NOT_BE_NULL_OR_LOWER_THAN_ZERO = "length should not be null or lower than zero";
+public class LineBuilder extends AAnimationBuilder<Line, LineTask> {
+
+    public static final String POINT1_SHOULD_NOT_BE_NULL = "point1 should not be null";
+    public static final String POINT2_SHOULD_NOT_BE_NULL = "point2 should not be null";
+    public static final String NB_POINTS_SHOULD_BE_POSITIVE = "nbPoints should be positive";
+    public static final String DIRECTION_SHOULD_NOT_BE_NULL = "direction should not be null";
+    public static final String LENGTH_SHOULD_BE_POSITIVE = "Length should be positive";
 
     public LineBuilder() {
         super();
         // Default values
-        setPoint1AtOrigin();
-        animation.setPoint2(new Constant<>(new Vector(10, 0, 0)));
-//        animation.setDirection(new Vector(1, 0, 0));
-        animation.setShowPeriod(new Constant<>(1));
-        animation.setNbPoints(new Constant<>(10));
-//        animation.setLength(new Constant<>(10.0d));
+        animation.setShowPeriod(new Constant<>(2));
+        setNbPoints(10);
+        setFromPositionToPoint2(new Vector(1, 0, 0), 3d);
         animation.setTicksDuration(60);
     }
 
@@ -39,83 +32,261 @@ public class LineBuilder extends ARotatingAnimationBuilder<Line, LineTask> {
         return new Line();
     }
 
+    @Override
+    public Line getAnimation() {
+        checkNotNull(animation.getFromPositionToPoint1(), POINT1_SHOULD_NOT_BE_NULL);
+        checkNotNull(animation.getFromPositionToPoint2(), POINT2_SHOULD_NOT_BE_NULL);
+        checkPositiveAndNotNull(animation.getNbPoints(), NB_POINTS_SHOULD_BE_POSITIVE, false);
+        return super.getAnimation();
+    }
+
     /********* Line specific setters ***********/
-    public void setPoint1(APosition position) {
-        IVariable<Vector> point1 = getVectorVariableFromAPosition(position);
-        animation.setPoint1(point1);
-    }
-    public void setPoint1(IVariable<Vector> point1) {
-        animation.setPoint1(point1);
-    }
-    public void setPoint1AtOrigin() {
-        IVariable<Vector> point1 = new Constant<>(new Vector(0, 0, 0));
-        animation.setPoint1(point1);
-    }
-    public void setPoint2(APosition position) {
-        IVariable<Vector> point2 = getVectorVariableFromAPosition(position);
-        animation.setPoint2(point2);
-    }
-    public void setPoint2(IVariable<Vector> point2) {
-        animation.setPoint2(point2);
-    }
-    public void setPoint2AtOrigin() {
-        IVariable<Vector> point2 = new Constant<>(new Vector(0, 0, 0));
-        animation.setPoint2(point2);
+
+
+    //******** Set points with 2 locations and set position on line center
+    public void setAbsolutePointsAndCenterAnimPositionOnLineCenter(Location point1, Location point2) {
+        setAbsolutePointsAndCenterAnimPositionOnLineCenter(new Constant<>(point1), new Constant<>(point2));
     }
 
-    private IVariable<Vector> getVectorVariableFromAPosition(APosition position) {
-        APosition.Type type = position.getType();
-        IVariable<Vector> variable = null;
-        switch (type) {
-            case ENTITY: {
-                Entity entity = position.getMovingEntity();
-                variable = new CallbackVariable<>(iterationCount -> {
-                    return entity.getLocation().toVector();
-                });
-                break;
-            }
-            case LOCATION: {
-                variable = new CallbackVariable<>(iterationCount -> {
-                    Location location = position.getLocation().getCurrentValue(iterationCount);
-                    return location.toVector();
-                });
-                break;
-            }
-            case TRAIL: {
-                variable = position.getRelativeLocation();
-                break;
-            }
-            default: {
-                throw new IllegalArgumentException(String.format("Position type '%s' is not handle yet.", type.name()));
-            }
-        }
-        return variable;
+    public void setAbsolutePointsAndCenterAnimPositionOnLineCenter(Location point1, IVariable<Location> point2) {
+        setAbsolutePointsAndCenterAnimPositionOnLineCenter(new Constant<>(point1), point2);
     }
 
-    public void setDirection(IVariable<Vector> direction) {
-        checkNotNull(direction, DIRECTION_VECTOR_SHOULD_NOT_BE_NULL);
-        AnimationDirection animationDirection = AnimationDirection.fromMoveVector(direction);
-        animation.setDirection(animationDirection);
+    public void setAbsolutePointsAndCenterAnimPositionOnLineCenter(IVariable<Location> point1, Location point2) {
+        setAbsolutePointsAndCenterAnimPositionOnLineCenter(point1, new Constant<>(point2));
     }
 
-    public void setDirection(Vector direction) {
-        setDirection(new Constant<>(direction));
+    public void setAbsolutePointsAndCenterAnimPositionOnLineCenter(IVariable<Location> point1, IVariable<Location> point2) {
+        checkNotNull(point1, POINT1_SHOULD_NOT_BE_NULL);
+        checkNotNull(point2, POINT2_SHOULD_NOT_BE_NULL);
+
+        final LocatedAnimationPosition position = new LocatedAnimationPosition(new CallbackVariable<>(iterationCount -> {
+            Location point1Loc = point1.getCurrentValue(iterationCount);
+            Location point2Loc = point2.getCurrentValue(iterationCount);
+            return point1Loc.toVector().midpoint(point2Loc.toVector()).toLocation(Objects.requireNonNull(point1Loc.getWorld()));
+        }));
+
+        animation.setPosition(position);
+
+        animation.setFromPositionToPoint1(new CallbackVariable<>(iterationCount ->
+                point1.getCurrentValue(iterationCount).toVector()
+                        .subtract(
+                                position.getCurrentValue(iterationCount).getAfterMoveLocation().toVector()
+                        )
+        ));
+
+        animation.setFromPositionToPoint1(new CallbackVariable<>(iterationCount ->
+                point2.getCurrentValue(iterationCount).toVector()
+                        .subtract(
+                                position.getCurrentValue(iterationCount).getAfterMoveLocation().toVector()
+                        )
+        ));
     }
 
-    public void setDirectionFromOrientation(Orientation orientation, double length) {
-        Validate.isTrue(length > 0, LENGTH_SHOULD_NOT_BE_NULL_OR_LOWER_THAN_ZERO);
-        Vector direction = orientation.getDirection(length);
-        setDirection(direction);
+    //******** Set points with 2 locations and set position on point1
+    public void setAbsolutePointsAndCenterAnimPositionOnPoint1(Location point1, Location point2) {
+        setAbsolutePointsAndCenterAnimPositionOnPoint1(new Constant<>(point1), new Constant<>(point2));
     }
 
-    public void setPointDefinition(APointDefinition pointDefinition) {
-        checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
-        animation.setPointDefinition(pointDefinition);
+    public void setAbsolutePointsAndCenterAnimPositionOnPoint1(Location point1, IVariable<Location> point2) {
+        setAbsolutePointsAndCenterAnimPositionOnPoint1(new Constant<>(point1), point2);
     }
 
-    public void setPointDefinition(ParticleTemplate particleTemplate) {
-        setPointDefinition(APointDefinition.fromParticleTemplate(particleTemplate));
+    public void setAbsolutePointsAndCenterAnimPositionOnPoint1(IVariable<Location> point1, Location point2) {
+        setAbsolutePointsAndCenterAnimPositionOnPoint1(point1, new Constant<>(point2));
     }
+
+    public void setAbsolutePointsAndCenterAnimPositionOnPoint1(IVariable<Location> point1, IVariable<Location> point2) {
+        checkNotNull(point1, POINT1_SHOULD_NOT_BE_NULL);
+        checkNotNull(point2, POINT2_SHOULD_NOT_BE_NULL);
+
+        final LocatedAnimationPosition position = new LocatedAnimationPosition(point1);
+        animation.setPosition(position);
+
+        animation.setFromPositionToPoint1(new CallbackVariable<>(iterationCount ->
+                point1.getCurrentValue(iterationCount).toVector()
+                        .subtract(
+                                position.getCurrentValue(iterationCount).getAfterMoveLocation().toVector()
+                        )
+        ));
+
+        animation.setFromPositionToPoint1(new CallbackVariable<>(iterationCount ->
+                point2.getCurrentValue(iterationCount).toVector()
+                        .subtract(
+                                position.getCurrentValue(iterationCount).getAfterMoveLocation().toVector()
+                        )
+        ));
+    }
+
+    //******** Set points with a location and a vector and set position on line center
+    public void setAbsolutePointAndDirectionAndCenterAnimPositionOnLineCenter(Location point1, IVariable<Vector> direction, IVariable<Double> length) {
+        setAbsolutePointAndDirectionAndCenterAnimPositionOnLineCenter(new Constant<>(point1), direction, length);
+    }
+
+    public void setAbsolutePointAndDirectionAndCenterAnimPositionOnLineCenter(IVariable<Location> point1, Vector direction, IVariable<Double> length) {
+        setAbsolutePointAndDirectionAndCenterAnimPositionOnLineCenter(point1, new Constant<>(direction), length);
+    }
+
+    public void setAbsolutePointAndDirectionAndCenterAnimPositionOnLineCenter(IVariable<Location> point1, IVariable<Vector> direction, Double length) {
+        setAbsolutePointAndDirectionAndCenterAnimPositionOnLineCenter(point1, direction, new Constant<>(length));
+    }
+
+    public void setAbsolutePointAndDirectionAndCenterAnimPositionOnLineCenter(IVariable<Location> point1, Vector direction, Double length) {
+        setAbsolutePointAndDirectionAndCenterAnimPositionOnLineCenter(point1, new Constant<>(direction), new Constant<>(length));
+    }
+
+    public void setAbsolutePointAndDirectionAndCenterAnimPositionOnLineCenter(Location point1, IVariable<Vector> direction, Double length) {
+        setAbsolutePointAndDirectionAndCenterAnimPositionOnLineCenter(new Constant<>(point1), direction, new Constant<>(length));
+    }
+
+    public void setAbsolutePointAndDirectionAndCenterAnimPositionOnLineCenter(Location point1, Vector direction, IVariable<Double> length) {
+        setAbsolutePointAndDirectionAndCenterAnimPositionOnLineCenter(new Constant<>(point1), new Constant<>(direction), length);
+    }
+
+    public void setAbsolutePointAndDirectionAndCenterAnimPositionOnLineCenter(IVariable<Location> point1, IVariable<Vector> direction, IVariable<Double> length) {
+        checkNotNull(point1, POINT1_SHOULD_NOT_BE_NULL);
+        checkNotNull(direction, DIRECTION_SHOULD_NOT_BE_NULL);
+        checkNotNull(length, LENGTH_SHOULD_BE_POSITIVE);
+
+        IVariable<Location> point2 = new CallbackVariable<>(iterationCount ->
+                point1.getCurrentValue(iterationCount).clone()
+                        .add(
+                                direction.getCurrentValue(iterationCount)
+                                        .clone()
+                                        .normalize()
+                                        .multiply(
+                                                length.getCurrentValue(iterationCount)
+                                        ))
+        );
+
+        setAbsolutePointsAndCenterAnimPositionOnLineCenter(point1, point2);
+    }
+
+    //******** Set points with a location and a vector and set position on point1
+    public void setAbsolutePointAndDirectionAndCenterAnimPositionOnPoint1(Location point1, IVariable<Vector> direction, IVariable<Double> length) {
+        setAbsolutePointAndDirectionAndCenterAnimPositionOnPoint1(new Constant<>(point1), direction, length);
+    }
+
+    public void setAbsolutePointAndDirectionAndCenterAnimPositionOnPoint1(IVariable<Location> point1, Vector direction, IVariable<Double> length) {
+        setAbsolutePointAndDirectionAndCenterAnimPositionOnPoint1(point1, new Constant<>(direction), length);
+    }
+
+    public void setAbsolutePointAndDirectionAndCenterAnimPositionOnPoint1(IVariable<Location> point1, IVariable<Vector> direction, Double length) {
+        setAbsolutePointAndDirectionAndCenterAnimPositionOnPoint1(point1, direction, new Constant<>(length));
+    }
+
+    public void setAbsolutePointAndDirectionAndCenterAnimPositionOnPoint1(IVariable<Location> point1, Vector direction, Double length) {
+        setAbsolutePointAndDirectionAndCenterAnimPositionOnPoint1(point1, new Constant<>(direction), new Constant<>(length));
+    }
+
+    public void setAbsolutePointAndDirectionAndCenterAnimPositionOnPoint1(Location point1, IVariable<Vector> direction, Double length) {
+        setAbsolutePointAndDirectionAndCenterAnimPositionOnPoint1(new Constant<>(point1), direction, new Constant<>(length));
+    }
+
+    public void setAbsolutePointAndDirectionAndCenterAnimPositionOnPoint1(Location point1, Vector direction, IVariable<Double> length) {
+        setAbsolutePointAndDirectionAndCenterAnimPositionOnPoint1(new Constant<>(point1), new Constant<>(direction), length);
+    }
+
+    public void setAbsolutePointAndDirectionAndCenterAnimPositionOnPoint1(IVariable<Location> point1, IVariable<Vector> direction, IVariable<Double> length) {
+        checkNotNull(point1, POINT1_SHOULD_NOT_BE_NULL);
+        checkNotNull(direction, DIRECTION_SHOULD_NOT_BE_NULL);
+        checkNotNull(length, LENGTH_SHOULD_BE_POSITIVE);
+
+        IVariable<Location> point2 = new CallbackVariable<>(iterationCount ->
+                point1.getCurrentValue(iterationCount).clone()
+                        .add(
+                                direction.getCurrentValue(iterationCount)
+                                        .clone()
+                                        .normalize()
+                                        .multiply(
+                                                length.getCurrentValue(iterationCount)
+                                        ))
+        );
+
+        setAbsolutePointsAndCenterAnimPositionOnPoint1(point1, point2);
+
+    }
+
+    //******** Set point 1
+    public void setFromPositionToPoint1(Vector fromPositionToPoint1) {
+        setFromPositionToPoint1(new Constant<>(fromPositionToPoint1));
+    }
+
+    public void setFromPositionToPoint1(IVariable<Vector> fromPositionToPoint1) {
+        animation.setFromPositionToPoint1(fromPositionToPoint1);
+    }
+
+    //******** Set point 1 on Position
+    public void setPoint1OnPosition() {
+        setFromPositionToPoint1(new Vector(0, 0, 0));
+    }
+
+    //******** Set point 1 by direction and length
+
+    public void setFromPositionToPoint1(Vector direction, Double length) {
+        setFromPositionToPoint1(direction, new Constant<>(length));
+    }
+
+    public void setFromPositionToPoint1(Vector direction, IVariable<Double> length) {
+        setFromPositionToPoint1(new Constant<>(direction), length);
+    }
+
+    public void setFromPositionToPoint1(IVariable<Vector> direction, Double length) {
+        setFromPositionToPoint1(direction, new Constant<>(length));
+    }
+
+    public void setFromPositionToPoint1(IVariable<Vector> direction, IVariable<Double> length) {
+        setFromPositionToPoint1(new CallbackVariable<>(iterationCount ->
+                direction.getCurrentValue(iterationCount)
+                        .clone()
+                        .normalize()
+                        .multiply(
+                                length.getCurrentValue(iterationCount)
+                        )
+        ));
+    }
+
+    //******** Set point 2
+    public void setFromPositionToPoint2(Vector fromPositionToPoint2) {
+        setFromPositionToPoint2(new Constant<>(fromPositionToPoint2));
+    }
+
+    public void setFromPositionToPoint2(IVariable<Vector> fromPositionToPoint2) {
+        animation.setFromPositionToPoint2(fromPositionToPoint2);
+    }
+
+    //******** Set point 1 on Position
+    public void setPoint2OnPosition() {
+        setFromPositionToPoint2(new Vector(0, 0, 0));
+    }
+
+    //******** Set point 2 by direction and length
+
+    public void setFromPositionToPoint2(Vector direction, Double length) {
+        setFromPositionToPoint2(direction, new Constant<>(length));
+    }
+
+    public void setFromPositionToPoint2(Vector direction, IVariable<Double> length) {
+        setFromPositionToPoint2(new Constant<>(direction), length);
+    }
+
+    public void setFromPositionToPoint2(IVariable<Vector> direction, Double length) {
+        setFromPositionToPoint2(direction, new Constant<>(length));
+    }
+
+    public void setFromPositionToPoint2(IVariable<Vector> direction, IVariable<Double> length) {
+        setFromPositionToPoint2(new CallbackVariable<>(iterationCount ->
+                direction.getCurrentValue(iterationCount)
+                        .clone()
+                        .normalize()
+                        .multiply(
+                                length.getCurrentValue(iterationCount)
+                        )
+        ));
+    }
+
+    //******** Set nb points
+
 
     public void setNbPoints(IVariable<Integer> nbPoints) {
         animation.setNbPoints(nbPoints);
@@ -123,21 +294,5 @@ public class LineBuilder extends ARotatingAnimationBuilder<Line, LineTask> {
 
     public void setNbPoints(int nbPoints) {
         animation.setNbPoints(new Constant<>(nbPoints));
-    }
-
-    public void setLength(IVariable<Double> length) {
-        animation.setLength(length);
-    }
-
-    public void setLength(double length) {
-        animation.setLength(new Constant<>(length));
-    }
-
-    @Override
-    public Line getAnimation() {
-        checkNotNull(animation.getDirection(), DIRECTION_VECTOR_SHOULD_NOT_BE_NULL);
-        checkPositiveAndNotNull(animation.getNbPoints(), NBPOINTS_SHOULD_NOT_BE_NULL_OR_LOWER_THAN_ZERO, false);
-        checkPositiveAndNotNull(animation.getLength(), LENGTH_SHOULD_NOT_BE_NULL_OR_LOWER_THAN_ZERO, true);
-        return super.getAnimation();
     }
 }

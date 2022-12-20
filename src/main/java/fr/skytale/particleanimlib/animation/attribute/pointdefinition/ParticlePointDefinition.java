@@ -7,12 +7,15 @@ import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public class ParticlePointDefinition extends APointDefinition {
+public class ParticlePointDefinition implements APointDefinition {
 
-    private ParticleTemplate particleTemplate;
+    private final ParticleTemplate particleTemplate;
+
+    public ParticlePointDefinition(ParticlePointDefinition particlePointDefinition) {
+        this.particleTemplate = new ParticleTemplate(particlePointDefinition.getParticleTemplate());
+    }
 
     public ParticlePointDefinition(ParticleTemplate particleTemplate) {
-        super(ShowMethodParameters.LOCATION, false);
         this.particleTemplate = particleTemplate;
     }
 
@@ -21,20 +24,13 @@ public class ParticlePointDefinition extends APointDefinition {
     }
 
     @Override
-    public void show(AAnimation animation, Location loc, AAnimationTask<?> parentTask) {
-        particleTemplate.getParticleBuilder(loc).display(animation.getViewers().getPlayers(loc));
+    public void show(Location pointLocation, AAnimation animation, AAnimationTask<?> task, Vector fromAnimCenterToPoint, Vector fromPreviousToCurrentAnimBaseLocation) {
+        particleTemplate.getParticleBuilder(pointLocation).display(animation.getViewers().getPlayers(pointLocation));
     }
 
     @Override
-    public void show(AAnimation animation, Location loc, Vector fromCenterToPoint, AAnimationTask<?> parentTask) {
-        show(animation, loc, parentTask);
-    }
-
-    @Override
-    public ParticlePointDefinition clone() {
-        ParticlePointDefinition obj = (ParticlePointDefinition) super.clone();
-        obj.particleTemplate = new ParticleTemplate(particleTemplate);
-        return obj;
+    public ParticlePointDefinition copy() {
+        return new ParticlePointDefinition(this);
     }
 
 }

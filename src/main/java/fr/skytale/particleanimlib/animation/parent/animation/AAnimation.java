@@ -3,15 +3,13 @@ package fr.skytale.particleanimlib.animation.parent.animation;
 import fr.skytale.particleanimlib.animation.attribute.AnimationEndedCallback;
 import fr.skytale.particleanimlib.animation.attribute.AnimationStopCondition;
 import fr.skytale.particleanimlib.animation.attribute.PARotation;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.attribute.position.parent.IPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import fr.skytale.particleanimlib.animation.collision.CollisionHandler;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
-import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
@@ -20,7 +18,7 @@ import java.util.Set;
 
 public abstract class AAnimation implements Cloneable {
 
-    protected APosition position;
+    protected IPosition position;
     protected APointDefinition pointDefinition;
     protected JavaPlugin plugin;
     protected int ticksDuration;
@@ -31,28 +29,15 @@ public abstract class AAnimation implements Cloneable {
     protected Set<CollisionHandler<?, AAnimationTask<?>>> collisionHandlers = new HashSet<>();
     protected IVariable<PARotation> rotation;
 
-    protected static Set<Vector> getLinePoints(Vector point1, Vector point2, double step) {
-        double distance = point1.distance(point2);
-        Vector stepVector = point2.clone().subtract(point1).normalize().multiply(step);
-        double stepDistance = stepVector.length();
-        HashSet<Vector> points = new HashSet<>();
-        Vector point = point1.clone();
-        for (double length = 0; length < distance; length += stepDistance) {
-            points.add(point);
-            point = point.clone().add(stepVector);
-        }
-        return points;
-    }
-
     public abstract AAnimationTask<? extends AAnimation> show();
 
     /***********GETTERS & SETTERS***********/
 
-    public APosition getPosition() {
+    public IPosition getPosition() {
         return position;
     }
 
-    public void setPosition(APosition position) {
+    public void setPosition(IPosition position) {
         this.position = position;
     }
 
@@ -96,6 +81,15 @@ public abstract class AAnimation implements Cloneable {
         animationEndedCallbacks.add(callback);
     }
 
+    public void clearAnimationEndedCallbacks() {
+        this.animationEndedCallbacks.clear();
+    }
+
+    public void setAnimationEndedCallback(AnimationEndedCallback callback) {
+        clearAnimationEndedCallbacks();
+        addAnimationEndedCallback(callback);
+    }
+
     public JavaPlugin getPlugin() {
         return plugin;
     }
@@ -104,15 +98,26 @@ public abstract class AAnimation implements Cloneable {
         this.plugin = plugin;
     }
 
-    public void setStopCondition(AnimationStopCondition stopCondition) { this.setStopCondition(stopCondition, false); }
+    public void setStopCondition(AnimationStopCondition stopCondition) {
+        this.setStopCondition(stopCondition, false);
+    }
+
     public void setStopCondition(AnimationStopCondition stopCondition, boolean infiniteTickDuration) {
         this.stopCondition = stopCondition;
-        if(infiniteTickDuration) this.setTicksDuration(Integer.MAX_VALUE);
+        if (infiniteTickDuration) this.setTicksDuration(Integer.MAX_VALUE);
     }
-    public AnimationStopCondition getStopCondition() { return this.stopCondition; }
 
-    public void addCollisionHandler(CollisionHandler<?, AAnimationTask<?>> collisionHandler) { this.collisionHandlers.add(collisionHandler); }
-    public Set<CollisionHandler<?, AAnimationTask<?>>> getCollisionHandlers() { return collisionHandlers; }
+    public AnimationStopCondition getStopCondition() {
+        return this.stopCondition;
+    }
+
+    public void addCollisionHandler(CollisionHandler<?, AAnimationTask<?>> collisionHandler) {
+        this.collisionHandlers.add(collisionHandler);
+    }
+
+    public Set<CollisionHandler<?, AAnimationTask<?>>> getCollisionHandlers() {
+        return collisionHandlers;
+    }
 
     public IVariable<PARotation> getRotation() {
         return rotation;
@@ -120,10 +125,6 @@ public abstract class AAnimation implements Cloneable {
 
     public void setRotation(IVariable<PARotation> rotation) {
         this.rotation = rotation;
-    }
-
-    public void setRotation(Vector u, Vector v) {
-         setRotation(new Constant<>(new PARotation(u,v)));
     }
 
     @Override
@@ -135,13 +136,16 @@ public abstract class AAnimation implements Cloneable {
             e.printStackTrace();
         }
         assert obj != null;
-        obj.position = this.position.clone();
+        obj.position = this.position.copy();
+        obj.pointDefinition = this.pointDefinition.copy();
+        obj.plugin = this.plugin;
+        obj.ticksDuration = this.ticksDuration;
+        obj.showPeriod = this.showPeriod.copy();
+        obj.animationEndedCallbacks = new HashSet<>(animationEndedCallbacks);
         obj.viewers = this.viewers.clone();
-        obj.pointDefinition = pointDefinition.clone();
         obj.stopCondition = this.stopCondition;
         obj.collisionHandlers = new HashSet<>(collisionHandlers);
         obj.rotation = this.rotation.copy();
         return obj;
     }
-
 }

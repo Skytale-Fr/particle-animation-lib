@@ -3,9 +3,8 @@ package fr.skytale.particleanimlib.animation.animation.rose;
 
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 
-public class Rose extends AAnimation implements ISubAnimation {
+public class Rose extends AAnimation {
     private IVariable<Integer> nbPoints;
     private IVariable<Double> roseModifierNumerator;
     private IVariable<Integer> roseModifierDenominator;

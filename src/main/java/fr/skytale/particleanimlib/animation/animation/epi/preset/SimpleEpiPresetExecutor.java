@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.epi.preset;
 
 import fr.skytale.particleanimlib.animation.animation.epi.EpiBuilder;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
@@ -9,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -48,7 +46,6 @@ public class SimpleEpiPresetExecutor extends AAnimationPresetExecutor<EpiBuilder
             return epiModifiersDenominator;
         }));
 
-        epiBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         epiBuilder.setShowPeriod(new Constant<>(1));
     }
 }

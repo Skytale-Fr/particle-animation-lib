@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.cuboid;
 
 
-import fr.skytale.particleanimlib.animation.attribute.position.LocationPosition;
+import fr.skytale.particleanimlib.animation.attribute.position.animationposition.LocatedAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
@@ -20,6 +20,14 @@ public class CuboidBuilder extends AAnimationBuilder<Cuboid, CuboidTask> {
     @Override
     protected Cuboid initAnimation() {
         return new Cuboid();
+    }
+
+    @Override
+    public Cuboid getAnimation() {
+        checkNotNull(animation.getFromLocationToFirstCorner(), "fromLocationToFirstCorner must not be null.");
+        checkNotNull(animation.getFromLocationToSecondCorner(), "fromLocationToSecondCorner must not be null.");
+        checkNotNull(animation.getDistanceBetweenPoints(), "distanceBetweenPoints must not be null");
+        return super.getAnimation();
     }
 
     /********* Cuboid specific setters ***********/
@@ -52,21 +60,12 @@ public class CuboidBuilder extends AAnimationBuilder<Cuboid, CuboidTask> {
         setDistanceBetweenPoints(new Constant<>(distanceBetweenPoints));
     }
 
-
     public void setCornersAndComputeCenter(Location firstCorner, Location secondCorner) {
         Vector fromFirstToSecond = secondCorner.toVector().subtract(firstCorner.toVector());
         Vector fromCenterToSecond = fromFirstToSecond.clone().multiply(0.5);
         Location center = firstCorner.clone().add(fromCenterToSecond);
-        animation.setPosition(new LocationPosition(new Constant<>(center)));
+        animation.setPosition(new LocatedAnimationPosition(new Constant<>(center)));
         animation.setFromLocationToFirstCorner(new Constant<>(fromCenterToSecond.clone().multiply(-1)));
         animation.setFromLocationToSecondCorner(new Constant<>(fromCenterToSecond.clone()));
-    }
-
-    @Override
-    public Cuboid getAnimation() {
-        checkNotNull(animation.getFromLocationToFirstCorner(), "fromLocationToFirstCorner must not be null.");
-        checkNotNull(animation.getFromLocationToSecondCorner(), "fromLocationToSecondCorner must not be null.");
-        checkNotNull(animation.getDistanceBetweenPoints(), "distanceBetweenPoints must not be null");
-        return super.getAnimation();
     }
 }

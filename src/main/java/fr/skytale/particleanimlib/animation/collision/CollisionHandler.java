@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.animation.collision;
 
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -16,9 +15,10 @@ import java.util.function.Function;
  * to perform collisions (checks, callbacks) with a lot of customization.<br />
  * If you want to create a CollisionHandler, you may want to use
  * the CollisionBuilder.
- * @see CollisionBuilder
+ *
  * @param <T> The type of target you want to perform collisions on
  * @param <K> The type of animation task you want to plug this collision handler to
+ * @see CollisionBuilder
  */
 public class CollisionHandler<T, K extends AAnimationTask> {
 
@@ -50,6 +50,7 @@ public class CollisionHandler<T, K extends AAnimationTask> {
     private Set<BiPredicate<T, K>> filters;
     /**
      * All the registered processors stored by their CollisionTestType to ensure optimisation access.
+     *
      * @see CollisionProcessor
      */
     private Map<CollisionTestType, Collection<CollisionProcessor<T, K>>> collisionProcessorsByType;
@@ -80,9 +81,9 @@ public class CollisionHandler<T, K extends AAnimationTask> {
         this.collector = collector;
         this.collectorPeriod = collectorPeriod;
         this.filters = filters;
-        if(this.filters == null) this.filters = new HashSet<>();
+        if (this.filters == null) this.filters = new HashSet<>();
         this.collisionProcessorsByType = collisionProcessorsByType;
-        if(this.collisionProcessorsByType == null) this.collisionProcessorsByType = new HashMap<>();
+        if (this.collisionProcessorsByType == null) this.collisionProcessorsByType = new HashMap<>();
     }
 
     /**
@@ -91,8 +92,9 @@ public class CollisionHandler<T, K extends AAnimationTask> {
      * <b>/!\ Careful /!\</b><br />
      * This method calls an inner class method to provide access to Bukkit API calls
      * by calling it synchronously.
+     *
      * @param iterationCount The iteration count of the current animation task
-     * @param animationTask The animation task calling the method
+     * @param animationTask  The animation task calling the method
      */
     public void collect(int iterationCount, K animationTask) {
         Bukkit.getScheduler().runTask(javaPlugin, () -> innerCollect(iterationCount, animationTask));
@@ -100,14 +102,15 @@ public class CollisionHandler<T, K extends AAnimationTask> {
 
     /**
      * Calls the collector and store the collected targets.
+     *
      * @param iterationCount The iteration count of the current animation task
-     * @param animationTask The animation task calling the method
+     * @param animationTask  The animation task calling the method
      */
     private void innerCollect(int iterationCount, K animationTask) {
         int collectorPeriodValue = this.collectorPeriod.getCurrentValue(iterationCount);
-        if(collectorPeriodValue <= 0)
+        if (collectorPeriodValue <= 0)
             throw new IllegalStateException(String.format("Your are not able to provide a collector period that is lower or equals to 0 (got '%d')", collectorPeriodValue));
-        if(iterationCount == 0 || iterationCount % collectorPeriodValue == 0) {
+        if (iterationCount == 0 || iterationCount % collectorPeriodValue == 0) {
             this.targetsCollected = this.collector.apply(animationTask);
             noCollisionTicksMap.values().removeIf(noCollisionTicks -> noCollisionTicks <= 0);
 
@@ -123,10 +126,11 @@ public class CollisionHandler<T, K extends AAnimationTask> {
 
     /**
      * Apply registered filters to the collected targets.
+     *
      * @param animationTask The animation task calling the method
      */
     private void applyFilters(K animationTask) {
-        if(this.targetsCollected == null) return;
+        if (this.targetsCollected == null) return;
         this.filters.forEach(filter -> {
             this.targetsCollected.removeIf(t -> !filter.test(t, animationTask));
         });
@@ -138,16 +142,16 @@ public class CollisionHandler<T, K extends AAnimationTask> {
      * <b>/!\ Careful /!\</b><br />
      * This method calls an inner class method to provide access to Bukkit API calls
      * by calling it synchronously.
-     * @param iterationCount The iteration count of the current animation task
+     *
+     * @param iterationCount    The iteration count of the current animation task
      * @param collisionTestType The type of the collision called (see location param)
-     * @param location The location of the process (PER_PARTICLE: the location of the particle, MAIN_POSITION: the location of the animation)
-     * @param animationTask The animation task calling the method
+     * @param location          The location of the process (PER_PARTICLE: the location of the particle, MAIN_POSITION: the location of the animation)
+     * @param animationTask     The animation task calling the method
      */
     public void processCollision(int iterationCount, CollisionTestType collisionTestType, Location location, K animationTask) {
         // Update runner and fetch its iteration count
         int runnerIterationCount = 0;
-        if(runner == null || runner.hasDurationEnded())
-        {
+        if (runner == null || (!runner.isRunning())) {
             clearTimestamps();
             runner = null;
             if (animationTask.getIterationCount() == 0) {
@@ -160,8 +164,7 @@ public class CollisionHandler<T, K extends AAnimationTask> {
         // Compute recursive showPeriod
         int showPeriod = 1;
         AAnimationTask<?> currentAnimationTask = animationTask;
-        while (currentAnimationTask != null)
-        {
+        while (currentAnimationTask != null) {
             if (currentAnimationTask.getTickDuration() > 1)
                 showPeriod *= currentAnimationTask.getCurrentShowPeriod();
             currentAnimationTask = currentAnimationTask.getParentTask();
@@ -174,19 +177,19 @@ public class CollisionHandler<T, K extends AAnimationTask> {
     /**
      * Process collisions checks on previously collected targets (for every registered collision processors).
      *
-     * @param iterationCount The iteration count of the current animation task
-     * @param showPeriod The recursive show period of the current animation task (multiplied by the show period of every parent)
+     * @param iterationCount    The iteration count of the current animation task
+     * @param showPeriod        The recursive show period of the current animation task (multiplied by the show period of every parent)
      * @param collisionTestType The type of the collision called (see location param)
-     * @param location The location of the process (PER_PARTICLE: the location of the particle, MAIN_POSITION: the location of the animation)
-     * @param animationTask The animation task calling the method
+     * @param location          The location of the process (PER_PARTICLE: the location of the particle, MAIN_POSITION: the location of the animation)
+     * @param animationTask     The animation task calling the method
      */
     private void innerProcessCollision(int iterationCount, int showPeriod, CollisionTestType collisionTestType, Location location, K animationTask) {
         int collisionPeriodValue = this.collisionPeriod.getCurrentValue(iterationCount);
-        if(collisionPeriodValue <= 0)
+        if (collisionPeriodValue <= 0)
             throw new IllegalStateException(String.format("Your are not able to provide a collision period that is lower or equals to 0 (got '%d')", collisionPeriodValue));
-        if(iterationCount == 0 || iterationCount % collisionPeriodValue == 0) {
+        if (iterationCount == 0 || iterationCount % collisionPeriodValue == 0) {
             Collection<CollisionProcessor<T, K>> collisionProcessors = collisionProcessorsByType.get(collisionTestType);
-            if(collisionProcessors == null) return;
+            if (collisionProcessors == null) return;
             collisionProcessors.forEach(collisionProcessor -> {
                 CollisionPredicate<T, K> collisionTest = collisionProcessor.getCollisionTest();
                 CollisionActionCallback<T, K> actionCallback = collisionProcessor.getActionCallback();
@@ -203,14 +206,14 @@ public class CollisionHandler<T, K extends AAnimationTask> {
                     if (animationTask == runner && lastUpdateIterationCount < iterationCount) {
                         // When updating this map, we need to subtract not 1, but the number of ticks between every animation show() call
                         int ticksPassed = showPeriod * collisionPeriodValue;
-                        noCollisionTicks =  Math.max(noCollisionTicks - ticksPassed, 0);
+                        noCollisionTicks = Math.max(noCollisionTicks - ticksPassed, 0);
                         noCollisionTicksMap.put(target, noCollisionTicks);
                         updateTimestampsMap.put(target, iterationCount);
                     }
 
-                    if(noCollisionTicks <= 0 && collisionTest.test(location, animationTask, target)) {
+                    if (noCollisionTicks <= 0 && collisionTest.test(location, animationTask, target)) {
                         noCollisionTicks = actionCallback.run(animationTask, target);
-                        if(noCollisionTicks >= 0) {
+                        if (noCollisionTicks >= 0) {
                             lastValidateTestTimestampsMap.put(target, iterationCount);
                             noCollisionTicksMap.put(target, noCollisionTicks);
                         }

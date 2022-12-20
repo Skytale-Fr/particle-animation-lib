@@ -1,110 +1,114 @@
 package fr.skytale.particleanimlib.animation.animation.sphere;
 
+import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
+import fr.skytale.particleanimlib.animation.attribute.annotation.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
-import org.bukkit.Location;
+import org.bukkit.util.Vector;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SphereTask extends AAnimationTask<Sphere> {
 
-    //Evolving variables
-    private final double max;
-    private final double min;
+    private static final double GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
 
-    private Double currentMin;
+    double currentMinPercent;
 
-    private double stepBetweenCircles;
-    private double radius;
-    private double angleBetweenEachPoint;
+    @IVariableCurrentValue
+    private Float percentShownWhilePropagate;
+
+    @IVariableCurrentValue
+    private Float percentStepWhilePropagate;
+
+    @IVariableCurrentValue
+    private Double radius;
+
+    @IVariableCurrentValue
+    private Integer nbPoints;
 
     public SphereTask(Sphere sphere) {
         super(sphere);
-
-        double tmpMin = 0, tmpMax = Math.PI;
-
-        switch (animation.getSphereType()) {
-            case HALF_TOP:
-                tmpMax = Math.PI / 2;
-                break;
-            case HALF_BOTTOM:
-                tmpMin = Math.PI / 2;
-                break;
-        }
-
-        //Si on va de bas en haut, le min et le max est inversé
-        if (animation.getPropagationType() == Sphere.PropagationType.BOTTOM_TO_TOP) {
-            min = tmpMax;
-            max = tmpMin;
-        } else {
-            min = tmpMin;
-            max = tmpMax;
-        }
-
-        currentMin = min;
-
+        currentMinPercent = 0;
         startTask();
     }
 
     @Override
-    public void show(Location iterationBaseLocation) {
-
-        //Stop
-        if (hasDurationEnded()) {
-            stopAnimation();
-            return;
-        }
+    protected List<AnimationPointData> computeAnimationPoints() {
 
         Sphere.PropagationType propagationType = animation.getPropagationType();
-        stepBetweenCircles = (max - min) / animation.getNbCircles().getCurrentValue(iterationCount);
-
-        //Define the vertical limits of the sphere that will be shown
-        double currentMax;
-
-        if (propagationType != null) {
-            Integer simultaneousCircles = animation.getSimultaneousCircles().getCurrentValue(iterationCount);
-            currentMax = currentMin + stepBetweenCircles * simultaneousCircles;
-            if (propagationType == Sphere.PropagationType.BOTTOM_TO_TOP && currentMax < max) {
-                currentMax = max;
-            } else if (propagationType == Sphere.PropagationType.TOP_TO_BOTTOM && currentMax > max) {
-                currentMax = max;
-            }
-        } else {
-            currentMax = max;
-        }
-
-        if (propagationType != null && (propagationType == Sphere.PropagationType.BOTTOM_TO_TOP && currentMin <= max || propagationType == Sphere.PropagationType.TOP_TO_BOTTOM && currentMin >= max)) {
+        if (propagationType != null && currentMinPercent >= 1) {
             stopAnimation();
-            return;
+            return null;
         }
 
-        radius = animation.getRadius().getCurrentValue(iterationCount);
-        angleBetweenEachPoint = animation.getAngleBetweenEachPoint().getCurrentValue(iterationCount);
 
-        for (double i = currentMin; propagationType == Sphere.PropagationType.BOTTOM_TO_TOP ? i >= currentMax : i <= currentMax; i += stepBetweenCircles) {
-            double currentRadius = Math.sin(i) * radius;
-            double y = iterationBaseLocation.getY() + Math.cos(i) * radius;
+        List<Vector> animationPointsDataVector = new ArrayList<>();
 
-            for (double j = 0; j < Math.PI * 2; j += angleBetweenEachPoint) {
-                double x = iterationBaseLocation.getX() + Math.cos(j) * currentRadius;
-                double z = iterationBaseLocation.getZ() + Math.sin(j) * currentRadius;
+        Sphere.Type type = animation.getType();
+        double phi, theta, sinPhi;
 
-                showPoint(animation.getPointDefinition(), new Location(iterationBaseLocation.getWorld(), x, y, z), iterationBaseLocation);
-            }
+
+        double typeDeducedShift;
+        double typeDeducedFactor;
+        switch (type) {
+            case HALF_TOP:
+                typeDeducedFactor = 1;
+                typeDeducedShift = 1;
+                break;
+            case HALF_BOTTOM:
+                typeDeducedFactor = 1;
+                typeDeducedShift = 0;
+                break;
+            default:
+                typeDeducedFactor = 2;
+                typeDeducedShift = 1;
+                break;
+        }
+
+        for (int i = 0; i < nbPoints; i++) {
+            phi = Math.acos(typeDeducedShift - typeDeducedFactor * (i + 0.5d) / nbPoints);
+            theta = (2 * Math.PI * i) / GOLDEN_RATIO;
+            sinPhi = Math.sin(phi);
+
+            animationPointsDataVector.add(new Vector(
+                    radius * Math.cos(theta) * sinPhi,
+                    radius * Math.cos(phi),
+                    radius * Math.sin(theta) * sinPhi
+            ));
         }
 
         if (propagationType != null) {
-            currentMin += stepBetweenCircles;
+
+            if (propagationType == Sphere.PropagationType.BOTTOM_TO_TOP) {
+                Collections.reverse(animationPointsDataVector);
+            }
+
+            double currentMaxPercent = Math.min((currentMinPercent + percentShownWhilePropagate), 1);
+
+            int minPointIndex = (int) Math.floor(currentMinPercent * nbPoints);
+            int maxPointIndex = (int) Math.floor(currentMaxPercent * nbPoints);
+
+            animationPointsDataVector = animationPointsDataVector.subList(minPointIndex, maxPointIndex);
+
+            currentMinPercent += percentStepWhilePropagate;
         }
+
+        return animationPointsDataVector.stream()
+                .map(AnimationPointData::new)
+                .collect(Collectors.toList());
+
     }
 
-    public double getCurrentStepBetweenCircles() {
-        return stepBetweenCircles;
+    @Override
+    protected boolean shouldUpdatePoints() {
+        return animation.getPropagationType() != null;
     }
 
     public double getCurrentRadius() {
         return radius;
     }
 
-    public double getCurrentAngleBetweenEachPoint() {
-        return angleBetweenEachPoint;
-    }
 
 }

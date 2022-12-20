@@ -1,17 +1,15 @@
 package fr.skytale.particleanimlib.animation.animation.parabola;
 
-import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.animation.ARotatingAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.IDirectionSubAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.util.Vector;
 
-public class Parabola extends ARotatingAnimation implements IDirectionSubAnimation {
+public class Parabola extends AAnimation {
 
+    private IVariable<Vector> direction;
     private IVariable<Double> speed;
     private IVariable<Vector> gravity;
     private IVariable<Integer> bulletLifetime;
-    private AnimationDirection direction;
     private IVariable<Integer> bulletShootPeriod;
 
     public Parabola() {
@@ -23,12 +21,21 @@ public class Parabola extends ARotatingAnimation implements IDirectionSubAnimati
     }
 
     @Override
-    public AnimationDirection getDirection() {
+    public Parabola clone() {
+        Parabola obj = (Parabola) super.clone();
+        obj.speed = speed.copy();
+        obj.gravity = gravity.copy();
+        obj.direction = direction.copy();
+        obj.bulletShootPeriod = bulletShootPeriod.copy();
+        obj.bulletLifetime = bulletLifetime.copy();
+        return obj;
+    }
+
+    public IVariable<Vector> getDirection() {
         return direction;
     }
 
-    @Override
-    public void setDirection(AnimationDirection direction) {
+    public void setDirection(IVariable<Vector> direction) {
         this.direction = direction;
     }
 
@@ -62,16 +69,5 @@ public class Parabola extends ARotatingAnimation implements IDirectionSubAnimati
 
     public void setBulletShootPeriod(IVariable<Integer> bulletShootPeriod) {
         this.bulletShootPeriod = bulletShootPeriod;
-    }
-
-    @Override
-    public Parabola clone() {
-        Parabola obj = (Parabola) super.clone();
-        obj.speed = speed.copy();
-        obj.gravity = gravity.copy();
-        obj.direction = direction.clone();
-        obj.bulletShootPeriod = bulletShootPeriod.copy();
-        obj.bulletLifetime = bulletLifetime.copy();
-        return obj;
     }
 }

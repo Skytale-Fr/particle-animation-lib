@@ -7,6 +7,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
+import xyz.xenondevs.particle.ParticleEffect;
 
 import java.awt.*;
 
@@ -19,11 +20,12 @@ public class FontSizeEvolvingTextKGEverSinceNewYorkPresetExecutor extends AAnima
     @Override
     protected void apply(TextBuilder textBuilder, JavaPlugin plugin) {
         textBuilder.setDirectorVectors(new Vector(0, 0, 1), new Vector(0, 1, 0));
-        textBuilder.setMainParticle(new ParticleTemplate("WATER_BUBBLE", new Color(255, 170, 0), null));
+        textBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.WATER_BUBBLE, new Color(255, 170, 0)));
         textBuilder.setTicksDuration(100);
         textBuilder.setShowPeriod(new Constant<>(1));
         textBuilder.setString(new Constant<>("Coucou"));
-        textBuilder.setFontSize(new CallbackVariable<>(iterationCount -> 10.0d + 5.0d * Math.cos(iterationCount * 0.1d)));
+        textBuilder.setFontSize(new CallbackVariable<>(iterationCount -> 10.0d +
+                                                                         5.0d * Math.cos(iterationCount * 0.1d)));
         textBuilder.setFontFileName("KGEverSinceNewYork.ttf");
     }
 }

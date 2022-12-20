@@ -1,12 +1,11 @@
 package fr.skytale.particleanimlib.animation.animation.circle.preset;
 
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
-import fr.skytale.particleanimlib.animation.animation.circle.CircleTask;
 import fr.skytale.particleanimlib.animation.animation.line.LineBuilder;
 import fr.skytale.particleanimlib.animation.animation.line.LineTask;
 import fr.skytale.particleanimlib.animation.attribute.Orientation;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.CallbackPointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.position.animationposition.DirectedLocationAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.collision.CollisionBuilder;
 import fr.skytale.particleanimlib.animation.collision.EntityCollisionPreset;
@@ -18,8 +17,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-
-import java.awt.*;
 
 public class HelicopterWithCollisionsPresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -35,18 +32,25 @@ public class HelicopterWithCollisionsPresetExecutor extends AAnimationPresetExec
         LineBuilder lineBuilder = new LineBuilder();
         lineBuilder.setPosition(circleBuilder.getPosition());
         lineBuilder.setJavaPlugin(circleBuilder.getJavaPlugin());
-
-        lineBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         lineBuilder.setTicksDuration(1);
         lineBuilder.setShowPeriod(new Constant<>(1));
         lineBuilder.setNbPoints(new Constant<>(50));
         lineBuilder.addCollisionHandler(createCollisionBuilder(lineBuilder).build());
 
-        circleBuilder.setDirectorVectorsFromOrientation(ORIENTATION, 1);
+        circleBuilder.setOrientationAndRotation(ORIENTATION, new Vector(0, 1, 0), Math.PI / 12);
         circleBuilder.setNbPoints(PROPELLER_COUNT, true);
         circleBuilder.setRadius(0.01);
-        circleBuilder.setRotation(new Vector(0, 1, 0), Math.PI / 12);
-        circleBuilder.setPointDefinition(APointDefinition.fromSubAnim(lineBuilder.getAnimation(), 10.0d));
+        circleBuilder.setPointDefinition(new CallbackPointDefinition(
+                (pointLocation, animation, task, fromAnimCenterToPoint, fromPreviousToCurrentAnimBaseLocation) -> {
+                    lineBuilder.setPosition(new DirectedLocationAnimationPosition(
+                            pointLocation,
+                            fromAnimCenterToPoint,
+                            1.0));
+                    lineBuilder.setPoint1OnPosition();
+                    lineBuilder.setFromPositionToPoint2(new Constant<>(fromAnimCenterToPoint.clone().multiply(-1)), new Constant<>(fromAnimCenterToPoint.length()));
+                    lineBuilder.getAnimation().show().setParentTask(task);
+                }
+        ));
         circleBuilder.setTicksDuration(100);
         circleBuilder.setShowPeriod(new Constant<>(3));
     }
@@ -60,7 +64,7 @@ public class HelicopterWithCollisionsPresetExecutor extends AAnimationPresetExec
         });
         collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> !entity.getType().equals(EntityType.PLAYER));
         collisionBuilder.addCollisionProcessor(ParticleCollisionProcessor.useDefault(lineBuilder, EntityCollisionPreset.EXACT_BOUNDING_BOX, (animationTask, target) -> {
-            if(!(target instanceof LivingEntity)) return -1;
+            if (!(target instanceof LivingEntity)) return -1;
             ((LivingEntity) target).damage(1);
             return 40; // The entity can only take damages every 20 ticks.
         }));

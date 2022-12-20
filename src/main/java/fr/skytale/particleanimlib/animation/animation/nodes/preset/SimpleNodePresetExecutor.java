@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.nodes.preset;
 
 import fr.skytale.particleanimlib.animation.animation.nodes.NodeBuilder;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
@@ -9,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -48,7 +46,6 @@ public class SimpleNodePresetExecutor extends AAnimationPresetExecutor<NodeBuild
             return nodeModifiersDenominator;
         }));
 
-        nodeBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         nodeBuilder.setShowPeriod(new Constant<>(1));
     }
 }

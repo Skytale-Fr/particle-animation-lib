@@ -1,18 +1,17 @@
 package fr.skytale.particleanimlib.animation.attribute.pointdefinition;
 
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.PointShowCallback;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public class CallbackPointDefinition extends APointDefinition {
+public class CallbackPointDefinition implements APointDefinition {
 
-    private PointShowCallback pointShowCallback;
+    private final PointShowCallback pointShowCallback;
 
     public CallbackPointDefinition(PointShowCallback pointShowCallback) {
-        super(ShowMethodParameters.LOCATION_AND_DIRECTION, false);
         this.pointShowCallback = pointShowCallback;
     }
 
@@ -21,20 +20,14 @@ public class CallbackPointDefinition extends APointDefinition {
     }
 
     @Override
-    public void show(AAnimation animation, Location loc, AAnimationTask<?> parentTask) {
-        pointShowCallback.show(animation, loc, null, parentTask);
+    public void show(Location pointLocation, AAnimation animation, AAnimationTask<?> task, Vector fromAnimCenterToPoint, Vector fromPreviousToCurrentAnimBaseLocation) {
+        pointShowCallback.show(pointLocation, animation, task, fromAnimCenterToPoint, fromPreviousToCurrentAnimBaseLocation);
     }
 
     @Override
-    public void show(AAnimation animation, Location loc, Vector fromCenterToPoint, AAnimationTask<?> parentTask) {
-        pointShowCallback.show(animation, loc, fromCenterToPoint, parentTask);
+    public APointDefinition copy() {
+        // we cannot clone a callback (which is the only attribute of this class instances)
+        // so better return the same instance without any copy.
+        return this;
     }
-
-    @Override
-    public CallbackPointDefinition clone() {
-        CallbackPointDefinition obj = (CallbackPointDefinition) super.clone();
-        obj.pointShowCallback = this.pointShowCallback;
-        return obj;
-    }
-
 }

@@ -1,12 +1,10 @@
 package fr.skytale.particleanimlib.animation.collision;
 
-import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
-
-import java.util.function.BiFunction;
 
 /**
  * A collision processor should handle the type of the collision process, the collision test predicate and the callback.
+ *
  * @param <T> The type of target you want to perform collisions on
  * @param <K> The type of animation task you want to plug this collision processor to
  */
@@ -14,6 +12,7 @@ public class CollisionProcessor<T, K extends AAnimationTask> {
 
     /**
      * The type of the collision process. You may see CollisionTestType.
+     *
      * @see CollisionTestType
      */
     protected CollisionTestType collisionTestType;
@@ -29,10 +28,9 @@ public class CollisionProcessor<T, K extends AAnimationTask> {
     protected CollisionActionCallback<T, K> actionCallback;
 
     /**
-     *
      * @param collisionTestType The type of the collision process. You may see CollisionTestType.
-     * @param collisionTest The predicate that should check the collision.
-     * @param actionCallback The action callback that will be called if the predicate is verified. This function should return an integer represents how many ticks a target can't be part of the collision process since the last time it collides.
+     * @param collisionTest     The predicate that should check the collision.
+     * @param actionCallback    The action callback that will be called if the predicate is verified. This function should return an integer represents how many ticks a target can't be part of the collision process since the last time it collides.
      */
     public CollisionProcessor(CollisionTestType collisionTestType, CollisionPredicate<T, K> collisionTest, CollisionActionCallback<T, K> actionCallback) {
         this.collisionTestType = collisionTestType;
@@ -42,6 +40,7 @@ public class CollisionProcessor<T, K extends AAnimationTask> {
 
     /**
      * Gets the collision test type.
+     *
      * @return The collision test type
      */
     public CollisionTestType getCollisionTestType() {
@@ -50,6 +49,7 @@ public class CollisionProcessor<T, K extends AAnimationTask> {
 
     /**
      * Gets the collision check predicate.
+     *
      * @return The collision check predicate
      */
     public CollisionPredicate<T, K> getCollisionTest() {
@@ -58,6 +58,7 @@ public class CollisionProcessor<T, K extends AAnimationTask> {
 
     /**
      * Gets the collision action callback.
+     *
      * @return The collision action callback
      */
     public CollisionActionCallback<T, K> getActionCallback() {

@@ -3,11 +3,8 @@ package fr.skytale.particleanimlib.animation.animation.wave;
 
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.IPlaneSubAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
-import org.bukkit.util.Vector;
 
-public class Wave extends AAnimation implements ISubAnimation {
+public class Wave extends AAnimation {
     protected IVariable<Double> angleBetweenEachPoint;
     protected IVariable<Integer> nbPoints;
     protected IVariable<Double> radiusStep;
@@ -21,6 +18,15 @@ public class Wave extends AAnimation implements ISubAnimation {
     @Override
     public WaveTask show() {
         return new WaveTask(this);
+    }
+
+    @Override
+    public Wave clone() {
+        Wave obj = (Wave) super.clone();
+        obj.angleBetweenEachPoint = angleBetweenEachPoint.copy();
+        obj.nbPoints = nbPoints.copy();
+        obj.radiusStep = radiusStep.copy();
+        return obj;
     }
 
     /***********GETTERS & SETTERS***********/
@@ -71,14 +77,5 @@ public class Wave extends AAnimation implements ISubAnimation {
 
     public void setPositiveHeight(boolean positiveHeight) {
         this.positiveHeight = positiveHeight;
-    }
-
-    @Override
-    public Wave clone() {
-        Wave obj = (Wave) super.clone();
-        obj.angleBetweenEachPoint = angleBetweenEachPoint.copy();
-        obj.nbPoints = nbPoints.copy();
-        obj.radiusStep = radiusStep.copy();
-        return obj;
     }
 }

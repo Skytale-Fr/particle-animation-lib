@@ -1,19 +1,15 @@
 package fr.skytale.particleanimlib.animation.animation.text;
 
 
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 import fr.skytale.ttfparser.TTFAlphabet;
 import fr.skytale.ttfparser.TTFParser;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
-public class Text extends AAnimation implements ISubAnimation {
+public class Text extends AAnimation {
 
     public static final String FONTS_FOLDER = "fonts";
 
@@ -40,7 +36,8 @@ public class Text extends AAnimation implements ISubAnimation {
         if (!fontsDir.exists()) {
             boolean result = fontsDir.mkdir();
             if (!result) {
-                throw new IllegalStateException("The " + FONTS_FOLDER + " directory could not be created. It is probably a permission issue.");
+                throw new IllegalStateException(
+                        "The " + FONTS_FOLDER + " directory could not be created. It is probably a permission issue.");
             }
         }
         return fontsDir;
@@ -68,7 +65,8 @@ public class Text extends AAnimation implements ISubAnimation {
     @Override
     public Text clone() {
         Text obj = (Text) super.clone();
-        obj.ttfAlphabet = ttfAlphabet == null ? null : ttfAlphabet; // Clone a TTFAlphabet seems to be weird (there is only getters).
+        obj.ttfAlphabet = ttfAlphabet ==
+                          null ? null : ttfAlphabet; // Clone a TTFAlphabet seems to be weird (there is only getters).
         obj.baseString = baseString.copy();
         obj.fontSize = fontSize.copy();
         obj.fontFileName = fontFileName;

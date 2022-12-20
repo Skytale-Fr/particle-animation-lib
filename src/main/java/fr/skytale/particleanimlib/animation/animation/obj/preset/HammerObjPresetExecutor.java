@@ -6,6 +6,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
+import xyz.xenondevs.particle.ParticleEffect;
 
 import java.awt.*;
 
@@ -22,7 +23,7 @@ public class HammerObjPresetExecutor extends AAnimationPresetExecutor<ObjBuilder
         objBuilder.setScale(0.7);
         objBuilder.setDistanceBetweenParticles(1);
 
-        objBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
+        objBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, new Color(255, 170, 0)));
         objBuilder.setTicksDuration(400);
         objBuilder.setShowPeriod(new Constant<>(2));
     }

@@ -1,9 +1,9 @@
 package fr.skytale.particleanimlib.testing.command;
 
-import fr.skytale.particleanimlib.animation.animation.spiral.SpiralBuilder;
+import fr.skytale.particleanimlib.animation.animation.helix.HelixBuilder;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
-import fr.skytale.particleanimlib.animation.attribute.position.APosition;
-import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
+import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
+import fr.skytale.particleanimlib.animation.attribute.position.animationposition.TargetingEntityAnimationPosition;
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -104,27 +104,6 @@ public class AnimationLibCommand implements CommandExecutor {
                 }
             }
 
-            // ---- TARGET ----
-
-            else if(args.length == 2 && args[0].equals("target")){
-                Player targetedPlayer = Bukkit.getPlayer(args[1]);
-                if( targetedPlayer == null ){
-                    player.sendMessage("The player "+args[1]+" does not exist.");
-                    return true;
-                }
-                else if(targetedPlayer.equals(player)){
-                    player.sendMessage("One cannot target itself.");
-                    return true;
-                }
-                else if(!targetedPlayer.getWorld().equals(player.getWorld())){
-                    player.sendMessage("Targeted player must be in the same world.");
-                    return true;
-                }
-
-                target(player, targetedPlayer);
-                return true;
-            }
-
             player.sendMessage("Usage: /" + label + " [<type | showall | event | trail> [type/player]]");
             return true;
         } catch (Exception e) {
@@ -132,13 +111,5 @@ public class AnimationLibCommand implements CommandExecutor {
             e.printStackTrace();
         }
         return false;
-    }
-
-    private void target(Player player, Player targetedPlayer) {
-        SpiralBuilder  spiralBuilder = new SpiralBuilder();
-        spiralBuilder.setPosition(APosition.fromLocation(player.getLocation().clone()));
-        spiralBuilder.setDirection(AnimationDirection.fromTargetEntity(targetedPlayer,0.5));
-        spiralBuilder.applyPreset(AnimationPreset.SPIRAL_CASTING_SPELL,particleAnimLibTest.getPlugin());
-        spiralBuilder.getAnimation().show();
     }
 }

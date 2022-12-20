@@ -1,99 +1,100 @@
 package fr.skytale.particleanimlib.animation.attribute;
 
-import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
 import xyz.xenondevs.particle.data.ParticleData;
 import xyz.xenondevs.particle.data.color.RegularColor;
 import xyz.xenondevs.particle.data.texture.BlockTexture;
-import xyz.xenondevs.particle.data.texture.ItemTexture;
 
 import java.awt.*;
 
 public class ParticleTemplate {
 
-    private ParticleEffect particleEffect;
-    private ParticleData particleData;
-    private Color color;
-    private String material;
+    private ParticleEffect type;
     private int amount;
     private float speed;
+    private Vector offset;
+    private ParticleData additionalData;
 
-    public ParticleTemplate(String particleType, Color color, String material) {
-        this(particleType, color, material, 1, 0);
+    /***********CONSTRUCTORS***********/
+
+    public ParticleTemplate(ParticleEffect type) {
+        this(
+                type,
+                1,
+                1,
+                new Vector(0, 0, 0),
+                (ParticleData) null
+        );
     }
 
-    public ParticleTemplate(ParticleTemplate other) {
-        this(other.getParticleEffect().name(), other.getColor(), other.getMaterial(), other.getAmount(), other.getSpeed());
+    public ParticleTemplate(ParticleEffect type, Color color) {
+        this(
+                type,
+                1,
+                1,
+                new Vector(0, 0, 0),
+                color
+        );
     }
 
-    public ParticleTemplate(String particleType, Color color, String material, int amount, float speed) {
-        this.color = color;
-        this.material = material;
+    public ParticleTemplate(ParticleEffect type, Material material) {
+        this(
+                type,
+                1,
+                1,
+                new Vector(0, 0, 0),
+                material
+        );
+    }
+
+    public ParticleTemplate(ParticleEffect type, int amount, float speed, Vector offset, Color color) {
+        this(
+                type,
+                amount,
+                speed,
+                offset,
+                color != null ? new RegularColor(color) : null
+        );
+    }
+
+    public ParticleTemplate(ParticleEffect type, int amount, float speed, Vector offset, Material material) {
+        this(
+                type,
+                amount,
+                speed,
+                offset,
+                material != null ? new BlockTexture(material) : null
+        );
+    }
+
+    public ParticleTemplate(ParticleEffect type, int amount, float speed, Vector offset, ParticleData additionalData) {
+        this.type = type;
         this.amount = amount;
         this.speed = speed;
+        this.offset = offset;
+        this.additionalData = additionalData;
+    }
 
-        particleEffect = ParticleEffect.valueOf(particleType);
-
-        switch (particleEffect) {
-            case REDSTONE:
-                particleData = new RegularColor(color);
-                break;
-
-            case BLOCK_CRACK:
-            case BLOCK_DUST:
-            case FALLING_DUST:
-                particleData = new BlockTexture(Material.valueOf(material));
-                break;
-
-            case ITEM_CRACK:
-                particleData = new ItemTexture(new ItemStack(Material.valueOf(material)));
-                break;
-        }
+    public ParticleTemplate(ParticleTemplate particleTemplate) {
+        this.type = particleTemplate.type;
+        this.amount = particleTemplate.amount;
+        this.speed = particleTemplate.speed;
+        this.offset = particleTemplate.offset.clone();
+        this.additionalData = particleTemplate.additionalData;
     }
 
     /***********GETTERS & SETTERS***********/
-    public ParticleBuilder getParticleBuilder(Location location) {
-        ParticleBuilder newParticleBuilder = new ParticleBuilder(particleEffect, location.clone());
-        newParticleBuilder.setAmount(amount);
-        newParticleBuilder.setSpeed(speed);
-        newParticleBuilder.setParticleData(particleData);
-        return newParticleBuilder;
+
+    public ParticleEffect getType() {
+        return type;
     }
 
-    public ParticleEffect getParticleEffect() {
-        return particleEffect;
-    }
-
-    public void setParticleEffect(ParticleEffect particleEffect) {
-        this.particleEffect = particleEffect;
-    }
-
-    public ParticleData getParticleData() {
-        return particleData;
-    }
-
-    public void setParticleData(ParticleData particleData) {
-        this.particleData = particleData;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
+    public void setType(ParticleEffect type) {
+        this.type = type;
     }
 
     public int getAmount() {
@@ -110,5 +111,32 @@ public class ParticleTemplate {
 
     public void setSpeed(float speed) {
         this.speed = speed;
+    }
+
+    public Vector getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Vector offset) {
+        this.offset = offset;
+    }
+
+    public ParticleData getAdditionalData() {
+        return additionalData;
+    }
+
+    public void setAdditionalData(ParticleData additionalData) {
+        this.additionalData = additionalData;
+    }
+
+    /***********Map to ParticleLib ParticleBuilder instance***********/
+
+    public ParticleBuilder getParticleBuilder(Location location) {
+        ParticleBuilder particleBuilder = new ParticleBuilder(type, location.clone());
+        particleBuilder.setAmount(amount);
+        particleBuilder.setSpeed(speed);
+        particleBuilder.setOffset(offset);
+        particleBuilder.setParticleData(additionalData);
+        return particleBuilder;
     }
 }

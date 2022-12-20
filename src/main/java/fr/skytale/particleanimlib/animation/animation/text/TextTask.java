@@ -1,7 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.text;
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
-import fr.skytale.particleanimlib.animation.attribute.IVariableCurrentValue;
+import fr.skytale.particleanimlib.animation.attribute.annotation.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import fr.skytale.ttfparser.TTFAlphabet;
 import fr.skytale.ttfparser.TTFCharacter;
@@ -45,7 +45,7 @@ public class TextTask extends AAnimationTask<Text> {
 
         //transform String to ttfString
         BaseComponent[] components = TextComponent.fromLegacyText(baseString, ChatColor.WHITE);
-        String parsedString = Arrays.stream(components).map(BaseComponent::toPlainText).reduce("", String::concat);
+        String parsedString = Arrays.stream(components).map(baseComponent -> baseComponent.toPlainText()).reduce("", String::concat);
         // The scale factor of 1.3 his to fit a Minecraft block size.
         // So a font size of 10.0 will create an upper case character of 10.0 blocks height.
         TTFString ttfString = ttfAlphabet.getString(parsedString, fontSize * 1.3d);

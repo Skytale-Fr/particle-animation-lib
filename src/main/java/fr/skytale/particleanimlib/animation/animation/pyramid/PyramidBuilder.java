@@ -22,6 +22,11 @@ public class PyramidBuilder extends AAnimationBuilder<Pyramid, PyramidTask> {
         return new Pyramid();
     }
 
+    @Override
+    public Pyramid getAnimation() {
+        return super.getAnimation();
+    }
+
     /********* Pyramid specific setters ***********/
 
     public void setFromCenterToApex(IVariable<Vector> fromCenterToApex) {
@@ -61,10 +66,5 @@ public class PyramidBuilder extends AAnimationBuilder<Pyramid, PyramidTask> {
 
     public void setDistanceToAnyBaseApex(double distanceToAnyBaseApex) {
         setDistanceToAnyBaseApex(new Constant<>(distanceToAnyBaseApex));
-    }
-
-    @Override
-    public Pyramid getAnimation() {
-        return super.getAnimation();
     }
 }

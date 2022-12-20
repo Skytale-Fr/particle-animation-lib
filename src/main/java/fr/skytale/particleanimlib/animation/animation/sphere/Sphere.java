@@ -1,21 +1,16 @@
 package fr.skytale.particleanimlib.animation.animation.sphere;
 
 
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARoundAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 
 
-public class Sphere extends ARoundAnimation implements ISubAnimation {
+public class Sphere extends ARoundAnimation {
 
-    private IVariable<Integer> nbCircles;
     private PropagationType propagationType = null;
-    private IVariable<Integer> simultaneousCircles;
+    private IVariable<Float> percentShownWhilePropagate;
+    private IVariable<Float> percentStepWhilePropagate;
     private Type type;
-    private APointDefinition pointDefinition;
 
     public Sphere() {
     }
@@ -25,32 +20,30 @@ public class Sphere extends ARoundAnimation implements ISubAnimation {
         return new SphereTask(this);
     }
 
-    @Override
-    public APointDefinition getPointDefinition() {
-        return pointDefinition;
-    }
-
-    @Override
-    public void setPointDefinition(APointDefinition pointDefinition) {
-        this.pointDefinition = pointDefinition;
-    }
-
     /***********GETTERS & SETTERS***********/
 
-    public IVariable<Integer> getNbCircles() {
-        return nbCircles;
+    public Type getType() {
+        return type;
     }
 
-    public void setNbCircles(IVariable<Integer> nbCircles) {
-        this.nbCircles = nbCircles;
+    public void setType(Type type) {
+        this.type = type;
     }
 
-    public IVariable<Integer> getSimultaneousCircles() {
-        return simultaneousCircles;
+    public IVariable<Float> getPercentShownWhilePropagate() {
+        return percentShownWhilePropagate;
     }
 
-    public void setSimultaneousCircles(IVariable<Integer> simultaneousCircles) {
-        this.simultaneousCircles = simultaneousCircles;
+    public void setPercentShownWhilePropagate(IVariable<Float> percentShownWhilePropagate) {
+        this.percentShownWhilePropagate = percentShownWhilePropagate;
+    }
+
+    public IVariable<Float> getPercentStepWhilePropagate() {
+        return percentStepWhilePropagate;
+    }
+
+    public void setPercentStepWhilePropagate(IVariable<Float> percentStepWhilePropagate) {
+        this.percentStepWhilePropagate = percentStepWhilePropagate;
     }
 
     public PropagationType getPropagationType() {
@@ -61,20 +54,10 @@ public class Sphere extends ARoundAnimation implements ISubAnimation {
         this.propagationType = propagationType;
     }
 
-    public Type getSphereType() {
-        return type;
-    }
-
-    public void setSphereType(Type type) {
-        this.type = type;
-    }
-
     @Override
     public Sphere clone() {
         Sphere obj = (Sphere) super.clone();
-        obj.nbCircles = nbCircles.copy();
-        obj.simultaneousCircles = simultaneousCircles == null ? null : simultaneousCircles.copy();
-        obj.pointDefinition = pointDefinition.clone();
+        obj.percentShownWhilePropagate = percentShownWhilePropagate.copy();
         return obj;
     }
 

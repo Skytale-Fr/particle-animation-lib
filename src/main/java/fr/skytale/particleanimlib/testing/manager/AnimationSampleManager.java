@@ -1,7 +1,8 @@
 package fr.skytale.particleanimlib.testing.manager;
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
-import fr.skytale.particleanimlib.animation.attribute.position.APosition;
+import fr.skytale.particleanimlib.animation.attribute.position.animationposition.OnEntityAnimationPosition;
+import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.Bukkit;
@@ -27,7 +28,7 @@ public class AnimationSampleManager {
         return instance;
     }
 
-    public AAnimationBuilder<?, ?> initBuilder(Player player, APosition position, JavaPlugin plugin, String animationSampleName) {
+    public AAnimationBuilder<?, ?> initBuilder(Player player, AAnimationPosition position, JavaPlugin plugin, String animationSampleName) {
         AnimationPreset animationPreset;
         try {
             animationPreset = AnimationPreset.fromName(animationSampleName);
@@ -49,7 +50,7 @@ public class AnimationSampleManager {
         AAnimationBuilder<?, ?> firstBuilder = null;
         String firstBuilderStr = null;
         for (AnimationPreset preset : presets) {
-            AAnimationBuilder<?, ?> currentBuilder = initBuilder(player, APosition.fromEntity(player), plugin, preset.name());
+            AAnimationBuilder<?, ?> currentBuilder = initBuilder(player, new OnEntityAnimationPosition(player), plugin, preset.name());
             String animationStr = String.format("Showing animation preset \"%s\"", preset.name());
             if (prevBuilder != null) {
                 prevBuilder.addAnimationEndedCallback((anim) -> {

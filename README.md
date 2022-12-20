@@ -467,7 +467,7 @@ builder.setRotation(
 
 #### Parabola
 
-#### Lighting
+#### Lightning
 
 #### Spiral
 
@@ -552,7 +552,7 @@ Here we want to check if the particles off every sub line animations collides wi
 ````java
 SphereBuilder sphereBuilder = // ... create and setup your sphere builder
 LineBuilder lienBuilder = // ... create and setup your line builder
-sphereBuilder.setPointDefinition(APointDefinition.fromSubAnim(lineBuilder.getAnimation()));
+sphereBuilder.setPointDefinition(new SubAnimPointDefinition(lineBuilder.getAnimation()));
 
 CollisionBuilder collisionBuilder = // ... create and setup your collision builder
 
@@ -574,7 +574,7 @@ sphereBuilder.setJavaPlugin(/* set your java plugin*/);
 sphereBuilder.setRadius(4);
 sphereBuilder.setNbCircles(8);
 sphereBuilder.setAngleBetweenEachPoint(Math.PI / 4);
-sphereBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
+sphereBuilder.setMainParticle(new ParticleTemplate(ParticleEffect.REDSTONE, new Color(255, 170, 0))));
 sphereBuilder.setSphereType(Sphere.Type.FULL);
 sphereBuilder.setTicksDuration(100);
 sphereBuilder.setShowPeriod(5);
@@ -606,7 +606,7 @@ circleBuilder.setJavaPlugin(/* set your java plugin*/);
 circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
 circleBuilder.setNbPoints(20, true);
 circleBuilder.setRadius(4);
-circleBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
+circleBuilder.setMainParticle(new ParticleTemplate(ParticleEffect.REDSTONE, new Color(255, 170, 0))));
 circleBuilder.setTicksDuration(100);
 circleBuilder.setShowPeriod(new Constant<>(1));
 

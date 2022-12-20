@@ -6,8 +6,8 @@ public class ObjBuilder extends AAnimationBuilder<Obj, ObjTask> {
 
     public ObjBuilder() {
         super();
-        animation.setScale(0.05);
-        animation.setDistanceBetweenParticles(0.5);
+        animation.setScale(0.2);
+        animation.setDistanceBetweenParticles(1);
         animation.setMinAngleBetweenFaces(Math.toRadians(20));
         animation.setMinFaceArea(1);
     }

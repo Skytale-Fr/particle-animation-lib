@@ -3,9 +3,8 @@ package fr.skytale.particleanimlib.animation.animation.epi;
 
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 
-public class Epi extends AAnimation implements ISubAnimation {
+public class Epi extends AAnimation {
 
     private IVariable<Integer> nbPoints;
     private IVariable<Double> epiModifierNumerator;
@@ -28,7 +27,7 @@ public class Epi extends AAnimation implements ISubAnimation {
         obj.epiModifierNumerator = epiModifierNumerator.copy();
         obj.epiModifierDenominator = epiModifierDenominator.copy();
         obj.radius = radius.copy();
-        obj.maxRadius = maxRadius != null ? maxRadius.copy() : maxRadius;
+        obj.maxRadius = maxRadius == null ? null : maxRadius.copy();
         return obj;
     }
 

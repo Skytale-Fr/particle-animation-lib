@@ -1,15 +1,13 @@
 package fr.skytale.particleanimlib.animation.parent.task;
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
-import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
-import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class AnimationTaskUtils {
 
@@ -43,21 +41,55 @@ public class AnimationTaskUtils {
         return radiusVector.normalize().multiply(radius);
     }
 
-    protected static final List<AnimationPointData> getLinePoints(Vector point1, Vector point2, double step) {
-        return getLinePoints(point1, point2, step, null);
+    public static List<AnimationPointData> getLinePoints(Vector point1, Vector point2, int nbPoints) {
+        return getLinePoints(point1, point2, nbPoints, true);
     }
 
-    protected static final List<AnimationPointData> getLinePoints(Vector point1, Vector point2, double step, Function<APointDefinition, APointDefinition> pointDefinitionModifier) {
+    public static List<AnimationPointData> getLinePoints(Vector point1, Vector point2, double step) {
+        return getLinePoints(point1, point2, step, true);
+    }
+
+    public static List<AnimationPointData> getLinePoints(Vector point1, Vector point2, int nbPoints, boolean showLastPoint) {
+        return getLinePoints(point1, point2, nbPoints, showLastPoint, null);
+    }
+
+    public static List<AnimationPointData> getLinePoints(Vector point1, Vector point2, double step, boolean showLastPoint) {
+        return getLinePoints(point1, point2, step, showLastPoint, null);
+    }
+
+    public static List<AnimationPointData> getLinePoints(Vector point1, Vector point2, double step, boolean showLastPoint, Function<APointDefinition, APointDefinition> pointDefinitionModifier) {
+        return getLineVectors(point1, point2, step, showLastPoint).stream()
+                .map(vector -> new AnimationPointData(vector, pointDefinitionModifier))
+                .collect(Collectors.toList());
+    }
+
+    public static List<AnimationPointData> getLinePoints(Vector point1, Vector point2, int nbPoints, boolean showLastPoint, Function<APointDefinition, APointDefinition> pointDefinitionModifier) {
+        return getLineVectors(point1, point2, nbPoints, showLastPoint).stream()
+                .map(vector -> new AnimationPointData(vector, pointDefinitionModifier))
+                .collect(Collectors.toList());
+    }
+
+    public static List<Vector> getLineVectors(Vector point1, Vector point2, int nbPoints, boolean showLastPoint) {
         double distance = point1.distance(point2);
-        Vector stepVector = point2.subtract(point1).normalize().multiply(step);
+        double step = distance / (nbPoints - 1);
+        return getLineVectors(point1, point2, step, showLastPoint);
+    }
+
+    public static List<Vector> getLineVectors(Vector point1, Vector point2, double step, boolean showLastPoint) {
+        List<Vector> linePoints = new ArrayList<>();
+
+        double distance = point1.distance(point2);
+        Vector stepVector = point2.clone().subtract(point1).normalize().multiply(step);
         Vector currentLoc = point1.clone();
 
-        List<AnimationPointData> linePoints = new ArrayList<>();
         for (double length = 0; length < distance; currentLoc.add(stepVector)) {
-            linePoints.add(new AnimationPointData(currentLoc.clone(), pointDefinitionModifier));
+            linePoints.add(currentLoc.clone());
             length += step;
         }
-        linePoints.add(new AnimationPointData(point2.clone(), pointDefinitionModifier));
+        if (showLastPoint) {
+            linePoints.add(point2.clone());
+        }
+
         return linePoints;
     }
 }

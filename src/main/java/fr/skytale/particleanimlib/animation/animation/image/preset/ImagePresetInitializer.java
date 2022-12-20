@@ -20,7 +20,8 @@ public class ImagePresetInitializer extends APresetInitializer {
     private static final String IMAGES_FOLDER_NAME = Image.IMAGES_FOLDER;
     private static final String IMAGES_FOLDER_PATH_IN_JAR = IMAGES_FOLDER_NAME + "/";
     private static final String IMAGES_FOLDER_CREATION_ERROR = "Error creating " + IMAGES_FOLDER_NAME + " folder.";
-    private static final String IMAGES_EXTRACTION_ERROR = "Error extracting default image into " + IMAGES_FOLDER_NAME + " folder.";
+    private static final String IMAGES_EXTRACTION_ERROR =
+            "Error extracting default image into " + IMAGES_FOLDER_NAME + " folder.";
 
     @Override
     protected void initialize(JavaPlugin plugin) {

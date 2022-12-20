@@ -1,22 +1,28 @@
 package fr.skytale.particleanimlib.animation.animation.parabola;
 
-import fr.skytale.particleanimlib.animation.parent.task.ARotatingAnimationTask;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
+import fr.skytale.particleanimlib.animation.attribute.annotation.IVariableCurrentValue;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.util.Vector;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Objects;
+import java.util.List;
 import java.util.Set;
 
-public class ParabolaTask extends ARotatingAnimationTask<Parabola> {
+public class ParabolaTask extends AAnimationTask<Parabola> {
 
-    private Set<BulletData> bullets;
+    private final Set<BulletData> bullets;
+    @IVariableCurrentValue
     private Vector direction;
-    private int bulletShootPeriod;
-    private int finalFreq;
+    @IVariableCurrentValue
+    private Double speed;
+    @IVariableCurrentValue
     private Vector gravity;
+    @IVariableCurrentValue
+    private Integer bulletLifetime;
+    @IVariableCurrentValue
+    private Integer bulletShootPeriod;
 
     public ParabolaTask(Parabola parabola) {
         super(parabola);
@@ -25,74 +31,50 @@ public class ParabolaTask extends ARotatingAnimationTask<Parabola> {
     }
 
     @Override
-    public void showRotated(boolean rotationChanged, Location iterationBaseLocation) {
-        fireBullet(rotationChanged, iterationBaseLocation);
-        updateBullets(iterationBaseLocation);
+    protected List<AnimationPointData> computeAnimationPoints() {
+        fireNewBullets();
+        return getUpdateBullets();
     }
 
-    private void fireBullet(boolean rotationChanged, Location iterationBaseLocation) {
-        direction = animation.getDirection().getMoveVector().getCurrentValue(iterationCount);
+    @Override
+    protected boolean shouldUpdatePoints() {
+        return bulletShootPeriod == 0 || iterationCount % bulletShootPeriod == 0 || (!bullets.isEmpty());
+    }
 
-        if (rotationChanged) {
-            direction = rotation.rotateVector(direction.clone());
-
-        }
-        bulletShootPeriod = animation.getBulletShootPeriod().getCurrentValue(iterationCount);
+    private void fireNewBullets() {
         if (bulletShootPeriod == 0 || iterationCount % bulletShootPeriod == 0) {
             BulletData bulletData = new BulletData();
-            bulletData.location = iterationBaseLocation.toVector();
-            bulletData.velocity = direction.clone().normalize().multiply(animation.getSpeed().getCurrentValue(iterationCount));
-            bulletData.lifetime = animation.getBulletLifetime().getCurrentValue(iterationCount);
+            bulletData.location = new Vector(0, 0, 0);
+            bulletData.velocity = direction.clone().normalize().multiply(speed);
+            bulletData.lifetime = bulletLifetime;
             bullets.add(bulletData);
         }
     }
 
-    private void updateBullets(Location iterationBaseLocation) {
-        int freq = animation.getShowPeriod().getCurrentValue(iterationCount);
-        finalFreq = freq == 0 ? 1 : freq;
-        gravity = animation.getGravity().getCurrentValue(iterationCount);
-        final Collection<? extends Player> players = animation.getViewers().getPlayers(iterationBaseLocation);
+    private List<AnimationPointData> getUpdateBullets() {
+        List<AnimationPointData> animationPoints = new ArrayList<>();
+        int showPeriod = currentShowPeriod == 0 ? 1 : currentShowPeriod;
         bullets.removeIf(bulletData -> {
             if (bulletData.lifetime == 0) {
                 return true;
             }
-//          For each bullet, update velocity and position for each time step using (forward) Euler's method:
-//          V(t + dt) = V(t) + dV(t + dt)/dt * dt = V(t) + gravity * dt
-//          X(t + dt) = X(t) + dX(t + dt)/dt * dt = X(t) + V(t + dt) * dt
-            bulletData.velocity.add(gravity.clone().multiply(finalFreq));
-            bulletData.location.add(bulletData.velocity.clone().multiply(finalFreq));
+            //  For each bullet, update velocity and position for each time step using (forward) Euler's method:
+            //  V(t + dt) = V(t) + dV(t + dt)/dt * dt = V(t) + gravity * dt
+            //  X(t + dt) = X(t) + dX(t + dt)/dt * dt = X(t) + V(t + dt) * dt
+            bulletData.velocity.add(gravity.clone().multiply(showPeriod));
+            bulletData.location.add(bulletData.velocity.clone().multiply(showPeriod));
             bulletData.lifetime--;
-            animation.getMainParticle()
-                    .getParticleBuilder(bulletData.location.toLocation(Objects.requireNonNull(iterationBaseLocation.getWorld())))
-                    .display(players);
+
+            animationPoints.add(new AnimationPointData(bulletData.location));
             return false;
         });
+        return animationPoints;
     }
 
-    public static class BulletData {
+    private static class BulletData {
         public Vector location;
         public Vector velocity;
         public int lifetime;
-    }
-
-    public Set<BulletData> getCurrentBullets() {
-        return bullets;
-    }
-
-    public Vector getCurrentDirection() {
-        return direction;
-    }
-
-    public int getCurrentBulletShootPeriod() {
-        return bulletShootPeriod;
-    }
-
-    public int getCurrentFinalFreq() {
-        return finalFreq;
-    }
-
-    public Vector getCurrentGravity() {
-        return gravity;
     }
 
 }

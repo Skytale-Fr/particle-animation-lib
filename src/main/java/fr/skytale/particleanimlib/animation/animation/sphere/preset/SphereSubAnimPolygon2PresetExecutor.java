@@ -3,12 +3,9 @@ package fr.skytale.particleanimlib.animation.animation.sphere.preset;
 import fr.skytale.particleanimlib.animation.animation.polygon.PolygonBuilder;
 import fr.skytale.particleanimlib.animation.animation.sphere.Sphere;
 import fr.skytale.particleanimlib.animation.animation.sphere.SphereBuilder;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.awt.*;
 
 public class SphereSubAnimPolygon2PresetExecutor extends AAnimationPresetExecutor<SphereBuilder> {
 
@@ -24,13 +21,11 @@ public class SphereSubAnimPolygon2PresetExecutor extends AAnimationPresetExecuto
         polygonBuilder.setNbVertices(6);
         polygonBuilder.setDistanceBetweenPoints(0.4);
         polygonBuilder.setDistanceFromCenterToVertices(2);
-        polygonBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         polygonBuilder.setTicksDuration(1);
         polygonBuilder.setShowPeriod(1);
         sphereBuilder.setRadius(5);
-        sphereBuilder.setNbCircles(7);
-        sphereBuilder.setAngleBetweenEachPoint(Math.PI / 4);
-        sphereBuilder.setPointDefinition(APointDefinition.fromSubAnim(polygonBuilder.getAnimation()));
+        sphereBuilder.setNbPoints(56);
+        sphereBuilder.setPointDefinition(new SubAnimPointDefinition(polygonBuilder.getAnimation()));
         sphereBuilder.setSphereType(Sphere.Type.FULL);
         sphereBuilder.setTicksDuration(100);
         sphereBuilder.setShowPeriod(3);

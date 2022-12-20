@@ -4,10 +4,11 @@ import org.bukkit.Location;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TrailPlayerData {
 
-    private ArrayList<TrailPlayerLocationData> locations;
+    private List<TrailPlayerLocationData> locations;
     private LocalTime startTime;
     private Location lastLocation;
     private int iterationCount;
@@ -18,11 +19,11 @@ public class TrailPlayerData {
         this.iterationCount = 0;
     }
 
-    public ArrayList<TrailPlayerLocationData> getPreviousLocations() {
+    public List<TrailPlayerLocationData> getPreviousLocations() {
         return locations;
     }
 
-    public void setPreviousLocations(ArrayList<TrailPlayerLocationData> locations) {
+    public void setPreviousLocations(List<TrailPlayerLocationData> locations) {
         this.locations = locations;
     }
 

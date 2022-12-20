@@ -3,10 +3,6 @@ package fr.skytale.particleanimlib.animation.animation.circle.preset;
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.animation.circle.CircleTask;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
-import fr.skytale.particleanimlib.animation.attribute.var.Constant;
-import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.collision.CollisionBuilder;
 import fr.skytale.particleanimlib.animation.collision.EntityCollisionPreset;
 import fr.skytale.particleanimlib.animation.collision.EntityFilters;
@@ -18,8 +14,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-
-import java.awt.*;
 
 public class RotatingCircleWithInsideCollisionsPresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -44,11 +38,11 @@ public class RotatingCircleWithInsideCollisionsPresetExecutor extends AAnimation
         });
         collisionBuilder.addPotentialCollidingTargetsFilter((EntityFilters.isNotType(EntityType.PLAYER)));
         collisionBuilder.addCollisionProcessor(SimpleCollisionProcessor.useDefault(circleBuilder, EntityCollisionPreset.TARGET_CENTER_INSIDE_CIRCLE, (animationTask, target) -> {
-            if(!(target instanceof LivingEntity)) return -1;
+            if (!(target instanceof LivingEntity)) return -1;
             ((LivingEntity) target).damage(1);
             return 20; // The entity can only take damages every 20 ticks.
         }));
-        
+
 
         return collisionBuilder;
     }

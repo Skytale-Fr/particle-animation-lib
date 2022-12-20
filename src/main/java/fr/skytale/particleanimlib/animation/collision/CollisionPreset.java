@@ -5,6 +5,7 @@ import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 
 /**
  * This class describes a preset of a collision predicate.
+ *
  * @param <T> The type of target you want to perform collisions on
  */
 public class CollisionPreset<T> {
@@ -17,6 +18,7 @@ public class CollisionPreset<T> {
 
     /**
      * Returns the collision predicate set in this preset
+     *
      * @param <K> The type of animation task you want to plug this collision predicate to
      * @return The collision predicate
      */

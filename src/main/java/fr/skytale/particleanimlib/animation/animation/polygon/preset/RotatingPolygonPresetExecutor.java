@@ -20,7 +20,8 @@ public class RotatingPolygonPresetExecutor extends AAnimationPresetExecutor<Poly
         polygonBuilder.setRotation(
                 new CallbackWithPreviousValueVariable<Vector>(
                         new Vector(0, 1, 0),
-                        (iterationCount, previousValue) -> previousValue.add(new Vector(Math.random() / 4, Math.random() / 4, Math.random() / 4)).normalize()
+                        (iterationCount, previousValue) -> previousValue.add(new Vector(
+                                Math.random() / 4, Math.random() / 4, Math.random() / 4)).normalize()
                 ),
                 Math.PI / 10
         );

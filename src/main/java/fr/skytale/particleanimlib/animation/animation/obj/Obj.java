@@ -3,6 +3,7 @@ package fr.skytale.particleanimlib.animation.animation.obj;
 
 import com.mokiat.data.front.parser.*;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.task.AnimationTaskUtils;
 import org.apache.commons.math3.geometry.euclidean.threed.Plane;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
@@ -21,7 +22,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Obj extends AAnimation {
 
@@ -55,7 +55,8 @@ public class Obj extends AAnimation {
         if (!objsDir.exists()) {
             boolean result = objsDir.mkdir();
             if (!result) {
-                throw new IllegalStateException("The " + MODELS_FOLDER + " directory could not be created. It is probably a permission issue.");
+                throw new IllegalStateException(
+                        "The " + MODELS_FOLDER + " directory could not be created. It is probably a permission issue.");
             }
         }
         return objsDir;
@@ -173,7 +174,7 @@ public class Obj extends AAnimation {
 
     private void buildPoints(List<Vector> objPixels, Set<Segment> segments) {
         segments.forEach(segment -> objPixels.addAll(
-                getLinePoints(
+                AnimationTaskUtils.getLineVectors(
                         new Vector(
                                 segment.getA().getX(),
                                 segment.getA().getY(),
@@ -184,7 +185,8 @@ public class Obj extends AAnimation {
                                 segment.getB().getY(),
                                 segment.getB().getZ()
                         ),
-                        distanceBetweenParticles)
+                        distanceBetweenParticles,
+                        true)
         ));
     }
 
@@ -260,12 +262,14 @@ public class Obj extends AAnimation {
             if (compute2DPolygonArea(faceData) >= minFaceArea) {
                 //1.4 Find out the face segments
                 //1.4.1 Add the segment between the first and the last vertex
-                Segment firstSegment = new Segment(faceData.vertices.get(0), faceData.vertices.get(faceData.vertices.size() - 1), faceData);
+                Segment firstSegment = new Segment(faceData.vertices.get(0), faceData.vertices.get(
+                        faceData.vertices.size() - 1), faceData);
                 addSegment(segments, firstSegment);
 
                 //1.4.2 Add each other segments
                 for (int i = 1; i < faceData.vertices.size(); i++) {
-                    Segment currentSegment = new Segment(faceData.vertices.get(i - 1), faceData.vertices.get(i), faceData);
+                    Segment currentSegment = new Segment(faceData.vertices.get(
+                            i - 1), faceData.vertices.get(i), faceData);
                     addSegment(segments, currentSegment);
                 }
             }

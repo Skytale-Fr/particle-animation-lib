@@ -2,10 +2,9 @@ package fr.skytale.particleanimlib.animation.animation.pyramid;
 
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 import org.bukkit.util.Vector;
 
-public class Pyramid extends AAnimation implements ISubAnimation {
+public class Pyramid extends AAnimation {
     //Vector between the base's center and the pyramid's apex
     private IVariable<Vector> fromCenterToApex;
     //Distance between the center of the base and its vertices
@@ -17,6 +16,16 @@ public class Pyramid extends AAnimation implements ISubAnimation {
     @Override
     public PyramidTask show() {
         return new PyramidTask(this);
+    }
+
+    @Override
+    public Pyramid clone() {
+        Pyramid obj = (Pyramid) super.clone();
+        obj.fromCenterToApex = fromCenterToApex.copy();
+        obj.distanceToAnyBaseApex = distanceToAnyBaseApex.copy();
+        obj.nbBaseApex = nbBaseApex.copy();
+        obj.distanceBetweenParticles = distanceBetweenParticles.copy();
+        return obj;
     }
 
     public IVariable<Vector> getFromCenterToApex() {
@@ -51,15 +60,5 @@ public class Pyramid extends AAnimation implements ISubAnimation {
 
     public void setDistanceBetweenParticles(IVariable<Double> distanceBetweenParticles) {
         this.distanceBetweenParticles = distanceBetweenParticles;
-    }
-
-    @Override
-    public Pyramid clone() {
-        Pyramid obj = (Pyramid) super.clone();
-        obj.fromCenterToApex = fromCenterToApex.copy();
-        obj.distanceToAnyBaseApex = distanceToAnyBaseApex.copy();
-        obj.nbBaseApex = nbBaseApex.copy();
-        obj.distanceBetweenParticles = distanceBetweenParticles.copy();
-        return obj;
     }
 }

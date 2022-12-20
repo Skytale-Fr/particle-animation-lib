@@ -3,7 +3,8 @@ package fr.skytale.particleanimlib.animation.animation.circle.preset;
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.animation.parabola.ParabolaBuilder;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.CallbackPointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.position.animationposition.DirectedLocationAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,11 +26,20 @@ public class SubAnimationParabolaRotatingPresetExecutor extends AAnimationPreset
         parabolaBuilder.setPosition(circleBuilder.getPosition());
 
         circleBuilder.setNbPoints(5, true);
-        circleBuilder.setRotation(new Vector(0, 1, 0), new DoublePeriodicallyEvolvingVariable(Math.PI / 500, Math.PI / 100, 1));
+        circleBuilder.setRotation(new Vector(0, 1, 0), new DoublePeriodicallyEvolvingVariable(
+                Math.PI / 500, Math.PI / 100, 1));
         circleBuilder.setRadius(8);
         circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
         circleBuilder.setTicksDuration(600);
         circleBuilder.setShowPeriod(20);
-        circleBuilder.setPointDefinition(APointDefinition.fromSubAnim(parabolaBuilder.getAnimation(), 1.0, (v) -> v.multiply(-1).add(new Vector(0, 5, 0))));
+        circleBuilder.setPointDefinition(new CallbackPointDefinition(
+                (pointLocation, animation, task, fromAnimCenterToPoint, fromPreviousToCurrentAnimBaseLocation) -> {
+                    parabolaBuilder.setPosition(new DirectedLocationAnimationPosition(
+                            pointLocation,
+                            fromAnimCenterToPoint.multiply(-1).add(new Vector(0, 5, 0)),
+                            1.0));
+                    parabolaBuilder.getAnimation().show().setParentTask(task);
+                }
+        ));
     }
 }

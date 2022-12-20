@@ -6,14 +6,15 @@ import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotati
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.epi.preset.SimpleEpiPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixADNPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.*;
-import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningSubAnimLightningPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.lighting.preset.LightningSubAnimSpherePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningSubAnimLightningPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningSubAnimSpherePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.line.preset.*;
 import fr.skytale.particleanimlib.animation.animation.nodes.preset.SimpleNodePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.obj.preset.*;
-import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPlayerAimPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizeParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizedRotatingParabolaPresetExecutor;
@@ -23,11 +24,9 @@ import fr.skytale.particleanimlib.animation.animation.polygon.preset.SimplePolyg
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramid2PresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.SimplePyramidPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.rose.preset.*;
+import fr.skytale.particleanimlib.animation.animation.rose.preset.RotatingRoseInsideEpiPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.rose.preset.SimpleRosePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
-import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralADNPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralCastSpellPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.spiral.preset.SpiralPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.text.preset.*;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.RotatingTorusSolenoidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.TorusSolenoidPresetExecutor;
@@ -60,6 +59,7 @@ public enum AnimationPreset {
     CUBOID_ROTATING_RESIZING_WITH_INNER_COLLISIONS(new CuboidRotatingResizingWithInsideCollisionsPresetExecutor()),
     CUBOID_WITH_INSIDE_COLLISIONS(new CuboidWithInsideCollisionsPresetExecutor()),
     EPI(new SimpleEpiPresetExecutor()),
+    EXPLODING_LINES(new ExplodingLinesPresetExecutor()),
     HELICOPTER(new HelicopterPresetExecutor()),
     HELICOPTER_WITH_COLLISIONS(new HelicopterWithCollisionsPresetExecutor()),
     IMAGE_COUNTDOWN(new CountdownImagePresetExecutor(), ImagePresetInitializer.class),
@@ -71,7 +71,6 @@ public enum AnimationPreset {
     LIGHTNING_SUB_ANIM_SPHERE(new LightningSubAnimSpherePresetExecutor()),
     LINE(new SimpleLinePresetExecutor()),
     LINE_HANDS_OF_CLOCK(new LineHandsOfClockPresetExecutor()),
-    LINE_HANDS_OF_CLOCK2(new LineHandsOfClock2PresetExecutor()),
     LINE_ROTATING_ALONG_Y(new LineRotationYPresetExecutor()),
     LINE_WITH_COLLISIONS(new SimpleLineWithCollisionPresetExecutor()),
     LINE_WITH_POLYGONS(new LineWithPolygonsPresetExecutor()),
@@ -84,7 +83,6 @@ public enum AnimationPreset {
     OBJ_HUMANOID_TRI(new HumanoidTriObjPresetExecutor(), ObjPresetInitializer.class),
     OBJ_SHUTTLE(new ShuttleObjPresetExecutor(), ObjPresetInitializer.class),
     PARABOLA(new ParabolaPresetExecutor()),
-    PARABOLA_PLAYER_AIM(new ParabolaPlayerAimPresetExecutor()),
     PARABOLA_RAND_DIRECTION_AND_ROTATION(new RandomizedRotatingParabolaPresetExecutor()),
     PARABOLA_RAND_ROTATION(new RandomizeParabolaPresetExecutor()),
     POLYGON(new SimplePolygonPresetExecutor()),
@@ -107,9 +105,8 @@ public enum AnimationPreset {
     SPHERE_SUB_ANIM_POLYGON2(new SphereSubAnimPolygon2PresetExecutor()),
     SPHERE_SUB_ANIM_SPIRAL_PROPAGATION(new SphereSubAnimSpiralPropagatingUpPresetExecutor()),
     SPHERE_WITH_INSIDE_COLLISIONS(new SphereWithInsideCollisionsPresetExecutor()),
-    SPIRAL(new SpiralPresetExecutor()),
-    SPIRAL_ADN(new SpiralADNPresetExecutor()),
-    SPIRAL_CASTING_SPELL(new SpiralCastSpellPresetExecutor()),
+    SPIRAL(new HelixPresetExecutor()),
+    SPIRAL_ADN(new HelixADNPresetExecutor()),
     TEXT_KGEVERSINCENEWYORK(new SimpleTextKGEverSinceNewYorkPresetExecutor()),
     TEXT_KGEVERSINCENEWYORK_CONTENT_EVOLVING(new ContentEvolvingTextKGEverSinceNewYorkPresetExecutor()),
     TEXT_KGEVERSINCENEWYORK_DETAILSLEVEL_EVOLVING(new DetailsEvolvingTextKGEverSinceNewYorkPresetExecutor()),

@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.torussolenoid.preset;
 
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.TorusSolenoidBuilder;
-import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
@@ -9,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -53,19 +51,18 @@ public class TorusSolenoidPresetExecutor extends AAnimationPresetExecutor<TorusS
                 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 1, 1, 1
         ));
         torusSolenoidBuilder.setTorusSolenoidModifierNumerator(new CallbackVariable<>(iterationCount -> {
-            int index = Math.round(iterationCount / (3*60f)) % torusSolenoidModifiersNumerators.size();
+            int index = Math.round(iterationCount / (3 * 60f)) % torusSolenoidModifiersNumerators.size();
             Double torusSolenoidModifierNumerator = torusSolenoidModifiersNumerators.get(index);
             Bukkit.broadcastMessage("numerator = " + torusSolenoidModifierNumerator);
             return torusSolenoidModifierNumerator;
         }));
         torusSolenoidBuilder.setTorusSolenoidModifierDenominator(new CallbackVariable<>(iterationCount -> {
-            int index = Math.round(iterationCount / (3*60f)) % torusSolenoidModifiersDenominators.size();
+            int index = Math.round(iterationCount / (3 * 60f)) % torusSolenoidModifiersDenominators.size();
             int torusSolenoidModifiersDenominator = torusSolenoidModifiersDenominators.get(index);
             Bukkit.broadcastMessage("numerator = " + torusSolenoidModifiersDenominator);
             return torusSolenoidModifiersDenominator;
         }));
 
-        torusSolenoidBuilder.setMainParticle(new ParticleTemplate("REDSTONE", new Color(255, 170, 0), null));
         torusSolenoidBuilder.setShowPeriod(new Constant<>(1));
     }
 }

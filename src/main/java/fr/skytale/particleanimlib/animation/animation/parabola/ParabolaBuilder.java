@@ -1,12 +1,11 @@
 package fr.skytale.particleanimlib.animation.animation.parabola;
 
-import fr.skytale.particleanimlib.animation.attribute.projectiledirection.AnimationDirection;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.parent.builder.ARotatingAnimationBuilder;
+import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import org.bukkit.util.Vector;
 
-public class ParabolaBuilder extends ARotatingAnimationBuilder<Parabola, ParabolaTask> {
+public class ParabolaBuilder extends AAnimationBuilder<Parabola, ParabolaTask> {
 
 
     public static final String BULLET_LIFETIME_POSITIVE = "bulletLifetime should be strictly positive";
@@ -17,7 +16,7 @@ public class ParabolaBuilder extends ARotatingAnimationBuilder<Parabola, Parabol
 
     public ParabolaBuilder() {
         super();
-        animation.setDirection(AnimationDirection.fromMoveVector(new Vector(1, 1, 1)));
+        animation.setDirection(new Constant<>(new Vector(1, 1, 0)));
         animation.setSpeed(new Constant<>((double) 1));
         animation.setBulletLifetime(new Constant<>(60));
         animation.setBulletShootPeriod(new Constant<>(1));
@@ -29,8 +28,18 @@ public class ParabolaBuilder extends ARotatingAnimationBuilder<Parabola, Parabol
         return new Parabola();
     }
 
+    @Override
+    public Parabola getAnimation() {
+        checkNotNull(animation.getDirection(), DIRECTION_NOT_NULL);
+        checkPositiveAndNotNull(animation.getSpeed(), VELOCITY_POSITIVE, false);
+        checkNotNull(animation.getGravity(), GRAVITY_NOT_NULL);
+        checkSuperior(animation.getBulletLifetime(), new Constant<>(1), BULLET_LIFETIME_POSITIVE, true);
+        checkSuperior(animation.getBulletShootPeriod(), new Constant<>(1), BULLET_SHOOT_FREQUENCY_POSITIVE, true);
+        return super.getAnimation();
+    }
+
     /********* Parabola specific setters ***********/
-    public void setDirection(AnimationDirection direction) {
+    public void setDirection(IVariable<Vector> direction) {
         checkNotNull(direction, DIRECTION_NOT_NULL);
         animation.setDirection(direction);
     }
@@ -69,15 +78,5 @@ public class ParabolaBuilder extends ARotatingAnimationBuilder<Parabola, Parabol
     public void setBulletShootPeriod(IVariable<Integer> bulletShootPeriod) {
         checkSuperior(bulletShootPeriod, new Constant<>(1), BULLET_SHOOT_FREQUENCY_POSITIVE, true);
         animation.setBulletShootPeriod(bulletShootPeriod);
-    }
-
-    @Override
-    public Parabola getAnimation() {
-        checkNotNull(animation.getDirection(), DIRECTION_NOT_NULL);
-        checkPositiveAndNotNull(animation.getSpeed(), VELOCITY_POSITIVE, false);
-        checkNotNull(animation.getGravity(), GRAVITY_NOT_NULL);
-        checkSuperior(animation.getBulletLifetime(), new Constant<>(1), BULLET_LIFETIME_POSITIVE, true);
-        checkSuperior(animation.getBulletShootPeriod(), new Constant<>(1), BULLET_SHOOT_FREQUENCY_POSITIVE, true);
-        return super.getAnimation();
     }
 }

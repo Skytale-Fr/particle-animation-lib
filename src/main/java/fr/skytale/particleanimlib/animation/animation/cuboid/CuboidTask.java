@@ -1,11 +1,14 @@
 package fr.skytale.particleanimlib.animation.animation.cuboid;
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
-import fr.skytale.particleanimlib.animation.attribute.IVariableCurrentValue;
+import fr.skytale.particleanimlib.animation.attribute.annotation.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
+import fr.skytale.particleanimlib.animation.parent.task.AnimationTaskUtils;
+import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CuboidTask extends AAnimationTask<Cuboid> {
 
@@ -18,6 +21,8 @@ public class CuboidTask extends AAnimationTask<Cuboid> {
     @IVariableCurrentValue
     private Double distanceBetweenPoints;
 
+    private Map<CuboidCorner, Vector> corners;
+
     public CuboidTask(Cuboid cuboid) {
         super(cuboid);
         startTask();
@@ -25,14 +30,14 @@ public class CuboidTask extends AAnimationTask<Cuboid> {
 
     @Override
     protected List<AnimationPointData> computeAnimationPoints() {
-        Map<CuboidCorner, Vector> corners = getCorners();
+        corners = getCorners();
         List<AnimationPointData> points = new ArrayList<>();
 
         //Collecting each edge points
         CuboidEdge.getEdges().forEach(edge -> {
             Vector firstCorner = corners.get(edge.firstVertice);
             Vector secondCorner = corners.get(edge.secondVertice);
-            points.addAll(getLinePoints(firstCorner, secondCorner, distanceBetweenPoints));
+            points.addAll(AnimationTaskUtils.getLinePoints(firstCorner, secondCorner, distanceBetweenPoints));
 
         });
         return points;
@@ -73,6 +78,19 @@ public class CuboidTask extends AAnimationTask<Cuboid> {
         return corners;
     }
 
+    // TODO probablement à supprimer car utilisé uniquement dans le contexte d'un mauvais calcul de collision
+    public Map<CuboidCorner, Location> getCurrentCornersLocation() {
+        return CuboidCorner.OPPOSITE_CORNERS.stream()
+                .collect(Collectors.toMap(
+                        cuboidCorner -> cuboidCorner,
+                        cuboidCorner -> {
+                            Vector fromCenterToCorner = corners.get(cuboidCorner);
+                            Vector fromCenterToCornerRotated = currentRotation.rotateVector(fromCenterToCorner);
+                            return getCurrentIterationBaseLocation().clone().add(fromCenterToCornerRotated);
+                        }
+                ));
+    }
+
     public enum CuboidCorner {
         UPPER_EAST_SOUTH,
         UPPER_EAST_NORTH,
@@ -82,6 +100,8 @@ public class CuboidTask extends AAnimationTask<Cuboid> {
         LOWER_EAST_NORTH,
         LOWER_WEST_SOUTH,
         LOWER_WEST_NORTH;
+
+        public static List<CuboidCorner> OPPOSITE_CORNERS = new ArrayList<>(Arrays.asList(CuboidCorner.LOWER_WEST_NORTH, CuboidCorner.UPPER_EAST_SOUTH));
     }
 
     private static class CuboidEdge {
@@ -104,19 +124,20 @@ public class CuboidTask extends AAnimationTask<Cuboid> {
         private static Set<CuboidEdge> initEdges() {
             HashSet<CuboidEdge> edgeSet = new HashSet<>();
 
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_SOUTH, CuboidCorner.LOWER_EAST_SOUTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_SOUTH, CuboidCorner.LOWER_EAST_NORTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_NORTH, CuboidCorner.LOWER_EAST_NORTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_NORTH, CuboidCorner.LOWER_WEST_SOUTH));
+
             edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_WEST_SOUTH, CuboidCorner.UPPER_EAST_SOUTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_SOUTH, CuboidCorner.LOWER_WEST_NORTH));
             edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_EAST_SOUTH, CuboidCorner.UPPER_EAST_NORTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_NORTH, CuboidCorner.LOWER_EAST_NORTH));
             edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_EAST_NORTH, CuboidCorner.UPPER_WEST_NORTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_NORTH, CuboidCorner.LOWER_EAST_SOUTH));
             edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_WEST_NORTH, CuboidCorner.UPPER_WEST_SOUTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_SOUTH, CuboidCorner.LOWER_WEST_NORTH));
 
             edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_SOUTH, CuboidCorner.UPPER_WEST_SOUTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_EAST_NORTH, CuboidCorner.LOWER_EAST_NORTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_NORTH, CuboidCorner.UPPER_EAST_NORTH));
             edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_SOUTH, CuboidCorner.UPPER_EAST_SOUTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_WEST_NORTH, CuboidCorner.LOWER_WEST_NORTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_NORTH, CuboidCorner.UPPER_WEST_NORTH));
 
             return edgeSet;
         }

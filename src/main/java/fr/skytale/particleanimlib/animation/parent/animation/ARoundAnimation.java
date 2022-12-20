@@ -4,7 +4,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 
 public abstract class ARoundAnimation extends AAnimation {
     protected IVariable<Double> radius;
-    protected IVariable<Double> angleBetweenEachPoint;
+    protected IVariable<Integer> nbPoints;
 
     /***********GETTERS & SETTERS***********/
 
@@ -16,12 +16,12 @@ public abstract class ARoundAnimation extends AAnimation {
         this.radius = radius;
     }
 
-    public IVariable<Double> getAngleBetweenEachPoint() {
-        return angleBetweenEachPoint;
+    public IVariable<Integer> getNbPoints() {
+        return nbPoints;
     }
 
-    public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint) {
-        this.angleBetweenEachPoint = angleBetweenEachPoint;
+    public void setNbPoints(IVariable<Integer> nbPoints) {
+        this.nbPoints = nbPoints;
     }
 
     @Override
@@ -29,7 +29,7 @@ public abstract class ARoundAnimation extends AAnimation {
         ARoundAnimation obj = null;
         obj = (ARoundAnimation) super.clone();
         obj.radius = radius.copy();
-        obj.angleBetweenEachPoint = angleBetweenEachPoint.copy();
+        obj.nbPoints = nbPoints.copy();
         return obj;
     }
 

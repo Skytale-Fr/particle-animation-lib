@@ -8,6 +8,12 @@ import java.util.function.BiPredicate;
 
 public abstract class AViewers implements Cloneable {
 
+    protected final Type type;
+
+    protected AViewers(Type type) {
+        this.type = type;
+    }
+
     public static AViewers fromCustomPlayers(Collection<? extends Player> viewers) {
         return new CustomPlayers(viewers);
     }
@@ -22,12 +28,6 @@ public abstract class AViewers implements Cloneable {
 
     public static AViewers fromWorldPlayers() {
         return new WorldPlayers();
-    }
-
-    protected final Type type;
-
-    protected AViewers(Type type) {
-        this.type = type;
     }
 
     public Type getType() {

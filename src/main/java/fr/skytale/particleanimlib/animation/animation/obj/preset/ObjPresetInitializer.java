@@ -20,7 +20,8 @@ public class ObjPresetInitializer extends APresetInitializer {
     private static final String OBJ_FOLDER_NAME = Obj.MODELS_FOLDER;
     private static final String OBJ_FOLDER_PATH_IN_JAR = OBJ_FOLDER_NAME + "/";
     private static final String OBJ_FOLDER_CREATION_ERROR = "Error creating " + OBJ_FOLDER_NAME + " folder.";
-    private static final String OBJ_EXTRACTION_ERROR = "Error extracting default obj into " + OBJ_FOLDER_NAME + " folder.";
+    private static final String OBJ_EXTRACTION_ERROR =
+            "Error extracting default obj into " + OBJ_FOLDER_NAME + " folder.";
 
     @Override
     protected void initialize(JavaPlugin plugin) {

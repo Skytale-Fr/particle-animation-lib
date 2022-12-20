@@ -33,6 +33,14 @@ public class CallbackWithPreviousValueVariable<T> implements IVariable<T> {
         this.previousIterationCount = 0;
     }
 
+    public CallbackWithPreviousValueVariable(CallbackWithPreviousValueVariable<T> callbackWithPreviousValueVariable) {
+        this(
+                callbackWithPreviousValueVariable.previousValue,
+                callbackWithPreviousValueVariable.callback
+        );
+    }
+
+
     /**
      * Retrieves the callback able to return the current value of type T
      *
@@ -73,7 +81,7 @@ public class CallbackWithPreviousValueVariable<T> implements IVariable<T> {
      */
     @Override
     public IVariable<T> copy() {
-        return new CallbackWithPreviousValueVariable<T>(this.previousValue, this.callback);
+        return new CallbackWithPreviousValueVariable<>(this.previousValue, this.callback);
     }
 
     /**

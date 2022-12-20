@@ -3,10 +3,9 @@ package fr.skytale.particleanimlib.animation.animation.circle;
 
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARoundAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 
-public class Circle extends ARoundAnimation implements ISubAnimation {
-    private IVariable<Integer> nbPoints;
+public class Circle extends ARoundAnimation {
+    private IVariable<Double> angleBetweenEachPoint;
 
     public Circle() {
     }
@@ -18,12 +17,12 @@ public class Circle extends ARoundAnimation implements ISubAnimation {
 
     /***********GETTERS & SETTERS***********/
 
-    public IVariable<Integer> getNbPoints() {
-        return nbPoints;
+    public IVariable<Double> getAngleBetweenEachPoint() {
+        return angleBetweenEachPoint;
     }
 
-    public void setNbPoints(IVariable<Integer> nbPoints) {
-        this.nbPoints = nbPoints;
+    public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint) {
+        this.angleBetweenEachPoint = angleBetweenEachPoint;
     }
 
     @Override

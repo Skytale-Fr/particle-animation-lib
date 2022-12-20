@@ -3,9 +3,8 @@ package fr.skytale.particleanimlib.animation.animation.nodes;
 
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
-import fr.skytale.particleanimlib.animation.parent.animation.subanim.ISubAnimation;
 
-public class Node extends AAnimation implements ISubAnimation {
+public class Node extends AAnimation {
     private IVariable<Integer> nbPoints;
     private IVariable<Double> nodeModifierNumerator;
     private IVariable<Integer> nodeModifierDenominator;

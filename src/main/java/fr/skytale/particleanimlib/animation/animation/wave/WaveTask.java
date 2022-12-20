@@ -1,8 +1,8 @@
 package fr.skytale.particleanimlib.animation.animation.wave;
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
-import fr.skytale.particleanimlib.animation.attribute.ForceUpdatePointsConfiguration;
-import fr.skytale.particleanimlib.animation.attribute.IVariableCurrentValue;
+import fr.skytale.particleanimlib.animation.attribute.annotation.ForceUpdatePointsConfiguration;
+import fr.skytale.particleanimlib.animation.attribute.annotation.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.util.Vector;
 
@@ -32,7 +32,8 @@ public class WaveTask extends AAnimationTask<Wave> {
     protected List<AnimationPointData> computeAnimationPoints() {
         List<AnimationPointData> animationPointsData = new ArrayList<>();
         // Computing the vertical coordinate of the wave's current circle
-        double baseY = ((2 * Math.exp(intermediateCachedResult * currentRadius) * Math.sin(currentRadius)) + 1) * (animation.getPositiveHeight() ? 1 : -1);
+        double baseY = ((2 * Math.exp(intermediateCachedResult * currentRadius) * Math.sin(currentRadius)) + 1) *
+                       (animation.getPositiveHeight() ? 1 : -1);
 
         // Tracing circle
         for (int pointIndex = 0; pointIndex < nbPoints; pointIndex++) {
@@ -56,5 +57,4 @@ public class WaveTask extends AAnimationTask<Wave> {
     protected boolean shouldStop() {
         return super.shouldStop() || currentRadius >= animation.getRadiusMax();
     }
-
 }

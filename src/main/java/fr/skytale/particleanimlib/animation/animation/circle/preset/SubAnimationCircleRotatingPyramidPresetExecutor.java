@@ -3,7 +3,7 @@ package fr.skytale.particleanimlib.animation.animation.circle.preset;
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.animation.pyramid.PyramidBuilder;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
@@ -31,7 +31,8 @@ public class SubAnimationCircleRotatingPyramidPresetExecutor extends AAnimationP
         circleBuilder.setRadius(8);
         circleBuilder.setTicksDuration(600);
         circleBuilder.setShowPeriod(new Constant<>(2));
-        circleBuilder.setRotation(new Constant<>(new Vector(1, 0, 0)), new DoublePeriodicallyEvolvingVariable(Math.PI / 500, Math.PI / 200, 3));
-        circleBuilder.setPointDefinition(APointDefinition.fromSubAnim(pyramidBuilder.getAnimation()));
+        circleBuilder.setRotation(new Constant<>(new Vector(1, 0, 0)), new DoublePeriodicallyEvolvingVariable(
+                Math.PI / 500, Math.PI / 200, 3));
+        circleBuilder.setPointDefinition(new SubAnimPointDefinition(pyramidBuilder.getAnimation()));
     }
 }

@@ -13,12 +13,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-
-import java.util.Arrays;
 
 /**
  * This class extends CollisionPreset to implements entity collision presets.
+ *
  * @param <K> The type of animation task you want to plug this collision preset to
  * @see CollisionPreset
  */
@@ -43,6 +41,7 @@ public class EntityCollisionPreset<K extends AAnimationTask<? extends AAnimation
         Location min = animationTask.getCurrentCornersLocation().get(CuboidTask.CuboidCorner.LOWER_WEST_NORTH);
         Location max = animationTask.getCurrentCornersLocation().get(CuboidTask.CuboidCorner.UPPER_EAST_SOUTH);
         return BoundingBox.of(min, max).contains(target.getBoundingBox());
+        //TODO ça ne fonctionne pas car on est sur une AxisAlignedBB alors que le cuboid peut avoir subit une rotation
     });
 
     /**
@@ -79,7 +78,9 @@ public class EntityCollisionPreset<K extends AAnimationTask<? extends AAnimation
         // If the projected point isn't in the circle
         if (projectedPoint.distance(sphereCenterVector3D) >= animationTask.getCurrentRadius()) return false;
 
-        double radius = Math.sqrt(Math.pow(targetBoundingBox.getWidthX(), 2) + Math.pow(targetBoundingBox.getWidthZ(), 2) + Math.pow(targetBoundingBox.getHeight(), 2));
+        double radius = Math.sqrt(
+                Math.pow(targetBoundingBox.getWidthX(), 2) + Math.pow(targetBoundingBox.getWidthZ(), 2) +
+                Math.pow(targetBoundingBox.getHeight(), 2));
 
         double distance = projectedPoint.distance(targetCenterVector3D);
         // If the projected point is close to the entity
@@ -88,6 +89,7 @@ public class EntityCollisionPreset<K extends AAnimationTask<? extends AAnimation
 
     /**
      * Creates an entity collision preset with the provided collision check predicate.
+     *
      * @param collisionPredicate The collision check predicate.
      */
     public EntityCollisionPreset(CollisionPredicate<Entity, K> collisionPredicate) {
@@ -97,6 +99,7 @@ public class EntityCollisionPreset<K extends AAnimationTask<? extends AAnimation
     /**
      * Compute a generic version of an entity collision preset to check if an entity is inside a sphere.
      * The computation is based on the given sphere radius and on the animation current iteration base location.
+     *
      * @param sphereRadius The radius of the sphere
      * @return
      */
@@ -112,7 +115,8 @@ public class EntityCollisionPreset<K extends AAnimationTask<? extends AAnimation
     /**
      * Compute a generic version of an entity collision preset to check if an entity is inside a cube.
      * The computation is based on the given corners by computing the LOWER_WEST_NORTH and UPPER_EAST_SOUTH corners.
-     * @param firstCorner The first corner of the cube
+     *
+     * @param firstCorner  The first corner of the cube
      * @param secondCorner The second corner of the cube
      * @return
      */

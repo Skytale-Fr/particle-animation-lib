@@ -27,22 +27,20 @@ public class WaveBuilder extends AAnimationBuilder<Wave, WaveTask> {
         return new Wave();
     }
 
+    @Override
+    public Wave getAnimation() {
+        if (animation.getRadiusStart() <= 0) {
+            throw new IllegalArgumentException("RadiusStart should be positive.");
+        }
+        if (animation.getRadiusMax() <= 0) {
+            throw new IllegalArgumentException("RadiusMax should be positive.");
+        }
+        checkPositiveAndNotNull(animation.getNbPoints(), "nbPoints should be positive", false);
+        checkPositiveAndNotNull(animation.getAngleBetweenEachPoint(), "angleBetweenEachPoint should be positive", false);
+        return super.getAnimation();
+    }
 
     /********* Circle specific setters ***********/
-    public void setDirectorVectors(Vector u, Vector v) {
-        checkNotNull(u, CircleBuilder.DIRECTOR_VECTOR_U_SHOULD_NOT_BE_NULL);
-        checkNotNull(v, CircleBuilder.DIRECTOR_VECTOR_V_SHOULD_NOT_BE_NULL);
-        animation.setRotation(u,v);
-    }
-
-    public void setDirectorVectorsFromOrientation(Orientation direction, double length) {
-        setDirectorVectors(direction.getU(length), direction.getV(length));
-    }
-
-    public void setDirectorVectorsFromNormalVector(Vector normal) {
-        RotatableVector.Plane2D plane = new RotatableVector(normal).getPlane();
-        setDirectorVectors(plane.u,plane.v);
-    }
 
     public void setRadiusStart(double radiusStart) {
         if (radiusStart <= 0) {
@@ -80,7 +78,8 @@ public class WaveBuilder extends AAnimationBuilder<Wave, WaveTask> {
         if (fullCircle) {
             if (!angleBetweenEachPoint.isConstant())
                 throw new IllegalArgumentException(CircleBuilder.FULL_CIRCLE_ANGLE_BETWEEN_EACH_POINT_ERROR_MESSAGE);
-            animation.setNbPoints(new Constant<>((int) Math.round(2 * Math.PI / angleBetweenEachPoint.getCurrentValue(0))));
+            animation.setNbPoints(new Constant<>((int) Math.round(
+                    2 * Math.PI / angleBetweenEachPoint.getCurrentValue(0))));
         }
     }
 
@@ -112,18 +111,5 @@ public class WaveBuilder extends AAnimationBuilder<Wave, WaveTask> {
 
     public void setPositiveHeight(boolean positiveHeight) {
         animation.setPositiveHeight(positiveHeight);
-    }
-
-    @Override
-    public Wave getAnimation() {
-        if (animation.getRadiusStart() <= 0) {
-            throw new IllegalArgumentException("RadiusStart should be positive.");
-        }
-        if (animation.getRadiusMax() <= 0) {
-            throw new IllegalArgumentException("RadiusMax should be positive.");
-        }
-        checkPositiveAndNotNull(animation.getNbPoints(), "nbPoints should be positive", false);
-        checkPositiveAndNotNull(animation.getAngleBetweenEachPoint(), "angleBetweenEachPoint should be positive", false);
-        return super.getAnimation();
     }
 }
