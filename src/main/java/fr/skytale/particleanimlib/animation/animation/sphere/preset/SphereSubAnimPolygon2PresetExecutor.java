@@ -4,8 +4,10 @@ import fr.skytale.particleanimlib.animation.animation.polygon.PolygonBuilder;
 import fr.skytale.particleanimlib.animation.animation.sphere.Sphere;
 import fr.skytale.particleanimlib.animation.animation.sphere.SphereBuilder;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationModifier;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 public class SphereSubAnimPolygon2PresetExecutor extends AAnimationPresetExecutor<SphereBuilder> {
 
@@ -18,14 +20,18 @@ public class SphereSubAnimPolygon2PresetExecutor extends AAnimationPresetExecuto
         PolygonBuilder polygonBuilder = new PolygonBuilder();
         polygonBuilder.setPosition(sphereBuilder.getPosition());
         polygonBuilder.setJavaPlugin(sphereBuilder.getJavaPlugin());
+        polygonBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 1, 0));
         polygonBuilder.setNbVertices(6);
         polygonBuilder.setDistanceBetweenPoints(0.4);
         polygonBuilder.setDistanceFromCenterToVertices(2);
         polygonBuilder.setTicksDuration(1);
         polygonBuilder.setShowPeriod(1);
-        sphereBuilder.setRadius(5);
+        sphereBuilder.setRadius(7.5);
         sphereBuilder.setNbPoints(56);
-        sphereBuilder.setPointDefinition(new SubAnimPointDefinition(polygonBuilder.getAnimation()));
+        sphereBuilder.setPointDefinition(new SubAnimPointDefinition(
+                polygonBuilder.getAnimation(),
+                SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION
+        ));
         sphereBuilder.setSphereType(Sphere.Type.FULL);
         sphereBuilder.setTicksDuration(100);
         sphereBuilder.setShowPeriod(3);

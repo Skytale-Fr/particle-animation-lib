@@ -2,6 +2,7 @@ package fr.skytale.particleanimlib.animation.animation.helix.preset;
 
 import fr.skytale.particleanimlib.animation.animation.helix.HelixBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.position.animationposition.DirectedLocationAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.IntegerPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,6 +20,7 @@ public class HelixPresetExecutor extends AAnimationPresetExecutor<HelixBuilder> 
 
     @Override
     protected void apply(HelixBuilder helixBuilder, JavaPlugin plugin) {
+        helixBuilder.setPosition(new DirectedLocationAnimationPosition(helixBuilder.getOriginLocation(), new Vector(0, 1, 0), 0.3d));
         helixBuilder.setRadius(2);
         helixBuilder.setNbSpiral(new IntegerPeriodicallyEvolvingVariable(1, 1, 30));
         helixBuilder.setHelixAngle(Math.PI / 24);

@@ -6,6 +6,7 @@ import fr.skytale.particleanimlib.animation.animation.sphere.SphereBuilder;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 public class SphereSubAnimPolygonPropagatingUpPresetExecutor extends AAnimationPresetExecutor<SphereBuilder> {
 
@@ -21,6 +22,7 @@ public class SphereSubAnimPolygonPropagatingUpPresetExecutor extends AAnimationP
         polygonBuilder.setNbVertices(8);
         polygonBuilder.setDistanceBetweenPoints(0.4);
         polygonBuilder.setDistanceFromCenterToVertices(2);
+        polygonBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 1, 0));
         polygonBuilder.setTicksDuration(1);
         polygonBuilder.setShowPeriod(1);
         sphereBuilder.setRadius(10);

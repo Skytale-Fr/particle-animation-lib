@@ -37,7 +37,7 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
         animation.setShowPeriod(new Constant<>(0));
         animation.setTicksDuration(60);
         animation.setViewers(AViewers.fromNearbyPlayers(300));
-        animation.setRotation(new Constant<>(PARotation.DEFAULT_ROTATION));
+        setRotation(PARotation.DEFAULT_ROTATION);
         animation.setPointDefinition(new ParticlePointDefinition(
                 new ParticleTemplate(ParticleEffect.REDSTONE, new Color(255, 170, 0)))
         );

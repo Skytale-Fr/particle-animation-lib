@@ -16,8 +16,8 @@ import fr.skytale.particleanimlib.animation.animation.line.preset.*;
 import fr.skytale.particleanimlib.animation.animation.nodes.preset.SimpleNodePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.obj.preset.*;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizeParabolaPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizedRotatingParabolaPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizedDirectionParabolaPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizedSpeedAndDirectionParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.GrowingPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.RotatingPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.SimplePolygonPresetExecutor;
@@ -83,8 +83,8 @@ public enum AnimationPreset {
     OBJ_HUMANOID_TRI(new HumanoidTriObjPresetExecutor(), ObjPresetInitializer.class),
     OBJ_SHUTTLE(new ShuttleObjPresetExecutor(), ObjPresetInitializer.class),
     PARABOLA(new ParabolaPresetExecutor()),
-    PARABOLA_RAND_DIRECTION_AND_ROTATION(new RandomizedRotatingParabolaPresetExecutor()),
-    PARABOLA_RAND_ROTATION(new RandomizeParabolaPresetExecutor()),
+    PARABOLA_RAND_DIRECTION(new RandomizedDirectionParabolaPresetExecutor()),
+    PARABOLA_RAND_DIRECTION_AND_SPEED(new RandomizedSpeedAndDirectionParabolaPresetExecutor()),
     POLYGON(new SimplePolygonPresetExecutor()),
     POLYGON_GROWING(new GrowingPolygonPresetExecutor()),
     POLYGON_ROTATING(new RotatingPolygonPresetExecutor()),
@@ -105,8 +105,8 @@ public enum AnimationPreset {
     SPHERE_SUB_ANIM_POLYGON2(new SphereSubAnimPolygon2PresetExecutor()),
     SPHERE_SUB_ANIM_SPIRAL_PROPAGATION(new SphereSubAnimSpiralPropagatingUpPresetExecutor()),
     SPHERE_WITH_INSIDE_COLLISIONS(new SphereWithInsideCollisionsPresetExecutor()),
-    SPIRAL(new HelixPresetExecutor()),
-    SPIRAL_ADN(new HelixADNPresetExecutor()),
+    HELIX(new HelixPresetExecutor()),
+    HELIX_ADN(new HelixADNPresetExecutor()),
     TEXT_KGEVERSINCENEWYORK(new SimpleTextKGEverSinceNewYorkPresetExecutor()),
     TEXT_KGEVERSINCENEWYORK_CONTENT_EVOLVING(new ContentEvolvingTextKGEverSinceNewYorkPresetExecutor()),
     TEXT_KGEVERSINCENEWYORK_DETAILSLEVEL_EVOLVING(new DetailsEvolvingTextKGEverSinceNewYorkPresetExecutor()),

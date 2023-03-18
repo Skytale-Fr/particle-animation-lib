@@ -18,8 +18,10 @@ import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.lang.reflect.Field;
-import java.util.*;
-import java.util.function.Function;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
@@ -27,29 +29,24 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     public static final Vector U = new Vector(1, 0, 0);
     public static final Vector V = new Vector(0, 0, 1);
     public static final Vector W = new Vector(0, 1, 0);
-
+    private final AAnimationPosition position;
     protected T animation;
     protected AAnimationTask<?> parentTask;
-
     // Animation task main data management
     protected Integer taskId;
     protected int iterationCount;
     protected int currentShowPeriod;
     protected AnimationMove currentIterationMove;
-
     // Animation points management
     protected Set<AAnimationTaskTrackedField<?, ?>> trackedFieldsData;
     protected ForceUpdatePointsConfiguration forceUpdatePointsConfiguration;
     protected List<AnimationPointData> animationPoints;
-
     // Animation rotation management
     protected PARotation currentRotation;
     protected List<AnimationPointData> rotatedAnimationPoints;
     protected Vector currentU;
     protected Vector currentV;
     protected Vector currentW;
-
-    private AAnimationPosition position;
 
     protected AAnimationTask(T animation) {
         //noinspection unchecked
@@ -126,73 +123,70 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     /* ******** OTHER PUBLIC METHODS *********/
     @Override
     public final void run() {
-        computeIterationBaseLocation();
 
         //We only show at the specified frequency
         currentShowPeriod = animation.getShowPeriod().getCurrentValue(iterationCount);
+
+        final boolean isIterationShown = currentShowPeriod == 0 || iterationCount % currentShowPeriod == 0;
+
+        //Compute the move (including the new animation location)
+        currentIterationMove = position.getCurrentValue(iterationCount);
 
         // If a stop condition has been set, we need to check this condition
         // and stop the animation if true is returned.
         if (shouldStop()) {
             //If the move was cancelled we will not run the callback
-            //It usually occurs when:
-            // - the animation is moving according to an entity location
-            // - and the entity is dead
+            //It usually occurs when the animation is moving towards an entity and if:
+            // - the entity is dead
             // - or the entity was teleported to another world
             // - or the entity (player) left the server
-            final boolean runCallback = !getCurrentIterationMove().isCancelled();
-            stopAnimation(runCallback);
+            stopAnimation(!getCurrentIterationMove().isCancelled());
             return;
         }
 
         // Recomputing animationPoints if needed
         boolean animationPointsChanged = false;
 
-        if ((currentShowPeriod == 0 || iterationCount % currentShowPeriod == 0) && shouldRecomputePoints()) {
+        if (isIterationShown && shouldRecomputePoints()) {
             animationPoints = computeAnimationPoints();
             animationPointsChanged = true;
         }
 
         if (animationPoints != null && !animationPoints.isEmpty()) {
 
+            // Compute new rotation
             IVariable.ChangeResult<PARotation> rotationChangeResult = animation.getRotation().willChange(iterationCount, currentRotation);
-
-            // Rotating animation if needed
-            if (rotationChangeResult.hasChanged()) {
+            final boolean rotationChanged = rotationChangeResult.hasChanged();
+            if (rotationChanged) {
                 currentRotation = rotationChangeResult.getNewValue();
-                List<AnimationPointData> list = new ArrayList<>();
-                for (AnimationPointData pointData : animationPoints) {
-                    final Vector fromCenterToPoint = currentRotation.rotateVector(pointData.getFromCenterToPoint().clone());
-                    final Function<APointDefinition, APointDefinition> pointDefinitionModifier = pointData.getPointDefinitionModifier();
-                    AnimationPointData animationPointData = new AnimationPointData(fromCenterToPoint, pointDefinitionModifier);
-                    list.add(animationPointData);
-                }
-                rotatedAnimationPoints = list;
                 //Computing rotated 3D hyperplan(frame) from default hyperplan(minecraft world frame)
                 currentU = currentRotation.rotateVector(U);
                 currentV = currentRotation.rotateVector(V);
                 currentW = currentRotation.rotateVector(W);
-            } else if (animationPointsChanged) {
+            }
+
+            // (re)compute rotated points
+            if (rotationChanged || animationPointsChanged) {
                 rotatedAnimationPoints = animationPoints.stream()
-                        .map(pointData -> new AnimationPointData(currentRotation.rotateVector(pointData.getFromCenterToPoint()), pointData.getPointDefinitionModifier()))
+                        .map(pointData -> new AnimationPointData(
+                                currentRotation.rotateVector(pointData.getFromCenterToPoint().clone()), pointData.getPointDefinitionModifier()))
                         .collect(Collectors.toList());
             }
+
             // Collecting potential targets (usually entities) that can be collided
-            this.animation.getCollisionHandlers().forEach(collisionHandler -> {
-                collisionHandler.collect(iterationCount, this);
-            });
+            this.animation.getCollisionHandlers().forEach(collisionHandler ->
+                    collisionHandler.collect(iterationCount, this));
 
             // Showing animation at given show period
-            if (currentShowPeriod == 0 || iterationCount % currentShowPeriod == 0) {
+            if (isIterationShown) {
                 show();
             }
 
             // Processing collision
-            this.animation.getCollisionHandlers().forEach(collisionHandler -> {
-                collisionHandler.processCollision(iterationCount, CollisionTestType.MAIN_PARTICLE, currentIterationMove.getAfterMoveLocation(), this);
-            });
+            this.animation.getCollisionHandlers().forEach(collisionHandler ->
+                    collisionHandler.processCollision(iterationCount, CollisionTestType.MAIN_PARTICLE, currentIterationMove.getAfterMoveLocation(), this));
         }
-        if (getCurrentIterationMove().hasReachedTarget()) {
+        if (currentIterationMove.hasReachedTarget()) {
             stopAnimation();
         }
 
@@ -222,7 +216,8 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     }
 
     protected boolean shouldStop() {
-        return hasDurationEnded() ||
+        return getCurrentIterationMove().isCancelled() ||
+               hasDurationEnded() ||
                (
                        iterationCount > 0 &&
                        this.animation.getStopCondition() != null &&
@@ -244,9 +239,8 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
                 pointLocation.toVector().subtract(getCurrentIterationBaseLocation().toVector()),
                 getCurrentIterationMove().getMove());
 
-        this.animation.getCollisionHandlers().forEach(collisionHandler -> {
-            collisionHandler.processCollision(iterationCount, CollisionTestType.PER_PARTICLE, pointLocation, this);
-        });
+        this.animation.getCollisionHandlers().forEach(collisionHandler ->
+                collisionHandler.processCollision(iterationCount, CollisionTestType.PER_PARTICLE, pointLocation, this));
 
     }
 
@@ -272,41 +266,43 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
                 shouldRecomputePoints = true;
             }
         }
-        if (shouldRecomputePoints || animationPoints == null) {
-            return true;
-        }
 
-        if (this.forceUpdatePointsConfiguration != null && this.forceUpdatePointsConfiguration.alwaysUpdate()) {
-            return true;
-        }
+        return
+                // If a IVariable value changed and has been defined, through its annotation, to update points on change.
+                shouldRecomputePoints ||
 
-        if ((
-                    this.forceUpdatePointsConfiguration == null ||
-                    this.forceUpdatePointsConfiguration.ifShouldUpdatePointsMethod()
-            )
-            && shouldUpdatePoints()) {
-            return true;
-        }
+                // If this is the first iteration
+                animationPoints == null ||
 
-        return shouldRecomputePoints;
-    }
+                // If the AnimationTask has been defined to always update point through its annotation
+                (this.forceUpdatePointsConfiguration != null && this.forceUpdatePointsConfiguration.alwaysUpdate()) ||
 
-    private void computeIterationBaseLocation() {
-        currentIterationMove = position.getCurrentValue(iterationCount);
+                // If the shouldUpdatePoint method should be called (according to annotation)
+                // and if the result of this method is true
+                (
+                        (
+                                this.forceUpdatePointsConfiguration == null ||
+                                this.forceUpdatePointsConfiguration.ifShouldUpdatePointsMethod()
+                        ) &&
+                        shouldUpdatePoints()
+                );
     }
 
     private void show() {
 
-        rotatedAnimationPoints.forEach(animationPointData -> {
-            showPoint(
-                    animationPointData.applyModifier(animation.getPointDefinition()),
-                    new Location(
-                            getCurrentIterationBaseLocation().getWorld(),
-                            getCurrentIterationBaseLocation().getX() + animationPointData.getFromCenterToPoint().getX(),
-                            getCurrentIterationBaseLocation().getY() + animationPointData.getFromCenterToPoint().getY(),
-                            getCurrentIterationBaseLocation().getZ() + animationPointData.getFromCenterToPoint().getZ()
-                    ));
-        });
+        rotatedAnimationPoints.forEach(animationPointData ->
+                showPoint(
+                        animationPointData.applyModifier(animation.getPointDefinition()),
+                        new Location(
+                                getCurrentIterationBaseLocation().getWorld(),
+                                getCurrentIterationBaseLocation().getX() +
+                                animationPointData.getFromCenterToPoint().getX(),
+                                getCurrentIterationBaseLocation().getY() +
+                                animationPointData.getFromCenterToPoint().getY(),
+                                getCurrentIterationBaseLocation().getZ() +
+                                animationPointData.getFromCenterToPoint().getZ()
+                        )));
+
     }
 
     private void buildAnnotationData() {
@@ -328,11 +324,11 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         for (Field taskField : taskFields) {
             //Find fields having the @IVariableCurrentValue annotation
             //they will always contain the updated value of the IVariable inside the Task instance
-            buildIVariablaAnnotationData(animFields, taskField);
+            buildIVariableAnnotationData(animFields, taskField);
         }
     }
 
-    private void buildIVariablaAnnotationData(Set<Field> animFields, Field taskField) {
+    private void buildIVariableAnnotationData(Set<Field> animFields, Field taskField) {
         IVariableCurrentValue iVariableCurrentValueAnnotation = taskField.getAnnotation(IVariableCurrentValue.class);
         if (iVariableCurrentValueAnnotation != null) {
             // Allow overriding the related animation field name in the IVariableCurrentValue annotation

@@ -16,7 +16,6 @@ public class ParabolaPresetExecutor extends AAnimationPresetExecutor<ParabolaBui
 
     @Override
     protected void apply(ParabolaBuilder parabolaBuilder, JavaPlugin plugin) {
-        parabolaBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, new Color(255, 0, 0)));
         parabolaBuilder.setTicksDuration(100);
         parabolaBuilder.setShowPeriod(3);
         parabolaBuilder.setBulletShootPeriod(10);

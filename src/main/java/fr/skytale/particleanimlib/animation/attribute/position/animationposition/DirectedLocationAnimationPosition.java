@@ -27,7 +27,7 @@ public class DirectedLocationAnimationPosition extends AAnimationPosition {
                    useful for animations like Helix that will use this vector to define the Hyperplane of the animation
                  */
                 AnimationMove.createMove(
-                        originLocation,
+                        originLocation.clone().subtract(direction.getCurrentValue(0)),
                         direction.getCurrentValue(0)
                 ),
                 (iterationCount, previousMove) -> {

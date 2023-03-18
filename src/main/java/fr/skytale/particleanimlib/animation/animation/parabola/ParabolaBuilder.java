@@ -39,6 +39,10 @@ public class ParabolaBuilder extends AAnimationBuilder<Parabola, ParabolaTask> {
     }
 
     /********* Parabola specific setters ***********/
+    public void setDirection(Vector direction) {
+        animation.setDirection(new Constant<>(direction));
+    }
+
     public void setDirection(IVariable<Vector> direction) {
         checkNotNull(direction, DIRECTION_NOT_NULL);
         animation.setDirection(direction);

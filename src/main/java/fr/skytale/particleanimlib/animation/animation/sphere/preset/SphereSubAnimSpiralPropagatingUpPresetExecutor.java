@@ -20,7 +20,7 @@ public class SphereSubAnimSpiralPropagatingUpPresetExecutor extends AAnimationPr
         HelixBuilder helixBuilder = new HelixBuilder();
         helixBuilder.setPosition(sphereBuilder.getPosition());
         helixBuilder.setJavaPlugin(sphereBuilder.getJavaPlugin());
-        helixBuilder.applyPreset(AnimationPreset.SPIRAL, plugin);
+        helixBuilder.applyPreset(AnimationPreset.HELIX, plugin);
         helixBuilder.setRadius(new DoublePeriodicallyEvolvingVariable(1.0, 0.2, 3));
         sphereBuilder.setRadius(5);
         sphereBuilder.setNbPoints(60);

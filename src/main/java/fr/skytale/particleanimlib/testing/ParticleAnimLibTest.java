@@ -24,7 +24,7 @@ import java.util.UUID;
 
 public class ParticleAnimLibTest {
 
-    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.IMAGE_PIG_BOAT_BOW;
+    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.HELIX;
     public static TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
     public static boolean DEFAULT_SHOW_ON_CLICK = true;
 
