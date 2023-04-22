@@ -6,7 +6,7 @@ import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotati
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.epi.preset.SimpleEpiPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixADNPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixSubAnimPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.*;
 import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningPresetExecutor;
@@ -103,10 +103,11 @@ public enum AnimationPreset {
     SPHERE_SUB_ANIM_POLYGON(new SphereSubAnimPolygonPresetExecutor()),
     SPHERE_SUB_ANIM_POLYGON_PROPAGATION(new SphereSubAnimPolygonPropagatingUpPresetExecutor()),
     SPHERE_SUB_ANIM_POLYGON2(new SphereSubAnimPolygon2PresetExecutor()),
-    SPHERE_SUB_ANIM_SPIRAL_PROPAGATION(new SphereSubAnimSpiralPropagatingUpPresetExecutor()),
+    SPHERE_SUB_ANIM_HELIX_PROPAGATION(new SphereSubAnimHelixPropagatingUpPresetExecutor()),
+    SPHERE_SUB_ANIM_HELIX_PROPAGATION2(new SphereSubAnimHelixPropagatingUp2PresetExecutor()),
     SPHERE_WITH_INSIDE_COLLISIONS(new SphereWithInsideCollisionsPresetExecutor()),
     HELIX(new HelixPresetExecutor()),
-    HELIX_ADN(new HelixADNPresetExecutor()),
+    HELIX_SUB_ANIM_POLYGON(new HelixSubAnimPolygonPresetExecutor()),
     TEXT_KGEVERSINCENEWYORK(new SimpleTextKGEverSinceNewYorkPresetExecutor()),
     TEXT_KGEVERSINCENEWYORK_CONTENT_EVOLVING(new ContentEvolvingTextKGEverSinceNewYorkPresetExecutor()),
     TEXT_KGEVERSINCENEWYORK_DETAILSLEVEL_EVOLVING(new DetailsEvolvingTextKGEverSinceNewYorkPresetExecutor()),

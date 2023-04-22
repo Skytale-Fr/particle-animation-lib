@@ -469,7 +469,7 @@ builder.setRotation(
 
 #### Lightning
 
-#### Spiral
+#### Helix
 
 #### Wave
 

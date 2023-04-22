@@ -22,7 +22,7 @@ public class HelixPresetExecutor extends AAnimationPresetExecutor<HelixBuilder> 
     protected void apply(HelixBuilder helixBuilder, JavaPlugin plugin) {
         helixBuilder.setPosition(new DirectedLocationAnimationPosition(helixBuilder.getOriginLocation(), new Vector(0, 1, 0), 0.3d));
         helixBuilder.setRadius(2);
-        helixBuilder.setNbSpiral(new IntegerPeriodicallyEvolvingVariable(1, 1, 30));
+        helixBuilder.setNbHelix(new IntegerPeriodicallyEvolvingVariable(1, 1, 30));
         helixBuilder.setHelixAngle(Math.PI / 24);
         helixBuilder.setNbTrailingCentralPoint(3);
         helixBuilder.setNbTrailingHelixPoint(8);

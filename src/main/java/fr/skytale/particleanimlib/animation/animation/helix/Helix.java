@@ -6,7 +6,7 @@ import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 
 public class Helix extends AAnimation {
     private IVariable<Double> radius;
-    private IVariable<Integer> nbSpiral;
+    private IVariable<Integer> nbHelix;
     private IVariable<Double> helixAngle;
     private IVariable<Integer> nbTrailingHelixPoint;
     private IVariable<Integer> nbTrailingCentralPoint;
@@ -24,7 +24,7 @@ public class Helix extends AAnimation {
     public Helix clone() {
         Helix obj = (Helix) super.clone();
         obj.radius = radius.copy();
-        obj.nbSpiral = nbSpiral.copy();
+        obj.nbHelix = nbHelix.copy();
         obj.helixAngle = helixAngle.copy();
         obj.nbTrailingHelixPoint = nbTrailingHelixPoint.copy();
         obj.nbTrailingCentralPoint = nbTrailingCentralPoint.copy();
@@ -42,12 +42,12 @@ public class Helix extends AAnimation {
         this.radius = radius;
     }
 
-    public IVariable<Integer> getNbSpiral() {
-        return nbSpiral;
+    public IVariable<Integer> getNbHelix() {
+        return nbHelix;
     }
 
-    public void setNbSpiral(IVariable<Integer> nbSpiral) {
-        this.nbSpiral = nbSpiral;
+    public void setNbHelix(IVariable<Integer> nbHelix) {
+        this.nbHelix = nbHelix;
     }
 
     public IVariable<Double> getHelixAngle() {

@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.attribute.pointdefinition;
 
 import fr.skytale.particleanimlib.animation.attribute.PARotation;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationConfig;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationModifier;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.DirectedLocationAnimationPosition;
@@ -15,33 +16,24 @@ import org.bukkit.util.Vector;
 
 public class SubAnimPointDefinition implements APointDefinition {
 
-    protected final IVariable<Double> speed;
-    protected SubAnimOrientationModifier subAnimationOrientationModifier;
+    protected final SubAnimOrientationConfig subAnimationOrientationConfig;
     protected AAnimation subAnimation;
 
-
     public SubAnimPointDefinition(AAnimation subAnimation) {
-        this(subAnimation, SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION);
+        this(subAnimation, new SubAnimOrientationConfig(SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION));
     }
 
-    public SubAnimPointDefinition(AAnimation subAnimation, SubAnimOrientationModifier subAnimationOrientationModifier) {
-        this(subAnimation, subAnimationOrientationModifier, 0);
-    }
-
-    public SubAnimPointDefinition(AAnimation subAnimation, SubAnimOrientationModifier subAnimationOrientationModifier, double speed) {
-        this(subAnimation, subAnimationOrientationModifier, new Constant<>(speed));
-    }
-
-    public SubAnimPointDefinition(AAnimation subAnimation, SubAnimOrientationModifier subAnimationOrientationModifier, IVariable<Double> speed) {
+    public SubAnimPointDefinition(AAnimation subAnimation, SubAnimOrientationConfig subAnimationOrientationConfig) {
         this.subAnimation = subAnimation;
-        this.subAnimationOrientationModifier = subAnimationOrientationModifier;
-        this.speed = speed;
+        if (subAnimationOrientationConfig == null) {
+            throw new IllegalArgumentException("subAnimationOrientationConfig should not be null");
+        }
+        this.subAnimationOrientationConfig = subAnimationOrientationConfig;
     }
 
     public SubAnimPointDefinition(SubAnimPointDefinition subAnimPointDefinition) {
-        this.speed = subAnimPointDefinition.getSpeed().copy();
-        this.subAnimationOrientationModifier = subAnimPointDefinition.getSubAnimationOrientationModifier();
         this.subAnimation = subAnimPointDefinition.getSubAnimation();
+        this.subAnimationOrientationConfig = new SubAnimOrientationConfig(subAnimPointDefinition.getSubAnimOrientationConfig());
     }
 
 
@@ -49,12 +41,8 @@ public class SubAnimPointDefinition implements APointDefinition {
         return subAnimation;
     }
 
-    public IVariable<Double> getSpeed() {
-        return speed;
-    }
-
-    public SubAnimOrientationModifier getSubAnimationOrientationModifier() {
-        return subAnimationOrientationModifier;
+    public SubAnimOrientationConfig getSubAnimOrientationConfig() {
+        return subAnimationOrientationConfig;
     }
 
     @Override
@@ -62,17 +50,27 @@ public class SubAnimPointDefinition implements APointDefinition {
         AAnimation newSubAnimation = subAnimation.clone();
         PARotation additionalRotation = null;
         Vector subAnimationDirection = null;
-        if (subAnimationOrientationModifier != null) switch (subAnimationOrientationModifier) {
+        switch (subAnimationOrientationConfig.getRotationModifier()) {
             case PARENT_ANIM_CENTER_ORIENTATION:
                 additionalRotation = new PARotation(AAnimationTask.W, fromAnimCenterToPoint);
-                subAnimationDirection = fromAnimCenterToPoint.clone();
                 break;
             case PARENT_ANIM_MOVEMENT_ORIENTATION:
                 additionalRotation = new PARotation(AAnimationTask.W, fromPreviousToCurrentAnimBaseLocation);
-                subAnimationDirection = fromPreviousToCurrentAnimBaseLocation.clone();
                 break;
             case NO_ADDITIONAL_ORIENTATION:
                 additionalRotation = null;
+                break;
+            default:
+                throw new NotImplementedException("This SubAnimOrientationModifier is not implemented yet");
+        }
+        switch (subAnimationOrientationConfig.getDirectionModifier()) {
+            case PARENT_ANIM_CENTER_ORIENTATION:
+                subAnimationDirection = fromAnimCenterToPoint.clone();
+                break;
+            case PARENT_ANIM_MOVEMENT_ORIENTATION:
+                subAnimationDirection = fromPreviousToCurrentAnimBaseLocation.clone();
+                break;
+            case NO_ADDITIONAL_ORIENTATION:
                 subAnimationDirection = AAnimationTask.W.clone();
                 break;
             default:
@@ -90,7 +88,7 @@ public class SubAnimPointDefinition implements APointDefinition {
         newSubAnimation.setPosition(new DirectedLocationAnimationPosition(
                 pointLocation,
                 subAnimationDirection,
-                speed));
+                subAnimationOrientationConfig.getSpeed()));
         newSubAnimation.show().setParentTask(task);
     }
 

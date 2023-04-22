@@ -3,6 +3,7 @@ package fr.skytale.particleanimlib.animation.animation.circle.preset;
 import fr.skytale.particleanimlib.animation.animation.circle.Circle;
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationConfig;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationModifier;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
@@ -33,7 +34,7 @@ public class SubAnimationCircleRotating2PresetExecutor extends AAnimationPresetE
                 ),
                 Math.PI / 10
         );
-        circleBuilder.setPointDefinition(new SubAnimPointDefinition(circle, SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION, 0.5));
+        circleBuilder.setPointDefinition(new SubAnimPointDefinition(circle, new SubAnimOrientationConfig(SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION, 0.5)));
 
 
 

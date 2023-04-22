@@ -1,13 +1,12 @@
 package fr.skytale.particleanimlib.animation.animation.circle.preset;
 
-import fr.skytale.particleanimlib.animation.animation.circle.Circle;
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.animation.line.Line;
 import fr.skytale.particleanimlib.animation.animation.line.LineBuilder;
 import fr.skytale.particleanimlib.animation.attribute.Orientation;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationConfig;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationModifier;
-import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,6 +37,6 @@ public class HelicopterPresetExecutor extends AAnimationPresetExecutor<CircleBui
         circleBuilder.setShowPeriod(5);
         circleBuilder.setRadius(0.1);
         circleBuilder.setRotation(new Vector(0, 1, 0),Math.PI / 10);
-        circleBuilder.setPointDefinition(new SubAnimPointDefinition(line, SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION));
+        circleBuilder.setPointDefinition(new SubAnimPointDefinition(line, new SubAnimOrientationConfig(SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION)));
     }
 }

@@ -12,7 +12,7 @@ public class HelixBuilder extends AAnimationBuilder<Helix, HelixTask> {
     public HelixBuilder() {
         super();
         animation.setRadius(new Constant<>(2.0));
-        animation.setNbSpiral(new Constant<>(2));
+        animation.setNbHelix(new Constant<>(2));
         animation.setHelixAngle(new Constant<>(Math.toRadians(20)));
         animation.setNbTrailingHelixPoint(new Constant<>(5));
         animation.setNbTrailingCentralPoint(new Constant<>(2));
@@ -26,14 +26,12 @@ public class HelixBuilder extends AAnimationBuilder<Helix, HelixTask> {
     @Override
     public Helix getAnimation() {
         checkPositiveAndNotNull(animation.getRadius(), "radius should be positive.", false);
-        checkPositiveAndNotNull(animation.getNbSpiral(), "nbSpiral should be positive", false);
+        checkPositiveAndNotNull(animation.getNbHelix(), "nbHelix should be positive", false);
         checkNotNull(animation.getHelixAngle(), "helixAngle should not be null");
         checkPositiveAndNotNull(animation.getNbTrailingHelixPoint(), "nbTrailingHelixPoint should be positive or equal to zero", true);
         checkPositiveAndNotNull(animation.getNbTrailingCentralPoint(), "nbTrailingCentralPoint should be positive or equal to zero", true);
         return super.getAnimation();
     }
-
-    /*********SETTERS des éléments spécifiques a la spirale ***********/
 
     public void setRadius(IVariable<Double> radius) {
         checkPositiveAndNotNull(radius, "radius should be positive", false);
@@ -44,13 +42,13 @@ public class HelixBuilder extends AAnimationBuilder<Helix, HelixTask> {
         setRadius(new Constant<>(radius));
     }
 
-    public void setNbSpiral(IVariable<Integer> nbSpiral) {
-        checkPositiveAndNotNull(nbSpiral, "nbSpiral should be positive", false);
-        animation.setNbSpiral(nbSpiral);
+    public void setNbHelix(IVariable<Integer> nbHelix) {
+        checkPositiveAndNotNull(nbHelix, "nbHelix should be positive", false);
+        animation.setNbHelix(nbHelix);
     }
 
-    public void setNbSpiral(int nbSpiral) {
-        setNbSpiral(new Constant<>(nbSpiral));
+    public void setNbHelix(int nbHelix) {
+        setNbHelix(new Constant<>(nbHelix));
     }
 
     public void setHelixAngle(IVariable<Double> helixAngle) {

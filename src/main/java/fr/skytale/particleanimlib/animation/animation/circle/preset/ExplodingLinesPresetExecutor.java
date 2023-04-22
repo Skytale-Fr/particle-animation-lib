@@ -5,6 +5,7 @@ import fr.skytale.particleanimlib.animation.animation.line.Line;
 import fr.skytale.particleanimlib.animation.animation.line.LineBuilder;
 import fr.skytale.particleanimlib.animation.attribute.Orientation;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationConfig;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationModifier;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
@@ -27,7 +28,7 @@ public class ExplodingLinesPresetExecutor extends AAnimationPresetExecutor<Circl
         lineBuilder.setJavaPlugin(circleBuilder.getJavaPlugin());
         lineBuilder.setPosition(circleBuilder.getPosition());
         lineBuilder.setPoint1OnPosition();
-        lineBuilder.setFromPositionToPoint2(new Constant<>(new Vector(0,0,1)), new Constant<>(3d));
+        lineBuilder.setFromPositionToPoint2(new Constant<>(new Vector(0, 0, 1)), new Constant<>(3d));
         lineBuilder.setTicksDuration(80);
         lineBuilder.setShowPeriod(new Constant<>(2));
         lineBuilder.setNbPoints(new Constant<>(5));
@@ -44,6 +45,9 @@ public class ExplodingLinesPresetExecutor extends AAnimationPresetExecutor<Circl
                 ),
                 Math.PI / 10
         );
-        circleBuilder.setPointDefinition(new SubAnimPointDefinition(line, SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION,0.2));
+        circleBuilder.setPointDefinition(new SubAnimPointDefinition(
+                line,
+                new SubAnimOrientationConfig(SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION, 0.2)
+        ));
     }
 }

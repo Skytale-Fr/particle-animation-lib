@@ -5,10 +5,9 @@ import fr.skytale.particleanimlib.animation.animation.parabola.Parabola;
 import fr.skytale.particleanimlib.animation.animation.parabola.ParabolaBuilder;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
 import fr.skytale.particleanimlib.animation.attribute.PARotation;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.CallbackPointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationConfig;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationModifier;
-import fr.skytale.particleanimlib.animation.attribute.position.animationposition.DirectedLocationAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
@@ -41,6 +40,6 @@ public class SubAnimationParabolaRotating2PresetExecutor extends AAnimationPrese
         circleBuilder.setRadius(2);
         circleBuilder.setTicksDuration(600);
         circleBuilder.setShowPeriod(40);
-        circleBuilder.setPointDefinition(new SubAnimPointDefinition(parabola, SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION, 0.2));
+        circleBuilder.setPointDefinition(new SubAnimPointDefinition(parabola, new SubAnimOrientationConfig(SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION, 0.2)));
     }
 }

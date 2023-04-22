@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.testing;
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
-import fr.skytale.particleanimlib.animation.attribute.position.animationposition.OnEntityAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.RelativeToEntityAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
@@ -24,7 +23,7 @@ import java.util.UUID;
 
 public class ParticleAnimLibTest {
 
-    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.HELIX;
+    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.HELIX_SUB_ANIM_POLYGON;
     public static TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
     public static boolean DEFAULT_SHOW_ON_CLICK = true;
 

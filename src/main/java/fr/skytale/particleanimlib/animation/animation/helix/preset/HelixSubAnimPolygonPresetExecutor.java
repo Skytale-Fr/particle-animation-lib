@@ -12,9 +12,9 @@ import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-public class HelixADNPresetExecutor extends AAnimationPresetExecutor<HelixBuilder> {
+public class HelixSubAnimPolygonPresetExecutor extends AAnimationPresetExecutor<HelixBuilder> {
 
-    public HelixADNPresetExecutor() {
+    public HelixSubAnimPolygonPresetExecutor() {
         super(HelixBuilder.class);
     }
 
@@ -35,7 +35,7 @@ public class HelixADNPresetExecutor extends AAnimationPresetExecutor<HelixBuilde
 
 
         helixBuilder.setRadius(4);
-        helixBuilder.setNbSpiral(2);
+        helixBuilder.setNbHelix(2);
         helixBuilder.setHelixAngle(Math.PI / 24);
         helixBuilder.setNbTrailingHelixPoint(30);
         helixBuilder.setNbTrailingCentralPoint(3);

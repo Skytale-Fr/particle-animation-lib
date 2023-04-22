@@ -16,18 +16,24 @@ import java.util.stream.Collectors;
 @ForceUpdatePointsConfiguration(alwaysUpdate = true)
 public class HelixTask extends AAnimationTask<Helix> {
 
-    private final TrailData trailData;
     @IVariableCurrentValue
     private Double radius;
+
     @IVariableCurrentValue
-    private Integer nbSpiral;
+    private Integer nbHelix;
+
     @IVariableCurrentValue
     private Double helixAngle;
+
     @IVariableCurrentValue
     private Integer nbTrailingHelixPoint;
+
     @IVariableCurrentValue
     private Integer nbTrailingCentralPoint;
+
     private double helixAngleSum;
+
+    private final TrailData trailData;
 
     public HelixTask(Helix helix) {
         super(helix);
@@ -46,25 +52,25 @@ public class HelixTask extends AAnimationTask<Helix> {
         List<AnimationPointData> currentIterationHelixPoints = new ArrayList<>();
 
         // Calculating radiusVector according to currentIterationMoveVector
-        if (nbSpiral > 0) {
+        if (nbHelix > 0) {
             final Vector directorVector = getCurrentIterationMove().getMove();
             Vector radiusVector = AnimationTaskUtils.computeRadiusVector(directorVector.clone().normalize(), radius);
 
             // Rotate radius vector according to the current value of helixAnglePerIteration to obtain the first helix point vector
             RotatableVector firstPoint = new RotatableVector(radiusVector);
             if (helixAngleSum != 0) {
-                firstPoint.rotateAroundAxis(directorVector, helixAngleSum);
+                firstPoint = firstPoint.rotateAroundAxis(directorVector, helixAngleSum);
             }
             currentIterationHelixPoints.add(new AnimationPointData(firstPoint));
 
-            //Calculating each spiral particle Vector
-            double spiralParticlesGapAngle = 2 * Math.PI / nbSpiral;
-            for (int i = 1; i < nbSpiral; i++) {
+            //Calculating each helix particle Vector
+            double helixParticlesGapAngle = 2 * Math.PI / nbHelix;
+            for (int i = 1; i < nbHelix; i++) {
                 // helixAnglePerIteration is used to rotate the helix points between each iteration
-                // spiralParticlesGapAngle is the angle between two point of the same iteration
-                double currentHelixPointAngle = i * spiralParticlesGapAngle;
+                // helixParticlesGapAngle is the angle between two point of the same iteration
+                double currentHelixPointAngle = i * helixParticlesGapAngle;
                 Vector currentHelixPoint = new RotatableVector(firstPoint).rotateAroundAxis(directorVector, currentHelixPointAngle);
-                // --- show each spiral particle (and add it to the Set to be able to show the particle again within the spiral trail during a future iteration)
+                // --- show each helix particle (and add it to the Set to be able to show the particle again within the helix trail during a future iteration)
                 currentIterationHelixPoints.add(new AnimationPointData(currentHelixPoint));
             }
         }
@@ -99,7 +105,7 @@ public class HelixTask extends AAnimationTask<Helix> {
             trailPointsPerIteration.add(0, newTrailIterationPoints);
 
             // Purge the list of TrailIterationPoints to avoid keeping useless data
-            int maxNbTrailingIterationData = Math.max(nbTrailingCentralPoint, nbTrailingHelixPoint);
+            int maxNbTrailingIterationData = Math.min(trailPointsPerIteration.size(), Math.max(nbTrailingCentralPoint, nbTrailingHelixPoint));
             this.trailPointsPerIteration = trailPointsPerIteration.subList(0, maxNbTrailingIterationData);
 
 

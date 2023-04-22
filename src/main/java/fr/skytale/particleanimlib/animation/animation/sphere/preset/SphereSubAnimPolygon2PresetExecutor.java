@@ -4,7 +4,6 @@ import fr.skytale.particleanimlib.animation.animation.polygon.PolygonBuilder;
 import fr.skytale.particleanimlib.animation.animation.sphere.Sphere;
 import fr.skytale.particleanimlib.animation.animation.sphere.SphereBuilder;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationModifier;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
@@ -29,8 +28,7 @@ public class SphereSubAnimPolygon2PresetExecutor extends AAnimationPresetExecuto
         sphereBuilder.setRadius(7.5);
         sphereBuilder.setNbPoints(56);
         sphereBuilder.setPointDefinition(new SubAnimPointDefinition(
-                polygonBuilder.getAnimation(),
-                SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION
+                polygonBuilder.getAnimation()
         ));
         sphereBuilder.setSphereType(Sphere.Type.FULL);
         sphereBuilder.setTicksDuration(100);

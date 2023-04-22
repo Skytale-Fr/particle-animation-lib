@@ -16,7 +16,6 @@ public class LightningBuilder extends AAnimationBuilder<Lightning, LightningTask
         animation.setConvergeToTarget(true);
     }
 
-    /*********SETTERS des éléments spécifiques a la spirale ***********/
 
     public void setTargetLocation(Location location) {
         checkNotNull(location, "targetLocation should not be null");
