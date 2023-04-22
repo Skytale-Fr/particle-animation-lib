@@ -6,9 +6,8 @@ import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAn
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.DirectedLocationAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
-import fr.skytale.particleanimlib.animation.attribute.var.Constant;
-import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.DirectionalAnimation;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.Location;
@@ -20,7 +19,7 @@ public class SubAnimPointDefinition implements APointDefinition {
     protected AAnimation subAnimation;
 
     public SubAnimPointDefinition(AAnimation subAnimation) {
-        this(subAnimation, new SubAnimOrientationConfig(SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION));
+        this(subAnimation, getDefaultSubAnimOrientationConfig(subAnimation));
     }
 
     public SubAnimPointDefinition(AAnimation subAnimation, SubAnimOrientationConfig subAnimationOrientationConfig) {
@@ -36,6 +35,12 @@ public class SubAnimPointDefinition implements APointDefinition {
         this.subAnimationOrientationConfig = new SubAnimOrientationConfig(subAnimPointDefinition.getSubAnimOrientationConfig());
     }
 
+    private static SubAnimOrientationConfig getDefaultSubAnimOrientationConfig(AAnimation subAnimation) {
+        if (subAnimation instanceof DirectionalAnimation) {
+            return new SubAnimOrientationConfig(SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION, 0.2, SubAnimOrientationModifier.NO_ADDITIONAL_ORIENTATION);
+        }
+        return new SubAnimOrientationConfig(SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION);
+    }
 
     public AAnimation getSubAnimation() {
         return subAnimation;
@@ -97,4 +102,3 @@ public class SubAnimPointDefinition implements APointDefinition {
         return new SubAnimPointDefinition(this);
     }
 }
-

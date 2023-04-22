@@ -3,8 +3,9 @@ package fr.skytale.particleanimlib.animation.animation.helix;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.animation.DirectionalAnimation;
 
-public class Helix extends AAnimation {
+public class Helix extends AAnimation implements DirectionalAnimation {
     private IVariable<Double> radius;
     private IVariable<Integer> nbHelix;
     private IVariable<Double> helixAngle;
