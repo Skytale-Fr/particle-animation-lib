@@ -40,6 +40,11 @@ import java.util.Locale;
 
 public enum AnimationPreset {
     //ATOM(new AtomPresetExecutor()),
+    PA_0_01_FUMEE(new PA001FumeePresetExecutor()),
+    PA_0_02_BRUME(new PA002BrumePresetExecutor()),
+    PA_0_03_BRUME_EPAISSE(new PA003BrumeEpaissePresetExecutor()),
+    PA_0_05_FIL_OR(new PA005FilOrPresetExecutor()),
+    PA_1_01_MAGIE_FUMEE(new PA101MagieFumeePresetExecutor()),
     CIRCLE(new SimpleCirclePresetExecutor()),
     CIRCLE_HALF_GROWING(new GrowingHalfCirclePresetExecutor()),
     CIRCLE_MOVING_POINT(new MovingPointCirclePresetExecutor()),
