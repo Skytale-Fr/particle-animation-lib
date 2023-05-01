@@ -31,6 +31,26 @@ public class ParticleTemplate {
         );
     }
 
+    public ParticleTemplate(ParticleEffect type, float speed) {
+        this(
+                type,
+                1,
+                speed,
+                new Vector(0, 0, 0),
+                (ParticleData) null
+        );
+    }
+
+    public ParticleTemplate(ParticleEffect type, ParticleData additionalData) {
+        this(
+                type,
+                1,
+                1,
+                new Vector(0, 0, 0),
+                additionalData
+        );
+    }
+
     public ParticleTemplate(ParticleEffect type, Color color) {
         this(
                 type,
