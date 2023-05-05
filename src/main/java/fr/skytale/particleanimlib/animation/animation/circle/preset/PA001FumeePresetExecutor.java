@@ -2,6 +2,8 @@ package fr.skytale.particleanimlib.animation.animation.circle.preset;
 
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.position.animationposition.LocatedRelativeAnimationPosition;
+import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
@@ -23,7 +25,7 @@ public class PA001FumeePresetExecutor extends AAnimationPresetExecutor<CircleBui
         subAnim1.setNbPoints(1);
         subAnim1.setShowPeriod(20);
         subAnim1.setTicksDuration(20);
-        subAnim1.setPointDefinition(new ParticleTemplate(ParticleEffect.EXPLOSION_NORMAL, 20, 0.01f, new Vector(2, 2, 2), (ParticleData) null));
+        subAnim1.setPointDefinition(new ParticleTemplate(ParticleEffect.EXPLOSION_NORMAL, 200, 0.01f, new Vector(2, 2, 2), (ParticleData) null));
 
         CircleBuilder subAnim2 = new CircleBuilder();
         subAnim2.setPosition(circleBuilder.getPosition());

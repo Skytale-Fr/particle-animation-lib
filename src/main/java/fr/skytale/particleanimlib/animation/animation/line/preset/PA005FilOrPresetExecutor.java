@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
+import xyz.xenondevs.particle.data.ParticleData;
 
 public class PA005FilOrPresetExecutor extends AAnimationPresetExecutor<LineBuilder> {
 
@@ -21,32 +22,11 @@ public class PA005FilOrPresetExecutor extends AAnimationPresetExecutor<LineBuild
 
         Vector directionValar = new Vector(-1, 0, 0); //TODO
 
-        LineBuilder sparklyLineBuilder = new LineBuilder();
-        sparklyLineBuilder.setPosition(lineBuilder.getPosition());
-        sparklyLineBuilder.setJavaPlugin(lineBuilder.getJavaPlugin());
-        //Position = OnEntity = Rita
-        sparklyLineBuilder.setPoint1OnPosition();
-        sparklyLineBuilder.setFromPositionToPoint2(directionValar, new DoublePeriodicallyEvolvingVariable(0d, 0.1));
-        sparklyLineBuilder.setTicksDuration(10 * 20);
-        sparklyLineBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.END_ROD, 0.01f));
-        sparklyLineBuilder.setNbPoints(new IntegerPeriodicallyEvolvingVariable(0, 1, 4 * 2));
-
-        LineBuilder goldenLineBuilder = new LineBuilder();
-        goldenLineBuilder.setPosition(lineBuilder.getPosition());
-        goldenLineBuilder.setJavaPlugin(lineBuilder.getJavaPlugin());
-        //Position = OnEntity = Rita
-        goldenLineBuilder.setPoint1OnPosition();
-        goldenLineBuilder.setFromPositionToPoint2(directionValar, new DoublePeriodicallyEvolvingVariable(0d, 0.1));
-        goldenLineBuilder.setTicksDuration(10 * 20);
-        goldenLineBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.BLOCK_DUST, Material.GOLD_BLOCK));
-        goldenLineBuilder.setNbPoints(new IntegerPeriodicallyEvolvingVariable(0, 1, 4));
-
         lineBuilder.setPoint1OnPosition();
-        lineBuilder.setTicksDuration(1);
-        lineBuilder.setAnimationEndedCallback(animationEnding -> {
-            sparklyLineBuilder.getAnimation().show();
-//            goldenLineBuilder.getAnimation().show();
-        });
+        lineBuilder.setFromPositionToPoint2(directionValar, new DoublePeriodicallyEvolvingVariable(0d, 0.1));
+        lineBuilder.setTicksDuration(10 * 20);
+        lineBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.END_ROD, 1, 0.01f, new Vector(0.3,0.3,0.3), (ParticleData) null));
+        lineBuilder.setNbPoints(new IntegerPeriodicallyEvolvingVariable(0, 1, 30));
         /*
         BLOCK_CRACK
             GOLD_BLOCK
