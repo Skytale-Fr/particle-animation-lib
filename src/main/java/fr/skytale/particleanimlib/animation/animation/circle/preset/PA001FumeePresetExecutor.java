@@ -30,8 +30,8 @@ public class PA001FumeePresetExecutor extends AAnimationPresetExecutor<CircleBui
         CircleBuilder subAnim2 = new CircleBuilder();
         subAnim2.setPosition(circleBuilder.getPosition());
         subAnim2.setJavaPlugin(circleBuilder.getJavaPlugin());
-        subAnim2.setRadius(0.1);
-        subAnim2.setNbPoints(1);
+        subAnim2.setRadius(1);
+        subAnim2.setNbPoints(2);
         subAnim2.setShowPeriod(20);
         subAnim2.setTicksDuration(20);
         subAnim2.setPointDefinition(new ParticleTemplate(ParticleEffect.EXPLOSION_LARGE, 10, 0f, new Vector(2, 2, 2), (ParticleData) null));

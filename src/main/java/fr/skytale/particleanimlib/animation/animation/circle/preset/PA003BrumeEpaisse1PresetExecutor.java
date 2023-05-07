@@ -8,9 +8,9 @@ import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
 import xyz.xenondevs.particle.data.ParticleData;
 
-public class PA003BrumeEpaissePresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
+public class PA003BrumeEpaisse1PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
-    public PA003BrumeEpaissePresetExecutor() {
+    public PA003BrumeEpaisse1PresetExecutor() {
         super(CircleBuilder.class);
     }
 
