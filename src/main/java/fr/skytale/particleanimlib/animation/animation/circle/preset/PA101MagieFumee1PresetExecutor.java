@@ -9,9 +9,9 @@ import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
 import xyz.xenondevs.particle.data.ParticleData;
 
-public class PA101MagieFumeePresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
+public class PA101MagieFumee1PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
-    public PA101MagieFumeePresetExecutor() {
+    public PA101MagieFumee1PresetExecutor() {
         super(CircleBuilder.class);
     }
 
@@ -25,10 +25,10 @@ public class PA101MagieFumeePresetExecutor extends AAnimationPresetExecutor<Circ
         magie.setPosition(circleBuilder.getPosition());
         magie.setJavaPlugin(circleBuilder.getJavaPlugin());
         magie.setRadius(0.1);
-        magie.setNbPoints(1);
+        magie.setNbPoints(3);
         magie.setShowPeriod(20);
         magie.setTicksDuration(20);
-        magie.setPointDefinition(new ParticleTemplate(ParticleEffect.SPELL_WITCH, 30, 0.1f, new Vector(2, 2, 2), (ParticleData) null));
+        magie.setPointDefinition(new ParticleTemplate(ParticleEffect.SPELL_WITCH, 100, 0.1f, new Vector(2, 2, 2), (ParticleData) null));
         /*
         COMPOSTER
         CRIT_MAGIC

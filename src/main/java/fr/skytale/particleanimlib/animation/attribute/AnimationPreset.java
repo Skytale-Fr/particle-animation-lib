@@ -47,8 +47,15 @@ public enum AnimationPreset {
     PA_0_03_BRUME_EPAISSE1(new PA003BrumeEpaisse1PresetExecutor()),
     PA_0_03_BRUME_EPAISSE2(new PA003BrumeEpaisse2PresetExecutor()),
 
+    PA_0_04_RITA_LONG(new PA004RitaLongPresetExecutor()),
+    PA_0_04_RITA_COURT(new PA004RitaCourtPresetExecutor()),
+
     PA_0_05_FIL_OR(new PA005FilOrPresetExecutor()),
-    PA_1_01_MAGIE_FUMEE(new PA101MagieFumeePresetExecutor()),
+    //TODO determiner quelle anim garder
+    PA_1_01_MAGIE_FUMEE_1(new PA101MagieFumee1PresetExecutor()),
+    PA_1_01_MAGIE_FUMEE_2(new PA101MagieFumee2PresetExecutor()),
+    PA_1_01_MAGIE_FUMEE_3(new PA101MagieFumee3PresetExecutor()),
+
     CIRCLE(new SimpleCirclePresetExecutor()),
     CIRCLE_HALF_GROWING(new GrowingHalfCirclePresetExecutor()),
     CIRCLE_MOVING_POINT(new MovingPointCirclePresetExecutor()),

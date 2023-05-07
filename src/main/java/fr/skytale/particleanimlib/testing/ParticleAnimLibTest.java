@@ -23,7 +23,7 @@ import java.util.UUID;
 
 public class ParticleAnimLibTest {
 
-    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.HELIX_SUB_ANIM_POLYGON;
+    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.PA_0_04_RITA_COURT;
     public static TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
     public static boolean DEFAULT_SHOW_ON_CLICK = true;
 
