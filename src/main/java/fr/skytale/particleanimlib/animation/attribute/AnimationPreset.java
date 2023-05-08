@@ -61,6 +61,8 @@ public enum AnimationPreset {
     PA_2_02_RITA_LISEUSE_3(new PA202Liseuse3PresetExecutor()),
     PA_2_02_RITA_LISEUSE_4(new PA202Liseuse4PresetExecutor()),
 
+    PA_2_05_MARQUE_MAGIQUE(new PA205MarqueMagiquePresetExecutor()),
+
     CIRCLE(new SimpleCirclePresetExecutor()),
     CIRCLE_HALF_GROWING(new GrowingHalfCirclePresetExecutor()),
     CIRCLE_MOVING_POINT(new MovingPointCirclePresetExecutor()),
