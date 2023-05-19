@@ -8,9 +8,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
 
-public class PA202Liseuse4PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
+public class PA202LiseusePresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
-    public PA202Liseuse4PresetExecutor() {
+    public PA202LiseusePresetExecutor() {
         super(CircleBuilder.class);
     }
 
@@ -25,6 +25,6 @@ public class PA202Liseuse4PresetExecutor extends AAnimationPresetExecutor<Circle
                 new Vector(0,1,0),
                 new CallbackVariable<>(iterationCount -> (Math.PI/48) * Math.pow(-1,(iterationCount/60)) )
         );
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.END_ROD, 0.01f));
+        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.END_ROD, 0.05f));
     }
 }

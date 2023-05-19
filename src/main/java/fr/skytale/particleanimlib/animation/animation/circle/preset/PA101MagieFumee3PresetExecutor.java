@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.circle.preset;
 
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
+import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -8,9 +9,9 @@ import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
 import xyz.xenondevs.particle.data.ParticleData;
 
-public class PA101MagieFumee32PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
+public class PA101MagieFumee3PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
-    public PA101MagieFumee32PresetExecutor() {
+    public PA101MagieFumee3PresetExecutor() {
         super(CircleBuilder.class);
     }
 
@@ -31,9 +32,9 @@ public class PA101MagieFumee32PresetExecutor extends AAnimationPresetExecutor<Ci
         fumeeSubAnimDragonBreath.setJavaPlugin(circleBuilder.getJavaPlugin());
         fumeeSubAnimDragonBreath.setRadius(1);
         fumeeSubAnimDragonBreath.setNbPoints(3);
-//        fumeeSubAnimDragonBreath.setShowPeriod(15);
-        fumeeSubAnimDragonBreath.setTicksDuration(20 + 5);
-        fumeeSubAnimDragonBreath.setPointDefinition(new ParticleTemplate(ParticleEffect.DRAGON_BREATH, 10, 0.05f, new Vector(2, 2, 2), (ParticleData) null));
+        fumeeSubAnimDragonBreath.setShowPeriod(20);
+        fumeeSubAnimDragonBreath.setTicksDuration(20);
+        fumeeSubAnimDragonBreath.setPointDefinition(new ParticleTemplate(ParticleEffect.DRAGON_BREATH, 100, 0.2f, new Vector(2, 2, 2), (ParticleData) null));
 
         CircleBuilder fumee = new CircleBuilder();
         fumee.setPosition(circleBuilder.getPosition());
@@ -54,9 +55,9 @@ public class PA101MagieFumee32PresetExecutor extends AAnimationPresetExecutor<Ci
         magie.setJavaPlugin(circleBuilder.getJavaPlugin());
         magie.setRadius(0.1);
         magie.setNbPoints(3);
-//        magie.setShowPeriod(15);
-        magie.setTicksDuration(20 + 5);
-        magie.setPointDefinition(new ParticleTemplate(ParticleEffect.SPELL_WITCH, 10, 0.1f, new Vector(2, 2, 2), (ParticleData) null));
+        magie.setShowPeriod(10);
+        magie.setTicksDuration(20+10);
+        magie.setPointDefinition(new ParticleTemplate(ParticleEffect.SPELL_WITCH, 100, 0.01f, new Vector(2, 2, 2), (ParticleData) null));
         /*
         COMPOSTER
         CRIT_MAGIC

@@ -9,9 +9,9 @@ import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
 import xyz.xenondevs.particle.data.ParticleData;
 
-public class PA101MagieFumee3PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
+public class PA101MagieFumee31PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
-    public PA101MagieFumee3PresetExecutor() {
+    public PA101MagieFumee31PresetExecutor() {
         super(CircleBuilder.class);
     }
 
