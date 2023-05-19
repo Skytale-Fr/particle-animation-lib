@@ -41,27 +41,31 @@ import java.util.Locale;
 public enum AnimationPreset {
     //ATOM(new AtomPresetExecutor()),
     PA_0_01_FUMEE(new PA001FumeePresetExecutor()),
-    //TODO determiner quelle brume garder
     PA_0_02_BRUME1(new PA002Brume1PresetExecutor()),
     PA_0_02_BRUME2(new PA002Brume2PresetExecutor()),
     PA_0_03_BRUME_EPAISSE1(new PA003BrumeEpaisse1PresetExecutor()),
     PA_0_03_BRUME_EPAISSE2(new PA003BrumeEpaisse2PresetExecutor()),
-
     PA_0_04_RITA_LONG(new PA004RitaLongPresetExecutor()),
     PA_0_04_RITA_COURT(new PA004RitaCourtPresetExecutor()),
     PA_0_05_FIL_OR(new PA005FilOrPresetExecutor()),
-    //TODO determiner quelle anim garder
+
     PA_1_01_MAGIE_FUMEE_1(new PA101MagieFumee1PresetExecutor()),
-    PA_1_01_MAGIE_FUMEE_2(new PA101MagieFumee2PresetExecutor()),
-    PA_1_01_MAGIE_FUMEE_3(new PA101MagieFumee3PresetExecutor()),
+    PA_1_01_MAGIE_FUMEE_3_0(new PA101MagieFumee3PresetExecutor()),
+    PA_1_01_MAGIE_FUMEE_3_1(new PA101MagieFumee31PresetExecutor()),
+    PA_1_01_MAGIE_FUMEE_3_2(new PA101MagieFumee32PresetExecutor()),
 
-    //TODO determiner quelle anim garder
-    PA_2_02_RITA_LISEUSE_1(new PA202Liseuse1PresetExecutor()),
-    PA_2_02_RITA_LISEUSE_2(new PA202Liseuse2PresetExecutor()),
-    PA_2_02_RITA_LISEUSE_3(new PA202Liseuse3PresetExecutor()),
-    PA_2_02_RITA_LISEUSE_4(new PA202Liseuse4PresetExecutor()),
-
+    PA_2_02_RITA_LISEUSE(new PA202LiseusePresetExecutor()),
+    PA_2_03_ATTAQUE_CHARGE_1(new PA203Attaque1ChargePresetExecutor()),
+    PA_2_03_ATTAQUE_CHARGE_2(new PA203Attaque2ChargePresetExecutor()),
+    PA_2_03_ATTAQUE_CHARGE_3(new PA203Attaque3ChargePresetExecutor()),
+    PA_2_03_ATTAQUE_CHARGE_4(new PA203Attaque4ChargePresetExecutor()),
     PA_2_05_MARQUE_MAGIQUE(new PA205MarqueMagiquePresetExecutor()),
+    PA_2_06_PROTECTION_ARCANIQUE_1(new PA206ProtectionArcanique1PresetExecutor()),
+    PA_2_06_PROTECTION_ARCANIQUE_2(new PA206ProtectionArcanique2PresetExecutor()),
+    PA_2_06_PROTECTION_ARCANIQUE_3(new PA206ProtectionArcanique3PresetExecutor()),
+    PA_2_06_PROTECTION_ARCANIQUE_4(new PA206ProtectionArcanique4PresetExecutor()),
+    PA_2_06_PROTECTION_ARCANIQUE_4_1(new PA206ProtectionArcanique41PresetExecutor()),
+    PA_2_06_PROTECTION_ARCANIQUE_4_2(new PA206ProtectionArcanique42PresetExecutor()),
 
     CIRCLE(new SimpleCirclePresetExecutor()),
     CIRCLE_HALF_GROWING(new GrowingHalfCirclePresetExecutor()),
