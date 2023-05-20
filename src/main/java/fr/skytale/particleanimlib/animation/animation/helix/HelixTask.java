@@ -46,14 +46,19 @@ public class HelixTask extends AAnimationTask<Helix> {
     protected List<AnimationPointData> computeAnimationPoints() {
 
         // Create the central point
-        AnimationPointData currentIterationCentralPoint = new AnimationPointData(new Vector(), pointDefinition -> animation.getCentralPointDefinition());
-
+        AnimationPointData currentIterationCentralPoint = null;
+        if (animation.getCentralPointDefinition() != null) {
+            currentIterationCentralPoint = new AnimationPointData(new Vector(), pointDefinition -> animation.getCentralPointDefinition());
+        }
         // The Set that contains this iteration helix points
         List<AnimationPointData> currentIterationHelixPoints = new ArrayList<>();
 
         // Calculating radiusVector according to currentIterationMoveVector
         if (nbHelix > 0) {
             final Vector directorVector = getCurrentIterationMove().getMove();
+            if (directorVector.getX() == 0 && directorVector.getY() == 0 && directorVector.getZ() == 0) {
+                throw new IllegalArgumentException("An Helix MUST move. Please define its movement using HelixBuilder's setPosition method.");
+            }
             Vector radiusVector = AnimationTaskUtils.computeRadiusVector(directorVector.clone().normalize(), radius);
 
             // Rotate radius vector according to the current value of helixAnglePerIteration to obtain the first helix point vector
@@ -112,7 +117,10 @@ public class HelixTask extends AAnimationTask<Helix> {
             // Add the central points
             List<AnimationPointData> animationPoints = new ArrayList<>();
             for (int i = 0; i < nbTrailingCentralPoint && i < trailPointsPerIteration.size(); i++) {
-                animationPoints.add(trailPointsPerIteration.get(i).getCentralPoint());
+                final AnimationPointData centralPoint = trailPointsPerIteration.get(i).getCentralPoint();
+                if (centralPoint != null) {
+                    animationPoints.add(centralPoint);
+                }
             }
             // Add the helix points
             for (int i = 0; i < nbTrailingHelixPoint && i < trailPointsPerIteration.size(); i++) {
@@ -141,7 +149,9 @@ public class HelixTask extends AAnimationTask<Helix> {
         }
 
         public void moveTrailPoints(Vector invertedAnimationMoveVector) {
-            centralPoint = new AnimationPointData(centralPoint.getFromCenterToPoint().add(invertedAnimationMoveVector), centralPoint.getPointDefinitionModifier());
+            if (centralPoint != null) {
+                centralPoint = new AnimationPointData(centralPoint.getFromCenterToPoint().add(invertedAnimationMoveVector), centralPoint.getPointDefinitionModifier());
+            }
             helixPoints = helixPoints.stream()
                     .map(helixPoint -> new AnimationPointData(helixPoint.getFromCenterToPoint().add(invertedAnimationMoveVector), helixPoint.getPointDefinitionModifier()))
                     .collect(Collectors.toList());

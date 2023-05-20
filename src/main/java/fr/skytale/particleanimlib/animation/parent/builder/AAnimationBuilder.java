@@ -2,11 +2,11 @@ package fr.skytale.particleanimlib.animation.parent.builder;
 
 import fr.skytale.particleanimlib.animation.attribute.*;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.attr.PositionType;
 import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.parent.IPosition;
-import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
@@ -14,7 +14,6 @@ import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import fr.skytale.particleanimlib.animation.collision.CollisionHandler;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -104,6 +103,8 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
         checkNotNull(animation.getPointDefinition(), POINT_DEFINITION_SHOULD_NOT_BE_NULL);
         checkNotNull(animation.getPlugin(), "The plugin should be defined");
         checkNotNull(animation.getViewers(), VIEWERS_SHOULD_NOT_BE_NULL);
+        checkNotNull(animation.getPointDefinition(), "The point definition should be defined");
+        checkSubAnimPointDefinitionTicksDuration();
         if (animation.getTicksDuration() <= 0) {
             throw new IllegalArgumentException("Position should be positive");
         }
@@ -155,9 +156,11 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
     public void setRotation(PARotation initialRotation, Vector axis, Double rotationAngleAlpha) {
         setRotation(initialRotation, new Constant<>(axis), new Constant<>(rotationAngleAlpha));
     }
+
     public void setRotation(PARotation initialRotation, Vector axis, IVariable<Double> rotationAngleAlpha) {
         setRotation(initialRotation, new Constant<>(axis), rotationAngleAlpha);
     }
+
     public void setRotation(PARotation initialRotation, IVariable<Vector> axis, Double rotationAngleAlpha) {
         setRotation(initialRotation, axis, new Constant<>(rotationAngleAlpha));
     }
@@ -333,6 +336,66 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
         if (animation.getPosition().getType().equals(PositionType.TRAIL)) {
             throw new IllegalArgumentException("Since a trail position depends of the player evolving location, you can not get its origin location");
         }
-        return ((AAnimationPosition)animation.getPosition()).getCurrentValue(0).getAfterMoveLocation();
+        return ((AAnimationPosition) animation.getPosition()).getCurrentValue(0).getAfterMoveLocation();
+    }
+
+    protected final void checkSubAnimPointDefinitionTicksDuration() {
+        checkSubAnimPointDefinitionTicksDurationRecursive(
+                animation,
+                0d,
+                "");
+    }
+
+    /**
+     * This method aims to throw an exception when the server will obviously crash when showing the animation
+     * This crash happens when we try to show too much particles
+     * <p>
+     * The exception is based on the multiplication of:
+     * =  parent anim (ticksDuration / showPeriod)
+     * * sub anim (ticksDuration / showPeriod)
+     * * sub sub anim (ticksDuration / showPeriod)
+     * * ...
+     * <p>
+     * "Your animation is trying to show 50304304 (X/Y*X/Y*X/Y ticksDurations/showPeriod) points within N ticks. This would crash your server. Please modify the animation parameters."
+     *
+     * @param animation            the current animation
+     * @param showPerTick       the actual multiplication
+     * @param multiplicationString the displayed multiplication used in the final error message
+     */
+    private void checkSubAnimPointDefinitionTicksDurationRecursive(AAnimation animation, double showPerTick, String multiplicationString) {
+        int ticksDuration = animation.getTicksDuration();
+
+        //TODO should use average of every iterationCount showPeriod instead of the showPeriod having iterationTotal 0.
+        int showPeriod = animation.getShowPeriod().getCurrentValue(0);
+
+        double animNbShow = ticksDuration / (double) showPeriod;
+
+        String newMultiplicationString = multiplicationString + " * (" + ticksDuration + " / " + showPeriod + ")";
+        double newIterationTotal = showPerTick * animNbShow;
+
+        APointDefinition pointDefinition = animation.getPointDefinition();
+
+        if (pointDefinition instanceof SubAnimPointDefinition) {
+            // recursively check pointDefinitions in depth
+            checkSubAnimPointDefinitionTicksDurationRecursive(
+                    ((SubAnimPointDefinition) pointDefinition).getSubAnimation(),
+                    newIterationTotal,
+                    newMultiplicationString
+            );
+        } else {
+            // we are in the latest sub animation
+            if (showPerTick > 10) {
+                //if the number of animation displayed each tick is greater than 1,
+                //it means the number of particles will increase exponentially.
+                //This exponential growth can be correct if well configured so we will not throw the exception if it is <= 10.
+                throw new IllegalArgumentException(
+                        "With the current settings, your deepest sub animation would be shown " + newIterationTotal +
+                        " times.\n" +
+                        "This would cause a crash or, at least, this would slow down players.\n" +
+                        "Please modify the animation parameters.\n" +
+                        "Product of the ticksDuration/showPeriod ratios (from the parent animation to the deepest sub animation):\n" +
+                        newMultiplicationString);
+            }
+        }
     }
 }
