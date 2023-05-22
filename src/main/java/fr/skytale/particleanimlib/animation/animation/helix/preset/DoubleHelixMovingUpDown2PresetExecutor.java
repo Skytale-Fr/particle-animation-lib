@@ -11,9 +11,9 @@ import xyz.xenondevs.particle.ParticleEffect;
 
 import java.awt.*;
 
-public class DoubleHelixMovingUpDownPresetExecutor extends AAnimationPresetExecutor<HelixBuilder> {
+public class DoubleHelixMovingUpDown2PresetExecutor extends AAnimationPresetExecutor<HelixBuilder> {
 
-    public DoubleHelixMovingUpDownPresetExecutor() {
+    public DoubleHelixMovingUpDown2PresetExecutor() {
         super(HelixBuilder.class);
     }
 
@@ -23,35 +23,35 @@ public class DoubleHelixMovingUpDownPresetExecutor extends AAnimationPresetExecu
         helixBuilder.setPosition(
                 new DirectedLocationAnimationPosition( //Seulement DirectedLocationAnimationPosition accepté
                         helixBuilder.getOriginLocation(),
-                        //new CallbackVariable<>(iterationCount -> new Vector(0, Math.cos(iterationCount / 14d), 0)),
+                        //new CallbackVariable<>(iterationCount -> new Vector(0, Math.cos(iterationCount / 28d), 0)),
                         new CallbackVariable<>(iterationCount -> {
-                            double Y = Math.sin(iterationCount / 14d);
-                            if (Y>=0)
-                                return new Vector(0,1,0);
+                            double Y = Math.sin(iterationCount / 28d);
+                            if (Y >= 0)
+                                return new Vector(0, 1, 0);
                             else
-                                return new Vector(0,-1,0);
+                                return new Vector(0, -1, 0);
                         }),
-                        0.05d)
+                        0.025d)
         );
         helixBuilder.setHelixAngle(
                 new CallbackVariable<>(
                         iterationCount -> {
-                            if (Math.sin(iterationCount / 14d) > 0)
-                                return Math.toRadians(20);
+                            if (Math.sin(iterationCount / 28d) > 0)
+                                return Math.toRadians(25);
                             else
-                                return -Math.toRadians(20);
+                                return -Math.toRadians(25);
                         }
                 )
         );
 
 
         helixBuilder.setRadius(
-                new CallbackVariable<>(iterationCount -> Math.sin(iterationCount / 14d) * 1.5)
+                new CallbackVariable<>(iterationCount -> Math.sin(iterationCount / 28d) * 1.5)
         );
 
         helixBuilder.setNbHelix(2);
         helixBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, Color.BLACK));
 
-        helixBuilder.setTicksDuration(20 * 20);
+        helixBuilder.setTicksDuration(20 * 20 + 18);
     }
 }
