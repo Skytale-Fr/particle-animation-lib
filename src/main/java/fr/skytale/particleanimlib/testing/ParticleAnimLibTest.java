@@ -23,7 +23,7 @@ import java.util.UUID;
 
 public class ParticleAnimLibTest {
 
-    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.PA_2_06_PROTECTION_ARCANIQUE_4_2;
+    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.HELIX_MOVING_UP_DOWN;
     public static TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
     public static boolean DEFAULT_SHOW_ON_CLICK = true;
 

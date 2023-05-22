@@ -6,6 +6,7 @@ import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotati
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.epi.preset.SimpleEpiPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.helix.preset.DoubleHelixMovingUpDownPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixSubAnimPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.*;
@@ -136,6 +137,7 @@ public enum AnimationPreset {
     SPHERE_SUB_ANIM_ROTATING_CIRCLES(new SphereSubAnimRotatingCirclesPresetExecutor()),
     SPHERE_WITH_INSIDE_COLLISIONS(new SphereWithInsideCollisionsPresetExecutor()),
     HELIX(new HelixPresetExecutor()),
+    HELIX_MOVING_UP_DOWN(new DoubleHelixMovingUpDownPresetExecutor()),
     HELIX_SUB_ANIM_POLYGON(new HelixSubAnimPolygonPresetExecutor()),
     TEXT_KGEVERSINCENEWYORK(new SimpleTextKGEverSinceNewYorkPresetExecutor()),
     TEXT_KGEVERSINCENEWYORK_CONTENT_EVOLVING(new ContentEvolvingTextKGEverSinceNewYorkPresetExecutor()),
