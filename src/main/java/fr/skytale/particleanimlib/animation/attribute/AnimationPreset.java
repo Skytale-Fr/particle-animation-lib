@@ -20,6 +20,7 @@ import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPr
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizedDirectionParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizedSpeedAndDirectionParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.GrowingPolygonPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.polygon.preset.PA104CerclePierrePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.RotatingPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.SimplePolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramid2PresetExecutor;
@@ -54,6 +55,8 @@ public enum AnimationPreset {
     PA_1_01_MAGIE_FUMEE_3_0(new PA101MagieFumee3PresetExecutor()),
     PA_1_01_MAGIE_FUMEE_3_1(new PA101MagieFumee31PresetExecutor()),
     PA_1_01_MAGIE_FUMEE_3_2(new PA101MagieFumee32PresetExecutor()),
+    PA_1_02_GRANGE(new PA102GrangePresetExecutor()),
+    PA_1_04_CERCLE_PIERRE(new PA104CerclePierrePresetExecutor()),
 
     PA_2_02_RITA_LISEUSE(new PA202LiseusePresetExecutor()),
     PA_2_03_ATTAQUE_CHARGE_1(new PA203Attaque1ChargePresetExecutor()),
