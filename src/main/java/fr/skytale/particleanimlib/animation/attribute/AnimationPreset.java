@@ -59,6 +59,8 @@ public enum AnimationPreset {
     PA_1_02_GRANGE(new PA102GrangePresetExecutor()),
     PA_1_04_CERCLE_PIERRE(new PA104CerclePierrePresetExecutor()),
     PA_1_05_ARBRE(new PA105ArbePresetExecutor()),
+    PA_1_06_DISPARITION_TIMBLIN_1(new PA106DisparitionTimblin1PresetExecutor()),
+    PA_1_06_DISPARITION_TIMBLIN_2(new PA106DisparitionTimblin2PresetExecutor()),
 
     PA_2_02_RITA_LISEUSE(new PA202LiseusePresetExecutor()),
     PA_2_03_ATTAQUE_CHARGE_1(new PA203Attaque1ChargePresetExecutor()),
