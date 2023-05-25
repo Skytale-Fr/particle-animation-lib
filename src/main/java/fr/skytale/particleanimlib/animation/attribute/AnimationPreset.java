@@ -6,10 +6,7 @@ import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotati
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.epi.preset.SimpleEpiPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.helix.preset.DoubleHelixMovingUpDown2PresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.helix.preset.DoubleHelixMovingUpDownPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixSubAnimPolygonPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.helix.preset.*;
 import fr.skytale.particleanimlib.animation.animation.image.preset.*;
 import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningSubAnimLightningPresetExecutor;
@@ -77,6 +74,7 @@ public enum AnimationPreset {
     PA_2_06_PROTECTION_ARCANIQUE_4(new PA206ProtectionArcanique4PresetExecutor()),
     PA_2_06_PROTECTION_ARCANIQUE_4_1(new PA206ProtectionArcanique41PresetExecutor()),
     PA_2_06_PROTECTION_ARCANIQUE_4_2(new PA206ProtectionArcanique42PresetExecutor()),
+    PA_2_08_BATON_EAU_1(new PA208BatonEauPresetExecutor()),
 
     CIRCLE(new SimpleCirclePresetExecutor()),
     CIRCLE_HALF_GROWING(new GrowingHalfCirclePresetExecutor()),
