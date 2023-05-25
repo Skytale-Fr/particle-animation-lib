@@ -68,6 +68,8 @@ public enum AnimationPreset {
     PA_2_03_ATTAQUE_CHARGE_2(new PA203Attaque2ChargePresetExecutor()),
     PA_2_03_ATTAQUE_CHARGE_3(new PA203Attaque3ChargePresetExecutor()),
     PA_2_03_ATTAQUE_CHARGE_4(new PA203Attaque4ChargePresetExecutor()),
+    PA_2_04_ATTAQUE_CORPS_SOL_1(new PA204AttaqueCorpsSol1PresetExecutor()),
+    PA_2_04_ATTAQUE_CORPS_SOL_2(new PA204AttaqueCorpsSol2PresetExecutor()),
     PA_2_05_MARQUE_MAGIQUE(new PA205MarqueMagiquePresetExecutor()),
     PA_2_06_PROTECTION_ARCANIQUE_1(new PA206ProtectionArcanique1PresetExecutor()),
     PA_2_06_PROTECTION_ARCANIQUE_2(new PA206ProtectionArcanique2PresetExecutor()),
