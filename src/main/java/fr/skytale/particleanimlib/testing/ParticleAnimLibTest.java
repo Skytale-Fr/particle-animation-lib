@@ -23,7 +23,7 @@ import java.util.UUID;
 
 public class ParticleAnimLibTest {
 
-    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.PA_2_08_BATON_EAU_1;
+    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.PA_1_04_CERCLE_PIERRE_2;
     public static TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
     public static boolean DEFAULT_SHOW_ON_CLICK = true;
 

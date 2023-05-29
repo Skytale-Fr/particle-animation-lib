@@ -17,10 +17,7 @@ import fr.skytale.particleanimlib.animation.animation.obj.preset.*;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizedDirectionParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizedSpeedAndDirectionParabolaPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.polygon.preset.GrowingPolygonPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.polygon.preset.PA104CerclePierrePresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.polygon.preset.RotatingPolygonPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.polygon.preset.SimplePolygonPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.polygon.preset.*;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramid2PresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.SimplePyramidPresetExecutor;
@@ -55,6 +52,7 @@ public enum AnimationPreset {
     PA_1_01_MAGIE_FUMEE_3_2(new PA101MagieFumee32PresetExecutor()),
     PA_1_02_GRANGE(new PA102GrangePresetExecutor()),
     PA_1_04_CERCLE_PIERRE(new PA104CerclePierrePresetExecutor()),
+    PA_1_04_CERCLE_PIERRE_2(new PA104CerclePierre2PresetExecutor()),
     PA_1_05_ARBRE(new PA105ArbePresetExecutor()),
     PA_1_06_DISPARITION_TIMBLIN_1(new PA106DisparitionTimblin1PresetExecutor()),
     PA_1_06_DISPARITION_TIMBLIN_2(new PA106DisparitionTimblin2PresetExecutor()),
