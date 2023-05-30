@@ -16,7 +16,7 @@ public class CustomPlayers extends AViewers {
     }
 
     @Override
-    public Collection<? extends Player> getPlayers(Location location) {
+    public Collection<? extends Player> getPlayers(Location pointLocation) {
         return viewers;
     }
 

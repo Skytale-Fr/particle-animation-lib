@@ -19,7 +19,7 @@ public class SimpleRosePresetExecutor extends AAnimationPresetExecutor<RoseBuild
 
     @Override
     protected void apply(RoseBuilder roseBuilder, JavaPlugin plugin) {
-        roseBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        roseBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         roseBuilder.setNbPoints(200);
         roseBuilder.setRadius(10);
         roseBuilder.setTicksDuration(3000);

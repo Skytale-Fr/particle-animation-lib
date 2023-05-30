@@ -25,7 +25,7 @@ public class RotatingRoseInsideEpiPresetExecutor extends AAnimationPresetExecuto
 
         //Rose
         RoseBuilder roseBuilder1 = new RoseBuilder();
-        roseBuilder1.setDirectorVectorsAndRotation(new Vector(0, 0, 1), new Vector(1, 0, 0), new Vector(0, 1, 0), new Constant<>(Math.PI / 210));
+        roseBuilder1.setRotation(new Vector(0, 0, 1), new Vector(1, 0, 0), new Vector(0, 1, 0), new Constant<>(Math.PI / 210));
         roseBuilder1.setNbPoints(200);
         roseBuilder1.setRadius(3);
         roseBuilder1.setRoseModifierNumerator(3d);
@@ -40,7 +40,7 @@ public class RotatingRoseInsideEpiPresetExecutor extends AAnimationPresetExecuto
 
         //Epi
         EpiBuilder epiBuilder = new EpiBuilder();
-        epiBuilder.setDirectorVectorsAndRotation(new Vector(0, 0, 1), new Vector(1, 0, 0), new Vector(0, 1, 0), new Constant<>(-Math.PI / 200));
+        epiBuilder.setRotation(new Vector(0, 0, 1), new Vector(1, 0, 0), new Vector(0, 1, 0), new Constant<>(-Math.PI / 200));
         epiBuilder.setNbPoints(200);
         epiBuilder.setRadius(3);
         epiBuilder.setMaxRadius(8);

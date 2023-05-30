@@ -15,7 +15,7 @@ public class GrowingHalfCirclePresetExecutor extends AAnimationPresetExecutor<Ci
 
     @Override
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
-        circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        circleBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         circleBuilder.setNbPoints(20, false);
         circleBuilder.setAngleBetweenEachPoint(Math.PI / 20);
         circleBuilder.setRadius(new DoublePeriodicallyEvolvingVariable(1.0, 0.2, 1));

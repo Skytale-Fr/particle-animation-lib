@@ -17,7 +17,7 @@ public class MagicCircleImagePresetExecutor extends AAnimationPresetExecutor<Ima
     protected void apply(ImageBuilder imageBuilder, JavaPlugin plugin) {
 
         imageBuilder.setImageFileName("magic_circle_ext.png");
-        imageBuilder.setDirectorVectors(new Vector(0.2, 0, 0), new Vector(0, 0, 0.2));
+        imageBuilder.setRotation(new Vector(0.2, 0, 0), new Vector(0, 0, 0.2));
         imageBuilder.setRotation(new Constant<>(new Vector(0, 1, 0)), new Constant<>(-Math.PI / 100));
         imageBuilder.setTicksDuration(400);
         imageBuilder.setShowPeriod(new Constant<>(3));
@@ -27,7 +27,7 @@ public class MagicCircleImagePresetExecutor extends AAnimationPresetExecutor<Ima
         midImageBuilder.setJavaPlugin(imageBuilder.getJavaPlugin());
 
         midImageBuilder.setImageFileName("magic_circle_mid.png");
-        midImageBuilder.setDirectorVectors(new Vector(0.2, 0, 0), new Vector(0, 0, 0.2));
+        midImageBuilder.setRotation(new Vector(0.2, 0, 0), new Vector(0, 0, 0.2));
         midImageBuilder.setRotation(new Constant<>(new Vector(0, 1, 0)), new Constant<>(Math.PI / 40));
         midImageBuilder.setTicksDuration(400);
         midImageBuilder.setShowPeriod(new Constant<>(3));
@@ -37,7 +37,7 @@ public class MagicCircleImagePresetExecutor extends AAnimationPresetExecutor<Ima
         inImageBuilder.setJavaPlugin(imageBuilder.getJavaPlugin());
 
         inImageBuilder.setImageFileName("magic_circle_in.png");
-        inImageBuilder.setDirectorVectors(new Vector(0.2, 0, 0), new Vector(0, 0, 0.2));
+        inImageBuilder.setRotation(new Vector(0.2, 0, 0), new Vector(0, 0, 0.2));
         inImageBuilder.setRotation(new Constant<>(new Vector(0, 1, 0)), new Constant<>(-Math.PI / 23));
         inImageBuilder.setTicksDuration(400);
         inImageBuilder.setShowPeriod(new Constant<>(3));

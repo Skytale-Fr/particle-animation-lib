@@ -14,7 +14,7 @@ public class SkytaleImagePresetExecutor extends AAnimationPresetExecutor<ImageBu
 
     @Override
     protected void apply(ImageBuilder imageBuilder, JavaPlugin plugin) {
-        imageBuilder.setDirectorVectorsAndRotation(
+        imageBuilder.setRotation(
                 new Vector(0, 0, 1), new Vector(0, -1, 0),
                 new Vector(0, 1, 0), Math.PI / 20f);
         imageBuilder.setImageFileName("skytale.png");

@@ -5,7 +5,6 @@ import fr.skytale.particleanimlib.animation.animation.polygon.PolygonBuilder;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.DirectedLocationAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.LocatedAnimationPosition;
-import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.LocationPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
@@ -29,7 +28,7 @@ public class HelixSubAnimPolygonPresetExecutor extends AAnimationPresetExecutor<
         polygonBuilder.setDistanceFromCenterToVertices(2.5);
         polygonBuilder.setNbVertices(6);
         polygonBuilder.setDistanceBetweenPoints(new Constant<>(1d));
-        polygonBuilder.setPlaneFromNormalVector(new Vector(0, 0.25, 0));
+        polygonBuilder.setRotation(new Vector(0, 0.25, 0));
         polygonBuilder.setTicksDuration(1);
         polygonBuilder.setRotation(new Vector(0, 1, 0), Math.PI / 24);
         polygonBuilder.setShowPeriod(new Constant<>(2));

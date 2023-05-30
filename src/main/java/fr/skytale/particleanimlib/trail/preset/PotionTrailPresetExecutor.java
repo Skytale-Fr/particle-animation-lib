@@ -21,7 +21,7 @@ public class PotionTrailPresetExecutor extends ATrailPresetExecutor {
         circleBuilder.setRadius(new Constant<>(0.8));
         circleBuilder.setNbPoints(new Constant<>(8), true);
         circleBuilder.setPosition(new StaticTrailPosition(true));
-        circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        circleBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.SPELL_MOB));
         circleBuilder.setTicksDuration(1);
         circleBuilder.setShowPeriod(new Constant<>(2));

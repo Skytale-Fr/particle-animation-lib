@@ -16,7 +16,7 @@ public class DetailsEvolvingTextKGEverSinceNewYorkPresetExecutor extends AAnimat
 
     @Override
     protected void apply(TextBuilder textBuilder, JavaPlugin plugin) {
-        textBuilder.setDirectorVectors(new Vector(0, 0, 1), new Vector(0, 1, 0));
+        textBuilder.setRotation(new Vector(0, 0, 1), new Vector(0, 1, 0));
         textBuilder.setTicksDuration(100);
         textBuilder.setShowPeriod(new Constant<>(1));
         textBuilder.setString(new Constant<>(ChatColor.RED + "Coucou"));

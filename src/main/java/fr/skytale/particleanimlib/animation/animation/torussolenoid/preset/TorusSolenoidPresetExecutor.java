@@ -19,7 +19,7 @@ public class TorusSolenoidPresetExecutor extends AAnimationPresetExecutor<TorusS
 
     @Override
     protected void apply(TorusSolenoidBuilder torusSolenoidBuilder, JavaPlugin plugin) {
-        torusSolenoidBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        torusSolenoidBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         torusSolenoidBuilder.setNbPoints(200);
         ArrayList<Double> torusRadiuses = new ArrayList<>(Arrays.asList(
                 6d, 2d, 0d

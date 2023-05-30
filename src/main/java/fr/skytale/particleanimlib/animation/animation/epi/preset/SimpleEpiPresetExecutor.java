@@ -19,7 +19,7 @@ public class SimpleEpiPresetExecutor extends AAnimationPresetExecutor<EpiBuilder
 
     @Override
     protected void apply(EpiBuilder epiBuilder, JavaPlugin plugin) {
-        epiBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        epiBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         epiBuilder.setNbPoints(200);
         epiBuilder.setRadius(3);
         epiBuilder.setMaxRadius(40);

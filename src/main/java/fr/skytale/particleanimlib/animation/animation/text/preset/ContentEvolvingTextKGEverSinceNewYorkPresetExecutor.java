@@ -2,7 +2,6 @@ package fr.skytale.particleanimlib.animation.animation.text.preset;
 
 import fr.skytale.particleanimlib.animation.animation.text.TextBuilder;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.LocatedAnimationPosition;
-import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
@@ -34,7 +33,7 @@ public class ContentEvolvingTextKGEverSinceNewYorkPresetExecutor extends AAnimat
             }
         })));
 
-        textBuilder.setDirectorVectors(new Vector(0, 0, 1), new Vector(0, 1, 0));
+        textBuilder.setRotation(new Vector(0, 0, 1), new Vector(0, 1, 0));
         textBuilder.setTicksDuration(150);
         textBuilder.setShowPeriod(new Constant<>(1));
         textBuilder.setString(new CallbackVariable<>((iterationCount) -> {

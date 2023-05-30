@@ -24,7 +24,7 @@ public class SimpleCircleWithInsideCollisionsPresetExecutor extends AAnimationPr
 
     @Override
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
-        circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        circleBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         circleBuilder.setNbPoints(20, true);
         circleBuilder.setRadius(4);
         circleBuilder.setTicksDuration(100);

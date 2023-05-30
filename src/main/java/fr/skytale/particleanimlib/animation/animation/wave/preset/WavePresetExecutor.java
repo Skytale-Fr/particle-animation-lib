@@ -17,7 +17,7 @@ public class WavePresetExecutor extends AAnimationPresetExecutor<WaveBuilder> {
     protected void apply(WaveBuilder waveBuilder, JavaPlugin plugin) {
         waveBuilder.setTicksDuration(400);
         waveBuilder.setShowPeriod(new Constant<>(0));
-        waveBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        waveBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         waveBuilder.setNbPoints(new Constant<>(50), true);
         waveBuilder.setRadiusMax(20);
         waveBuilder.setRadiusStart(1);

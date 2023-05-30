@@ -13,7 +13,7 @@ public class SimplePolygonPresetExecutor extends AAnimationPresetExecutor<Polygo
 
     @Override
     protected void apply(PolygonBuilder polygonBuilder, JavaPlugin plugin) {
-        polygonBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        polygonBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         polygonBuilder.setNbVertices(8);
         polygonBuilder.setDistanceBetweenPoints(0.3);
         polygonBuilder.setDistanceFromCenterToVertices(5);

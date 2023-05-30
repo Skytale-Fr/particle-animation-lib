@@ -31,7 +31,7 @@ public class SubAnimationParabolaRotating2PresetExecutor extends AAnimationPrese
         parabolaBuilder.setPosition(circleBuilder.getPosition());
         final Parabola parabola = parabolaBuilder.getAnimation();
         circleBuilder.setNbPoints(5, true);
-        circleBuilder.setDirectorVectorsAndRotation(
+        circleBuilder.setRotation(
                 new Vector(1, 0, 0),
                 new Vector(0, 0, 1),
                 new Vector(0, 1, 0),

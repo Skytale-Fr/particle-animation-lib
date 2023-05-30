@@ -13,7 +13,7 @@ public class WorldPlayers extends AViewers {
     }
 
     @Override
-    public Collection<? extends Player> getPlayers(Location location) {
-        return Objects.requireNonNull(location.getWorld()).getPlayers();
+    public Collection<? extends Player> getPlayers(Location pointLocation) {
+        return Objects.requireNonNull(pointLocation.getWorld()).getPlayers();
     }
 }

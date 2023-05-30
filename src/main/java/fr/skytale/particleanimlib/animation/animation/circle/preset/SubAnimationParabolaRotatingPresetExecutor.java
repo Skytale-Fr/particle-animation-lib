@@ -4,9 +4,7 @@ import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.animation.parabola.Parabola;
 import fr.skytale.particleanimlib.animation.animation.parabola.ParabolaBuilder;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.CallbackPointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.position.animationposition.DirectedLocationAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,7 +27,7 @@ public class SubAnimationParabolaRotatingPresetExecutor extends AAnimationPreset
         final Parabola parabola = parabolaBuilder.getAnimation();
 
         circleBuilder.setNbPoints(5, true);
-        circleBuilder.setDirectorVectorsAndRotation(
+        circleBuilder.setRotation(
                 new Vector(1, 0, 0),
                 new Vector(0, 0, 1),
                 new Vector(0, 1, 0),

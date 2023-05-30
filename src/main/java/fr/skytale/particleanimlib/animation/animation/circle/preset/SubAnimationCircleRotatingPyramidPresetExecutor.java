@@ -26,7 +26,7 @@ public class SubAnimationCircleRotatingPyramidPresetExecutor extends AAnimationP
         pyramidBuilder.setTicksDuration(2);
         pyramidBuilder.setShowPeriod(1);
 
-        circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 1, 0));
+        circleBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 1, 0));
         circleBuilder.setNbPoints(5, true);
         circleBuilder.setRadius(8);
         circleBuilder.setTicksDuration(600);
