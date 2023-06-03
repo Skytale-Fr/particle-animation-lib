@@ -28,7 +28,7 @@ public class Circle extends ARoundAnimation {
     @Override
     public Circle clone() {
         Circle obj = (Circle) super.clone();
-        obj.nbPoints = nbPoints.copy();
+        obj.angleBetweenEachPoint = angleBetweenEachPoint.copy();
         return obj;
     }
 }
