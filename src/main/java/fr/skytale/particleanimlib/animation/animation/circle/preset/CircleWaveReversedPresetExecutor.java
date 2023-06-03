@@ -5,7 +5,6 @@ import fr.skytale.particleanimlib.animation.animation.wave.Wave;
 import fr.skytale.particleanimlib.animation.animation.wave.WaveBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.LocatedAnimationPosition;
-import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
@@ -23,7 +22,7 @@ public class CircleWaveReversedPresetExecutor extends AAnimationPresetExecutor<C
     @Override
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
         final int halfCircleDuration = 30;
-        circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 1, 0));
+        circleBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 1, 0));
         circleBuilder.setNbPoints(10, true);
         circleBuilder.setRadius(new CallbackWithPreviousValueVariable<>(3.0, (iterationCount, previousValue) -> {
             if (iterationCount < halfCircleDuration)
@@ -51,7 +50,7 @@ public class CircleWaveReversedPresetExecutor extends AAnimationPresetExecutor<C
         waveBuilder.setJavaPlugin(plugin);
         waveBuilder.setPosition(new LocatedAnimationPosition(animationLoc.clone()));
         waveBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.FIREWORKS_SPARK));
-        waveBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 1, 0));
+        waveBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 1, 0));
         waveBuilder.setTicksDuration(40);
         waveBuilder.setShowPeriod(2);
         waveBuilder.setNbPoints(15, true);

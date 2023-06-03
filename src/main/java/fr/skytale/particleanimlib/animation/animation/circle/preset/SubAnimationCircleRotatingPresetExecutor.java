@@ -17,7 +17,7 @@ public class SubAnimationCircleRotatingPresetExecutor extends AAnimationPresetEx
 
     @Override
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
-        circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        circleBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         circleBuilder.setNbPoints(10, true);
         circleBuilder.setRadius(2);
         circleBuilder.setTicksDuration(1);

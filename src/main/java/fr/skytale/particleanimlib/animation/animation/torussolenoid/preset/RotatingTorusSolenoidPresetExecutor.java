@@ -15,7 +15,7 @@ public class RotatingTorusSolenoidPresetExecutor extends AAnimationPresetExecuto
 
     @Override
     protected void apply(TorusSolenoidBuilder torusSolenoidBuilder, JavaPlugin plugin) {
-        torusSolenoidBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        torusSolenoidBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         torusSolenoidBuilder.setNbPoints(200);
         torusSolenoidBuilder.setTorusRadius(6);
         torusSolenoidBuilder.setSolenoidRadius(1.5d);

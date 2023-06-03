@@ -2,7 +2,6 @@ package fr.skytale.particleanimlib.trail.preset;
 
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.trailposition.StaticTrailPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.trail.TrailBuilder;
@@ -22,7 +21,7 @@ public class CloudTrailPresetExecutor extends ATrailPresetExecutor {
         circleBuilder.setRadius(new Constant<>(0.8));
         circleBuilder.setNbPoints(new Constant<>(8), true);
         circleBuilder.setPosition(new StaticTrailPosition(true));
-        circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        circleBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.CLOUD));
         circleBuilder.setTicksDuration(1);
         circleBuilder.setShowPeriod(new Constant<>(2));

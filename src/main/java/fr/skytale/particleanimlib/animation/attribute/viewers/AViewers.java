@@ -34,7 +34,7 @@ public abstract class AViewers implements Cloneable {
         return type;
     }
 
-    public abstract Collection<? extends Player> getPlayers(Location location);
+    public abstract Collection<? extends Player> getPlayers(Location pointLocation);
 
     @Override
     public AViewers clone() {

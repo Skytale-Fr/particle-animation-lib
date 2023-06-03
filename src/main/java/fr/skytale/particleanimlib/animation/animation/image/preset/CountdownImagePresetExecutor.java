@@ -3,7 +3,6 @@ package fr.skytale.particleanimlib.animation.animation.image.preset;
 import fr.skytale.particleanimlib.animation.animation.image.Image;
 import fr.skytale.particleanimlib.animation.animation.image.ImageBuilder;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.LocatedAnimationPosition;
-import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
@@ -27,7 +26,7 @@ public class CountdownImagePresetExecutor extends AAnimationPresetExecutor<Image
 
         Location originLocation = imageBuilder.getOriginLocation();
 
-        imageBuilder.setDirectorVectors(new Vector(0, 0, 1), new Vector(0, -1, 0));
+        imageBuilder.setRotation(new Vector(0, 0, 1), new Vector(0, -1, 0));
         imageBuilder.setImageFileName("race_countdown_go.png");
         imageBuilder.setTicksDuration(20);
         imageBuilder.setShowPeriod(new Constant<>(2));

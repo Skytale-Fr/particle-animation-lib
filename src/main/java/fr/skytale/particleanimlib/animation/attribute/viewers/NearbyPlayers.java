@@ -17,10 +17,10 @@ public class NearbyPlayers extends AViewers {
     }
 
     @Override
-    public Collection<? extends Player> getPlayers(Location location) {
-        return Objects.requireNonNull(location.getWorld()).getPlayers()
+    public Collection<? extends Player> getPlayers(Location pointLocation) {
+        return Objects.requireNonNull(pointLocation.getWorld()).getPlayers()
                 .stream()
-                .filter(player -> player.getLocation().distance(location) <= this.maxDistance)
+                .filter(player -> player.getLocation().distance(pointLocation) <= this.maxDistance)
                 .collect(Collectors.toSet());
     }
 

@@ -14,7 +14,6 @@ public class SimpleCirclePresetExecutor extends AAnimationPresetExecutor<CircleB
 
     @Override
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
-        circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
         circleBuilder.setNbPoints(20, true);
         circleBuilder.setRadius(4);
         circleBuilder.setTicksDuration(100);

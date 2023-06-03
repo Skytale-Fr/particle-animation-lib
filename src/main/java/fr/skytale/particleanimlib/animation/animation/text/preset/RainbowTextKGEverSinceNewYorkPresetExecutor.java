@@ -19,7 +19,7 @@ public class RainbowTextKGEverSinceNewYorkPresetExecutor extends AAnimationPrese
 
     @Override
     protected void apply(TextBuilder textBuilder, JavaPlugin plugin) {
-        textBuilder.setDirectorVectors(new Vector(0, 0, 1), new Vector(0, 1, 0));
+        textBuilder.setRotation(new Vector(0, 0, 1), new Vector(0, 1, 0));
         textBuilder.setTicksDuration(100);
         textBuilder.setShowPeriod(new Constant<>(4));
         textBuilder.setString(new CallbackWithPreviousValueVariable<>("Skytale", (iterationCount, previousValue) -> {

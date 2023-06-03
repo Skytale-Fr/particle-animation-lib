@@ -19,7 +19,7 @@ public class SimpleNodePresetExecutor extends AAnimationPresetExecutor<NodeBuild
 
     @Override
     protected void apply(NodeBuilder nodeBuilder, JavaPlugin plugin) {
-        nodeBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        nodeBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         nodeBuilder.setNbPoints(200);
         nodeBuilder.setRadius(5);
         nodeBuilder.setMaxRadius(40);

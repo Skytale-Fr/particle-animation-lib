@@ -19,7 +19,7 @@ public class SphereSubAnimPolygon2PresetExecutor extends AAnimationPresetExecuto
         PolygonBuilder polygonBuilder = new PolygonBuilder();
         polygonBuilder.setPosition(sphereBuilder.getPosition());
         polygonBuilder.setJavaPlugin(sphereBuilder.getJavaPlugin());
-        polygonBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 1, 0));
+        polygonBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 1, 0));
         polygonBuilder.setNbVertices(6);
         polygonBuilder.setDistanceBetweenPoints(0.4);
         polygonBuilder.setDistanceFromCenterToVertices(2);
