@@ -23,10 +23,10 @@ public class PA204AttaqueCorpsSol2PresetExecutor extends AAnimationPresetExecuto
         circleBuilder.setRadius(new DoublePeriodicallyEvolvingVariable(0.5, 0.2));
         circleBuilder.setTicksDuration(5);
 
-        circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        circleBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         Circle circle1 = circleBuilder.getAnimation();
 
-        circleBuilder.setDirectorVectors(new Vector(-1, 0, 0), new Vector(0, 0, -1));
+        circleBuilder.setRotation(new Vector(-1, 0, 0), new Vector(0, 0, -1));
         Circle circle2 = circleBuilder.getAnimation();
 
         circleBuilder.setTicksDuration(1);

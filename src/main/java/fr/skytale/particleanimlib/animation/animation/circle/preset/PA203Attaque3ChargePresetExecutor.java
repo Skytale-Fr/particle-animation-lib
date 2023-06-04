@@ -25,7 +25,7 @@ public class PA203Attaque3ChargePresetExecutor extends AAnimationPresetExecutor<
         //SubAnim 1
         CircleBuilder growingMovingCircleBuilder1 = new CircleBuilder();
         growingMovingCircleBuilder1.setJavaPlugin(plugin);
-        growingMovingCircleBuilder1.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        growingMovingCircleBuilder1.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         growingMovingCircleBuilder1.setNbPoints(20, true);
         growingMovingCircleBuilder1.setTicksDuration(10);
         growingMovingCircleBuilder1.setPointDefinition(new ParticleTemplate(ParticleEffect.ELECTRIC_SPARK, 0.01f));
@@ -41,7 +41,7 @@ public class PA203Attaque3ChargePresetExecutor extends AAnimationPresetExecutor<
         //Sub Anim 2
         CircleBuilder growingMovingCircleBuilder2 = new CircleBuilder();
         growingMovingCircleBuilder2.setJavaPlugin(plugin);
-        growingMovingCircleBuilder2.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        growingMovingCircleBuilder2.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         growingMovingCircleBuilder2.setNbPoints(20, true);
         growingMovingCircleBuilder2.setTicksDuration(10);
         growingMovingCircleBuilder2.setPointDefinition(new ParticleTemplate(ParticleEffect.ELECTRIC_SPARK, 0.01f));

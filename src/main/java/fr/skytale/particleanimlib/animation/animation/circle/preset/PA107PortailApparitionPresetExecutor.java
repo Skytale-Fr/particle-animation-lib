@@ -24,8 +24,11 @@ public class PA107PortailApparitionPresetExecutor extends AAnimationPresetExecut
         double endRadius = 3d;
         int tickDuration = 20*5;
 
-        circleBuilder.setDirectorVectors(new Vector(0, 1, 0), new Vector(0, 0, 1));
-        circleBuilder.setRotation(new Vector(1,0,0), Math.PI/48);
+        circleBuilder.setRotation(
+                new Vector(0, 1, 0),
+                new Vector(0, 0, 1),
+                new Vector(1,0,0),
+                Math.PI/48);
         /*circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.END_ROD, 0.05f));
         circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 1, 0));
         circleBuilder.setNbPoints(10, true);

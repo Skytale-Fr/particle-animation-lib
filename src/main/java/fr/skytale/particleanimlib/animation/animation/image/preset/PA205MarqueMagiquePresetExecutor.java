@@ -45,7 +45,7 @@ public class PA205MarqueMagiquePresetExecutor extends AAnimationPresetExecutor<I
 
         //Image sulfur
         imageBuilder.setImageFileName("sulfur_25_25.png");
-        imageBuilder.setDirectorVectorsAndRotation(
+        imageBuilder.setRotation(
                 new Vector(1, 0, 0),
                 new Vector(0, -1, 0),
                 new Constant<>(new Vector(0, 1, 0)),
@@ -58,7 +58,7 @@ public class PA205MarqueMagiquePresetExecutor extends AAnimationPresetExecutor<I
         //Image mercury
         imageBuilder.setImageFileName("mercury_27_27.png");
         imageBuilder.setTicksDuration(durationTicks);
-        imageBuilder.setDirectorVectorsAndRotation(
+        imageBuilder.setRotation(
                 new Vector(1, 0, 0),
                 new Vector(0, -1, 0),
                 new Constant<>(new Vector(0, 1, 0)),
@@ -71,7 +71,7 @@ public class PA205MarqueMagiquePresetExecutor extends AAnimationPresetExecutor<I
         //Image salt
         imageBuilder.setImageFileName("salt_15_15.png");
         imageBuilder.setTicksDuration(halfDurationTicks);
-        imageBuilder.setDirectorVectorsAndRotation(
+        imageBuilder.setRotation(
                 new Vector(0, 0, 1),
                 new Vector(0, -1, 0),
                 new Vector(0, 1, 0),

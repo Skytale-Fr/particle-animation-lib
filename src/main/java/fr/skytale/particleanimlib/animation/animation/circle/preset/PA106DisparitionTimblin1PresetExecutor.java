@@ -22,12 +22,14 @@ public class PA106DisparitionTimblin1PresetExecutor extends AAnimationPresetExec
     @Override
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
 
-
-        circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
         circleBuilder.setNbPoints(5, true);
         circleBuilder.setTicksDuration(5);
         circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.EXPLOSION_NORMAL, 1, 0f, new Vector(0, 0, 0), (ParticleData) null));
-        circleBuilder.setRotation(new Vector(0, 1, 0), Math.PI / 6);
+        circleBuilder.setRotation(
+                new Vector(1, 0, 0),
+                new Vector(0, 0, 1),
+                new Vector(0, 1, 0),
+                Math.PI / 6);
 
         circleBuilder.setPosition(new LocatedAnimationPosition(circleBuilder.getOriginLocation()));
         circleBuilder.setRadius(new CallbackVariable<>(iterationCount -> Math.exp(iterationCount / 4d)));

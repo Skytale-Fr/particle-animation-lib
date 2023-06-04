@@ -34,7 +34,7 @@ public class PA208BatonEauPresetExecutor extends AAnimationPresetExecutor<HelixB
         waveBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.WATER_SPLASH, 0f));
         waveBuilder.setTicksDuration(400);
         waveBuilder.setShowPeriod(new Constant<>(0));
-        waveBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        waveBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
         waveBuilder.setNbPoints(new Constant<>(100), true);
         waveBuilder.setRadiusMax(20);
         waveBuilder.setRadiusStart(Math.sin(20 * 2 / 28d) * 1.5);

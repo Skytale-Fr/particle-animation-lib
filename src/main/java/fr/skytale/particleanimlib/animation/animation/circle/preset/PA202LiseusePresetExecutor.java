@@ -16,15 +16,16 @@ public class PA202LiseusePresetExecutor extends AAnimationPresetExecutor<CircleB
 
     @Override
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
-        circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        circleBuilder.setRotation(
+                new Vector(1, 0, 0),
+                new Vector(0, 0, 1),
+                new Vector(0,1,0),
+                new CallbackVariable<>(iterationCount -> (Math.PI/48) * Math.pow(-1,(iterationCount/60)) )
+        );
         circleBuilder.setNbPoints(4, true);
         circleBuilder.setRadius(4);
         circleBuilder.setTicksDuration(20*10);
         circleBuilder.setShowPeriod(2);
-        circleBuilder.setRotation(
-                new Vector(0,1,0),
-                new CallbackVariable<>(iterationCount -> (Math.PI/48) * Math.pow(-1,(iterationCount/60)) )
-        );
         circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.END_ROD, 0.05f));
     }
 }
