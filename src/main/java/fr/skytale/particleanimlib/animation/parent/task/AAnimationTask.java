@@ -202,7 +202,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
             Bukkit.getScheduler().cancelTask(taskId);
             taskId = null;
             if (runCallback && !animation.getCallbacks().isEmpty()) {
-                animation.getCallbacks().forEach(animationEndedCallback -> animationEndedCallback.run(animation, this));
+                animation.getCallbacks().forEach(animationEndedCallback -> animationEndedCallback.run(this));
             }
         }
     }
