@@ -24,6 +24,7 @@ import fr.skytale.particleanimlib.animation.animation.polygon.preset.SimplePolyg
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramid2PresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.SimplePyramidPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.randompoints.preset.RandomPointsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.rose.preset.RotatingRoseInsideEpiPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.rose.preset.SimpleRosePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
@@ -92,6 +93,7 @@ public enum AnimationPreset {
     PYRAMID_GROWING(new GrowingPyramidPresetExecutor()),
     PYRAMID_GROWING2(new GrowingPyramid2PresetExecutor()),
     ROSE(new SimpleRosePresetExecutor()),
+    RANDOM_POINTS(new RandomPointsPresetExecutor()),
     ROSE_INSIDE_EPI_ROTATING(new RotatingRoseInsideEpiPresetExecutor()),
     SPHERE(new SpherePresetExecutor()),
     SPHERE_ELECTRIC(new ElectricExplodingSpherePresetExecutor()),
