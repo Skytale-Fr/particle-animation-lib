@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class ObjTask extends AAnimationTask<Obj> {
 
-    private static ObjParsingService objParsingService = ObjParsingService.getInstance();
+    private final static ObjParsingService objParsingService = ObjParsingService.getInstance();
 
     private List<Vector> objPoints;
 

@@ -9,12 +9,14 @@ import fr.skytale.particleanimlib.animation.animation.epi.preset.SimpleEpiPreset
 import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixSubAnimPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.*;
+import fr.skytale.particleanimlib.animation.animation.image.preset.init.ImagePresetInitializer;
 import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningSubAnimLightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningSubAnimSpherePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.line.preset.*;
 import fr.skytale.particleanimlib.animation.animation.nodes.preset.SimpleNodePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.obj.preset.*;
+import fr.skytale.particleanimlib.animation.animation.obj.preset.init.ObjPresetInitializer;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizedDirectionParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizedSpeedAndDirectionParabolaPresetExecutor;
@@ -29,6 +31,7 @@ import fr.skytale.particleanimlib.animation.animation.rose.preset.RotatingRoseIn
 import fr.skytale.particleanimlib.animation.animation.rose.preset.SimpleRosePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
 import fr.skytale.particleanimlib.animation.animation.text.preset.*;
+import fr.skytale.particleanimlib.animation.animation.text.preset.init.TextPresetInitializer;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.RotatingTorusSolenoidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.TorusSolenoidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExecutor;
@@ -60,7 +63,8 @@ public enum AnimationPreset {
     CUBOID_ROTATING_RESIZING_WITH_INNER_COLLISIONS(new CuboidRotatingResizingWithInsideCollisionsPresetExecutor()),
     CUBOID_WITH_INSIDE_COLLISIONS(new CuboidWithInsideCollisionsPresetExecutor()),
     EPI(new SimpleEpiPresetExecutor()),
-    EXPLODING_LINES(new ExplodingLinesPresetExecutor()),
+    CIRCLE_EXPLODING_LINES(new ExplodingLinesPresetExecutor()),
+    CIRCLE_EXPLODING_LINES_INVERTED(new ExplodingLinesInvertedPresetExecutor()),
     HELICOPTER(new HelicopterPresetExecutor()),
     HELICOPTER_WITH_COLLISIONS(new HelicopterWithCollisionsPresetExecutor()),
     IMAGE_COUNTDOWN(new CountdownImagePresetExecutor(), ImagePresetInitializer.class),
@@ -108,13 +112,13 @@ public enum AnimationPreset {
     SPHERE_WITH_INSIDE_COLLISIONS(new SphereWithInsideCollisionsPresetExecutor()),
     HELIX(new HelixPresetExecutor()),
     HELIX_SUB_ANIM_POLYGON(new HelixSubAnimPolygonPresetExecutor()),
-    TEXT_KGEVERSINCENEWYORK(new SimpleTextKGEverSinceNewYorkPresetExecutor()),
-    TEXT_KGEVERSINCENEWYORK_CONTENT_EVOLVING(new ContentEvolvingTextKGEverSinceNewYorkPresetExecutor()),
-    TEXT_KGEVERSINCENEWYORK_DETAILSLEVEL_EVOLVING(new DetailsEvolvingTextKGEverSinceNewYorkPresetExecutor()),
-    TEXT_KGEVERSINCENEWYORK_FONTSIZE_EVOLVING(new FontSizeEvolvingTextKGEverSinceNewYorkPresetExecutor()),
-    TEXT_KGEVERSINCENEWYORK_RAINBOW(new RainbowTextKGEverSinceNewYorkPresetExecutor()),
-    TEXT_KGEVERSINCENEWYORK_ROTATING(new RotatingTextKGEverSinceNewYorkPresetExecutor()),
-    TEXT_MINECRAFT(new SimpleTextMinecraftPresetExecutor()),
+    TEXT_KGEVERSINCENEWYORK(new SimpleTextKGEverSinceNewYorkPresetExecutor(), TextPresetInitializer.class),
+    TEXT_KGEVERSINCENEWYORK_CONTENT_EVOLVING(new ContentEvolvingTextKGEverSinceNewYorkPresetExecutor(), TextPresetInitializer.class),
+    TEXT_KGEVERSINCENEWYORK_DETAILSLEVEL_EVOLVING(new DetailsEvolvingTextKGEverSinceNewYorkPresetExecutor(), TextPresetInitializer.class),
+    TEXT_KGEVERSINCENEWYORK_FONTSIZE_EVOLVING(new FontSizeEvolvingTextKGEverSinceNewYorkPresetExecutor(), TextPresetInitializer.class),
+    TEXT_KGEVERSINCENEWYORK_RAINBOW(new RainbowTextKGEverSinceNewYorkPresetExecutor(), TextPresetInitializer.class),
+    TEXT_KGEVERSINCENEWYORK_ROTATING(new RotatingTextKGEverSinceNewYorkPresetExecutor(), TextPresetInitializer.class),
+    TEXT_MINECRAFT(new SimpleTextMinecraftPresetExecutor(), TextPresetInitializer.class),
     TORUS_SOLENOID(new TorusSolenoidPresetExecutor()),
     TORUS_SOLENOID_ROTATING(new RotatingTorusSolenoidPresetExecutor()),
     WAVE(new WavePresetExecutor());

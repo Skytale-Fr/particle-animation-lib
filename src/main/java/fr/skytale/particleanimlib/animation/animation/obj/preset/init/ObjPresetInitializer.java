@@ -1,4 +1,4 @@
-package fr.skytale.particleanimlib.animation.animation.obj.preset;
+package fr.skytale.particleanimlib.animation.animation.obj.preset.init;
 
 import fr.skytale.particleanimlib.animation.animation.obj.parser.ObjParsingUtils;
 import fr.skytale.particleanimlib.animation.parent.preset.APresetInitializer;

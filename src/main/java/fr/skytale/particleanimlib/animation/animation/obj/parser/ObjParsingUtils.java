@@ -250,4 +250,6 @@ public class ObjParsingUtils {
             sameSegment.getRelatedFaces().add(segment.getRelatedFaces().get(0));
         }
     }
+
+    private ObjParsingUtils() {};
 }
