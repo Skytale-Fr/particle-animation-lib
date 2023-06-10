@@ -11,6 +11,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Possible evolutions:
+ * - randomly split the lightning at some points
+ */
 public class LightningTask extends AAnimationTask<Lightning> {
 
     private final Random random;
@@ -90,9 +94,12 @@ public class LightningTask extends AAnimationTask<Lightning> {
             Vector currentPointOnLine;
             boolean endReached = fromOriginToCurrentPointLength > fromOriginToTargetLength;
 
+            //If the lightning is converging to a specific place, and if we will reach floor,
+            // then we define that the floor location we will reach is the given target.
             if (endReached && animation.isConvergeToTarget()) {
                 currentPoint = originToTarget;
             } else {
+                //If the lightning is NOT converging, we prevent the lightning going further than the floor
                 if (endReached) {
                     fromOriginToCurrentPointLength = fromOriginToTargetLength;
                 }

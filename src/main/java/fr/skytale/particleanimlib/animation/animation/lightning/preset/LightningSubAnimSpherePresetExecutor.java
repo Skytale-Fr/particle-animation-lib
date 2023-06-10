@@ -19,9 +19,11 @@ public class LightningSubAnimSpherePresetExecutor extends AAnimationPresetExecut
         subAnimSphereBuilder.applyPreset(AnimationPreset.SPHERE, plugin);
         subAnimSphereBuilder.setPosition(lightningBuilder.getPosition().copy());
         subAnimSphereBuilder.setJavaPlugin(lightningBuilder.getJavaPlugin());
+        subAnimSphereBuilder.setNbPoints(20);
+        subAnimSphereBuilder.setRadius(2);
+        subAnimSphereBuilder.setTicksDuration(1);
 
         lightningBuilder.applyPreset(AnimationPreset.LIGHTNING, plugin);
         lightningBuilder.setPointDefinition(new SubAnimPointDefinition(subAnimSphereBuilder.getAnimation()));
-        lightningBuilder.setTicksDuration(1);
     }
 }

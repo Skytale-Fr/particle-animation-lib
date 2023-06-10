@@ -1,6 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.obj.preset;
 
-import fr.skytale.particleanimlib.animation.animation.obj.Obj;
+import fr.skytale.particleanimlib.animation.animation.obj.parser.ObjParsingUtils;
 import fr.skytale.particleanimlib.animation.parent.preset.APresetInitializer;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -17,7 +17,7 @@ import java.util.logging.Level;
 
 public class ObjPresetInitializer extends APresetInitializer {
 
-    private static final String OBJ_FOLDER_NAME = Obj.MODELS_FOLDER;
+    private static final String OBJ_FOLDER_NAME = ObjParsingUtils.MODELS_FOLDER;
     private static final String OBJ_FOLDER_PATH_IN_JAR = OBJ_FOLDER_NAME + "/";
     private static final String OBJ_FOLDER_CREATION_ERROR = "Error creating " + OBJ_FOLDER_NAME + " folder.";
     private static final String OBJ_EXTRACTION_ERROR =

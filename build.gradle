@@ -52,6 +52,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
     implementation 'org.apache.commons:commons-math3:3.6.1'
     implementation 'com.github.mokiat:java-data-front:2.0.0'
+    implementation 'com.github.ben-manes.caffeine:caffeine:2.9.3'
     implementation project(':ttfparser')
 }
 
