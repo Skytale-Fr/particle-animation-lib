@@ -27,10 +27,10 @@ public class PA107PortailApparitionPartie2_1PresetExecutor extends AAnimationPre
                 new Vector(1,0,0),
                 Math.PI/84);//new DoublePeriodicallyEvolvingVariable(Math.PI/144,-Math.PI/12));
 
-        circleBuilder.setNbPoints((int) (startRadius/4),true);
+        circleBuilder.setNbPoints((int) (startRadius/2),true);
         circleBuilder.setRadius(endRadius);
 
         circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.END_ROD, 0.05f));
-        circleBuilder.setTicksDuration(20*2);
+        circleBuilder.setTicksDuration(20*5);
     }
 }

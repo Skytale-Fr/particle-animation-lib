@@ -1,18 +1,16 @@
 package fr.skytale.particleanimlib.animation.animation.circle.preset;
 
-import fr.skytale.particleanimlib.animation.animation.circle.Circle;
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
 
-public class PA107PortailApparitionPartie1PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
+public class PA107PortailApparitionPartie1V1PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
-    public PA107PortailApparitionPartie1PresetExecutor() {
+    public PA107PortailApparitionPartie1V1PresetExecutor() {
         super(CircleBuilder.class);
     }
 
