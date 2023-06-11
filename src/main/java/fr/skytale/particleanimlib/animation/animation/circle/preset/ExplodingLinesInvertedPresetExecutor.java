@@ -1,13 +1,10 @@
 package fr.skytale.particleanimlib.animation.animation.circle.preset;
 
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
-import fr.skytale.particleanimlib.animation.animation.line.Line;
 import fr.skytale.particleanimlib.animation.animation.line.LineBuilder;
 import fr.skytale.particleanimlib.animation.attribute.Orientation;
+import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.CallbackPointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationConfig;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationModifier;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.DirectedLocationAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
@@ -15,13 +12,14 @@ import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvol
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
+import xyz.xenondevs.particle.ParticleEffect;
 
-public class ExplodingLinesPresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
+public class ExplodingLinesInvertedPresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
     private static final int PROPELLER_COUNT = 3;
     private static final Orientation ORIENTATION = Orientation.UP; // The orientation of the circle handling all lines
 
-    public ExplodingLinesPresetExecutor() {
+    public ExplodingLinesInvertedPresetExecutor() {
         super(CircleBuilder.class);
     }
 
@@ -29,15 +27,16 @@ public class ExplodingLinesPresetExecutor extends AAnimationPresetExecutor<Circl
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
         LineBuilder lineBuilder = new LineBuilder();
         lineBuilder.setJavaPlugin(circleBuilder.getJavaPlugin());
-        lineBuilder.setTicksDuration(80);
+        lineBuilder.setTicksDuration(40);
         lineBuilder.setShowPeriod(new Constant<>(2));
         lineBuilder.setNbPoints(new Constant<>(5));
+        lineBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.SPELL_WITCH));
 
         circleBuilder.setPointDefinition(new CallbackPointDefinition(
                 (pointLocation, animation, task, fromAnimCenterToPoint, fromPreviousToCurrentAnimBaseLocation) -> {
                     lineBuilder.setPosition(new DirectedLocationAnimationPosition(
                             pointLocation,
-                            fromAnimCenterToPoint,
+                            fromAnimCenterToPoint.clone().multiply(-1),
                             1.0));
                     lineBuilder.setPoint1OnPosition();
                     lineBuilder.setFromPositionToPoint2(new Constant<>(fromAnimCenterToPoint), new DoublePeriodicallyEvolvingVariable(1d, 0.1, 1));
@@ -47,7 +46,7 @@ public class ExplodingLinesPresetExecutor extends AAnimationPresetExecutor<Circl
         circleBuilder.setNbPoints(5, true);
         circleBuilder.setTicksDuration(20 * 10);
         circleBuilder.setShowPeriod(5);
-        circleBuilder.setRadius(1);
+        circleBuilder.setRadius(40);
         circleBuilder.setRotation(
                 new CallbackWithPreviousValueVariable<>(
                         new Vector(0, 1, 0),

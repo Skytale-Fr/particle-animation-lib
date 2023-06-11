@@ -10,6 +10,16 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+/**
+ * Possible evolutions:
+ * - bracing angle (avoiding instantaneous 180° turn)
+ * - asynchronous direction change (the particles currently change their direction at the same time)
+ * - world collision (avoid entering blocks)
+ * - Add a general direction
+ * - Avoid exiting sphere:
+ *   - Either the particle that exit the sphere will disappear and a new one will appear at a random place
+ *   - Either the particle can not move outside the sphere
+ */
 public class RandomPointsTask extends AAnimationTask<RandomPoints> {
 
     @IVariableCurrentValue
@@ -26,6 +36,7 @@ public class RandomPointsTask extends AAnimationTask<RandomPoints> {
 
     public RandomPointsTask(RandomPoints animation) {
         super(animation);
+        startTask();
     }
 
     @Override
@@ -52,17 +63,13 @@ public class RandomPointsTask extends AAnimationTask<RandomPoints> {
         } else {
             //Direction change
             if (iterationCount % directionChangePeriod == 0) {
-                this.randomPointsData.forEach(randomPointData -> {
-                    randomPointData.nextDirection = getRandomDirection();
-                });
+                this.randomPointsData.forEach(randomPointData -> randomPointData.nextDirection = getRandomDirection());
             }
 
             //Compute next point according to direction and speed
-            this.randomPointsData.forEach(randomPointData -> {
-                randomPointData.relativePosition = randomPointData.relativePosition.clone().add(
-                        randomPointData.nextDirection.clone().multiply(speed)
-                );
-            });
+            this.randomPointsData.forEach(randomPointData ->
+                    randomPointData.relativePosition = randomPointData.relativePosition.clone()
+                            .add(randomPointData.nextDirection.clone().multiply(speed)));
         }
 
         return randomPointsData.stream()
@@ -71,7 +78,7 @@ public class RandomPointsTask extends AAnimationTask<RandomPoints> {
     }
 
     private Vector getRandomDirection() {
-        Vector direction = new Vector(random.nextDouble(), random.nextDouble(), random.nextDouble());
+        Vector direction = new Vector(random.nextDouble() - 0.5, random.nextDouble() - 0.5, random.nextDouble() - 0.5);
         return direction.normalize();
     }
 

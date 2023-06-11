@@ -12,32 +12,37 @@ import xyz.xenondevs.particle.ParticleEffect;
 
 import java.time.Duration;
 
-public class PotionTrailPresetExecutor extends ATrailPresetExecutor {
+public class CirclePotionTrailPresetExecutor extends ATrailPresetExecutor {
     @Override
     public void applyPreset(TrailBuilder trailBuilder, JavaPlugin plugin) {
-
-        //Circle used in trail
-        CircleBuilder circleBuilder = new CircleBuilder();
-        circleBuilder.setRadius(new Constant<>(0.8));
-        circleBuilder.setNbPoints(new Constant<>(8), true);
-        circleBuilder.setPosition(new StaticTrailPosition(true));
-        circleBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.SPELL_MOB));
-        circleBuilder.setTicksDuration(1);
-        circleBuilder.setShowPeriod(new Constant<>(2));
-        circleBuilder.setJavaPlugin(plugin);
 
         //Trail builder
         trailBuilder.setDuration(Duration.ofSeconds(120));
         trailBuilder.setCheckPeriod(0);
         trailBuilder.setMinPlayerToAnimationDistance(0);
         trailBuilder.setMinDistanceBetweenAnimations(2.0f);
+
+        //Circle used in trail
+        CircleBuilder circleBuilder = new CircleBuilder();
+        circleBuilder.setRadius(new Constant<>(0.8));
+        circleBuilder.setNbPoints(new Constant<>(8), true);
+        circleBuilder.setPosition(new StaticTrailPosition(
+                false,
+                false,
+                new Vector(0, 0.9, 0),
+                null
+        ));
+        circleBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
+        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.SPELL_MOB));
+        circleBuilder.setTicksDuration(1);
+        circleBuilder.setShowPeriod(new Constant<>(2));
+        circleBuilder.setJavaPlugin(plugin);
+
         trailBuilder.addAnimation(circleBuilder.getAnimation());
 
         //First circle change to make inner circle
         circleBuilder.setRadius(0.25);
         circleBuilder.setNbPoints(new Constant<>(3), true);
-        circleBuilder.setPosition(new StaticTrailPosition(true));
 
         trailBuilder.addAnimation(circleBuilder.getAnimation());
     }

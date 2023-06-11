@@ -3,20 +3,22 @@ package fr.skytale.particleanimlib.trail.attribute;
 import fr.skytale.particleanimlib.animation.parent.preset.APresetInitializer;
 import fr.skytale.particleanimlib.trail.TrailBuilder;
 import fr.skytale.particleanimlib.trail.parent.ATrailPresetExecutor;
-import fr.skytale.particleanimlib.trail.preset.CircleTrailPresetExecutor;
-import fr.skytale.particleanimlib.trail.preset.CloudTrailPresetExecutor;
+import fr.skytale.particleanimlib.trail.preset.circle.*;
 import fr.skytale.particleanimlib.trail.preset.CuboidTrailPresetExecutor;
-import fr.skytale.particleanimlib.trail.preset.PotionTrailPresetExecutor;
+import fr.skytale.particleanimlib.trail.preset.CirclePotionTrailPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Locale;
 
 public enum TrailPreset {
-    CIRCLE_MOVING_UP(new CircleTrailPresetExecutor()),
-    CLOUD(new CloudTrailPresetExecutor()),
-    POTION(new PotionTrailPresetExecutor()),
-    ROTATING_CUBOID(new CuboidTrailPresetExecutor()),
-    //SKYTALE(new SkytaleImageTrailPresetExecutor(), ImagePresetInitializer.class),
+    CIRCLE_ORIENTED(new CircleOrientedTrailPresetExecutor()),
+    CIRCLE_MOVING_ORIENTED(new CircleMovingOrientedTrailPresetExecutor()),
+    CIRCLE_MOVING_UP(new CircleMovingUpTrailPresetExecutor()),
+    CIRCLE_TARGETING_ENTITY(new CircleTargetingEntityTrailPresetExecutor()),
+    CIRCLE_TARGETING_ENTITY_LOCATION(new CircleTargetingEntityLocationPresetExecutor()),
+    CIRCLE_CLOUD(new CircleCloudTrailPresetExecutor()),
+    POTION(new CirclePotionTrailPresetExecutor()),
+    ROTATING_CUBOID(new CuboidTrailPresetExecutor())
     ;
 
     private final ATrailPresetExecutor presetExecutor;

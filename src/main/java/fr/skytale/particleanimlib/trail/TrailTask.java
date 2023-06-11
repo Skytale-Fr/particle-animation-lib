@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
@@ -114,26 +115,41 @@ public class TrailTask implements Runnable {
             // --- Adding the new player location
 
             double distanceFromLastSavedLoc = Double.MAX_VALUE;
+            Vector velocity = new Vector(0, 0, 0);
+            Duration durationBetweenCurrentAndLastLoc = null;
             if (nbSavedLocations != 0) {
-                Location lastSavedLocation = locationsData.get(0).getLocation();
+                final TrailPlayerLocationData lastTrailPlayerLocationData = locationsData.get(0);
+                Location lastSavedLocation = lastTrailPlayerLocationData.getLocation();
                 if (lastSavedLocation.getWorld() != null &&
                     Objects.equals(playerLoc.getWorld(), lastSavedLocation.getWorld())) {
                     distanceFromLastSavedLoc = lastSavedLocation.distance(playerLoc);
+                    velocity = lastSavedLocation.toVector().subtract(playerLoc.toVector()).normalize();
+                    durationBetweenCurrentAndLastLoc = Duration.between(lastTrailPlayerLocationData.getTime(), LocalTime.now());
                 }
             }
 
-            playerData.addPreviousLocation(new TrailPlayerLocationData(playerLoc, distanceFromLastSavedLoc, player.getVelocity(), player.getLocation().getDirection()));
+            if (durationBetweenCurrentAndLastLoc != null) {
+                velocity = velocity.multiply(1f / (
+                        durationBetweenCurrentAndLastLoc.getSeconds() +
+                        (durationBetweenCurrentAndLastLoc.getNano() / 1_000_000_000f)
+                ));
+            }
+
+            playerData.addPreviousLocation(new TrailPlayerLocationData(
+                    playerLoc,
+                    distanceFromLastSavedLoc,
+                    velocity,
+                    player.getLocation().getDirection()
+            ));
             nbSavedLocations++;
 
             //Finding the oldest location that fill the requirements
             Integer locationToShowIndex = findLocationToShowIndex(locationsData, nbSavedLocations);
 
             // --- show the animation
-            int iterationCount = playerData.getIterationCount();
             if (locationToShowIndex != null) {
                 showAnimation(player, locationsData, locationToShowIndex);
             }
-            playerData.setIterationCount(iterationCount + 1);
         }
     }
 
@@ -172,13 +188,18 @@ public class TrailTask implements Runnable {
         locationsData.subList(locationToShowIndex - 1, locationsData.size()).clear();
 
         trail.getAnimations().forEach(animation -> {
-            if (animation.getPosition().getType() != PositionType.TRAIL) {
-                throw new IllegalStateException("During trail generation, the type of the position of an animation must be TRAIL. Usually, this error occurs when an animation created with a position extending the AAnimation class was used inside the trail system. Please use a position extending the class ATrailPosition instead.");
+            if (!animation.getPosition().getType().equals(PositionType.TRAIL)) {
+                throw new IllegalStateException("During trail execution, the animation position type must be TRAIL. Please define a position that extends ATrailPosition.");
             }
             ATrailPosition trailPosition = (ATrailPosition) animation.getPosition();
             final AAnimation clonedAnimation = animation.clone();
-            trailPosition.updateAAnimationPosition(clonedAnimation, player, trailPlayerData);
-            animation.show();
+            boolean shouldDisplay = trailPosition.computeFinalPositionAndRotation(clonedAnimation, player, trailPlayerData);
+            if (shouldDisplay) {
+                if (!animation.getPosition().getType().equals(PositionType.NORMAL)) {
+                    throw new IllegalStateException("During trail execution, the animation position should have been transformed to be NORMAL. Please define a position that extends ATrailPosition.");
+                }
+                animation.show();
+            }
         });
     }
 

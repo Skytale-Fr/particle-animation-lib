@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.text;
 
+import fr.skytale.particleanimlib.animation.animation.text.parser.FontParsingService;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
 import fr.skytale.particleanimlib.animation.attribute.annotation.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
@@ -12,15 +13,17 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TextTask extends AAnimationTask<Text> {
 
-    private static final double FILL_LINE_PADDING = 0.2;
+    private static final FontParsingService fontParsingService = FontParsingService.getInstance();
 
     private TTFAlphabet ttfAlphabet;
 
@@ -28,24 +31,60 @@ public class TextTask extends AAnimationTask<Text> {
     private Double detailsLevel;
 
     @IVariableCurrentValue
-    private String baseString;
+    private String text;
 
     @IVariableCurrentValue
     private Double fontSize;
 
     public TextTask(Text text) {
         super(text);
-        ttfAlphabet = animation.getTTFAlphabet();
-        this.startTask();
+        fontParsingService.getTTFAlphabet(text)
+                .thenAccept(builtTTFAlphabet -> {
+                    this.ttfAlphabet = builtTTFAlphabet;
+                    startTask();
+                });
     }
 
+    @SuppressWarnings("Convert2MethodRef")
     @Override
     protected List<AnimationPointData> computeAnimationPoints() {
+        List<AnimationPointData> animationPointsData = getAnimationPointData();
+        if (animation.isAlignCenter()) {
+            animationPointsData = alignCenter(animationPointsData);
+        }
+        return animationPointsData;
+    }
+
+    private List<AnimationPointData> alignCenter(List<AnimationPointData> animationPointsData) {
+        double maxX = 0;
+        double maxY = 0;
+        double maxZ = 0;
+
+        for (AnimationPointData animationPointData : animationPointsData) {
+            maxX = Math.max(maxX, animationPointData.getFromCenterToPoint().getX());
+            maxY = Math.max(maxY, animationPointData.getFromCenterToPoint().getY());
+            maxZ = Math.max(maxZ, animationPointData.getFromCenterToPoint().getZ());
+        }
+
+        Vector offset = new Vector(-maxX / 2d, -maxY / 2d, -maxZ / 2d);
+
+        return animationPointsData.stream()
+                .map(animationPointData -> new AnimationPointData(
+                        animationPointData.getFromCenterToPoint().clone().add(offset),
+                        animationPointData.getPointDefinitionModifier()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    @NotNull
+    private List<AnimationPointData> getAnimationPointData() {
         List<AnimationPointData> animationPointsData = new ArrayList<>();
 
         //transform String to ttfString
-        BaseComponent[] components = TextComponent.fromLegacyText(baseString, ChatColor.WHITE);
-        String parsedString = Arrays.stream(components).map(baseComponent -> baseComponent.toPlainText()).reduce("", String::concat);
+        BaseComponent[] components = TextComponent.fromLegacyText(text, ChatColor.WHITE);
+        String parsedString = Arrays.stream(components)
+                .map(baseComponent -> baseComponent.toPlainText())
+                .reduce("", String::concat);
         // The scale factor of 1.3 his to fit a Minecraft block size.
         // So a font size of 10.0 will create an upper case character of 10.0 blocks height.
         TTFString ttfString = ttfAlphabet.getString(parsedString, fontSize * 1.3d);
@@ -58,8 +97,8 @@ public class TextTask extends AAnimationTask<Text> {
             for (int i = 0; i < componentCharacters.length(); i++) {
                 TTFCharacter ttfCharacter = ttfString.getCharacter(characterIndex);
                 Point2D.Double position = ttfString.getPosition(characterIndex);
-                Vector vecU = currentU.clone().multiply(position.getX());
-                Vector vecV = currentV.clone().multiply(position.getY());
+                Vector vecU = TextTask.U.clone().multiply(position.getX());
+                Vector vecV = TextTask.V.clone().multiply(position.getY());
                 Vector charPadding = vecU.add(vecV);
 
                 animationPointsData.addAll(getCharacterPoints(ttfCharacter, charPadding, component.getColor(), detailsLevel));
@@ -75,11 +114,7 @@ public class TextTask extends AAnimationTask<Text> {
         List<AnimationPointData> characterPointsData = new ArrayList<>();
         Glyf glyf = character.getGlyf();
         List<List<TTFPoint>> contours = glyf.getContours();
-        for (int contourIndex = 0; contourIndex < contours.size(); contourIndex++) {
-            List<TTFPoint> points = contours.get(contourIndex);
-//            for(TTFPoint point : points) {
-//                characterPointsData.add(getPoint(point, charPadding, color);
-//            }
+        for (List<TTFPoint> points : contours) {
             for (int i = 0; i < points.size(); i++) {
                 TTFPoint point1 = points.get(i);
                 TTFPoint point2;
@@ -110,11 +145,6 @@ public class TextTask extends AAnimationTask<Text> {
             currentPoint.add(move);
         }
         return linePoints;
-    }
-
-    private AnimationPointData getPoint(TTFPoint point, Vector charPadding, ChatColor color) {
-        Vector pointLocation = getVectorFromPoint(point).add(charPadding);
-        return new AnimationPointData(pointLocation, AnimationPointData.getPointModifierForColor(color.getColor()));
     }
 
     private Vector getVectorFromPoint(TTFPoint point) {

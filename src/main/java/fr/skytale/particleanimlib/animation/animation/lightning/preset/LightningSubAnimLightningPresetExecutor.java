@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.lightning.preset;
 
+import fr.skytale.particleanimlib.animation.animation.lightning.Lightning;
 import fr.skytale.particleanimlib.animation.animation.lightning.LightningBuilder;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
@@ -14,15 +15,14 @@ public class LightningSubAnimLightningPresetExecutor extends AAnimationPresetExe
 
     @Override
     protected void apply(LightningBuilder lightningBuilder, JavaPlugin plugin) {
-        LightningBuilder subLightningBuilder = new LightningBuilder();
-        subLightningBuilder.applyPreset(AnimationPreset.LIGHTNING, plugin);
-        subLightningBuilder.setPosition(lightningBuilder.getPosition().copy());
-        subLightningBuilder.setJavaPlugin(lightningBuilder.getJavaPlugin());
-        subLightningBuilder.setTicksDuration(1);
-        subLightningBuilder.setMaxDistanceBetweenLightningAngles(40);
-
         lightningBuilder.applyPreset(AnimationPreset.LIGHTNING, plugin);
-        lightningBuilder.setPointDefinition(new SubAnimPointDefinition(subLightningBuilder.getAnimation()));
         lightningBuilder.setTicksDuration(1);
+        lightningBuilder.setConvergeToTarget(false);
+        Lightning subLightning = lightningBuilder.getAnimation();
+
+        lightningBuilder.setPointDefinition(new SubAnimPointDefinition(subLightning));
+        lightningBuilder.setTicksDuration(25);
+        lightningBuilder.setConvergeToTarget(true);
+        lightningBuilder.setDistanceBetweenPoints(20);
     }
 }

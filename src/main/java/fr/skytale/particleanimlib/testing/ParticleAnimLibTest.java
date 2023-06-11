@@ -3,6 +3,7 @@ package fr.skytale.particleanimlib.testing;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.RelativeToEntityAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.testing.attribute.AnimationLibPlayerData;
 import fr.skytale.particleanimlib.testing.command.AnimationLibCommand;
 import fr.skytale.particleanimlib.testing.command.AnimationLibTabCompleter;
@@ -14,7 +15,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ import java.util.UUID;
 
 public class ParticleAnimLibTest {
 
-    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.PA_1_07_PORTAIL_APPARITION_V2;
+    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.CIRCLE_EXPLODING_LINES_INVERTED;
     public static TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
     public static boolean DEFAULT_SHOW_ON_CLICK = true;
 
@@ -77,7 +77,7 @@ public class ParticleAnimLibTest {
                 player,
                 new RelativeToEntityAnimationPosition(
                         player,
-                        new Vector(0,0,0)//new Constant<>(player.getEyeLocation().toVector().subtract(player.getLocation().toVector()))
+                        new Constant<>(player.getEyeLocation().toVector().subtract(player.getLocation().toVector()))
                 ));
     }
 

@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.text.preset;
 
 import fr.skytale.particleanimlib.animation.animation.text.TextBuilder;
+import fr.skytale.particleanimlib.animation.attribute.Orientation;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,6 +21,7 @@ public class RotatingTextKGEverSinceNewYorkPresetExecutor extends AAnimationPres
         textBuilder.setString(new Constant<>("Coucou"));
         textBuilder.setFontSize(new Constant<>(10.0d));
         textBuilder.setFontFileName("KGEverSinceNewYork.ttf");
-        textBuilder.setRotation(new Vector(0, 1, 0), Math.PI / 30);
+        textBuilder.setAlignCenter(true);
+        textBuilder.setRotation(Orientation.EAST,new Vector(0, 1, 0), Math.PI / 120);
     }
 }

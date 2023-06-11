@@ -1,4 +1,4 @@
-package fr.skytale.particleanimlib.animation.animation.obj;
+package fr.skytale.particleanimlib.animation.animation.obj.parser;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 

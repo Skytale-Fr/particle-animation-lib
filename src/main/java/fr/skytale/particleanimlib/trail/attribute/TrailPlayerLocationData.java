@@ -3,12 +3,16 @@ package fr.skytale.particleanimlib.trail.attribute;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
+import java.time.Instant;
+import java.time.LocalTime;
+
 public class TrailPlayerLocationData {
 
     private final Vector eyeDirection;
     private final Vector velocity;
     private final Location location;
     private final double distanceFromPreviousLocation;
+    private final LocalTime time;
     private double distanceToPlayer;
 
     public TrailPlayerLocationData(Location location, double distanceFromPreviousLocation, Vector eyeDirection, Vector velocity) {
@@ -16,6 +20,7 @@ public class TrailPlayerLocationData {
         this.distanceFromPreviousLocation = distanceFromPreviousLocation;
         this.distanceToPlayer = 0;
         this.eyeDirection = eyeDirection;
+        this.time = LocalTime.now();
         this.velocity = velocity;
     }
 
@@ -41,6 +46,10 @@ public class TrailPlayerLocationData {
 
     public Vector getVelocity() {
         return velocity;
+    }
+
+    public LocalTime getTime() {
+        return time;
     }
 
     public void addDistanceToPlayer(double distanceToPlayerToAdd) {

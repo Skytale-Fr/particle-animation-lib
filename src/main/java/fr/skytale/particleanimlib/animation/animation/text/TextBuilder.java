@@ -1,12 +1,9 @@
 package fr.skytale.particleanimlib.animation.animation.text;
 
-import fr.skytale.particleanimlib.animation.attribute.Orientation;
-import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import org.apache.commons.lang.Validate;
-import org.bukkit.util.Vector;
 
 public class TextBuilder extends AAnimationBuilder<Text, TextTask> {
 
@@ -24,9 +21,10 @@ public class TextBuilder extends AAnimationBuilder<Text, TextTask> {
         animation.setFontFileName("Minecraft.ttf");
         animation.setShowPeriod(new Constant<>(1));
         animation.setTicksDuration(60);
-        animation.setString(new Constant<>("Coucou"));
+        animation.setText(new Constant<>("Coucou"));
         animation.setFontSize(new Constant<>(3.0d));
         animation.setDetailsLevel(new Constant<>(1.0d));
+        animation.setAlignCenter(true);
     }
 
     @Override
@@ -36,7 +34,7 @@ public class TextBuilder extends AAnimationBuilder<Text, TextTask> {
 
     @Override
     public Text getAnimation() {
-        checkNotNull(animation.getBaseString(), BASE_STRING_SHOULD_NOT_BE_NULL);
+        checkNotNull(animation.getText(), BASE_STRING_SHOULD_NOT_BE_NULL);
         checkNotNull(animation.getFontSize(), FONT_SIZE_SHOULD_NOT_BE_NULL_OR_EMPTY);
         checkNotNull(animation.getFontFileName(), FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
         checkNotNull(animation.getDetailsLevel(), DETAILS_LEVEL_SHOULD_BE_POSTIIVE_AND_NOT_NULL);
@@ -48,7 +46,7 @@ public class TextBuilder extends AAnimationBuilder<Text, TextTask> {
     /********* Line specific setters ***********/
     public void setString(IVariable<String> string) {
         checkNotNull(string, BASE_STRING_SHOULD_NOT_BE_NULL);
-        animation.setString(string);
+        animation.setText(string);
     }
 
     public void setFontSize(IVariable<Double> fontSize) {
@@ -65,5 +63,9 @@ public class TextBuilder extends AAnimationBuilder<Text, TextTask> {
         checkNotNull(fontFileName, FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
         Validate.notEmpty(fontFileName, FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
         animation.setFontFileName(fontFileName);
+    }
+
+    public void setAlignCenter(boolean alignCenter) {
+        animation.setAlignCenter(alignCenter);
     }
 }

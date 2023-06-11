@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.attribute;
 
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 import org.apache.commons.math3.geometry.euclidean.threed.RotationConvention;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
@@ -26,6 +27,10 @@ public class PARotation {
                     new Vector3D(newV.getX(), newV.getY(), newV.getZ()).normalize()
             );
         }
+    }
+
+    public PARotation(Vector direction) {
+        this(AAnimationTask.W, direction);
     }
 
     public PARotation(Vector from, Vector to) {
@@ -77,6 +82,11 @@ public class PARotation {
                 rotatedVector3D.getX(),
                 rotatedVector3D.getY(),
                 rotatedVector3D.getZ());
+    }
+
+    public Vector getAxis() {
+        Vector3D axis = this.rotation.getAxis(RotationConvention.VECTOR_OPERATOR);
+        return new Vector(axis.getX(), axis.getY(), axis.getZ());
     }
 
     @Override
