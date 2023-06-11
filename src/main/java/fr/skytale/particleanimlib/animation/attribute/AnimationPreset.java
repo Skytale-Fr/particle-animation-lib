@@ -8,6 +8,7 @@ import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidWithIn
 import fr.skytale.particleanimlib.animation.animation.epi.preset.SimpleEpiPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixSubAnimPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.helix.preset.PA208BatonEauPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.*;
 import fr.skytale.particleanimlib.animation.animation.image.preset.init.ImagePresetInitializer;
 import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningPresetExecutor;
@@ -21,6 +22,7 @@ import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPr
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizedDirectionParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizedSpeedAndDirectionParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.GrowingPolygonPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.polygon.preset.PA104CerclePierrePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.RotatingPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.SimplePolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramid2PresetExecutor;
@@ -32,6 +34,7 @@ import fr.skytale.particleanimlib.animation.animation.rose.preset.SimpleRosePres
 import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
 import fr.skytale.particleanimlib.animation.animation.text.preset.*;
 import fr.skytale.particleanimlib.animation.animation.text.preset.init.TextPresetInitializer;
+import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.PA107PortailApparitionPartie2V2PresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.RotatingTorusSolenoidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.TorusSolenoidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExecutor;
@@ -43,6 +46,59 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Locale;
 
 public enum AnimationPreset {
+    PA_0_01_FUMEE(new PA001FumeePresetExecutor()),
+    PA_0_02_BRUME1(new PA002Brume1PresetExecutor()),
+    PA_0_02_BRUME2(new PA002Brume2PresetExecutor()),
+    PA_0_03_BRUME_EPAISSE1(new PA003BrumeEpaisse1PresetExecutor()),
+    PA_0_03_BRUME_EPAISSE2(new PA003BrumeEpaisse2PresetExecutor()),
+    PA_0_04_RITA_LONG(new PA004RitaLongPresetExecutor()),
+    PA_0_04_RITA_COURT(new PA004RitaCourtPresetExecutor()),
+    PA_0_05_FIL_OR(new PA005FilOrPresetExecutor()),
+
+    PA_1_01_MAGIE_FUMEE_1(new PA101MagieFumee1PresetExecutor()),
+    PA_1_01_MAGIE_FUMEE_3_0(new PA101MagieFumee3PresetExecutor()),
+    PA_1_01_MAGIE_FUMEE_3_1(new PA101MagieFumee31PresetExecutor()),
+    PA_1_01_MAGIE_FUMEE_3_2(new PA101MagieFumee32PresetExecutor()),
+    PA_1_02_GRANGE(new PA102GrangePresetExecutor()),
+    PA_1_03_CERCLE_PIERRE(new PA104CerclePierrePresetExecutor()),
+    PA_1_03_CERCLE_PIERRE_2(new PA104CerclePierre2PresetExecutor()),
+    PA_1_05_ARBRE(new PA105ArbePresetExecutor()),
+    PA_1_06_DISPARITION_TIMBLIN_1(new PA106DisparitionTimblin1PresetExecutor()),
+    PA_1_06_DISPARITION_TIMBLIN_2(new PA106DisparitionTimblin2PresetExecutor()),
+
+    //1rst part
+    PA_1_07_PORTAIL_APPARITION_PARTIE_1_V1(new PA107PortailApparitionPartie1V1PresetExecutor()),
+    PA_1_07_PORTAIL_APPARITION_PARTIE_1_V2(new PA107PortailApparitionPartie1V2PresetExecutor()),
+    PA_1_07_PORTAIL_APPARITION_PARTIE_1_V4(new PA107PortailApparitionPartie1V4PresetExecutor()),
+    PA_1_07_PORTAIL_APPARITION_PARTIE_1_V5(new PA107PortailApparitionPartie1V5PresetExecutor()),
+
+    //2nd part
+    PA_1_07_PORTAIL_APPARITION_PARTIE_2_1(new PA107PortailApparitionPartie2_1PresetExecutor()),
+    PA_1_07_PORTAIL_APPARITION_PARTIE_2_V2(new PA107PortailApparitionPartie2V2PresetExecutor()),
+
+    //3rd part
+    PA_1_07_PORTAIL_APPARITION_PARTIE_3(new PA107PortailApparitionPartie3PresetExecutor()),
+
+    //Final anim
+    PA_1_07_PORTAIL_APPARITION_V1(new PA107PortailApparitionV1PresetExecutor()),
+    PA_1_07_PORTAIL_APPARITION_V2(new PA107PortailApparitionV2PresetExecutor()),
+
+    PA_2_02_RITA_LISEUSE(new PA202LiseusePresetExecutor()),
+    PA_2_03_ATTAQUE_CHARGE_1(new PA203Attaque1ChargePresetExecutor()),
+    PA_2_03_ATTAQUE_CHARGE_2(new PA203Attaque2ChargePresetExecutor()),
+    PA_2_03_ATTAQUE_CHARGE_3(new PA203Attaque3ChargePresetExecutor()),
+    PA_2_03_ATTAQUE_CHARGE_4(new PA203Attaque4ChargePresetExecutor()),
+    PA_2_04_ATTAQUE_CORPS_SOL_1(new PA204AttaqueCorpsSol1PresetExecutor()),
+    PA_2_04_ATTAQUE_CORPS_SOL_2(new PA204AttaqueCorpsSol2PresetExecutor()),
+    PA_2_05_MARQUE_MAGIQUE(new PA205MarqueMagiquePresetExecutor()),
+    PA_2_06_PROTECTION_ARCANIQUE_1(new PA206ProtectionArcanique1PresetExecutor()),
+    PA_2_06_PROTECTION_ARCANIQUE_2(new PA206ProtectionArcanique2PresetExecutor()),
+    PA_2_06_PROTECTION_ARCANIQUE_3(new PA206ProtectionArcanique3PresetExecutor()),
+    PA_2_06_PROTECTION_ARCANIQUE_4(new PA206ProtectionArcanique4PresetExecutor()),
+    PA_2_06_PROTECTION_ARCANIQUE_4_1(new PA206ProtectionArcanique41PresetExecutor()),
+    PA_2_06_PROTECTION_ARCANIQUE_4_2(new PA206ProtectionArcanique42PresetExecutor()),
+    PA_2_08_BATON_EAU_1(new PA208BatonEauPresetExecutor()),
+
     //ATOM(new AtomPresetExecutor()),
     CIRCLE(new SimpleCirclePresetExecutor()),
     CIRCLE_HALF_GROWING(new GrowingHalfCirclePresetExecutor()),
