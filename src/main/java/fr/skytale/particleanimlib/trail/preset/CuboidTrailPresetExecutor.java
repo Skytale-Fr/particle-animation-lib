@@ -17,7 +17,12 @@ public class CuboidTrailPresetExecutor extends ATrailPresetExecutor {
         CuboidBuilder cuboidBuilder = new CuboidBuilder();
         cuboidBuilder.setFromLocationToFirstCorner(new Constant<>(new Vector(-0.5, -0.5, -0.5)));
         cuboidBuilder.setFromLocationToSecondCorner(new Constant<>(new Vector(0.5, 0.5, 0.5)));
-        cuboidBuilder.setPosition(new StaticTrailPosition(true));
+        cuboidBuilder.setPosition(new StaticTrailPosition(
+                true,
+                true,
+                new Vector(0, 0.9, 0),
+                null
+        ));
         cuboidBuilder.setDistanceBetweenPoints(new Constant<>(0.2));
         cuboidBuilder.setRotation(new Constant<>(new Vector(0, 1, 0)), new DoublePeriodicallyEvolvingVariable(Math.toRadians(3), Math.toRadians(1), 1));
 

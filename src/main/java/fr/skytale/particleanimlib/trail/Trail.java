@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.trail;
 
+import fr.skytale.particleanimlib.animation.attribute.position.attr.PositionType;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.trail.attribute.TrailEndedCallback;
 
@@ -56,6 +57,9 @@ public class Trail implements Cloneable {
     }
 
     public void addAnimation(AAnimation animation) {
+        if (!animation.getPosition().getType().equals(PositionType.TRAIL)) {
+            throw new IllegalArgumentException("During trail execution, the animation position type must be TRAIL. Please define a position that extends ATrailPosition.");
+        }
         this.animations.add(animation);
     }
 

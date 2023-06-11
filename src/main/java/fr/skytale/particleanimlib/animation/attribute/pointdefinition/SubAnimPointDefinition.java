@@ -57,10 +57,10 @@ public class SubAnimPointDefinition implements APointDefinition {
         Vector subAnimationDirection = null;
         switch (subAnimationOrientationConfig.getRotationModifier()) {
             case PARENT_ANIM_CENTER_ORIENTATION:
-                additionalRotation = new PARotation(AAnimationTask.W, fromAnimCenterToPoint);
+                additionalRotation = new PARotation(fromAnimCenterToPoint);
                 break;
             case PARENT_ANIM_MOVEMENT_ORIENTATION:
-                additionalRotation = new PARotation(AAnimationTask.W, fromPreviousToCurrentAnimBaseLocation);
+                additionalRotation = new PARotation(fromPreviousToCurrentAnimBaseLocation);
                 break;
             case NO_ADDITIONAL_ORIENTATION:
                 additionalRotation = null;
