@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.attribute;
 
 import fr.skytale.particleanimlib.animation.animation.circle.preset.*;
+import fr.skytale.particleanimlib.animation.animation.circuitpulse2d.preset.CircuitPulsePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingWithInsideCollisionsPresetExecutor;
@@ -58,15 +59,16 @@ public enum AnimationPreset {
     CIRCLE_THEN_WAVE(new CircleWavePresetExecutor()),
     CIRCLE_THEN_WAVE_REVERSED(new CircleWaveReversedPresetExecutor()),
     CIRCLE_WITH_INSIDE_COLLISIONS(new SimpleCircleWithInsideCollisionsPresetExecutor()),
+    CIRCLE_EXPLODING_LINES(new ExplodingLinesPresetExecutor()),
+    CIRCLE_EXPLODING_LINES_INVERTED(new ExplodingLinesInvertedPresetExecutor()),
+    HELICOPTER(new HelicopterPresetExecutor()),
+    HELICOPTER_WITH_COLLISIONS(new HelicopterWithCollisionsPresetExecutor()),
     CUBOID(new CuboidPresetExecutor()),
     CUBOID_ROTATING_RESIZING(new CuboidRotatingResizingPresetExecutor()),
     CUBOID_ROTATING_RESIZING_WITH_INNER_COLLISIONS(new CuboidRotatingResizingWithInsideCollisionsPresetExecutor()),
     CUBOID_WITH_INSIDE_COLLISIONS(new CuboidWithInsideCollisionsPresetExecutor()),
     EPI(new SimpleEpiPresetExecutor()),
-    CIRCLE_EXPLODING_LINES(new ExplodingLinesPresetExecutor()),
-    CIRCLE_EXPLODING_LINES_INVERTED(new ExplodingLinesInvertedPresetExecutor()),
-    HELICOPTER(new HelicopterPresetExecutor()),
-    HELICOPTER_WITH_COLLISIONS(new HelicopterWithCollisionsPresetExecutor()),
+    CIRCUIT_PULSE(new CircuitPulsePresetExecutor()),
     IMAGE_COUNTDOWN(new CountdownImagePresetExecutor(), ImagePresetInitializer.class),
     IMAGE_MAGIC_CIRCLE(new MagicCircleImagePresetExecutor(), ImagePresetInitializer.class),
     IMAGE_PIG_BOAT_BOW(new PigBoatBowImagePresetExecutor(), ImagePresetInitializer.class),

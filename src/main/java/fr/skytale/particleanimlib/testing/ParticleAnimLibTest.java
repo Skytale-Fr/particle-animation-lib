@@ -21,9 +21,9 @@ import java.util.*;
 
 public class ParticleAnimLibTest {
 
-    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.CIRCLE_EXPLODING_LINES_INVERTED;
-    public static TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
-    public static boolean DEFAULT_SHOW_ON_CLICK = true;
+    public static final AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.CIRCUIT_PULSE;
+    public static final TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
+    public static final boolean DEFAULT_SHOW_ON_CLICK = true;
 
     private static ParticleAnimLibTest instance;
 
