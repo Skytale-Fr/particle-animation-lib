@@ -11,7 +11,7 @@ import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousVa
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
-import fr.skytale.particleanimlib.animation.collision.CollisionHandler;
+import fr.skytale.particleanimlib.animation.collision.handler.CollisionHandler;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
@@ -508,6 +508,18 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
     public void setPointDefinition(APointDefinition pointDefinition) {
         checkNotNull(pointDefinition, POINT_DEFINITION_SHOULD_NOT_BE_NULL);
         animation.setPointDefinition(pointDefinition);
+    }
+
+    public <S extends AAnimation> S getSubAnimation(Class<S> subAnimClass) {
+        final APointDefinition pointDefinition = animation.getPointDefinition();
+        if (!(pointDefinition instanceof SubAnimPointDefinition)) {
+            return null;
+        }
+        final AAnimation subAnimation = ((SubAnimPointDefinition) pointDefinition).getSubAnimation();
+        if (!(subAnimClass.isInstance(subAnimation))) {
+            throw new IllegalArgumentException("The sub animation is not an instance of " + subAnimClass.getSimpleName());
+        }
+        return subAnimClass.cast(subAnimation);
     }
 
     /**

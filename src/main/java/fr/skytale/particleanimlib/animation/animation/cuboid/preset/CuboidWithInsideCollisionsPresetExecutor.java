@@ -2,10 +2,14 @@ package fr.skytale.particleanimlib.animation.animation.cuboid.preset;
 
 import fr.skytale.particleanimlib.animation.animation.cuboid.CuboidBuilder;
 import fr.skytale.particleanimlib.animation.animation.cuboid.CuboidTask;
+import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
+import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import fr.skytale.particleanimlib.animation.collision.CollisionBuilder;
-import fr.skytale.particleanimlib.animation.collision.EntityCollisionPreset;
-import fr.skytale.particleanimlib.animation.collision.SimpleCollisionProcessor;
+import fr.skytale.particleanimlib.animation.collision.action.EntityCollisionActionCallbackPresets;
+import fr.skytale.particleanimlib.animation.collision.processor.check.EntityCollisionCheckPreset;
+import fr.skytale.particleanimlib.animation.collision.processor.SimpleCollisionProcessor;
+import fr.skytale.particleanimlib.animation.collision.processor.check.EntityCollisionCheckPresets;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -13,6 +17,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
+import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.Objects;
 
@@ -39,12 +44,16 @@ public class CuboidWithInsideCollisionsPresetExecutor extends AAnimationPresetEx
             Location currentIterationBaseLocation = lineTask.getCurrentIterationBaseLocation();
             return Objects.requireNonNull(currentIterationBaseLocation.getWorld()).getNearbyEntities(currentIterationBaseLocation, 10, 10, 10);
         });
-        collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> !entity.getType().equals(EntityType.PLAYER));
-        collisionBuilder.addCollisionProcessor(SimpleCollisionProcessor.useDefault(cuboidBuilder, EntityCollisionPreset.EXACT_BOUNDING_BOX_INSIDE_CUBOID, (animationTask, target) -> {
-            if (!(target instanceof LivingEntity)) return -1;
-            ((LivingEntity) target).damage(1);
-            return 20; // The entity can only take damages every 20 ticks.
-        }));
+        collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> entity.getType().equals(EntityType.PLAYER));
+        collisionBuilder.addCollisionProcessor(SimpleCollisionProcessor.useDefault(
+                cuboidBuilder,
+                EntityCollisionCheckPresets.EXACT_BOUNDING_BOX_INSIDE_CUBOID,
+                EntityCollisionActionCallbackPresets.displayParticle(
+                        new ParticleTemplate(ParticleEffect.EXPLOSION_HUGE),
+                        AViewers.fromNearbyPlayers(50),
+                        1
+                )
+        ));
 
         return collisionBuilder;
     }
