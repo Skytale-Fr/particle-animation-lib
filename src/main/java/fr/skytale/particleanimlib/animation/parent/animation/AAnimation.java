@@ -5,13 +5,11 @@ import fr.skytale.particleanimlib.animation.attribute.AnimationStopCondition;
 import fr.skytale.particleanimlib.animation.attribute.PARotation;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.parent.IPosition;
-import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
-import fr.skytale.particleanimlib.animation.collision.CollisionHandler;
+import fr.skytale.particleanimlib.animation.collision.handler.CollisionHandler;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
 
 import java.util.HashSet;
 import java.util.Set;

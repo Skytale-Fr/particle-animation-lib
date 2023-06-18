@@ -524,7 +524,7 @@ collisionBuilder.setPotentialCollidingTargetsCollector(sphereTask -> {
 });
 // The following lambdas will be called after the collector to filter the collected targets.
 // As an example, we don't want to collect entities that are players to avoid hurting the animation launcher.
-collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> !entity.getType().equals(EntityType.PLAYER));
+collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> entity.getType().equals(EntityType.PLAYER));
 
 // Here comes the hard part. In this simple exemple, we want to check collisions between an
 // entity's bounding box and the location of a particle of the animation.
@@ -585,7 +585,7 @@ collisionBuilder.setPotentialCollidingTargetsCollector(lineTask -> {
   Location currentIterationBaseLocation = lineTask.getCurrentIterationBaseLocation();
   return currentIterationBaseLocation.getWorld().getNearbyEntities(currentIterationBaseLocation, 10, 10, 10);
 });
-collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> !entity.getType().equals(EntityType.PLAYER));
+collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> entity.getType().equals(EntityType.PLAYER));
 // EntityCollisionPreset.TARGET_CENTER_INSIDE_SPHERE is the collision preset that we want to use.
 // (don't mind to check by userself how this collision test has been made).
 collisionBuilder.addCollisionProcessor(SimpleCollisionProcessor.useDefault(sphereBuilder, EntityCollisionPreset.TARGET_CENTER_INSIDE_SPHERE, (animationTask, target) -> {
@@ -616,7 +616,7 @@ collisionBuilder.setPotentialCollidingTargetsCollector(lineTask -> {
   Location currentIterationBaseLocation = lineTask.getCurrentIterationBaseLocation();
   return currentIterationBaseLocation.getWorld().getNearbyEntities(currentIterationBaseLocation, 10, 10, 10);
 });
-collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> !entity.getType().equals(EntityType.PLAYER));
+collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> entity.getType().equals(EntityType.PLAYER));
 // So here we are using the SimpleCollisionProcessor (type := MAIN_POSITION).
 // This way, the following processor will be performed only once per animation show and get provided with
 // the animation's main location (here the center of the circle).

@@ -1,6 +1,11 @@
-package fr.skytale.particleanimlib.animation.collision;
+package fr.skytale.particleanimlib.animation.collision.handler;
 
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
+import fr.skytale.particleanimlib.animation.collision.CollisionBuilder;
+import fr.skytale.particleanimlib.animation.collision.action.CollisionActionCallback;
+import fr.skytale.particleanimlib.animation.collision.processor.check.CollisionCheckPredicate;
+import fr.skytale.particleanimlib.animation.collision.processor.CollisionProcessor;
+import fr.skytale.particleanimlib.animation.collision.processor.CollisionTestType;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -75,7 +80,7 @@ public class CollisionHandler<T, K extends AAnimationTask> {
     private Map<T, Integer> lastValidateTestTimestampsMap = new HashMap<>();
     private AAnimationTask<?> runner = null;
 
-    protected CollisionHandler(JavaPlugin javaPlugin, IVariable<Integer> collisionPeriod, Function<K, Collection<T>> collector, IVariable<Integer> collectorPeriod, Set<BiPredicate<T, K>> filters, Map<CollisionTestType, Collection<CollisionProcessor<T, K>>> collisionProcessorsByType) {
+    public CollisionHandler(JavaPlugin javaPlugin, IVariable<Integer> collisionPeriod, Function<K, Collection<T>> collector, IVariable<Integer> collectorPeriod, Set<BiPredicate<T, K>> filters, Map<CollisionTestType, Collection<CollisionProcessor<T, K>>> collisionProcessorsByType) {
         this.javaPlugin = javaPlugin;
         this.collisionPeriod = collisionPeriod;
         this.collector = collector;
@@ -156,9 +161,10 @@ public class CollisionHandler<T, K extends AAnimationTask> {
             runner = null;
             if (animationTask.getIterationCount() == 0) {
                 runner = animationTask;
-                runnerIterationCount = runner.getIterationCount();
             }
-        } else runnerIterationCount = runner.getIterationCount();
+        } else {
+            runnerIterationCount = runner.getIterationCount();
+        }
         int finalRunnerIterationCount = runnerIterationCount;
 
         // Compute recursive showPeriod
@@ -191,7 +197,7 @@ public class CollisionHandler<T, K extends AAnimationTask> {
             Collection<CollisionProcessor<T, K>> collisionProcessors = collisionProcessorsByType.get(collisionTestType);
             if (collisionProcessors == null) return;
             collisionProcessors.forEach(collisionProcessor -> {
-                CollisionPredicate<T, K> collisionTest = collisionProcessor.getCollisionTest();
+                CollisionCheckPredicate<T, K> collisionTest = collisionProcessor.getCollisionTest();
                 CollisionActionCallback<T, K> actionCallback = collisionProcessor.getActionCallback();
                 targetsCollected.forEach(target -> {
                     // How many ticks before the target can be part of the collision process:

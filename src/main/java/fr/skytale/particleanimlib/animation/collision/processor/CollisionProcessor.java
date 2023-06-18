@@ -1,5 +1,7 @@
-package fr.skytale.particleanimlib.animation.collision;
+package fr.skytale.particleanimlib.animation.collision.processor;
 
+import fr.skytale.particleanimlib.animation.collision.action.CollisionActionCallback;
+import fr.skytale.particleanimlib.animation.collision.processor.check.CollisionCheckPredicate;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 
 /**
@@ -19,7 +21,7 @@ public class CollisionProcessor<T, K extends AAnimationTask> {
     /**
      * The predicate that should check the collision.
      */
-    protected CollisionPredicate<T, K> collisionTest;
+    protected CollisionCheckPredicate<T, K> collisionTest;
     /**
      * The action callback that will be called if the predicate is verified.
      * This function should return an integer represents how many ticks a target can't be part of the collision process
@@ -32,7 +34,7 @@ public class CollisionProcessor<T, K extends AAnimationTask> {
      * @param collisionTest     The predicate that should check the collision.
      * @param actionCallback    The action callback that will be called if the predicate is verified. This function should return an integer represents how many ticks a target can't be part of the collision process since the last time it collides.
      */
-    public CollisionProcessor(CollisionTestType collisionTestType, CollisionPredicate<T, K> collisionTest, CollisionActionCallback<T, K> actionCallback) {
+    public CollisionProcessor(CollisionTestType collisionTestType, CollisionCheckPredicate<T, K> collisionTest, CollisionActionCallback<T, K> actionCallback) {
         this.collisionTestType = collisionTestType;
         this.collisionTest = collisionTest;
         this.actionCallback = actionCallback;
@@ -52,7 +54,7 @@ public class CollisionProcessor<T, K extends AAnimationTask> {
      *
      * @return The collision check predicate
      */
-    public CollisionPredicate<T, K> getCollisionTest() {
+    public CollisionCheckPredicate<T, K> getCollisionTest() {
         return collisionTest;
     }
 

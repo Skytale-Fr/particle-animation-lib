@@ -66,14 +66,19 @@ public class TrailTask implements Runnable {
     /***********GETTERS & SETTERS***********/
 
     public void addPlayer(UUID playerUUID) {
-        if (this.playersDatas.size() == 0) startTask();
-        this.playersDatas.put(playerUUID, new TrailPlayerData()); //can also be used to reset trail duration
+        int previousPlayersDataSize = this.playersDatas.size();
+        this.playersDatas.put(playerUUID, new TrailPlayerData());
+        if (previousPlayersDataSize == 0 && this.playersDatas.size() == 1) {
+            startTask();
+        }
     }
 
-    public boolean removePlayer(UUID playerUUID) {
-        boolean result = this.playersDatas.remove(playerUUID) != null;
-        if (this.playersDatas.size() == 0) stopTask();
-        return result;
+    public void removePlayer(UUID playerUUID) {
+        int previousPlayersDataSize = this.playersDatas.size();
+        this.playersDatas.remove(playerUUID);
+        if (previousPlayersDataSize == 1 && this.playersDatas.size() == 0) {
+            stopTask();
+        }
     }
 
     public void clearPlayers() {
@@ -82,7 +87,7 @@ public class TrailTask implements Runnable {
     }
 
     public boolean containsPlayer(UUID playerUUID) {
-        return this.playersDatas.containsKey(playerUUID);
+        return this.playersDatas.get(playerUUID) != null;
     }
 
     /**
@@ -195,10 +200,10 @@ public class TrailTask implements Runnable {
             final AAnimation clonedAnimation = animation.clone();
             boolean shouldDisplay = trailPosition.computeFinalPositionAndRotation(clonedAnimation, player, trailPlayerData);
             if (shouldDisplay) {
-                if (!animation.getPosition().getType().equals(PositionType.NORMAL)) {
+                if (!clonedAnimation.getPosition().getType().equals(PositionType.NORMAL)) {
                     throw new IllegalStateException("During trail execution, the animation position should have been transformed to be NORMAL. Please define a position that extends ATrailPosition.");
                 }
-                animation.show();
+                clonedAnimation.show();
             }
         });
     }

@@ -1,4 +1,4 @@
-package fr.skytale.particleanimlib.animation.collision;
+package fr.skytale.particleanimlib.animation.collision.processor;
 
 public enum CollisionTestType {
 

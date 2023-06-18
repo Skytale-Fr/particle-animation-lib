@@ -4,10 +4,13 @@ import fr.skytale.particleanimlib.animation.animation.line.LineBuilder;
 import fr.skytale.particleanimlib.animation.animation.line.LineTask;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
+import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import fr.skytale.particleanimlib.animation.collision.CollisionBuilder;
-import fr.skytale.particleanimlib.animation.collision.CollisionHandler;
-import fr.skytale.particleanimlib.animation.collision.EntityCollisionPreset;
-import fr.skytale.particleanimlib.animation.collision.ParticleCollisionProcessor;
+import fr.skytale.particleanimlib.animation.collision.action.EntityCollisionActionCallbackPresets;
+import fr.skytale.particleanimlib.animation.collision.handler.CollisionHandler;
+import fr.skytale.particleanimlib.animation.collision.processor.check.EntityCollisionCheckPreset;
+import fr.skytale.particleanimlib.animation.collision.processor.ParticleCollisionProcessor;
+import fr.skytale.particleanimlib.animation.collision.processor.check.EntityCollisionCheckPresets;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -51,12 +54,16 @@ public class SimpleLineWithCollisionPresetExecutor extends AAnimationPresetExecu
             Location currentIterationBaseLocation = lineTask.getCurrentIterationBaseLocation();
             return Objects.requireNonNull(currentIterationBaseLocation.getWorld()).getNearbyEntities(currentIterationBaseLocation, 10, 10, 10);
         });
-        collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> !entity.getType().equals(EntityType.PLAYER));
-        collisionBuilder.addCollisionProcessor(ParticleCollisionProcessor.useDefault(lineBuilder, EntityCollisionPreset.EXACT_BOUNDING_BOX, (animationTask, target) -> {
-            if (!(target instanceof LivingEntity)) return -1;
-            ((LivingEntity) target).damage(1);
-            return 20; // The entity can only take damages every 20 ticks.
-        }));
+        collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> entity.getType().equals(EntityType.PLAYER));
+        collisionBuilder.addCollisionProcessor(ParticleCollisionProcessor.useDefault(
+                lineBuilder,
+                EntityCollisionCheckPresets.EXACT_BOUNDING_BOX,
+                EntityCollisionActionCallbackPresets.displayParticle(
+                        new ParticleTemplate(ParticleEffect.EXPLOSION_HUGE),
+                        AViewers.fromNearbyPlayers(50),
+                        1
+                )
+        ));
 
         return collisionBuilder;
     }

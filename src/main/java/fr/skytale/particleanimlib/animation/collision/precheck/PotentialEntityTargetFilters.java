@@ -1,4 +1,4 @@
-package fr.skytale.particleanimlib.animation.collision;
+package fr.skytale.particleanimlib.animation.collision.precheck;
 
 import com.google.common.collect.Sets;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiPredicate;
 
-public interface EntityFilters {
+public interface PotentialEntityTargetFilters {
 
     /**
      * Creates a BiPredicate for CollisionBuilder#addPotentialCollidingTargetsFilter
@@ -19,7 +19,7 @@ public interface EntityFilters {
      * @param types Entity types
      * @return
      */
-    public static BiPredicate<Entity, AAnimationTask<?>> isType(EntityType... types) {
+    public static <K extends AAnimationTask<?>> BiPredicate<Entity, K> isType(EntityType... types) {
         return isType(Sets.newHashSet(types));
     }
 
@@ -30,7 +30,7 @@ public interface EntityFilters {
      * @param types Entity types
      * @return
      */
-    public static BiPredicate<Entity, AAnimationTask<?>> isType(Collection<EntityType> types) {
+    public static <K extends AAnimationTask<?>> BiPredicate<Entity, K> isType(Collection<EntityType> types) {
         Set<EntityType> entityTypes;
         if (!(types instanceof HashSet)) entityTypes = Sets.newHashSet(types);
         else entityTypes = (HashSet<EntityType>) types;

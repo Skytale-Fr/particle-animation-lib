@@ -1,5 +1,8 @@
-package fr.skytale.particleanimlib.animation.collision;
+package fr.skytale.particleanimlib.animation.collision.processor;
 
+import fr.skytale.particleanimlib.animation.collision.action.CollisionActionCallback;
+import fr.skytale.particleanimlib.animation.collision.processor.check.CollisionCheckPredicate;
+import fr.skytale.particleanimlib.animation.collision.processor.check.CollisionCheckPreset;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
@@ -20,7 +23,7 @@ public class SimpleCollisionProcessor<T, K extends AAnimationTask<? extends AAni
      * @param collisionTest  The collision predicate
      * @param actionCallback The action callback
      */
-    public SimpleCollisionProcessor(CollisionPredicate<T, K> collisionTest, CollisionActionCallback<T, K> actionCallback) {
+    public SimpleCollisionProcessor(CollisionCheckPredicate<T, K> collisionTest, CollisionActionCallback<T, K> actionCallback) {
         super(CollisionTestType.PER_PARTICLE, collisionTest, actionCallback);
     }
 
@@ -34,7 +37,7 @@ public class SimpleCollisionProcessor<T, K extends AAnimationTask<? extends AAni
      * @param <K>            The type of animation task you want to plug this collision processor to
      * @return An instance of particle collision processor
      */
-    public static <T, K extends AAnimationTask<? extends AAnimation>> SimpleCollisionProcessor<T, K> useDefault(AAnimationBuilder<?, K> builder, CollisionPreset<T> preset, CollisionActionCallback<T, K> actionCallback) {
+    public static <T, K extends AAnimationTask<? extends AAnimation>> SimpleCollisionProcessor<T, K> useDefault(AAnimationBuilder<?, K> builder, CollisionCheckPreset<T> preset, CollisionActionCallback<T, K> actionCallback) {
         return new SimpleCollisionProcessor<T, K>(preset.<K>getCollisionPredicate(), actionCallback);
     }
 

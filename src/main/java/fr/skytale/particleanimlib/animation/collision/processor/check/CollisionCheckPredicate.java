@@ -1,4 +1,4 @@
-package fr.skytale.particleanimlib.animation.collision;
+package fr.skytale.particleanimlib.animation.collision.processor.check;
 
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Location;
@@ -10,7 +10,7 @@ import org.bukkit.Location;
  * @param <K> The type of animation task you want to plug this collision predicate to
  */
 @FunctionalInterface
-public interface CollisionPredicate<T, K extends AAnimationTask> {
+public interface CollisionCheckPredicate<T, K extends AAnimationTask> {
 
     public boolean test(Location location, K animationTask, T target);
 

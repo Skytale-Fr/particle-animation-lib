@@ -36,13 +36,13 @@ public class AnimationLibCommand implements CommandExecutor {
 
             // ---- EVENT TOGGLE ----
 
-            else if (args.length == 1 && args[0].equals("event")) {
+            else if (args.length == 1 && args[0].equals("toggle")) {
                 boolean isShowAnimationOnClick = this.particleAnimLibTest.getPlayerData(player).isShowAnimationOnClick();
                 this.particleAnimLibTest.setShowAnimOnClick(player, !isShowAnimationOnClick);
                 if (isShowAnimationOnClick) {
-                    player.sendMessage("Event disabled");
+                    player.sendMessage("Display animation on click disabled");
                 } else {
-                    player.sendMessage("Event enabled. Right click in air.");
+                    player.sendMessage("Display animation on click enabled. Simply left click in the air or on a block.");
                 }
                 return true;
             }
@@ -78,28 +78,19 @@ public class AnimationLibCommand implements CommandExecutor {
                 // ---- TRAIL TOGGLE ----
 
                 if (args.length == 1) {
-                    boolean activated = this.particleAnimLibTest.toggleTrail(player);
-                    player.sendMessage((activated ? "Testing" : "Stopping the test of") + " the trail \"" + this.particleAnimLibTest.getPlayerData(player).getTrailSampleName() + "\".");
+                    this.particleAnimLibTest.toggleTrail(player);
                     return true;
                 }
 
                 // ---- TRAIL TYPE ----
 
                 else if (args.length == 2) {
-                    String inputType = args[1].trim().toLowerCase(Locale.ROOT);
-                    Set<String> trailNames = this.particleAnimLibTest.getTrailNames();
-                    if (trailNames.contains(inputType)) {
-                        this.particleAnimLibTest.setTrailType(player, inputType);
-                        player.sendMessage("Testing the trail \"" + inputType + "\".");
-                    } else {
-                        player.sendMessage("This trail type does not exist. Available types : " +
-                                String.join(", ", trailNames));
-                    }
+                    this.particleAnimLibTest.setTrailType(player, args[1]);
                     return true;
                 }
             }
 
-            player.sendMessage("Usage: /" + label + " [<type | showall | event | trail> [type/player]]");
+            player.sendMessage("Usage: /" + label + " [<type | showall | toggle | trail> [type/player]]");
             return true;
         } catch (Exception e) {
             player.sendMessage(e.getMessage());

@@ -1,15 +1,22 @@
 package fr.skytale.particleanimlib.animation.animation.circle.preset;
 
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
+import fr.skytale.particleanimlib.animation.animation.line.Line;
 import fr.skytale.particleanimlib.animation.animation.line.LineBuilder;
 import fr.skytale.particleanimlib.animation.animation.line.LineTask;
 import fr.skytale.particleanimlib.animation.attribute.Orientation;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.CallbackPointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.position.animationposition.DirectedLocationAnimationPosition;
+import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationConfig;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationModifier;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
+import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
+import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import fr.skytale.particleanimlib.animation.collision.CollisionBuilder;
-import fr.skytale.particleanimlib.animation.collision.EntityCollisionPreset;
-import fr.skytale.particleanimlib.animation.collision.ParticleCollisionProcessor;
+import fr.skytale.particleanimlib.animation.collision.action.EntityCollisionActionCallbackPresets;
+import fr.skytale.particleanimlib.animation.collision.processor.check.EntityCollisionCheckPreset;
+import fr.skytale.particleanimlib.animation.collision.processor.ParticleCollisionProcessor;
+import fr.skytale.particleanimlib.animation.collision.processor.check.EntityCollisionCheckPresets;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -17,6 +24,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
+import xyz.xenondevs.particle.ParticleEffect;
+
+import java.util.Objects;
 
 public class HelicopterWithCollisionsPresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -30,29 +40,22 @@ public class HelicopterWithCollisionsPresetExecutor extends AAnimationPresetExec
     @Override
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
         LineBuilder lineBuilder = new LineBuilder();
-        lineBuilder.setPosition(circleBuilder.getPosition());
         lineBuilder.setJavaPlugin(circleBuilder.getJavaPlugin());
+        lineBuilder.setPosition(circleBuilder.getPosition());
+        lineBuilder.setFromPositionToPoint1(new Vector(0, 6, 0));
+        lineBuilder.setFromPositionToPoint2(new Vector(0, 0, 0));
         lineBuilder.setTicksDuration(1);
-        lineBuilder.setShowPeriod(new Constant<>(1));
-        lineBuilder.setNbPoints(new Constant<>(50));
+        lineBuilder.setShowPeriod(new Constant<>(2));
+        lineBuilder.setNbPoints(new Constant<>(10));
         lineBuilder.addCollisionHandler(createCollisionBuilder(lineBuilder).build());
 
-        circleBuilder.setRotation(ORIENTATION, new Vector(0, 1, 0), Math.PI / 12);
-        circleBuilder.setNbPoints(PROPELLER_COUNT, true);
-        circleBuilder.setRadius(0.01);
-        circleBuilder.setPointDefinition(new CallbackPointDefinition(
-                (pointLocation, animation, task, fromAnimCenterToPoint, fromPreviousToCurrentAnimBaseLocation) -> {
-                    lineBuilder.setPosition(new DirectedLocationAnimationPosition(
-                            pointLocation,
-                            fromAnimCenterToPoint,
-                            1.0));
-                    lineBuilder.setPoint1OnPosition();
-                    lineBuilder.setFromPositionToPoint2(new Constant<>(fromAnimCenterToPoint.clone().multiply(-1)), new Constant<>(fromAnimCenterToPoint.length()));
-                    lineBuilder.getAnimation().show().setParentTask(task);
-                }
-        ));
-        circleBuilder.setTicksDuration(100);
-        circleBuilder.setShowPeriod(new Constant<>(3));
+        Line line = lineBuilder.getAnimation();
+        circleBuilder.setNbPoints(5, true);
+        circleBuilder.setTicksDuration(20 * 20);
+        circleBuilder.setShowPeriod(3);
+        circleBuilder.setRadius(0.1);
+        circleBuilder.setRotation(new Vector(0, 1, 0), new DoublePeriodicallyEvolvingVariable(0d, Math.PI / 1000, 3));
+        circleBuilder.setPointDefinition(new SubAnimPointDefinition(line, new SubAnimOrientationConfig(SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION)));
     }
 
     private CollisionBuilder<Entity, LineTask> createCollisionBuilder(LineBuilder lineBuilder) {
@@ -60,14 +63,18 @@ public class HelicopterWithCollisionsPresetExecutor extends AAnimationPresetExec
         collisionBuilder.setJavaPlugin(lineBuilder.getJavaPlugin());
         collisionBuilder.setPotentialCollidingTargetsCollector(lineTask -> {
             Location currentIterationBaseLocation = lineTask.getCurrentIterationBaseLocation();
-            return currentIterationBaseLocation.getWorld().getNearbyEntities(currentIterationBaseLocation, 10, 10, 10);
+            return Objects.requireNonNull(currentIterationBaseLocation.getWorld()).getNearbyEntities(currentIterationBaseLocation, 10, 10, 10);
         });
-        collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> !entity.getType().equals(EntityType.PLAYER));
-        collisionBuilder.addCollisionProcessor(ParticleCollisionProcessor.useDefault(lineBuilder, EntityCollisionPreset.EXACT_BOUNDING_BOX, (animationTask, target) -> {
-            if (!(target instanceof LivingEntity)) return -1;
-            ((LivingEntity) target).damage(1);
-            return 40; // The entity can only take damages every 20 ticks.
-        }));
+        collisionBuilder.addPotentialCollidingTargetsFilter((entity, lineTask) -> entity.getType().equals(EntityType.PLAYER));
+        collisionBuilder.addCollisionProcessor(ParticleCollisionProcessor.useDefault(
+                lineBuilder,
+                EntityCollisionCheckPresets.EXACT_BOUNDING_BOX,
+                EntityCollisionActionCallbackPresets.displayParticle(
+                        new ParticleTemplate(ParticleEffect.EXPLOSION_HUGE),
+                        AViewers.fromNearbyPlayers(50),
+                        1
+                )
+        ));
 
         return collisionBuilder;
     }

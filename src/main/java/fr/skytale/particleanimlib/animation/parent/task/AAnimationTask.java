@@ -11,7 +11,7 @@ import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimation
 import fr.skytale.particleanimlib.animation.attribute.taskfieldtracking.AAnimationTaskTrackedField;
 import fr.skytale.particleanimlib.animation.attribute.taskfieldtracking.AnimationTaskTrackedIVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
-import fr.skytale.particleanimlib.animation.collision.CollisionTestType;
+import fr.skytale.particleanimlib.animation.collision.processor.CollisionTestType;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -90,9 +90,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         return taskId != null;
     }
 
-    public final Vector getCurrentU() {
-        return currentU;
-    }
+    public final Vector getCurrentU() { return currentU; }
 
     public final Vector getCurrentV() {
         return currentV;
@@ -100,18 +98,6 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     public final Vector getCurrentW() {
         return currentW;
-    }
-
-    public final Vector getCurrentAbsoluteU() {
-        return getCurrentIterationBaseLocation().toVector().add(currentU);
-    }
-
-    public final Vector getCurrentAbsoluteV() {
-        return getCurrentIterationBaseLocation().toVector().add(currentV);
-    }
-
-    public final Vector getCurrentAbsoluteW() {
-        return getCurrentIterationBaseLocation().toVector().add(currentW);
     }
 
     /* ******** SETTER *********/

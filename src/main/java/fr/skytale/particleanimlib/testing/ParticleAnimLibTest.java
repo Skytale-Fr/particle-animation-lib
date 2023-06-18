@@ -10,16 +10,14 @@ import fr.skytale.particleanimlib.testing.command.AnimationLibTabCompleter;
 import fr.skytale.particleanimlib.testing.listener.RightClickAirEventListener;
 import fr.skytale.particleanimlib.testing.manager.AnimationSampleManager;
 import fr.skytale.particleanimlib.testing.manager.TrailSampleManager;
+import fr.skytale.particleanimlib.trail.TrailTask;
 import fr.skytale.particleanimlib.trail.attribute.TrailPreset;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class ParticleAnimLibTest {
 
@@ -69,7 +67,6 @@ public class ParticleAnimLibTest {
     public void setAnimationType(Player player, String animationSampleName) {
         AnimationLibPlayerData playerData = getPlayerData(player);
         playerData.setAnimationType(animationSampleName);
-        playersData.put(player.getUniqueId(), playerData);
     }
 
     public void buildAndShowAnimation(Player player) {
@@ -104,20 +101,35 @@ public class ParticleAnimLibTest {
         return plugin;
     }
 
-
     public Set<String> getTrailNames() {
         return TrailSampleManager.getInstance().getTrailNames();
     }
 
-    public boolean toggleTrail(Player player) {
-        return TrailSampleManager.getInstance().toggleTrail(player, getPlayerData(player).getTrailSampleName());
+    public void toggleTrail(Player player) {
+        final AnimationLibPlayerData playerData = getPlayerData(player);
+        final String trailSampleName = playerData.getTrailSampleName();
+        TrailTask trailTask = TrailSampleManager.getInstance().getTrailTask(trailSampleName, player);
+        if (trailTask.containsPlayer(player.getUniqueId())) {
+            trailTask.removePlayer(player.getUniqueId());
+            player.sendMessage("Deactivating trail " + trailSampleName);
+        } else {
+            trailTask.addPlayer(player.getUniqueId());
+            player.sendMessage("Activating trail " + trailSampleName);
+        }
     }
 
     public void setTrailType(Player player, String trailAnimationSampleName) {
-        AnimationLibPlayerData playerData = getPlayerData(player);
-        TrailSampleManager.getInstance().disableTrail(player, playerData.getTrailSampleName());
-        playerData.setTrailSampleName(trailAnimationSampleName);
-        playersData.put(player.getUniqueId(), playerData);
-        TrailSampleManager.getInstance().enableTrail(player, trailAnimationSampleName);
+            AnimationLibPlayerData playerData = getPlayerData(player);
+            //disable previous trail
+            final TrailTask previousTrailTask = TrailSampleManager.getInstance().getTrailTask(playerData.getTrailSampleName(), player);
+            if (previousTrailTask.containsPlayer(player.getUniqueId())) {
+                previousTrailTask.removePlayer(player.getUniqueId());
+                player.sendMessage("Deactivating trail " + playerData.getTrailSampleName());
+            }
+            //activating new trail
+            playerData.setTrailSampleName(trailAnimationSampleName);
+            final TrailTask newTrailTask = TrailSampleManager.getInstance().getTrailTask(playerData.getTrailSampleName(), player);
+            newTrailTask.addPlayer(player.getUniqueId());
+            player.sendMessage("Activating trail " + playerData.getTrailSampleName());
     }
 }
