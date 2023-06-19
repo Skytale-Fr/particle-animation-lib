@@ -50,11 +50,12 @@ public class RandomPointsTask extends AAnimationTask<RandomPoints> {
                 double u = random.nextDouble();
                 double v = random.nextDouble();
                 double theta = 2 * Math.PI * u;
-                double phi = Math.acos(2 * v - 1);
+                double phi = Math.PI * v;
+                double distance = random.nextDouble() * (animation.getRadius() + 1);
 
-                double x = animation.getRadius() * Math.sin(phi) * Math.cos(theta);
-                double y = animation.getRadius() * Math.sin(phi) * Math.sin(theta);
-                double z = animation.getRadius() * Math.cos(phi);
+                double x = distance * Math.sin(phi) * Math.cos(theta);
+                double y = distance * Math.sin(phi) * Math.sin(theta);
+                double z = distance * Math.cos(phi);
 
                 this.randomPointsData.add(new RandomPointData(new Vector(x, y, z), getRandomDirection()));
             }

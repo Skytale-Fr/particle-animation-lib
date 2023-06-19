@@ -28,6 +28,7 @@ import fr.skytale.particleanimlib.animation.animation.polygon.preset.SimplePolyg
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramid2PresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.SimplePyramidPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.randompoints.preset.PA201PillierEauEnigmePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.randompoints.preset.RandomPointsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.rose.preset.RotatingRoseInsideEpiPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.rose.preset.SimpleRosePresetExecutor;
@@ -66,18 +67,16 @@ public enum AnimationPreset {
     PA_1_05_ARBRE(new PA105ArbePresetExecutor()),
     PA_1_06_DISPARITION_TIMBLIN_1(new PA106DisparitionTimblin1PresetExecutor()),
     PA_1_06_DISPARITION_TIMBLIN_2(new PA106DisparitionTimblin2PresetExecutor()),
-
     //1rst part
     PA_1_07_PORTAIL_APPARITION_PARTIE_1_2(new PA107PortailApparitionPartie1_2PresetExecutor()),
     PA_1_07_PORTAIL_APPARITION_PARTIE_1_1(new PA107PortailApparitionPartie1_1PresetExecutor()),
     PA_1_07_PORTAIL_APPARITION_PARTIE_1(new PA107PortailPartie1PresetExecutor()),
-
     //2nd part
     PA_1_07_PORTAIL_APPARITION_PARTIE_2_1(new PA107PortailApparitionPartie2_1PresetExecutor()),
-
     //Final anim
     PA_1_07_PORTAIL_APPARITION_V1(new PA107PortailApparitionV1PresetExecutor()),
 
+    PA_2_01_PILLIER_EAU_ENIGME(new PA201PillierEauEnigmePresetExecutor()),
     PA_2_02_RITA_LISEUSE(new PA202LiseusePresetExecutor()),
     PA_2_03_ATTAQUE_CHARGE_1(new PA203Attaque1ChargePresetExecutor()),
     PA_2_03_ATTAQUE_CHARGE_2(new PA203Attaque2ChargePresetExecutor()),
