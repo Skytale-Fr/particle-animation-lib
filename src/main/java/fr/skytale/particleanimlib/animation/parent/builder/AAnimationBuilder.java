@@ -22,9 +22,11 @@ import xyz.xenondevs.particle.ParticleEffect;
 
 import java.awt.*;
 import java.util.Collection;
+import java.util.Random;
 import java.util.function.BiPredicate;
 
 public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimationTask<T>> {
+    protected Random RANDOM = new Random();
     public static final String POSITION_SHOULD_NOT_BE_NULL = "Position should not be null";
     public static final String POINT_DEFINITION_SHOULD_NOT_BE_NULL = "Point Definition (or Main particle) should not be null";
     protected static final String VIEWERS_SHOULD_NOT_BE_NULL = "viewers should not be null";
@@ -38,7 +40,7 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
         animation.setViewers(AViewers.fromNearbyPlayers(300));
         setRotation(PARotation.DEFAULT_ROTATION);
         animation.setPointDefinition(new ParticlePointDefinition(
-                new ParticleTemplate(ParticleEffect.REDSTONE, new Color(255, 170, 0)))
+                new ParticleTemplate(ParticleEffect.REDSTONE, new Color(RANDOM.nextInt(256), RANDOM.nextInt(256), RANDOM.nextInt(256))))
         );
     }
 
@@ -94,6 +96,15 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
         }
     }
 
+    protected void checkNotNullAndBetween(IVariable<? extends Number> iVariable, int minInclusive, int maxInclusive, String checkFailureMessage) {
+        checkNotNull(iVariable, checkFailureMessage);
+        if (iVariable.isConstant()) {
+            int value = iVariable.getCurrentValue(0).intValue();
+            if (value < minInclusive || maxInclusive < value) {
+                throw new IllegalArgumentException(checkFailureMessage);
+            }
+        }
+    }
 
     // --------------------- FINAL BUILD ---------------------
     protected abstract T initAnimation();

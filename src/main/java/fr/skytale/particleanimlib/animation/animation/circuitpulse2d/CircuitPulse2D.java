@@ -1,14 +1,18 @@
 package fr.skytale.particleanimlib.animation.animation.circuitpulse2d;
 
+import fr.skytale.particleanimlib.animation.attribute.area.IArea;
 import fr.skytale.particleanimlib.animation.attribute.spawner.attribute.ParticlesToSpawn;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 
 public class CircuitPulse2D extends AAnimation {
-    IVariable<Double> speed;
-    IVariable<Integer> trailSize;
-    IVariable<Float> maxSize;
-    IVariable<ParticlesToSpawn> spawner;
+    private IVariable<Double> speed;
+    private IVariable<Integer> trailSize;
+    private IVariable<IArea> boundaryArea;
+    private IVariable<Double> maxAngleBetweenDirectionAndOriginDirection;
+    private IVariable<ParticlesToSpawn> spawner;
+    private IVariable<Boolean> fadeColorInTrail;
+    private IVariable<Double> directionChangeProbability;
 
     public CircuitPulse2D() {
     }
@@ -23,8 +27,11 @@ public class CircuitPulse2D extends AAnimation {
         CircuitPulse2D obj = (CircuitPulse2D) super.clone();
         obj.speed = speed.copy();
         obj.trailSize = trailSize.copy();
-        obj.maxSize = maxSize.copy();
+        obj.boundaryArea = boundaryArea.copy();
+        obj.maxAngleBetweenDirectionAndOriginDirection = maxAngleBetweenDirectionAndOriginDirection.copy();
         obj.spawner = spawner.copy();
+        obj.fadeColorInTrail = fadeColorInTrail.copy();
+        obj.directionChangeProbability = directionChangeProbability.copy();
         return obj;
     }
 
@@ -44,12 +51,20 @@ public class CircuitPulse2D extends AAnimation {
         this.trailSize = trailSize;
     }
 
-    public IVariable<Float> getMaxSize() {
-        return maxSize;
+    public IVariable<IArea> getBoundaryArea() {
+        return boundaryArea;
     }
 
-    public void setMaxSize(IVariable<Float> maxSize) {
-        this.maxSize = maxSize;
+    public void setBoundaryArea(IVariable<IArea> boundaryArea) {
+        this.boundaryArea = boundaryArea;
+    }
+
+    public IVariable<Double> getMaxAngleBetweenDirectionAndOriginDirection() {
+        return maxAngleBetweenDirectionAndOriginDirection;
+    }
+
+    public void setMaxAngleBetweenDirectionAndOriginDirection(IVariable<Double> maxAngleBetweenDirectionAndOriginDirection) {
+        this.maxAngleBetweenDirectionAndOriginDirection = maxAngleBetweenDirectionAndOriginDirection;
     }
 
     public IVariable<ParticlesToSpawn> getSpawner() {
@@ -58,5 +73,21 @@ public class CircuitPulse2D extends AAnimation {
 
     public void setSpawner(IVariable<ParticlesToSpawn> spawner) {
         this.spawner = spawner;
+    }
+
+    public IVariable<Boolean> getFadeColorInTrail() {
+        return fadeColorInTrail;
+    }
+
+    public void setFadeColorInTrail(IVariable<Boolean> fadeColorInTrail) {
+        this.fadeColorInTrail = fadeColorInTrail;
+    }
+
+    public IVariable<Double> getDirectionChangeProbability() {
+        return directionChangeProbability;
+    }
+
+    public void setDirectionChangeProbability(IVariable<Double> directionChangeProbability) {
+        this.directionChangeProbability = directionChangeProbability;
     }
 }
