@@ -21,12 +21,12 @@ public class CircuitPulse2DBuilder extends AAnimationBuilder<CircuitPulse2D, Cir
         setShowPeriod(1);
         setSpeed(0.25);
         setTrailSize(4);
-        setBoundaryArea(new Polygon2D(RANDOM.nextInt(2)+3, 8));
+        setBoundaryArea(new Polygon2D(RANDOM.nextInt(3)+3, 8));
         setMaxAngleBetweenDirectionAndOriginDirection(Math.PI / 4);
         setSpawner(new SimpleSpawner(
                 new Constant<>(new Vector(0, 0, 0)),
                 new Constant<>(40),
-                new Constant<>(15),
+                new Constant<>(15 + RANDOM.nextInt(30)),
                 new Constant<>(new ParticlePointDefinition(new ParticleTemplate(
                         ParticleEffect.REDSTONE,
                         new Color(RANDOM.nextInt(256), RANDOM.nextInt(256), RANDOM.nextInt(256))
