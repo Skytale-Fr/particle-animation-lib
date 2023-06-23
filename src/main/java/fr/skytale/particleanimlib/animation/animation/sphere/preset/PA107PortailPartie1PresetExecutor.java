@@ -20,11 +20,11 @@ public class PA107PortailPartie1PresetExecutor extends AAnimationPresetExecutor<
         CircleBuilder circleBuilder = new CircleBuilder();
         circleBuilder.setPosition(sphereBuilder.getPosition());
         circleBuilder.setJavaPlugin(plugin);
-        circleBuilder.applyPreset(AnimationPreset.PA_1_07_PORTAIL_APPARITION_PARTIE_1_2, plugin);
+        circleBuilder.applyPreset(AnimationPreset.CIRCLE_SHRINKING_REPETITIVE, plugin);
         Circle p1_2 = circleBuilder.getAnimation();
 
         //  1.1
-        sphereBuilder.applyPreset(AnimationPreset.PA_1_07_PORTAIL_APPARITION_PARTIE_1_1,plugin);
+        sphereBuilder.applyPreset(AnimationPreset.SPHERE_SHRINKING_REPETITIVE,plugin);
         Sphere p1_1 = sphereBuilder.getAnimation();
 
         sphereBuilder.setRadius(0.1);

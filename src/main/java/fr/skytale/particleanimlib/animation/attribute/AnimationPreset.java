@@ -35,7 +35,7 @@ import fr.skytale.particleanimlib.animation.animation.rose.preset.SimpleRosePres
 import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
 import fr.skytale.particleanimlib.animation.animation.text.preset.*;
 import fr.skytale.particleanimlib.animation.animation.text.preset.init.TextPresetInitializer;
-import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.PA107PortailApparitionPartie2_1PresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.PA107PortailApparitionPartie2PresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.RotatingTorusSolenoidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.TorusSolenoidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExecutor;
@@ -67,14 +67,9 @@ public enum AnimationPreset {
     PA_1_05_ARBRE(new PA105ArbePresetExecutor()),
     PA_1_06_DISPARITION_TIMBLIN_1(new PA106DisparitionTimblin1PresetExecutor()),
     PA_1_06_DISPARITION_TIMBLIN_2(new PA106DisparitionTimblin2PresetExecutor()),
-    //1rst part
-    PA_1_07_PORTAIL_APPARITION_PARTIE_1_2(new PA107PortailApparitionPartie1_2PresetExecutor()),
-    PA_1_07_PORTAIL_APPARITION_PARTIE_1_1(new PA107PortailApparitionPartie1_1PresetExecutor()),
     PA_1_07_PORTAIL_APPARITION_PARTIE_1(new PA107PortailPartie1PresetExecutor()),
-    //2nd part
-    PA_1_07_PORTAIL_APPARITION_PARTIE_2_1(new PA107PortailApparitionPartie2_1PresetExecutor()),
-    //Final anim
-    PA_1_07_PORTAIL_APPARITION_V1(new PA107PortailApparitionV1PresetExecutor()),
+    PA_1_07_PORTAIL_APPARITION_PARTIE_2(new PA107PortailApparitionPartie2PresetExecutor()),
+    PA_1_07_PORTAIL_APPARITION(new PA107PortailApparitionPresetExecutor()),
 
     PA_2_01_PILLIER_EAU_ENIGME(new PA201PillierEauEnigmePresetExecutor()),
     PA_2_02_RITA_LISEUSE(new PA202LiseusePresetExecutor()),
@@ -98,6 +93,7 @@ public enum AnimationPreset {
     CIRCLE_HALF_GROWING(new GrowingHalfCirclePresetExecutor()),
     CIRCLE_ROTATING(new RotatingCirclePresetExecutor()),
     CIRCLE_ROTATING_WITH_INSIDE_COLLISIONS(new RotatingCircleWithInsideCollisionsPresetExecutor()),
+    CIRCLE_SHRINKING_REPETITIVE(new CircleShrinkingRepetitivePresetExecutor()),
     CIRCLE_SUB_ANIM_ROTATING(new SubAnimationCircleRotatingPresetExecutor()),
     CIRCLE_SUB_ANIM_ROTATING_PARABOLA(new SubAnimationParabolaRotatingPresetExecutor()),
     CIRCLE_SUB_ANIM_ROTATING_PARABOLA2(new SubAnimationParabolaRotating2PresetExecutor()),
@@ -154,6 +150,7 @@ public enum AnimationPreset {
     SPHERE_PLASMA(new SpherePlasmaPresetExecutor()),
     SPHERE_PROPAGATION_BOTTOM_TO_TOP(new PropagatingUpSpherePresetExecutor()),
     SPHERE_PROPAGATION_TOP_TO_BOTTOM(new PropagatingDownSpherePresetExecutor()),
+    SPHERE_SHRINKING_REPETITIVE(new RepetitiveShrinkingSpherePresetExecutor()),
     SPHERE_SUB_ANIM_POLYGON(new SphereSubAnimPolygonPresetExecutor()),
     SPHERE_SUB_ANIM_POLYGON_PROPAGATION(new SphereSubAnimPolygonPropagatingUpPresetExecutor()),
     SPHERE_SUB_ANIM_POLYGON2(new SphereSubAnimPolygon2PresetExecutor()),
