@@ -1,7 +1,8 @@
 package fr.skytale.particleanimlib.animation.attribute;
 
 import fr.skytale.particleanimlib.animation.animation.circle.preset.*;
-import fr.skytale.particleanimlib.animation.animation.circuitpulse2d.preset.CircuitPulsePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.circuitpulse2d.preset.CircuitPulse2DPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.circuitpulse3d.preset.CircuitPulse3DPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingWithInsideCollisionsPresetExecutor;
@@ -68,7 +69,8 @@ public enum AnimationPreset {
     CUBOID_ROTATING_RESIZING_WITH_INNER_COLLISIONS(new CuboidRotatingResizingWithInsideCollisionsPresetExecutor()),
     CUBOID_WITH_INSIDE_COLLISIONS(new CuboidWithInsideCollisionsPresetExecutor()),
     EPI(new SimpleEpiPresetExecutor()),
-    CIRCUIT_PULSE(new CircuitPulsePresetExecutor()),
+    CIRCUIT_PULSE_2D(new CircuitPulse2DPresetExecutor()),
+    CIRCUIT_PULSE_3D(new CircuitPulse3DPresetExecutor()),
     IMAGE_COUNTDOWN(new CountdownImagePresetExecutor(), ImagePresetInitializer.class),
     IMAGE_MAGIC_CIRCLE(new MagicCircleImagePresetExecutor(), ImagePresetInitializer.class),
     IMAGE_PIG_BOAT_BOW(new PigBoatBowImagePresetExecutor(), ImagePresetInitializer.class),

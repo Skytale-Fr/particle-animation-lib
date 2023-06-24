@@ -7,9 +7,9 @@ import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class CircuitPulsePresetExecutor extends AAnimationPresetExecutor<CircuitPulse2DBuilder> {
+public class CircuitPulse2DPresetExecutor extends AAnimationPresetExecutor<CircuitPulse2DBuilder> {
 
-    public CircuitPulsePresetExecutor() {
+    public CircuitPulse2DPresetExecutor() {
         super(CircuitPulse2DBuilder.class);
     }
 

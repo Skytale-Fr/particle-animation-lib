@@ -3,6 +3,11 @@ package fr.skytale.particleanimlib.animation.animation.randompoints;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 
+//TODO:
+// - replace radius & nbPoints by IVariable<ParticlesToSpawn>
+// - Add a IVariable<IArea> boundingArea
+// - creates a RandomPointsInSphereSpawner class that extends CallbackVariable<ParticlesToSpawn>
+// - rename RandomPoints en RandomlyMovingPoints
 public class RandomPoints extends AAnimation {
 
     /**
