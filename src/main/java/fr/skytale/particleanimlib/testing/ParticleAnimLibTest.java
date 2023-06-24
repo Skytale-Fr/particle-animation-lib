@@ -21,7 +21,7 @@ import java.util.*;
 
 public class ParticleAnimLibTest {
 
-    public static final AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.CIRCUIT_PULSE;
+    public static final AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.MANDALA2D_PLAYER_MOUSE;
     public static final TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
     public static final boolean DEFAULT_SHOW_ON_CLICK = true;
 

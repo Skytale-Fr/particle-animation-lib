@@ -14,8 +14,10 @@ import org.bukkit.util.Vector;
 
 public class EntityCollisionCheckPresets {
 
-    //prevents instantiation
-    private EntityCollisionCheckPresets() {};
+
+    private EntityCollisionCheckPresets() {
+        //prevents instantiation
+    }
 
 
     /**

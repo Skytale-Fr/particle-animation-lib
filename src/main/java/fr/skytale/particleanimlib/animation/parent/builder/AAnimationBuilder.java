@@ -35,12 +35,15 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
 
     protected AAnimationBuilder() {
         animation = initAnimation();
-        animation.setShowPeriod(new Constant<>(0));
-        animation.setTicksDuration(60);
-        animation.setViewers(AViewers.fromNearbyPlayers(300));
+        setShowPeriod(new Constant<>(0));
+        setTicksDuration(120);
+        setViewers(AViewers.fromNearbyPlayers(300));
         setRotation(PARotation.DEFAULT_ROTATION);
-        animation.setPointDefinition(new ParticlePointDefinition(
-                new ParticleTemplate(ParticleEffect.REDSTONE, new Color(RANDOM.nextInt(256), RANDOM.nextInt(256), RANDOM.nextInt(256))))
+        setPointDefinition(
+                new ParticleTemplate(
+                        ParticleEffect.REDSTONE,
+                        new Color(RANDOM.nextInt(256), RANDOM.nextInt(256), RANDOM.nextInt(256))
+                )
         );
     }
 

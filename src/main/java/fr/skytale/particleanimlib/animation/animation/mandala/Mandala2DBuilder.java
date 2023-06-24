@@ -1,16 +1,30 @@
 package fr.skytale.particleanimlib.animation.animation.mandala;
 
-import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
+import fr.skytale.particleanimlib.animation.attribute.curve.CurvePointsGenerator;
+import fr.skytale.particleanimlib.animation.attribute.range.GeomSpaceRange;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Mandala2DBuilder extends AAnimationBuilder<Mandala2D, Mandala2DTask> {
 
     public Mandala2DBuilder() {
         super();
-        setPoint(new CallbackVariable<>(iterationCount -> ));
+        setPoints(
+                Arrays.asList(
+                        new Vector2D(0, 1),
+                        new Vector2D(0, 2),
+                        new Vector2D(0, 3),
+                        new Vector2D(0, 4),
+                        new Vector2D(0, 5)
+                )
+        );
+        /**/
+        setNbCircleSectionPairs(8);
 
     }
 
@@ -21,20 +35,9 @@ public class Mandala2DBuilder extends AAnimationBuilder<Mandala2D, Mandala2DTask
 
     @Override
     public Mandala2D getAnimation() {
-        checkNotNull(animation.getPoint(), "point should not be null");
+        checkNotNull(animation.getPoints(), "points should not be null");
         checkPositive(animation.getNbCircleSections(), "nbCircleSectionPairs should be positive", false);
-        checkPositive(animation.getMinIterationCountForDisplayedPoint(), "minIterationCountForDisplayedPoint should be positive", true);
-        checkSuperior(animation.getMaxIterationCountForDisplayedPoint(), animation.getMinIterationCountForDisplayedPoint(), "maxIterationCountForDisplayedPoint should be superior to minIterationCountForDisplayedPoint", true);
         return super.getAnimation();
-    }
-
-    public void setPoint(Vector2D point) {
-        setPoint(new Constant<>(point));
-    }
-
-    public void setPoint(IVariable<Vector2D> point) {
-        checkNotNull(point, "point should not be null");
-        animation.setPoint(point);
     }
 
     public void setNbCircleSectionPairs(int nbCircleSectionPairs) {
@@ -46,21 +49,16 @@ public class Mandala2DBuilder extends AAnimationBuilder<Mandala2D, Mandala2DTask
         animation.setNbCircleSections(nbCircleSectionPairs);
     }
 
-    public void setMinIterationCountForDisplayedPoint(int minIterationCountForDisplayedPoint) {
-        setMinIterationCountForDisplayedPoint(new Constant<>(minIterationCountForDisplayedPoint));
+    public void setPoints(List<Vector2D> points) {
+        setPoints(new Constant<>(points));
     }
 
-    public void setMinIterationCountForDisplayedPoint(IVariable<Integer> minIterationCountForDisplayedPoint) {
-        checkPositive(minIterationCountForDisplayedPoint, "minIterationCountForDisplayedPoint should be positive", true);
-        animation.setMinIterationCountForDisplayedPoint(minIterationCountForDisplayedPoint);
+    public void setPoints(IVariable<List<Vector2D>> points) {
+        checkNotNull(points, "points should not be null");
+        animation.setPoints(points);
     }
 
-    public void setMaxIterationCountForDisplayedPoint(int maxIterationCountForDisplayedPoint) {
-        setMaxIterationCountForDisplayedPoint(new Constant<>(maxIterationCountForDisplayedPoint));
-    }
-
-    public void setMaxIterationCountForDisplayedPoint(IVariable<Integer> maxIterationCountForDisplayedPoint) {
-        checkSuperior(maxIterationCountForDisplayedPoint, animation.getMinIterationCountForDisplayedPoint(), "maxIterationCountForDisplayedPoint should be superior to minIterationCountForDisplayedPoint", true);
-        animation.setMaxIterationCountForDisplayedPoint(maxIterationCountForDisplayedPoint);
+    public void setPoints(CurvePointsGenerator<?, Vector2D> curve2DGenerator) {
+        animation.setPoints(curve2DGenerator);
     }
 }
