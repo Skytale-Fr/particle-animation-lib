@@ -41,45 +41,90 @@ public class TorusSolenoidBuilder extends AAnimationBuilder<TorusSolenoid, Torus
     }
 
     /********* TorusSolenoid specific setters ***********/
+
+    /**
+     * Set the torus radius
+     * @param torusRadius the torus radius
+     */
     public void setTorusRadius(IVariable<Double> torusRadius) {
         checkPositiveAndNotNull(torusRadius, "torusRadius should be positive.", false);
         animation.setTorusRadius(torusRadius);
     }
 
+    /**
+     * Set the torus radius
+     * @param torusRadius the torus radius
+     */
     public void setTorusRadius(double torusRadius) {
         setTorusRadius(new Constant<>(torusRadius));
     }
 
+    /**
+     * Set the radius of the solenoid
+     * @param solenoidRadius the radius of the solenoid
+     */
     public void setSolenoidRadius(IVariable<Double> solenoidRadius) {
         checkPositiveAndNotNull(solenoidRadius, "solenoidRadius should be positive.", false);
         animation.setSolenoidRadius(solenoidRadius);
     }
 
+    /**
+     * Set the radius of the solenoid
+     * @param solenoidRadius the radius of the solenoid
+     */
     public void setSolenoidRadius(double solenoidRadius) {
         setSolenoidRadius(new Constant<>(solenoidRadius));
     }
 
+    /**
+     * Set the number of points of the torus solenoid
+     * @param nbPoints the number of points of the torus solenoid
+     */
     public void setNbPoints(int nbPoints) {
         setNbPoints(new Constant<>(nbPoints));
     }
 
+    /**
+     * Set the number of points of the torus solenoid
+     * @param nbPoints the number of points of the torus solenoid
+     */
     public void setNbPoints(IVariable<Integer> nbPoints) {
         animation.setNbPoints(nbPoints);
         checkPositiveAndNotNull(nbPoints, "nbPoints should be positive", false);
     }
 
+    /**
+     * Set the numerator of the torus solenoid modifier
+     * @see <a href="https://mathcurve.com/courbes3d/solenoidtoric/solenoidtoric.shtml">solenoid torus on mathcurve.com</a>
+     * @param torusSolenoidModifierNumerator the numerator of the torus solenoid modifier
+     */
     public void setTorusSolenoidModifierNumerator(IVariable<Double> torusSolenoidModifierNumerator) {
         animation.setTorusSolenoidModifierNumerator(torusSolenoidModifierNumerator);
     }
 
+    /**
+     * Set the numerator of the torus solenoid modifier
+     * @see <a href="https://mathcurve.com/courbes3d/solenoidtoric/solenoidtoric.shtml">solenoid torus on mathcurve.com</a>
+     * @param torusSolenoidModifierNumerator the numerator of the torus solenoid modifier
+     */
     public void setTorusSolenoidModifierNumerator(double torusSolenoidModifierNumerator) {
         setTorusSolenoidModifierNumerator(new Constant<>(torusSolenoidModifierNumerator));
     }
 
+    /**
+     * Set the denominator of the torus solenoid modifier
+     * @see <a href="https://mathcurve.com/courbes3d/solenoidtoric/solenoidtoric.shtml">solenoid torus on mathcurve.com</a>
+     * @param torusSolenoidModifierDenominator the denominator of the torus solenoid modifier
+     */
     public void setTorusSolenoidModifierDenominator(IVariable<Integer> torusSolenoidModifierDenominator) {
         animation.setTorusSolenoidModifierDenominator(torusSolenoidModifierDenominator);
     }
 
+    /**
+     * Set the denominator of the torus solenoid modifier
+     * @see <a href="https://mathcurve.com/courbes3d/solenoidtoric/solenoidtoric.shtml">solenoid torus on mathcurve.com</a>
+     * @param torusSolenoidModifierDenominator the denominator of the torus solenoid modifier
+     */
     public void setTorusSolenoidModifierDenominator(int torusSolenoidModifierDenominator) {
         setTorusSolenoidModifierDenominator(new Constant<>(torusSolenoidModifierDenominator));
     }

@@ -8,6 +8,9 @@ import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import org.bukkit.util.Vector;
 
+/**
+ * A simple spawner that spawn a given number of particles at a given location every given period.
+ */
 public class SimpleSpawner extends CallbackVariable<ParticlesToSpawn> implements ISpawner {
 
     public SimpleSpawner(

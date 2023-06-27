@@ -18,7 +18,7 @@ public interface APointDefinition extends Cloneable {
      *                                              - To the point to show
      * @param fromPreviousToCurrentAnimBaseLocation A vector that goes:
      *                                              - From the parent animation previous base location (of the previous iteration)
-     *                                              - To the parent animation current base location
+     *                                              - To the parent animation current base location (of the current iteration)
      */
     void show(
             Location pointLocation,

@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
+/**
+ * Represent the particles to spawn at a given iteration
+ */
 public class ParticlesToSpawn extends HashSet<ParticleToSpawn> {
     public ParticlesToSpawn() {
         super();

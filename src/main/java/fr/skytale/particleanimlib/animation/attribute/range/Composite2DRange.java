@@ -5,11 +5,19 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A range that returns a static list of 2 values in a Vector2D
+ */
 public class Composite2DRange implements IRange<Vector2D> {
 
     private final IRange<Double> first;
     private final IRange<Double> second;
 
+    /**
+     * Creates a new Composite2DRange based on 2 ranges
+     * @param first the first range that will define Vector2D.x
+     * @param second the second range that will define Vector2D.y
+     */
     public Composite2DRange(IRange<Double> first, IRange<Double> second) {
         this.first = first;
         this.second = second;

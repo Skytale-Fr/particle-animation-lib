@@ -23,34 +23,6 @@ public class SphereBuilder extends ARoundAnimationBuilder<Sphere, SphereTask> {
         return new Sphere();
     }
 
-    /*********SETTERS des éléments spécifiques a la sphere ***********/
-
-    public void setPropagation(Sphere.PropagationType propagationType, IVariable<Float> percentShownWhilePropagate, IVariable<Float> percentStepWhilePropagate) {
-        checkPositive(percentShownWhilePropagate, "percentShownWhilePropagate should be positive.", false);
-        checkPositive(percentStepWhilePropagate, "percentStepWhilePropagate should be positive.", false);
-        animation.setPropagationType(propagationType);
-        animation.setPercentShownWhilePropagate(percentShownWhilePropagate);
-        animation.setPercentStepWhilePropagate(percentStepWhilePropagate);
-    }
-
-    public void setPropagation(Sphere.PropagationType propagationType, float percentShownWhilePropagate, IVariable<Float> percentStepWhilePropagate) {
-        setPropagation(propagationType, new Constant<>(percentShownWhilePropagate), percentStepWhilePropagate);
-    }
-
-    public void setPropagation(Sphere.PropagationType propagationType, IVariable<Float> percentShownWhilePropagate, float percentStepWhilePropagate) {
-        setPropagation(propagationType, percentShownWhilePropagate, new Constant<>(percentStepWhilePropagate));
-    }
-
-
-    public void setPropagation(Sphere.PropagationType propagationType, float percentShownWhilePropagate, float percentStepWhilePropagate) {
-        setPropagation(propagationType, new Constant<>(percentShownWhilePropagate), new Constant<>(percentStepWhilePropagate));
-    }
-
-    public void setSphereType(Sphere.Type sphereType) {
-        checkNotNull(sphereType, "sphereType should not be null");
-        animation.setType(sphereType);
-    }
-
     @Override
     public Sphere getAnimation() {
         checkNotNull(animation.getType(), "sphereType should not be null");
@@ -60,5 +32,60 @@ public class SphereBuilder extends ARoundAnimationBuilder<Sphere, SphereTask> {
         }
 
         return super.getAnimation();
+    }
+
+    /*********SETTERS des éléments spécifiques a la sphere ***********/
+
+    /**
+     * Make the sphere appear progressively.
+     * @param propagationType the type of propagation
+     * @param percentShownWhilePropagate the percent of the sphere shown at a given time
+     * @param percentStepWhilePropagate the step between 2 displays (a way to set the propagation speed)
+     */
+    public void setPropagation(Sphere.PropagationType propagationType, IVariable<Float> percentShownWhilePropagate, IVariable<Float> percentStepWhilePropagate) {
+        checkPositive(percentShownWhilePropagate, "percentShownWhilePropagate should be positive.", false);
+        checkPositive(percentStepWhilePropagate, "percentStepWhilePropagate should be positive.", false);
+        animation.setPropagationType(propagationType);
+        animation.setPercentShownWhilePropagate(percentShownWhilePropagate);
+        animation.setPercentStepWhilePropagate(percentStepWhilePropagate);
+    }
+
+    /**
+     * Make the sphere appear progressively.
+     * @param propagationType the type of propagation
+     * @param percentShownWhilePropagate the percent of the sphere shown at a given time
+     * @param percentStepWhilePropagate the step between 2 displays (a way to set the propagation speed)
+     */
+    public void setPropagation(Sphere.PropagationType propagationType, float percentShownWhilePropagate, IVariable<Float> percentStepWhilePropagate) {
+        setPropagation(propagationType, new Constant<>(percentShownWhilePropagate), percentStepWhilePropagate);
+    }
+
+    /**
+     * Make the sphere appear progressively.
+     * @param propagationType the type of propagation
+     * @param percentShownWhilePropagate the percent of the sphere shown at a given time
+     * @param percentStepWhilePropagate the step between 2 displays (a way to set the propagation speed)
+     */
+    public void setPropagation(Sphere.PropagationType propagationType, IVariable<Float> percentShownWhilePropagate, float percentStepWhilePropagate) {
+        setPropagation(propagationType, percentShownWhilePropagate, new Constant<>(percentStepWhilePropagate));
+    }
+
+    /**
+     * Make the sphere appear progressively.
+     * @param propagationType the type of propagation
+     * @param percentShownWhilePropagate the percent of the sphere shown at a given time
+     * @param percentStepWhilePropagate the step between 2 displays (a way to set the propagation speed)
+     */
+    public void setPropagation(Sphere.PropagationType propagationType, float percentShownWhilePropagate, float percentStepWhilePropagate) {
+        setPropagation(propagationType, new Constant<>(percentShownWhilePropagate), new Constant<>(percentStepWhilePropagate));
+    }
+
+    /**
+     * Set the type of the sphere.
+     * @param sphereType the type of the sphere
+     */
+    public void setSphereType(Sphere.Type sphereType) {
+        checkNotNull(sphereType, "sphereType should not be null");
+        animation.setType(sphereType);
     }
 }

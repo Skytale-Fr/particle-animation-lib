@@ -44,27 +44,48 @@ public class TextBuilder extends AAnimationBuilder<Text, TextTask> {
     }
 
     /********* Line specific setters ***********/
+
+    /**
+     * Set the text to display
+     * @param string the text to display
+     */
     public void setString(IVariable<String> string) {
         checkNotNull(string, BASE_STRING_SHOULD_NOT_BE_NULL);
         animation.setText(string);
     }
 
+    /**
+     * Set the font size
+     * @param fontSize the font size
+     */
     public void setFontSize(IVariable<Double> fontSize) {
         checkNotNull(fontSize, FONT_SIZE_SHOULD_NOT_BE_NULL_OR_EMPTY);
         animation.setFontSize(fontSize);
     }
 
+    /**
+     * Set the details level
+     * @param detailsLevel the details level
+     */
     public void setDetailsLevel(IVariable<Double> detailsLevel) {
         checkPositiveAndNotNull(detailsLevel, DETAILS_LEVEL_SHOULD_BE_POSTIIVE_AND_NOT_NULL, true);
         animation.setDetailsLevel(detailsLevel);
     }
 
+    /**
+     * Set the font file name
+     * @param fontFileName the font file name
+     */
     public void setFontFileName(String fontFileName) {
         checkNotNull(fontFileName, FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
         Validate.notEmpty(fontFileName, FONT_FILE_NAME_SHOULD_NOT_BE_NULL_OR_EMPTY);
         animation.setFontFileName(fontFileName);
     }
 
+    /**
+     * Align the text to the center
+     * @param alignCenter true to align the text to the center
+     */
     public void setAlignCenter(boolean alignCenter) {
         animation.setAlignCenter(alignCenter);
     }

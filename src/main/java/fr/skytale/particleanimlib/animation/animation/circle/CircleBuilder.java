@@ -38,23 +38,37 @@ public class CircleBuilder extends ARoundAnimationBuilder<Circle, CircleTask> {
         return new Circle();
     }
 
-    /********* Circle specific setters ***********/
-
-    @Override
-    public void setNbPoints(IVariable<Integer> nbPoints) {
-        setNbPoints(nbPoints, false);
-    }
-
     @Override
     public Circle getAnimation() {
         checkAngleBetweenEachPoint(animation.getAngleBetweenEachPoint());
         return super.getAnimation();
     }
 
+    /********* Circle specific setters ***********/
+
+    /**
+     * Defines the number of point of the circle
+     * @param nbPoints the number of point of the circle
+     */
+    @Override
+    public void setNbPoints(IVariable<Integer> nbPoints) {
+        setNbPoints(nbPoints, false);
+    }
+
+    /**
+     * Defines the number of point of the circle
+     * @param nbPoints the number of point of the circle
+     * @param fullCircle if true, the angle between each point will be computed to make a full circle
+     */
     public void setNbPoints(int nbPoints, boolean fullCircle) {
         setNbPoints(new Constant<>(nbPoints), fullCircle);
     }
 
+    /**
+     * Defines the number of point of the circle
+     * @param nbPoints the number of point of the circle
+     * @param fullCircle if true, the angle between each point will be computed to make a full circle
+     */
     public void setNbPoints(IVariable<Integer> nbPoints, boolean fullCircle) {
         animation.setNbPoints(nbPoints);
         checkPositiveAndNotNull(nbPoints, "nbPoints should be positive", false);
@@ -64,14 +78,27 @@ public class CircleBuilder extends ARoundAnimationBuilder<Circle, CircleTask> {
         }
     }
 
+    /**
+     * Defines the angle in radian between each point of the circle
+     * @param angleBetweenEachPoint the angle in radian between each point of the circle
+     */
     public void setAngleBetweenEachPoint(double angleBetweenEachPoint) {
         setAngleBetweenEachPoint(new Constant<>(angleBetweenEachPoint));
     }
 
+    /**
+     * Defines the angle in radian between each point of the circle
+     * @param angleBetweenEachPoint the angle in radian between each point of the circle
+     */
     public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint) {
         setAngleBetweenEachPoint(angleBetweenEachPoint, false);
     }
 
+    /**
+     * Defines the angle in radian between each point of the circle
+     * @param angleBetweenEachPoint the angle in radian between each point of the circle
+     * @param fullCircle if true, the number of point will be computed to make a full circle
+     */
     public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint, boolean fullCircle) {
         animation.setAngleBetweenEachPoint(angleBetweenEachPoint);
         if (fullCircle) {
@@ -87,6 +114,11 @@ public class CircleBuilder extends ARoundAnimationBuilder<Circle, CircleTask> {
         }
     }
 
+    /**
+     * Defines the angle in radian between each point of the circle
+     * @param angleBetweenEachPoint the angle in radian between each point of the circle
+     * @param fullCircle if true, the number of point will be computed to make a full circle
+     */
     public void setAngleBetweenEachPoint(double angleBetweenEachPoint, boolean fullCircle) {
         setAngleBetweenEachPoint(new Constant<>(angleBetweenEachPoint), fullCircle);
     }

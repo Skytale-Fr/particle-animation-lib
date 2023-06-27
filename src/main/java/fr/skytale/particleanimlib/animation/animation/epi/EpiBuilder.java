@@ -50,45 +50,91 @@ public class EpiBuilder extends AAnimationBuilder<Epi, EpiTask> {
     }
 
     /********* Epi specific setters ***********/
+
+    /**
+     * Defines the radius of the epi
+     * @param radius the radius of the epi
+     */
     public void setRadius(IVariable<Double> radius) {
         checkPositiveAndNotNull(radius, "radius should be positive.", false);
         animation.setRadius(radius);
     }
 
+    /**
+     * Defines the radius of the epi
+     * @param radius the radius of the epi
+     */
     public void setRadius(double radius) {
         setRadius(new Constant<>(radius));
     }
 
+    /**
+     * Defines the maximum radius in which the points will be displayed
+     * @param maxRadius the maximal distance between the center and the displayed points
+     */
     public void setMaxRadius(IVariable<Double> maxRadius) {
         checkPositive(maxRadius, "maxRadius should be positive.", false);
         animation.setMaxRadius(maxRadius);
     }
 
+    /**
+     * Defines the maximum radius in which the points will be displayed
+     * @param maxRadius the maximal distance between the center and the displayed points
+     */
     public void setMaxRadius(double maxRadius) {
         setMaxRadius(new Constant<>(maxRadius));
     }
 
+    /**
+     * Defines the number of points of the epi
+     * @param nbPoints the number of points of the epi
+     */
     public void setNbPoints(int nbPoints) {
         setNbPoints(new Constant<>(nbPoints));
     }
 
+    /**
+     * Defines the number of points of the epi
+     * @param nbPoints the number of points of the epi
+     */
     public void setNbPoints(IVariable<Integer> nbPoints) {
         animation.setNbPoints(nbPoints);
         checkPositiveAndNotNull(nbPoints, "nbPoints should be positive", false);
     }
 
+    /**
+     * Defines the numerator of the epi modifier.
+     * @see <a href="https://mathcurve.com/courbes2d/epi/epi.shtml">Epi on mathcurve.com</a>
+     * @param epiModifierNumerator the numerator of the epi modifier
+     */
     public void setEpiModifierNumerator(IVariable<Double> epiModifierNumerator) {
         animation.setEpiModifierNumerator(epiModifierNumerator);
     }
 
+    /**
+     * Defines the numerator of the epi modifier.
+     * @see <a href="https://mathcurve.com/courbes2d/epi/epi.shtml">Epi on mathcurve.com</a>
+     * @param epiModifierNumerator the numerator of the epi modifier
+     */
     public void setEpiModifierNumerator(double epiModifierNumerator) {
         setEpiModifierNumerator(new Constant<>(epiModifierNumerator));
     }
 
+    /**
+     * Defines the denominator of the epi modifier.
+     * @see <a href="https://mathcurve.com/courbes2d/epi/epi.shtml">Epi on mathcurve.com</a>
+     * @param epiModifierDenominator the denominator of the epi modifier
+     */
     public void setEpiModifierDenominator(IVariable<Integer> epiModifierDenominator) {
         animation.setEpiModifierDenominator(epiModifierDenominator);
     }
 
+
+    /**
+     * Defines the denominator of the epi modifier.
+     * @see <a href="https://mathcurve.com/courbes2d/epi/epi.shtml">Epi on mathcurve.com</a>
+     * @param epiModifierDenominator the denominator of the epi modifier
+     */
     public void setEpiModifierDenominator(int epiModifierDenominator) {
         setEpiModifierDenominator(new Constant<>(epiModifierDenominator));
     }

@@ -33,6 +33,7 @@ public class CallbackWithPreviousValueVariable<T> implements IVariable<T> {
         this.previousIterationCount = 0;
     }
 
+    @SuppressWarnings("CopyConstructorMissesField")
     public CallbackWithPreviousValueVariable(CallbackWithPreviousValueVariable<T> callbackWithPreviousValueVariable) {
         this(
                 callbackWithPreviousValueVariable.previousValue,

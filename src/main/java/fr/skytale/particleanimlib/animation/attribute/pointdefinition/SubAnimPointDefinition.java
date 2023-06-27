@@ -13,15 +13,28 @@ import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
+/**
+ * To make each point of the parent animation displaying a sub animation
+ */
 public class SubAnimPointDefinition implements APointDefinition {
 
     protected final SubAnimOrientationConfig subAnimationOrientationConfig;
     protected AAnimation subAnimation;
 
+    /**
+     * Allows each point of the parent animation to display a sub animation
+     * @param subAnimation the sub animation to display
+     */
     public SubAnimPointDefinition(AAnimation subAnimation) {
         this(subAnimation, getDefaultSubAnimOrientationConfig(subAnimation));
     }
 
+    /**
+     * Allows each point of the parent animation to display a sub animation
+     * @param subAnimation the sub animation to display
+     * @param subAnimationOrientationConfig how the orientation of the sub animation will be modified according to the
+     *                                     parent animation
+     */
     public SubAnimPointDefinition(AAnimation subAnimation, SubAnimOrientationConfig subAnimationOrientationConfig) {
         this.subAnimation = subAnimation;
         if (subAnimationOrientationConfig == null) {
@@ -30,6 +43,10 @@ public class SubAnimPointDefinition implements APointDefinition {
         this.subAnimationOrientationConfig = subAnimationOrientationConfig;
     }
 
+    /**
+     * Copy constructor
+     * @param subAnimPointDefinition the SubAnimPointDefinition to copy
+     */
     public SubAnimPointDefinition(SubAnimPointDefinition subAnimPointDefinition) {
         this.subAnimation = subAnimPointDefinition.getSubAnimation();
         this.subAnimationOrientationConfig = new SubAnimOrientationConfig(subAnimPointDefinition.getSubAnimOrientationConfig());
@@ -42,14 +59,33 @@ public class SubAnimPointDefinition implements APointDefinition {
         return new SubAnimOrientationConfig(SubAnimOrientationModifier.PARENT_ANIM_CENTER_ORIENTATION);
     }
 
+    /**
+     * Retrieves the sub animation
+     * @return the sub animation
+     */
     public AAnimation getSubAnimation() {
         return subAnimation;
     }
 
+    /**
+     * Retrieves how the orientation of the sub animation will be modified according to the parent animation
+     */
     public SubAnimOrientationConfig getSubAnimOrientationConfig() {
         return subAnimationOrientationConfig;
     }
 
+    /**
+     * Display the sub animation
+     * @param pointLocation                         The location where the sub animation will be displayed
+     * @param animation                             The parent animation
+     * @param task                                  The parent animation task
+     * @param fromAnimCenterToPoint                 A vector that goes:
+     *                                              - From the parent animation center (its current iteration base location)
+     *                                              - To the point to show
+     * @param fromPreviousToCurrentAnimBaseLocation A vector that goes:
+     *                                              - From the parent animation previous base location (of the last iteration)
+     *                                              - To the parent animation current base location (of the current iteration)
+     */
     @Override
     public void show(Location pointLocation, AAnimation animation, AAnimationTask<?> task, Vector fromAnimCenterToPoint, Vector fromPreviousToCurrentAnimBaseLocation) {
         AAnimation newSubAnimation = subAnimation.clone();
@@ -97,6 +133,10 @@ public class SubAnimPointDefinition implements APointDefinition {
         newSubAnimation.show().setParentTask(task);
     }
 
+    /**
+     * Copy the SubAnimPointDefinition
+     * @return the copy
+     */
     @Override
     public APointDefinition copy() {
         return new SubAnimPointDefinition(this);

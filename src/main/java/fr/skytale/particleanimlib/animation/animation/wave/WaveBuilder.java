@@ -42,6 +42,10 @@ public class WaveBuilder extends AAnimationBuilder<Wave, WaveTask> {
 
     /********* Circle specific setters ***********/
 
+    /**
+     * Defines the start radius of the wave
+     * @param radiusStart initial radius of the wave
+     */
     public void setRadiusStart(double radiusStart) {
         if (radiusStart <= 0) {
             throw new IllegalArgumentException("RadiusStart should be positive.");
@@ -49,12 +53,21 @@ public class WaveBuilder extends AAnimationBuilder<Wave, WaveTask> {
         animation.setRadiusStart(radiusStart);
     }
 
-    public void setRadiusStep(IVariable<Double> radiusStep) {
-        animation.setRadiusStep(radiusStep);
-    }
 
+    /**
+     * Defines how the radius will evolve during the animation
+     * @param radiusStep the radius step
+     */
     public void setRadiusStep(double radiusStep) {
         setRadiusStep(new Constant<>(radiusStep));
+    }
+
+    /**
+     * Defines how the radius will evolve during the animation
+     * @param radiusStep the radius step
+     */
+    public void setRadiusStep(IVariable<Double> radiusStep) {
+        animation.setRadiusStep(radiusStep);
     }
 
     public void setRadiusMax(double radiusMax) {
@@ -64,14 +77,27 @@ public class WaveBuilder extends AAnimationBuilder<Wave, WaveTask> {
         animation.setRadiusMax(radiusMax);
     }
 
+    /**
+     * Defines the number of radian between each point of each wave's circle
+     * @param angleBetweenEachPoint the angle between each point
+     */
     public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint) {
         setAngleBetweenEachPoint(angleBetweenEachPoint, false);
     }
 
+    /**
+     * Defines the number of radian between each point of each wave's circle
+     * @param angleBetweenEachPoint the angle between each point
+     */
     public void setAngleBetweenEachPoint(double angleBetweenEachPoint) {
         setAngleBetweenEachPoint(new Constant<>(angleBetweenEachPoint));
     }
 
+    /**
+     * Defines the number of radian between each point of each wave's circle
+     * @param angleBetweenEachPoint the angle between each point
+     * @param fullCircle if true, the angleBetweenEachPoint will be ignored and the circle will be full
+     */
     public void setAngleBetweenEachPoint(IVariable<Double> angleBetweenEachPoint, boolean fullCircle) {
         checkPositiveAndNotNull(angleBetweenEachPoint, "angleBetweenEachPoint should be positive", false);
         animation.setAngleBetweenEachPoint(angleBetweenEachPoint);
@@ -83,18 +109,36 @@ public class WaveBuilder extends AAnimationBuilder<Wave, WaveTask> {
         }
     }
 
+    /**
+     * Defines the number of radian between each point of each wave's circle
+     * @param angleBetweenEachPoint the angle between each point
+     * @param fullCircle if true, the number of points will be computed automatically to make a full circle
+     */
     public void setAngleBetweenEachPoint(double angleBetweenEachPoint, boolean fullCircle) {
         setAngleBetweenEachPoint(new Constant<>(angleBetweenEachPoint), fullCircle);
     }
 
+    /**
+     * Defines the number of points in each wave's circle
+     * @param nbPoints the number of points in each wave's circle
+     */
     public void setNbPoints(IVariable<Integer> nbPoints) {
         setNbPoints(nbPoints, false);
     }
 
+    /**
+     * Defines the number of points in each wave's circle
+     * @param nbPoints the number of points in each wave's circle
+     */
     public void setNbPoints(int nbPoints) {
         setNbPoints(new Constant<>(nbPoints));
     }
 
+    /**
+     * Defines the number of points in each wave's circle
+     * @param nbPoints the number of points in each wave's circle
+     * @param fullCircle if true, the angle between each points will be computed automatically to make a full circle
+     */
     public void setNbPoints(IVariable<Integer> nbPoints, boolean fullCircle) {
         animation.setNbPoints(nbPoints);
         checkPositiveAndNotNull(nbPoints, "nbPoints should be positive", false);
@@ -105,10 +149,19 @@ public class WaveBuilder extends AAnimationBuilder<Wave, WaveTask> {
         }
     }
 
+    /**
+     * Defines the number of points in each wave's circle
+     * @param nbPoints the number of points in each wave's circle
+     * @param fullCircle if true, the angle between each points will be computed automatically to make a full circle
+     */
     public void setNbPoints(int nbPoints, boolean fullCircle) {
         setNbPoints(new Constant<>(nbPoints), fullCircle);
     }
 
+    /**
+     * Defines if the wave will start at the top of its height or at the bottom
+     * @param positiveHeight if true, the wave will start at the top of its height
+     */
     public void setPositiveHeight(boolean positiveHeight) {
         animation.setPositiveHeight(positiveHeight);
     }

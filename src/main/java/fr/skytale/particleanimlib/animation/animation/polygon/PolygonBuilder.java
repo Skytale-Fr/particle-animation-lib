@@ -37,30 +37,54 @@ public class PolygonBuilder extends AAnimationBuilder<Polygon, PolygonTask> {
 
     /********* Circle specific setters ***********/
 
+    /**
+     * Set the number of vertices of the polygon
+     * @param nbVertices the number of vertices
+     */
     public void setNbVertices(IVariable<Integer> nbVertices) {
         animation.setNbVertices(nbVertices);
         checkNotNull(nbVertices, "nbVertices should not be null");
         checkSuperior(nbVertices, new Constant<>(3), "nbVertices should be at least 3", true);
     }
 
+    /**
+     * Set the number of vertices of the polygon
+     * @param nbVertices the number of vertices
+     */
     public void setNbVertices(int nbVertices) {
         setNbVertices(new Constant<>(nbVertices));
     }
 
+    /**
+     * Set the distance between each point of the polygon in the polygon edges
+     * @param distanceBetweenPoints the distance between each point
+     */
     public void setDistanceBetweenPoints(IVariable<Double> distanceBetweenPoints) {
         checkNotNull(distanceBetweenPoints, "distanceBetweenPoints must not be null");
         animation.setDistanceBetweenPoints(distanceBetweenPoints);
     }
 
+    /**
+     * Set the distance between each point of the polygon in the polygon edges
+     * @param distanceBetweenPoints the distance between each point
+     */
     public void setDistanceBetweenPoints(double distanceBetweenPoints) {
         setDistanceBetweenPoints(new Constant<>(distanceBetweenPoints));
     }
 
+    /**
+     * Set the distance between the animation position and the vertices of the polygon
+     * @param distanceFromCenterToVertices the distance between the animation position and the vertices of the polygon
+     */
     public void setDistanceFromCenterToVertices(IVariable<Double> distanceFromCenterToVertices) {
         checkNotNull(distanceFromCenterToVertices, "distanceFromCenterToVertices must not be null");
         animation.setDistanceFromCenterToVertices(distanceFromCenterToVertices);
     }
 
+    /**
+     * Set the distance between the animation position and the vertices of the polygon
+     * @param distanceFromCenterToVertices the distance between the animation position and the vertices of the polygon
+     */
     public void setDistanceFromCenterToVertices(double distanceFromCenterToVertices) {
         setDistanceFromCenterToVertices(new Constant<>(distanceFromCenterToVertices));
     }

@@ -6,12 +6,21 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A range that returns a static list of 3 values in a Vector3D
+ */
 public class Composite3DRange implements IRange<Vector3D> {
 
     private final IRange<Double> first;
     private final IRange<Double> second;
     private final IRange<Double> third;
 
+    /**
+     * Creates a new Composite3DRange based on 3 ranges
+     * @param first the first range that will define Vector2D.x
+     * @param second the second range that will define Vector2D.y
+     * @param third the third range that will define Vector2D.z
+     */
     public Composite3DRange(IRange<Double> first, IRange<Double> second, IRange<Double> third) {
         this.first = first;
         this.second = second;

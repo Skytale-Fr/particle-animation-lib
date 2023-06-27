@@ -5,6 +5,9 @@ import org.bukkit.util.Vector;
 
 import java.util.Objects;
 
+/**
+ * This class represent the particles to spawn at a given iteration and at a given location relative to the animation position
+ */
 public class ParticleToSpawn {
     private final Vector spawnLocation;
     private final int nbParticleToSpawn;

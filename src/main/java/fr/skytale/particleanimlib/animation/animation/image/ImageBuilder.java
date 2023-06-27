@@ -27,14 +27,26 @@ public class ImageBuilder extends AAnimationBuilder<Image, ImageTask> {
 
     /********* Image specific setters ***********/
 
+    /**
+     * Defines the image file name
+     * @param imageFileName the image file name
+     */
     public void setImageFileName(String imageFileName) {
         animation.setImageFileName(imageFileName);
     }
 
+    /**
+     * Defines the scale of the image
+     * @param scale the scale of the image
+     */
     public void setScale(float scale) {
         animation.setScale(new Constant<>(scale));
     }
 
+    /**
+     * Defines the scale of the image
+     * @param scale the scale of the image
+     */
     public void setScale(IVariable<Float> scale) {
         animation.setScale(scale);
         checkPositiveAndNotNull(animation.getScale(), "The scale must be positive", false);

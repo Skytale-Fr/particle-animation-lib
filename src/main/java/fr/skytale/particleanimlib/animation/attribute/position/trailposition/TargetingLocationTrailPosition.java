@@ -1,8 +1,6 @@
 package fr.skytale.particleanimlib.animation.attribute.position.trailposition;
 
-import fr.skytale.particleanimlib.animation.attribute.position.animationposition.TargetingEntityAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.TargetingLocationAnimationPosition;
-import fr.skytale.particleanimlib.animation.attribute.position.attr.TrailTargetEntityFinder;
 import fr.skytale.particleanimlib.animation.attribute.position.attr.TrailTargetLocationFinder;
 import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.parent.ATrailPosition;

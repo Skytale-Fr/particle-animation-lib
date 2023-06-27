@@ -6,11 +6,19 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represent a polygon area
+ */
 public class Polygon2D implements IArea {
     private final int nbVertices;
     private final int radius;
     private final List<Vector2D> points;
 
+    /**
+     * Builds a polygon area
+     * @param nbVertices the number of vertices of the polygon
+     * @param radius the radius of the polygon
+     */
     public Polygon2D(int nbVertices, int radius) {
         if (nbVertices < 3) throw new IllegalArgumentException("A polygon must have at least 3 vertices");
         this.nbVertices = nbVertices;
