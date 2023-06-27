@@ -21,7 +21,7 @@ import java.util.*;
 
 public class ParticleAnimLibTest {
 
-    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.PA_2_01_PILLIER_EAU_ENIGME
+    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.PA_2_07_PILLIER_ACTIVATION_1
             ;
     public static TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
     public static boolean DEFAULT_SHOW_ON_CLICK = true;
