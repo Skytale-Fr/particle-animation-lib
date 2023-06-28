@@ -1,11 +1,8 @@
-package fr.skytale.particleanimlib.animation.animation.nodes;
+package fr.skytale.particleanimlib.animation.animation.node;
 
-import fr.skytale.particleanimlib.animation.attribute.Orientation;
-import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
-import org.bukkit.util.Vector;
 
 public class NodeBuilder extends AAnimationBuilder<Node, NodeTask> {
 

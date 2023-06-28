@@ -45,7 +45,6 @@ repositories {
     maven { url 'https://oss.sonatype.org/content/groups/public/' }
 }
 
-
 dependencies {
     implementation 'org.jetbrains:annotations:24.0.1'
     // The Spigot API with no shadowing. Requires the OSS repo.
@@ -76,6 +75,10 @@ tasks.register("updateReadmeVersion") {
 }
 compileJava {
     dependsOn updateReadmeVersion
+}
+
+task myJavadocs(type: Javadoc) {
+    source = sourceSets.main.allJava
 }
 
 tasks.withType(Javadoc) {

@@ -114,18 +114,18 @@ public class CircuitPulse2DBuilder extends AAnimationBuilder<CircuitPulse2D, Cir
     }
 
     /**
-     * Defines the minimum angle between the direction of a particle and its origin
+     * Defines the maximum angle between the direction of a particle and its origin
      *
-     * @param maxAngleBetweenDirectionAndOriginDirection the minimum angle between the direction of a particle and its origin
+     * @param maxAngleBetweenDirectionAndOriginDirection the maximum angle between the direction of a particle and its origin
      */
     public void setMaxAngleBetweenDirectionAndOriginDirection(double maxAngleBetweenDirectionAndOriginDirection) {
         setMaxAngleBetweenDirectionAndOriginDirection(new Constant<>(maxAngleBetweenDirectionAndOriginDirection));
     }
 
     /**
-     * Defines the minimum angle between the direction of a particle and its origin
+     * Defines the maximum angle between the direction of a particle and its origin
      *
-     * @param maxAngleBetweenDirectionAndOriginDirection the minimum angle between the direction of a particle and its origin
+     * @param maxAngleBetweenDirectionAndOriginDirection the maximum angle between the direction of a particle and its origin
      */
     public void setMaxAngleBetweenDirectionAndOriginDirection(IVariable<Double> maxAngleBetweenDirectionAndOriginDirection) {
         checkPositive(maxAngleBetweenDirectionAndOriginDirection, "maxAngleBetweenDirectionAndOriginDirection must be positive or equal to 0", true);

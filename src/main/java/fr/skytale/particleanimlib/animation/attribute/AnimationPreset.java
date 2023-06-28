@@ -19,7 +19,7 @@ import fr.skytale.particleanimlib.animation.animation.lightning.preset.Lightning
 import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningSubAnimSpherePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.line.preset.*;
 import fr.skytale.particleanimlib.animation.animation.mandala.preset.*;
-import fr.skytale.particleanimlib.animation.animation.nodes.preset.SimpleNodePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.node.preset.SimpleNodePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.obj.preset.*;
 import fr.skytale.particleanimlib.animation.animation.obj.preset.init.ObjPresetInitializer;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPresetExecutor;
