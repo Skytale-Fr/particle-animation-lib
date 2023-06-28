@@ -3,6 +3,8 @@ package fr.skytale.particleanimlib.animation.animation.randompoints;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 
+import java.util.List;
+
 //TODO:
 // - replace radius & nbPoints by IVariable<ParticlesToSpawn>
 // - Add a IVariable<IArea> boundingArea
@@ -36,6 +38,10 @@ public class RandomPoints extends AAnimation {
     @Override
     public RandomPointsTask show() {
         return new RandomPointsTask(this);
+    }
+
+    public RandomPointsTask show(boolean pointsSpawned, List<RandomPointsTask.RandomPointData> randomPointsData) {
+        return new RandomPointsTask(this, pointsSpawned, randomPointsData);
     }
 
     @Override

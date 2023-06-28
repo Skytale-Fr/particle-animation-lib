@@ -6,6 +6,7 @@ import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -39,6 +40,13 @@ public class RandomPointsTask extends AAnimationTask<RandomPoints> {
         startTask();
     }
 
+    public RandomPointsTask(RandomPoints animation, boolean pointsSpawned, List<RandomPointData> randomPointsData) {
+        super(animation);
+        this.pointsSpawned = pointsSpawned;
+        this.randomPointsData = randomPointsData;
+        startTask();
+    }
+
     @Override
     protected List<AnimationPointData> computeAnimationPoints() {
 
@@ -50,11 +58,12 @@ public class RandomPointsTask extends AAnimationTask<RandomPoints> {
                 double u = random.nextDouble();
                 double v = random.nextDouble();
                 double theta = 2 * Math.PI * u;
-                double phi = Math.acos(2 * v - 1);
+                double phi = Math.PI * v;
+                double distance = random.nextDouble() * (animation.getRadius() + 1);
 
-                double x = animation.getRadius() * Math.sin(phi) * Math.cos(theta);
-                double y = animation.getRadius() * Math.sin(phi) * Math.sin(theta);
-                double z = animation.getRadius() * Math.cos(phi);
+                double x = distance * Math.sin(phi) * Math.cos(theta);
+                double y = distance * Math.sin(phi) * Math.sin(theta);
+                double z = distance * Math.cos(phi);
 
                 this.randomPointsData.add(new RandomPointData(new Vector(x, y, z), getRandomDirection()));
             }
@@ -62,14 +71,28 @@ public class RandomPointsTask extends AAnimationTask<RandomPoints> {
 
         } else {
             //Direction change
-            if (iterationCount % directionChangePeriod == 0) {
+            if (directionChangePeriod!=0 && iterationCount % directionChangePeriod == 0) {
                 this.randomPointsData.forEach(randomPointData -> randomPointData.nextDirection = getRandomDirection());
             }
 
-            //Compute next point according to direction and speed
-            this.randomPointsData.forEach(randomPointData ->
-                    randomPointData.relativePosition = randomPointData.relativePosition.clone()
-                            .add(randomPointData.nextDirection.clone().multiply(speed)));
+            //Moving points
+            Iterator<RandomPointData> iterator = randomPointsData.iterator();
+            while (iterator.hasNext()) {
+                RandomPointData randomPointData = iterator.next();
+
+                Vector previousRelativePosition = randomPointData.relativePosition.clone();
+                Vector nextRelativePosition = randomPointData.relativePosition.clone().add(randomPointData.nextDirection.clone().multiply(speed));
+                double dotProduct = previousRelativePosition.dot(nextRelativePosition);
+
+                //If the particle changes direction relatively to the center of the animation while not supposed to
+                if (directionChangePeriod == 0 && dotProduct < 0) {
+                    iterator.remove(); // Remove the current element from the collection
+                }
+                else {
+                    randomPointData.relativePosition = nextRelativePosition;
+                }
+            }
+
         }
 
         return randomPointsData.stream()
@@ -82,7 +105,11 @@ public class RandomPointsTask extends AAnimationTask<RandomPoints> {
         return direction.normalize();
     }
 
-    protected static class RandomPointData {
+    public List<RandomPointData> getRandomPointsData() {
+        return randomPointsData;
+    }
+
+    public static class RandomPointData {
         public Vector relativePosition;
         public Vector nextDirection;
 
