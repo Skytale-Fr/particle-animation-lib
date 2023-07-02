@@ -40,7 +40,7 @@ public class Mandala2DPlayerMousePresetExecutor extends AAnimationPresetExecutor
             return new ArrayList<>(previousPoints);
         }));
 
-        mandala2DBuilder.setNbCircleSectionPairs(16);
+        mandala2DBuilder.setNbCircleSection(16);
     }
 
     private Vector2D findMousePositionInAnimPlane(Mandala2DBuilder mandala2DBuilder, Player player) {

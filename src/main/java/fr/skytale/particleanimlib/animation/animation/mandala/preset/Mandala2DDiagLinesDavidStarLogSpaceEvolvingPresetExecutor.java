@@ -4,7 +4,6 @@ import fr.skytale.particleanimlib.animation.animation.mandala.Mandala2DBuilder;
 import fr.skytale.particleanimlib.animation.attribute.curve.CurvePointsGenerator;
 import fr.skytale.particleanimlib.animation.attribute.range.EvolvingRange;
 import fr.skytale.particleanimlib.animation.attribute.range.LinearSpaceRange;
-import fr.skytale.particleanimlib.animation.attribute.range.LogSpaceRange;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,6 +23,6 @@ public class Mandala2DDiagLinesDavidStarLogSpaceEvolvingPresetExecutor extends A
                         3
                 )
         ));
-        mandala2DBuilder.setNbCircleSectionPairs(8);
+        mandala2DBuilder.setNbCircleSection(8);
     }
 }

@@ -25,6 +25,6 @@ public class Mandala2DCurveSluzeConchoidPresetExecutor extends AAnimationPresetE
                 },
                 new LinearSpaceRange(0.0, Math.PI * 2, N)
         ));
-        mandala2DBuilder.setNbCircleSectionPairs(4);
+        mandala2DBuilder.setNbCircleSection(4);
     }
 }

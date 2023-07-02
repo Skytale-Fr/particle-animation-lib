@@ -2,7 +2,6 @@ package fr.skytale.particleanimlib.animation.animation.mandala.preset;
 
 import fr.skytale.particleanimlib.animation.animation.mandala.Mandala2DBuilder;
 import fr.skytale.particleanimlib.animation.attribute.curve.CurvePointsGenerator;
-import fr.skytale.particleanimlib.animation.attribute.range.LinearSpaceRange;
 import fr.skytale.particleanimlib.animation.attribute.range.LogSpaceRange;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
@@ -20,6 +19,6 @@ public class Mandala2DDiagLinesLogSpacePresetExecutor extends AAnimationPresetEx
                 x -> new Vector2D(x, (x * -10) + 40),
                 new LogSpaceRange(0.5, 4, 30,10)
         ));
-        mandala2DBuilder.setNbCircleSectionPairs(8);
+        mandala2DBuilder.setNbCircleSection(8);
     }
 }

@@ -28,8 +28,8 @@ public class ImageBuilder extends AAnimationBuilder<Image, ImageTask> {
     /********* Image specific setters ***********/
 
     /**
-     * Defines the image file name
-     * @param imageFileName the image file name
+     * Defines the image file name (should be in the plugin's images directory)
+     * @param imageFileName the image file name (with its extension)
      */
     public void setImageFileName(String imageFileName) {
         animation.setImageFileName(imageFileName);

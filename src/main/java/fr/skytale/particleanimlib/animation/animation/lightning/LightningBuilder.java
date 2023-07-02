@@ -24,7 +24,6 @@ public class LightningBuilder extends AAnimationBuilder<Lightning, LightningTask
     @Override
     public Lightning getAnimation() {
         checkNotNull(animation.getTargetLocation(), "targetLocation should not be null");
-        checkNotNull(animation.getPointDefinition(), POINT_DEFINITION_SHOULD_NOT_BE_NULL);
         if (animation.getDispersionAngle() < 0)
             throw new IllegalArgumentException("dispersionAngle should be positive");
         checkNotNull(animation.getDistanceBetweenPoints(), "distanceBetweenPoints must not be null");

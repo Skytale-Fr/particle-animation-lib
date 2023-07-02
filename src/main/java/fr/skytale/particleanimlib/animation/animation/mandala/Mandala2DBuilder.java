@@ -23,7 +23,7 @@ public class Mandala2DBuilder extends AAnimationBuilder<Mandala2D, Mandala2DTask
                 )
         );
         /**/
-        setNbCircleSectionPairs(8);
+        setNbCircleSection(8);
 
     }
 
@@ -45,8 +45,8 @@ public class Mandala2DBuilder extends AAnimationBuilder<Mandala2D, Mandala2DTask
      *
      * @param nbCircleSectionPairs the number of circle section pairs
      */
-    public void setNbCircleSectionPairs(int nbCircleSectionPairs) {
-        setNbCircleSectionPairs(new Constant<>(nbCircleSectionPairs));
+    public void setNbCircleSection(int nbCircleSectionPairs) {
+        setNbCircleSection(new Constant<>(nbCircleSectionPairs));
     }
 
     /**
@@ -55,7 +55,7 @@ public class Mandala2DBuilder extends AAnimationBuilder<Mandala2D, Mandala2DTask
      *
      * @param nbCircleSectionPairs the number of circle section pairs
      */
-    public void setNbCircleSectionPairs(IVariable<Integer> nbCircleSectionPairs) {
+    public void setNbCircleSection(IVariable<Integer> nbCircleSectionPairs) {
         checkPositive(nbCircleSectionPairs, "nbCircleSectionPairs should be positive", false);
         animation.setNbCircleSections(nbCircleSectionPairs);
     }

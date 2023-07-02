@@ -19,6 +19,6 @@ public class Mandala2DDiagLinesDavidStarPresetExecutor extends AAnimationPresetE
                 x -> new Vector2D(x, (x * -4) + 10),
                 new LinearSpaceRange(0.5, 4, 30)
         ));
-        mandala2DBuilder.setNbCircleSectionPairs(8);
+        mandala2DBuilder.setNbCircleSection(8);
     }
 }

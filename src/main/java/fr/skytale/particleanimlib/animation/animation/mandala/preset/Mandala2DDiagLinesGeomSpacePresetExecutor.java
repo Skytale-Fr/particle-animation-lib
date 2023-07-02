@@ -19,6 +19,6 @@ public class Mandala2DDiagLinesGeomSpacePresetExecutor extends AAnimationPresetE
                 x -> new Vector2D(x, (x * -10) + 40),
                 new GeomSpaceRange(0.5, 4, 30)
         ));
-        mandala2DBuilder.setNbCircleSectionPairs(8);
+        mandala2DBuilder.setNbCircleSection(8);
     }
 }

@@ -1,8 +1,12 @@
 package fr.skytale.particleanimlib.testing;
 
+import fr.skytale.particleanimlib.animation.animation.mandala.Mandala2DBuilder;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
+import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
+import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.RelativeToEntityAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
+import fr.skytale.particleanimlib.animation.attribute.range.*;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.testing.attribute.AnimationLibPlayerData;
 import fr.skytale.particleanimlib.testing.command.AnimationLibCommand;
@@ -12,11 +16,14 @@ import fr.skytale.particleanimlib.testing.manager.AnimationSampleManager;
 import fr.skytale.particleanimlib.testing.manager.TrailSampleManager;
 import fr.skytale.particleanimlib.trail.TrailTask;
 import fr.skytale.particleanimlib.trail.attribute.TrailPreset;
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
+import java.awt.*;
 import java.util.*;
 
 public class ParticleAnimLibTest {
