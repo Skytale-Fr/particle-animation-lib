@@ -49,7 +49,7 @@ public class TextBuilder extends AAnimationBuilder<Text, TextTask> {
      * Set the text to display
      * @param string the text to display
      */
-    public void setString(IVariable<String> string) {
+    public void setText(IVariable<String> string) {
         checkNotNull(string, BASE_STRING_SHOULD_NOT_BE_NULL);
         animation.setText(string);
     }
