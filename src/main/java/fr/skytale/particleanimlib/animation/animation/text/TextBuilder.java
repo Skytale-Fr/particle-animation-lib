@@ -49,6 +49,14 @@ public class TextBuilder extends AAnimationBuilder<Text, TextTask> {
      * Set the text to display
      * @param string the text to display
      */
+    public void setText(String string) {
+        setText(new Constant<>(string));
+    }
+
+    /**
+     * Set the text to display
+     * @param string the text to display
+     */
     public void setText(IVariable<String> string) {
         checkNotNull(string, BASE_STRING_SHOULD_NOT_BE_NULL);
         animation.setText(string);
@@ -58,9 +66,25 @@ public class TextBuilder extends AAnimationBuilder<Text, TextTask> {
      * Set the font size
      * @param fontSize the font size
      */
+    public void setFontSize(Double fontSize) {
+        setFontSize(new Constant<>(fontSize));
+    }
+
+    /**
+     * Set the font size
+     * @param fontSize the font size
+     */
     public void setFontSize(IVariable<Double> fontSize) {
         checkNotNull(fontSize, FONT_SIZE_SHOULD_NOT_BE_NULL_OR_EMPTY);
         animation.setFontSize(fontSize);
+    }
+
+    /**
+     * Set the details level
+     * @param detailsLevel the details level
+     */
+    public void setDetailsLevel(Double detailsLevel) {
+        setDetailsLevel(new Constant<>(detailsLevel));
     }
 
     /**

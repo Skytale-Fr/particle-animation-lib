@@ -46,7 +46,7 @@ public class ContentEvolvingTextKGEverSinceNewYorkPresetExecutor extends AAnimat
                 } else return "";
             }
         }));
-        textBuilder.setFontSize(new Constant<>(10.0d));
+        textBuilder.setFontSize(10.0d);
         textBuilder.setFontFileName("KGEverSinceNewYork.ttf");
     }
 

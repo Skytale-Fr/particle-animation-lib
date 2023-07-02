@@ -35,7 +35,7 @@ public class RainbowTextKGEverSinceNewYorkPresetExecutor extends AAnimationPrese
             return sb.toString();
         }));
 //        textBuilder.setString(new Constant<>(ChatColor.GREEN + "Sky" + ChatColor.RED + "tale"));
-        textBuilder.setFontSize(new Constant<>(10.0d));
+        textBuilder.setFontSize(10.0d);
         textBuilder.setFontFileName("KGEverSinceNewYork.ttf");
     }
 }
