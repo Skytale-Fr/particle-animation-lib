@@ -23,7 +23,7 @@ public class FontSizeEvolvingTextKGEverSinceNewYorkPresetExecutor extends AAnima
         textBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.WATER_BUBBLE, new Color(255, 170, 0)));
         textBuilder.setTicksDuration(100);
         textBuilder.setShowPeriod(new Constant<>(1));
-        textBuilder.setString(new Constant<>("Coucou"));
+        textBuilder.setText("Coucou");
         textBuilder.setFontSize(new CallbackVariable<>(iterationCount -> 10.0d +
                                                                          5.0d * Math.cos(iterationCount * 0.1d)));
         textBuilder.setFontFileName("KGEverSinceNewYork.ttf");
