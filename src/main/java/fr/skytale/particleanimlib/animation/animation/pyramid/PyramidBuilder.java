@@ -14,7 +14,7 @@ public class PyramidBuilder extends AAnimationBuilder<Pyramid, PyramidTask> {
         animation.setTicksDuration(60);
         animation.setNbBaseApex(new Constant<>(3));
         animation.setFromCenterToApex(new Constant<>(new Vector(0, 5, 0)));
-        animation.setDistanceToAnyBaseApex(new Constant<>(3.0));
+        animation.setDistanceFromCenterToAnyBaseVertex(new Constant<>(3.0));
     }
 
     @Override
@@ -86,17 +86,17 @@ public class PyramidBuilder extends AAnimationBuilder<Pyramid, PyramidTask> {
      * Set the distance between the pyramid base center and its base apexes
      * @param distanceToAnyBaseApex the distance between the pyramid base center and its base apexes
      */
-    public void setDistanceToAnyBaseApex(IVariable<Double> distanceToAnyBaseApex) {
+    public void setDistanceFromCenterToAnyBaseVertex(IVariable<Double> distanceToAnyBaseApex) {
         if (distanceToAnyBaseApex.isConstant() && distanceToAnyBaseApex.getCurrentValue(0) <= 0.5)
             throw new IllegalArgumentException("The distance between the pyramid center and its base apexes (distanceToAnyBaseApex) should be greater than 0.5.");
-        animation.setDistanceToAnyBaseApex(distanceToAnyBaseApex);
+        animation.setDistanceFromCenterToAnyBaseVertex(distanceToAnyBaseApex);
     }
 
     /**
      * Set the distance between the pyramid base center and its base apexes
      * @param distanceToAnyBaseApex the distance between the pyramid base center and its base apexes
      */
-    public void setDistanceToAnyBaseApex(double distanceToAnyBaseApex) {
-        setDistanceToAnyBaseApex(new Constant<>(distanceToAnyBaseApex));
+    public void setDistanceFromCenterToAnyBaseVertex(double distanceToAnyBaseApex) {
+        setDistanceFromCenterToAnyBaseVertex(new Constant<>(distanceToAnyBaseApex));
     }
 }

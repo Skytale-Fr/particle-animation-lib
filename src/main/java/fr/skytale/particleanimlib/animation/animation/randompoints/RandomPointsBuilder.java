@@ -60,12 +60,28 @@ public class RandomPointsBuilder extends AAnimationBuilder<RandomPoints, RandomP
     }
 
     /**
+     * Set the period of time in ticks between each direction change of the points
+     * @param directionChangePeriod the period of time in ticks between each direction change of the points
+     */
+    public void setDirectionChangePeriod(int directionChangePeriod) {
+        setDirectionChangePeriod(new Constant<>(directionChangePeriod));
+    }
+
+    /**
      * Set the speed of the points
      * @param speed the speed of the points
      */
     public void setSpeed(IVariable<Float> speed) {
         animation.setSpeed(speed);
         checkSpeed();
+    }
+
+    /**
+     * Set the speed of the points
+     * @param speed the speed of the points
+     */
+    public void setSpeed(float speed) {
+        setSpeed(new Constant<>(speed));
     }
 
     private void checkNbPoints() {
