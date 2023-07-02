@@ -9,30 +9,30 @@ import java.util.List;
 /**
  * Represent a polygon area
  */
-public class Polygon2D implements IArea {
-    private final int nbVertices;
-    private final int radius;
+public class Prism implements IArea {
+    private final int nbBaseVertices;
+    private final int baseRadius;
     private final List<Vector2D> points;
 
     /**
      * Builds a polygon area
-     * @param nbVertices the number of vertices of the polygon
-     * @param radius the radius of the polygon
+     * @param nbBaseVertices the number of vertices of the polygon that correspond to the prism bottom face
+     * @param baseRadius the radius of the circle in which the prism bottom face is inscribed
      */
-    public Polygon2D(int nbVertices, int radius) {
-        if (nbVertices < 3) throw new IllegalArgumentException("A polygon must have at least 3 vertices");
-        this.nbVertices = nbVertices;
-        this.radius = radius;
+    public Prism(int nbBaseVertices, int baseRadius) {
+        if (nbBaseVertices < 3) throw new IllegalArgumentException("A polygon must have at least 3 vertices");
+        this.nbBaseVertices = nbBaseVertices;
+        this.baseRadius = baseRadius;
         this.points = computeVertexes();
     }
 
     private List<Vector2D> computeVertexes() {
-        double stepAngle = 2 * Math.PI / nbVertices;
+        double stepAngle = 2 * Math.PI / nbBaseVertices;
         List<Vector2D> vertices = new ArrayList<>();
 
-        for (int pointIndex = 0; pointIndex < nbVertices; pointIndex++) {
+        for (int pointIndex = 0; pointIndex < nbBaseVertices; pointIndex++) {
             double theta = pointIndex * stepAngle;
-            vertices.add(new Vector2D(radius * Math.cos(theta), radius * Math.sin(theta)));
+            vertices.add(new Vector2D(baseRadius * Math.cos(theta), baseRadius * Math.sin(theta)));
         }
         return vertices;
     }

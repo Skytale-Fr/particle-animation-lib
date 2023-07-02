@@ -2,7 +2,7 @@ package fr.skytale.particleanimlib.animation.animation.circuitpulse2d;
 
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.area.IArea;
-import fr.skytale.particleanimlib.animation.attribute.area.Polygon2D;
+import fr.skytale.particleanimlib.animation.attribute.area.Prism;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.spawner.SimpleSpawner;
 import fr.skytale.particleanimlib.animation.attribute.spawner.parent.ISpawner;
@@ -21,7 +21,7 @@ public class CircuitPulse2DBuilder extends AAnimationBuilder<CircuitPulse2D, Cir
         setShowPeriod(1);
         setSpeed(0.25);
         setTrailSize(4);
-        setBoundaryArea(new Polygon2D(RANDOM.nextInt(3)+3, 8));
+        setBoundaryArea(new Prism(RANDOM.nextInt(3) + 3, 8));
         setMaxAngleBetweenDirectionAndOriginDirection(Math.PI / 4);
         setSpawner(new SimpleSpawner(
                 new Constant<>(new Vector(0, 0, 0)),

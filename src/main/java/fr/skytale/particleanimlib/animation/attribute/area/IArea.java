@@ -5,6 +5,8 @@ import org.bukkit.util.Vector;
 /**
  * Represent an area whatever the shape
  */
+
+@FunctionalInterface
 public interface IArea {
-    public abstract boolean isInside(Vector vector);
+    boolean isInside(Vector vector);
 }

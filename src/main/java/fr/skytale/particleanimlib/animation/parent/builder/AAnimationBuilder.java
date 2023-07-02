@@ -26,7 +26,7 @@ import java.util.Random;
 import java.util.function.BiPredicate;
 
 public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimationTask<T>> {
-    protected Random RANDOM = new Random();
+    public static final Random RANDOM = new Random();
     public static final String POSITION_SHOULD_NOT_BE_NULL = "Position should not be null";
     public static final String POINT_DEFINITION_SHOULD_NOT_BE_NULL = "Point Definition (or Main particle) should not be null";
     protected static final String VIEWERS_SHOULD_NOT_BE_NULL = "viewers should not be null";
