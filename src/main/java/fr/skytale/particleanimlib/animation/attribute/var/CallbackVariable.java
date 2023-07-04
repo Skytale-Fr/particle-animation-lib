@@ -55,7 +55,7 @@ public class CallbackVariable<T> implements IVariable<T> {
      */
     @Override
     public IVariable<T> copy() {
-        return new CallbackVariable<T>(this.callback);
+        return new CallbackVariable<>(this.callback);
     }
 
     /**

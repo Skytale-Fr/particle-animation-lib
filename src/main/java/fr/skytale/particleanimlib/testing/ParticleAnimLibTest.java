@@ -17,14 +17,16 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 public class ParticleAnimLibTest {
 
-    public static AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.PA_2_07_PILLIER_ACTIVATION_1
-            ;
-    public static TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
-    public static boolean DEFAULT_SHOW_ON_CLICK = true;
+    public static final AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.MANDALA2D_PLAYER_MOUSE;
+    public static final TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
+    public static final boolean DEFAULT_SHOW_ON_CLICK = true;
 
     private static ParticleAnimLibTest instance;
 
@@ -120,17 +122,17 @@ public class ParticleAnimLibTest {
     }
 
     public void setTrailType(Player player, String trailAnimationSampleName) {
-            AnimationLibPlayerData playerData = getPlayerData(player);
-            //disable previous trail
-            final TrailTask previousTrailTask = TrailSampleManager.getInstance().getTrailTask(playerData.getTrailSampleName(), player);
-            if (previousTrailTask.containsPlayer(player.getUniqueId())) {
-                previousTrailTask.removePlayer(player.getUniqueId());
-                player.sendMessage("Deactivating trail " + playerData.getTrailSampleName());
-            }
-            //activating new trail
-            playerData.setTrailSampleName(trailAnimationSampleName);
-            final TrailTask newTrailTask = TrailSampleManager.getInstance().getTrailTask(playerData.getTrailSampleName(), player);
-            newTrailTask.addPlayer(player.getUniqueId());
-            player.sendMessage("Activating trail " + playerData.getTrailSampleName());
+        AnimationLibPlayerData playerData = getPlayerData(player);
+        //disable previous trail
+        final TrailTask previousTrailTask = TrailSampleManager.getInstance().getTrailTask(playerData.getTrailSampleName(), player);
+        if (previousTrailTask.containsPlayer(player.getUniqueId())) {
+            previousTrailTask.removePlayer(player.getUniqueId());
+            player.sendMessage("Deactivating trail " + playerData.getTrailSampleName());
+        }
+        //activating new trail
+        playerData.setTrailSampleName(trailAnimationSampleName);
+        final TrailTask newTrailTask = TrailSampleManager.getInstance().getTrailTask(playerData.getTrailSampleName(), player);
+        newTrailTask.addPlayer(player.getUniqueId());
+        player.sendMessage("Activating trail " + playerData.getTrailSampleName());
     }
 }

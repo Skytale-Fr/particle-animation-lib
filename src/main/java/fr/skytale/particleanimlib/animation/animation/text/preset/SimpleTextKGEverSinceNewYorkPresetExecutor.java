@@ -17,8 +17,8 @@ public class SimpleTextKGEverSinceNewYorkPresetExecutor extends AAnimationPreset
         textBuilder.setRotation(new Vector(0, 0, 1), new Vector(0, 1, 0));
         textBuilder.setTicksDuration(100);
         textBuilder.setShowPeriod(new Constant<>(1));
-        textBuilder.setString(new Constant<>("Coucou"));
-        textBuilder.setFontSize(new Constant<>(10.0d));
+        textBuilder.setText("Coucou");
+        textBuilder.setFontSize(10.0d);
         textBuilder.setFontFileName("KGEverSinceNewYork.ttf");
     }
 }

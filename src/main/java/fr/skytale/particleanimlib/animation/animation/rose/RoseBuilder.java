@@ -39,36 +39,73 @@ public class RoseBuilder extends AAnimationBuilder<Rose, RoseTask> {
     }
 
     /********* Rose specific setters ***********/
+
+    /**
+     * Defines the radius of the rose
+     * @param radius the radius
+     */
     public void setRadius(IVariable<Double> radius) {
         checkPositiveAndNotNull(radius, "radius should be positive.", false);
         animation.setRadius(radius);
     }
 
+    /**
+     * Defines the radius of the rose
+     * @param radius the radius
+     */
     public void setRadius(double radius) {
         setRadius(new Constant<>(radius));
     }
 
+    /**
+     * Defines the number of points of the rose
+     * @param nbPoints the number of points
+     */
     public void setNbPoints(int nbPoints) {
         setNbPoints(new Constant<>(nbPoints));
     }
 
+    /**
+     * Defines the number of points of the rose
+     * @param nbPoints the number of points
+     */
     public void setNbPoints(IVariable<Integer> nbPoints) {
         animation.setNbPoints(nbPoints);
         checkPositiveAndNotNull(nbPoints, "nbPoints should be positive", false);
     }
 
+    /**
+     * Defines the numerator of the rose modifier
+     * @see <a href="https://mathcurve.com/courbes2d/rosace/rosace.shtml">rose on mathcurve.com</a>
+     * @param roseModifierNumerator the numerator of the rose modifier
+     */
     public void setRoseModifierNumerator(IVariable<Double> roseModifierNumerator) {
         animation.setRoseModifierNumerator(roseModifierNumerator);
     }
 
+    /**
+     * Defines the numerator of the rose modifier
+     * @see <a href="https://mathcurve.com/courbes2d/rosace/rosace.shtml">rose on mathcurve.com</a>
+     * @param roseModifierNumerator the numerator of the rose modifier
+     */
     public void setRoseModifierNumerator(double roseModifierNumerator) {
         setRoseModifierNumerator(new Constant<>(roseModifierNumerator));
     }
 
+    /**
+     * Defines the denominator of the rose modifier
+     * @see <a href="https://mathcurve.com/courbes2d/rosace/rosace.shtml">rose on mathcurve.com</a>
+     * @param roseModifierDenominator the denominator of the rose modifier
+     */
     public void setRoseModifierDenominator(IVariable<Integer> roseModifierDenominator) {
         animation.setRoseModifierDenominator(roseModifierDenominator);
     }
 
+    /**
+     * Defines the denominator of the rose modifier
+     * @see <a href="https://mathcurve.com/courbes2d/rosace/rosace.shtml">rose on mathcurve.com</a>
+     * @param roseModifierDenominator the denominator of the rose modifier
+     */
     public void setRoseModifierDenominator(int roseModifierDenominator) {
         setRoseModifierDenominator(new Constant<>(roseModifierDenominator));
     }

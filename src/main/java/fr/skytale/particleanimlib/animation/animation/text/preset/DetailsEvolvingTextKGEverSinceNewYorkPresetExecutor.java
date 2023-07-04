@@ -19,8 +19,8 @@ public class DetailsEvolvingTextKGEverSinceNewYorkPresetExecutor extends AAnimat
         textBuilder.setRotation(new Vector(0, 0, 1), new Vector(0, 1, 0));
         textBuilder.setTicksDuration(100);
         textBuilder.setShowPeriod(new Constant<>(1));
-        textBuilder.setString(new Constant<>(ChatColor.RED + "Coucou"));
-        textBuilder.setFontSize(new Constant<>(10.0d));
+        textBuilder.setText(ChatColor.RED + "Coucou");
+        textBuilder.setFontSize(10.0d);
         textBuilder.setFontFileName("KGEverSinceNewYork.ttf");
         textBuilder.setDetailsLevel(new CallbackWithPreviousValueVariable<>(5.0d, (iterationCount, previousValue) -> {
             return Math.max(0.2d, previousValue - 0.08d);

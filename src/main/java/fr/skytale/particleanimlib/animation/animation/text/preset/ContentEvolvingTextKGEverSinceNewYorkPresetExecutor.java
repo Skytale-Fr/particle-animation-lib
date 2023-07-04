@@ -36,7 +36,7 @@ public class ContentEvolvingTextKGEverSinceNewYorkPresetExecutor extends AAnimat
         textBuilder.setRotation(new Vector(0, 0, 1), new Vector(0, 1, 0));
         textBuilder.setTicksDuration(150);
         textBuilder.setShowPeriod(new Constant<>(1));
-        textBuilder.setString(new CallbackVariable<>((iterationCount) -> {
+        textBuilder.setText(new CallbackVariable<>((iterationCount) -> {
             if (iterationCount < 70) {
                 int letterCount = (int) Math.floor(iterationCount / 10.0d);
                 return "Skytale".substring(0, letterCount);
@@ -46,7 +46,7 @@ public class ContentEvolvingTextKGEverSinceNewYorkPresetExecutor extends AAnimat
                 } else return "";
             }
         }));
-        textBuilder.setFontSize(new Constant<>(10.0d));
+        textBuilder.setFontSize(10.0d);
         textBuilder.setFontFileName("KGEverSinceNewYork.ttf");
     }
 

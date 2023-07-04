@@ -16,7 +16,7 @@ public class PyramidTask extends AAnimationTask<Pyramid> {
     private Vector fromCenterToApex;
 
     @IVariableCurrentValue
-    private Double distanceToAnyBaseApex;
+    private Double distanceFromBaseCenterToAnyBaseVertex;
 
     @IVariableCurrentValue
     private Integer nbBaseApex;
@@ -45,7 +45,7 @@ public class PyramidTask extends AAnimationTask<Pyramid> {
          */
         Vector normalVector = fromCenterToApex.clone().normalize();
 
-        Vector radiusVector = AnimationTaskUtils.computeRadiusVector(normalVector, animation.getDistanceToAnyBaseApex().getCurrentValue(iterationCount));
+        Vector radiusVector = AnimationTaskUtils.computeRadiusVector(normalVector, animation.getDistanceFromBaseCenterToAnyBaseVertex().getCurrentValue(iterationCount));
 
         /*
         Compute each point of the pyramid's base with :

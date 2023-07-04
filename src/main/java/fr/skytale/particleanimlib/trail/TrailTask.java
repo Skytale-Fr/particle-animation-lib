@@ -42,7 +42,7 @@ public class TrailTask implements Runnable {
      * @see #removePlayer(UUID)
      * @see #clearPlayers()
      */
-    public void stopTask() {
+    private void stopTask() {
         if (taskId != null) {
             Bukkit.getScheduler().cancelTask(taskId);
             taskId = null;
@@ -57,7 +57,7 @@ public class TrailTask implements Runnable {
      *
      * @see #addPlayer(UUID)
      */
-    public void startTask() {
+    private void startTask() {
         if (taskId == null) {
             this.taskId = Bukkit.getScheduler().runTaskTimer(plugin, this, 0, trail.getCheckPeriod()).getTaskId();
         }

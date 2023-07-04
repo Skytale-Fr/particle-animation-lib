@@ -14,7 +14,7 @@ public class PyramidBuilder extends AAnimationBuilder<Pyramid, PyramidTask> {
         animation.setTicksDuration(60);
         animation.setNbBaseApex(new Constant<>(3));
         animation.setFromCenterToApex(new Constant<>(new Vector(0, 5, 0)));
-        animation.setDistanceToAnyBaseApex(new Constant<>(3.0));
+        animation.setDistanceFromCenterToAnyBaseVertex(new Constant<>(3.0));
     }
 
     @Override
@@ -29,42 +29,74 @@ public class PyramidBuilder extends AAnimationBuilder<Pyramid, PyramidTask> {
 
     /********* Pyramid specific setters ***********/
 
+    /**
+     * Set the apex point of the pyramid according to a vector from the animation center to this apex
+     * @param fromCenterToApex the vector from the animation center to the apex point
+     */
     public void setFromCenterToApex(IVariable<Vector> fromCenterToApex) {
         checkNotNull(fromCenterToApex, "Apex point of pyramid has to be defined.");
         animation.setFromCenterToApex(fromCenterToApex);
     }
 
+    /**
+     * Set the apex point of the pyramid according to a vector from the animation center to this apex
+     * @param fromCenterToApex the vector from the animation center to the apex point
+     */
     public void setFromCenterToApex(Vector fromCenterToApex) {
         setFromCenterToApex(new Constant<>(fromCenterToApex));
     }
 
+    /**
+     * Set the number of base apex of the pyramid
+     * @param nbBaseApex the number of base apex of the pyramid
+     */
     public void setNbBaseApex(IVariable<Integer> nbBaseApex) {
         if (nbBaseApex.isConstant() && nbBaseApex.getCurrentValue(0) <= 2)
             throw new IllegalArgumentException("A pyramid should have at least 3 base apex.");
         animation.setNbBaseApex(nbBaseApex);
     }
 
+    /**
+     * Set the number of base apex of the pyramid
+     * @param nbBaseApex the number of base apex of the pyramid
+     */
     public void setNbBaseApex(int nbBaseApex) {
         setNbBaseApex(new Constant<>(nbBaseApex));
     }
 
+    /**
+     * Set the distance between two particles on the pyramid edges
+     * @param distanceBetweenParticles the distance between two particles on the pyramid edges
+     */
     public void setDistanceBetweenParticles(IVariable<Double> distanceBetweenParticles) {
         if (distanceBetweenParticles.isConstant() && distanceBetweenParticles.getCurrentValue(0) <= 0)
             throw new IllegalArgumentException("The distanceBetweenParticles has to be strictly positive.");
         animation.setDistanceBetweenParticles(distanceBetweenParticles);
     }
 
+    /**
+     * Set the distance between two particles on the pyramid edges
+     * @param distanceBetweenParticles the distance between two particles on the pyramid edges
+     */
     public void setDistanceBetweenParticles(double distanceBetweenParticles) {
         setDistanceBetweenParticles(new Constant<>(distanceBetweenParticles));
     }
 
-    public void setDistanceToAnyBaseApex(IVariable<Double> distanceToAnyBaseApex) {
+    /**
+     * Set the distance between the pyramid base center and its base apexes
+     * @param distanceToAnyBaseApex the distance between the pyramid base center and its base apexes
+     */
+    public void setDistanceFromCenterToAnyBaseVertex(IVariable<Double> distanceToAnyBaseApex) {
         if (distanceToAnyBaseApex.isConstant() && distanceToAnyBaseApex.getCurrentValue(0) <= 0.5)
             throw new IllegalArgumentException("The distance between the pyramid center and its base apexes (distanceToAnyBaseApex) should be greater than 0.5.");
-        animation.setDistanceToAnyBaseApex(distanceToAnyBaseApex);
+        animation.setDistanceFromCenterToAnyBaseVertex(distanceToAnyBaseApex);
     }
 
-    public void setDistanceToAnyBaseApex(double distanceToAnyBaseApex) {
-        setDistanceToAnyBaseApex(new Constant<>(distanceToAnyBaseApex));
+    /**
+     * Set the distance between the pyramid base center and its base apexes
+     * @param distanceToAnyBaseApex the distance between the pyramid base center and its base apexes
+     */
+    public void setDistanceFromCenterToAnyBaseVertex(double distanceToAnyBaseApex) {
+        setDistanceFromCenterToAnyBaseVertex(new Constant<>(distanceToAnyBaseApex));
     }
 }

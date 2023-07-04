@@ -1,11 +1,8 @@
-package fr.skytale.particleanimlib.animation.animation.nodes;
+package fr.skytale.particleanimlib.animation.animation.node;
 
-import fr.skytale.particleanimlib.animation.attribute.Orientation;
-import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
-import org.bukkit.util.Vector;
 
 public class NodeBuilder extends AAnimationBuilder<Node, NodeTask> {
 
@@ -50,45 +47,90 @@ public class NodeBuilder extends AAnimationBuilder<Node, NodeTask> {
     }
 
     /********* Node specific setters ***********/
+
+    /**
+     * Set the radius of the node
+     * @param radius the radius of the node
+     */
     public void setRadius(IVariable<Double> radius) {
         checkPositiveAndNotNull(radius, "radius should be positive.", false);
         animation.setRadius(radius);
     }
 
+    /**
+     * Set the radius of the node
+     * @param radius the radius of the node
+     */
     public void setRadius(double radius) {
         setRadius(new Constant<>(radius));
     }
 
+    /**
+     * Set the maximum radius of the points to display
+     * @param maxRadius the maximum radius of the points to display
+     */
     public void setMaxRadius(IVariable<Double> maxRadius) {
         checkPositive(maxRadius, "maxRadius should be positive.", false);
         animation.setMaxRadius(maxRadius);
     }
 
+    /**
+     * Set the maximum radius of the points to display
+     * @param maxRadius the maximum radius of the points to display
+     */
     public void setMaxRadius(double maxRadius) {
         setMaxRadius(new Constant<>(maxRadius));
     }
 
+    /**
+     * Set the number of points of the node
+     * @param nbPoints the number of points of the node
+     */
     public void setNbPoints(int nbPoints) {
         setNbPoints(new Constant<>(nbPoints));
     }
 
+    /**
+     * Set the number of points of the node
+     * @param nbPoints the number of points of the node
+     */
     public void setNbPoints(IVariable<Integer> nbPoints) {
         animation.setNbPoints(nbPoints);
         checkPositiveAndNotNull(nbPoints, "nbPoints should be positive", false);
     }
 
+    /**
+     * Set the numerator of the node modifier
+     * @see <a href="https://mathcurve.com/courbes2d/noeud/noeud.shtml">Node of mathcurve.com</a>
+     * @param nodeModifierNumerator the numerator of the node modifier
+     */
     public void setNodeModifierNumerator(IVariable<Double> nodeModifierNumerator) {
         animation.setNodeModifierNumerator(nodeModifierNumerator);
     }
 
+    /**
+     * Set the numerator of the node modifier
+     * @see <a href="https://mathcurve.com/courbes2d/noeud/noeud.shtml">Node of mathcurve.com</a>
+     * @param nodeModifierNumerator the numerator of the node modifier
+     */
     public void setNodeModifierNumerator(double nodeModifierNumerator) {
         setNodeModifierNumerator(new Constant<>(nodeModifierNumerator));
     }
 
+    /**
+     * Set the denominator of the node modifier
+     * @see <a href="https://mathcurve.com/courbes2d/noeud/noeud.shtml">Node of mathcurve.com</a>
+     * @param nodeModifierDenominator the denominator of the node modifier
+     */
     public void setNodeModifierDenominator(IVariable<Integer> nodeModifierDenominator) {
         animation.setNodeModifierDenominator(nodeModifierDenominator);
     }
 
+    /**
+     * Set the denominator of the node modifier
+     * @see <a href="https://mathcurve.com/courbes2d/noeud/noeud.shtml">Node of mathcurve.com</a>
+     * @param nodeModifierDenominator the denominator of the node modifier
+     */
     public void setNodeModifierDenominator(int nodeModifierDenominator) {
         setNodeModifierDenominator(new Constant<>(nodeModifierDenominator));
     }

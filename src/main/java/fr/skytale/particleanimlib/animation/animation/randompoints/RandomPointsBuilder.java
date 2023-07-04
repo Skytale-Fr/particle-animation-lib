@@ -21,26 +21,6 @@ public class RandomPointsBuilder extends AAnimationBuilder<RandomPoints, RandomP
         return new RandomPoints();
     }
 
-    public void setNbPoints(int nbPoints) {
-        animation.setNbPoints(nbPoints);
-        checkNbPoints();
-    }
-
-    public void setRadius(float radius) {
-        animation.setRadius(radius);
-        checkRadius();
-    }
-
-    public void setDirectionChangePeriod(IVariable<Integer> directionChangePeriod) {
-        animation.setDirectionChangePeriod(directionChangePeriod);
-        checkDirectionChangePeriod();
-    }
-
-    public void setSpeed(IVariable<Float> speed) {
-        animation.setSpeed(speed);
-        checkSpeed();
-    }
-
     @Override
     public RandomPoints getAnimation() {
         checkNbPoints();
@@ -48,6 +28,60 @@ public class RandomPointsBuilder extends AAnimationBuilder<RandomPoints, RandomP
         checkDirectionChangePeriod();
         checkSpeed();
         return super.getAnimation();
+    }
+
+    /********* Pyramid specific setters ***********/
+
+    /**
+     * Set the number of points that will spawn
+     * @param nbPoints the number of points that will spawn
+     */
+    public void setNbPoints(int nbPoints) {
+        animation.setNbPoints(nbPoints);
+        checkNbPoints();
+    }
+
+    /**
+     * Set the radius of the sphere where the points will spawn
+     * @param radius the radius of the sphere where the points will spawn
+     */
+    public void setRadius(float radius) {
+        animation.setRadius(radius);
+        checkRadius();
+    }
+
+    /**
+     * Set the period of time in ticks between each direction change of the points
+     * @param directionChangePeriod the period of time in ticks between each direction change of the points
+     */
+    public void setDirectionChangePeriod(IVariable<Integer> directionChangePeriod) {
+        animation.setDirectionChangePeriod(directionChangePeriod);
+        checkDirectionChangePeriod();
+    }
+
+    /**
+     * Set the period of time in ticks between each direction change of the points
+     * @param directionChangePeriod the period of time in ticks between each direction change of the points
+     */
+    public void setDirectionChangePeriod(int directionChangePeriod) {
+        setDirectionChangePeriod(new Constant<>(directionChangePeriod));
+    }
+
+    /**
+     * Set the speed of the points
+     * @param speed the speed of the points
+     */
+    public void setSpeed(IVariable<Float> speed) {
+        animation.setSpeed(speed);
+        checkSpeed();
+    }
+
+    /**
+     * Set the speed of the points
+     * @param speed the speed of the points
+     */
+    public void setSpeed(float speed) {
+        setSpeed(new Constant<>(speed));
     }
 
     private void checkNbPoints() {

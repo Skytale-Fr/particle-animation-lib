@@ -8,7 +8,7 @@ public class Pyramid extends AAnimation {
     //Vector between the base's center and the pyramid's apex
     private IVariable<Vector> fromCenterToApex;
     //Distance between the center of the base and its vertices
-    private IVariable<Double> distanceToAnyBaseApex;
+    private IVariable<Double> distanceFromBaseCenterToAnyBaseVertex;
     //Number of vertices of the base
     private IVariable<Integer> nbBaseApex;
     private IVariable<Double> distanceBetweenParticles;
@@ -22,7 +22,7 @@ public class Pyramid extends AAnimation {
     public Pyramid clone() {
         Pyramid obj = (Pyramid) super.clone();
         obj.fromCenterToApex = fromCenterToApex.copy();
-        obj.distanceToAnyBaseApex = distanceToAnyBaseApex.copy();
+        obj.distanceFromBaseCenterToAnyBaseVertex = distanceFromBaseCenterToAnyBaseVertex.copy();
         obj.nbBaseApex = nbBaseApex.copy();
         obj.distanceBetweenParticles = distanceBetweenParticles.copy();
         return obj;
@@ -38,12 +38,12 @@ public class Pyramid extends AAnimation {
         this.fromCenterToApex = fromCenterToApex;
     }
 
-    public IVariable<Double> getDistanceToAnyBaseApex() {
-        return distanceToAnyBaseApex;
+    public IVariable<Double> getDistanceFromBaseCenterToAnyBaseVertex() {
+        return distanceFromBaseCenterToAnyBaseVertex;
     }
 
-    public void setDistanceToAnyBaseApex(IVariable<Double> distanceToAnyBaseApex) {
-        this.distanceToAnyBaseApex = distanceToAnyBaseApex;
+    public void setDistanceFromCenterToAnyBaseVertex(IVariable<Double> distanceFromCenterToAnyBaseVertex) {
+        this.distanceFromBaseCenterToAnyBaseVertex = distanceFromCenterToAnyBaseVertex;
     }
 
     public IVariable<Integer> getNbBaseApex() {

@@ -21,6 +21,10 @@ public class ParticleTemplate {
 
     /***********CONSTRUCTORS***********/
 
+    /**
+     * Builds a particle template
+     * @param type the type of the particle
+     */
     public ParticleTemplate(ParticleEffect type) {
         this(
                 type,
@@ -51,6 +55,11 @@ public class ParticleTemplate {
         );
     }
 
+    /**
+     * Builds a particle template for a particle supporting colors
+     * @param type the type of the particle
+     * @param color the color of the particle
+     */
     public ParticleTemplate(ParticleEffect type, Color color) {
         this(
                 type,
@@ -61,6 +70,11 @@ public class ParticleTemplate {
         );
     }
 
+    /**
+     * Builds a particle template for a particle supporting materials display
+     * @param type the type of the particle
+     * @param material the material of the particle
+     */
     public ParticleTemplate(ParticleEffect type, Material material) {
         this(
                 type,
@@ -71,6 +85,14 @@ public class ParticleTemplate {
         );
     }
 
+    /**
+     * Builds a particle template for a particle supporting area display and colors
+     * @param type the type of the particle
+     * @param amount the number of particles to display
+     * @param speed the speed of the particle movement
+     * @param offset the offset defining the cuboid where the particles will spawn
+     * @param color the color of the particle
+     */
     public ParticleTemplate(ParticleEffect type, int amount, float speed, Vector offset, Color color) {
         this(
                 type,
@@ -81,6 +103,14 @@ public class ParticleTemplate {
         );
     }
 
+    /**
+     * Builds a particle template for a particle supporting area display and materials display
+     * @param type the type of the particle
+     * @param amount the number of particles to display
+     * @param speed the speed of the particle movement
+     * @param offset the offset defining the cuboid where the particles will spawn
+     * @param material the material of the particle
+     */
     public ParticleTemplate(ParticleEffect type, int amount, float speed, Vector offset, Material material) {
         this(
                 type,
@@ -91,6 +121,14 @@ public class ParticleTemplate {
         );
     }
 
+    /**
+     * Builds a particle template using ParticleData to define additional data
+     * @param type the type of the particle
+     * @param amount the number of particles to display
+     * @param speed the speed of the particle movement
+     * @param offset the offset defining the cuboid where the particles will spawn
+     * @param additionalData the additional data of the particle
+     */
     public ParticleTemplate(ParticleEffect type, int amount, float speed, Vector offset, ParticleData additionalData) {
         this.type = type;
         this.amount = amount;
@@ -99,6 +137,10 @@ public class ParticleTemplate {
         this.additionalData = additionalData;
     }
 
+    /**
+     * Builds a particle template using another particle template
+     * @param particleTemplate the particle template to copy
+     */
     public ParticleTemplate(ParticleTemplate particleTemplate) {
         this.type = particleTemplate.type;
         this.amount = particleTemplate.amount;

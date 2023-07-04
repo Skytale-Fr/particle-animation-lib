@@ -18,7 +18,7 @@ public class GrowingPyramidPresetExecutor extends AAnimationPresetExecutor<Pyram
     @Override
     protected void apply(PyramidBuilder pyramidBuilder, JavaPlugin plugin) {
         pyramidBuilder.setDistanceBetweenParticles(new DoublePeriodicallyEvolvingVariable(0.2, 0.015, 2));
-        pyramidBuilder.setDistanceToAnyBaseApex(new DoublePeriodicallyEvolvingVariable(1.0, 0.08, 2));
+        pyramidBuilder.setDistanceFromCenterToAnyBaseVertex(new DoublePeriodicallyEvolvingVariable(1.0, 0.08, 2));
         pyramidBuilder.setFromCenterToApex(new VectorPeriodicallyEvolvingVariable(new Vector(0, -2.0, 0), new Vector(0, 0.2, 0), 2));
         pyramidBuilder.setNbBaseApex(new IntegerPeriodicallyEvolvingVariable(3, 1, 40));
         pyramidBuilder.setTicksDuration(200);

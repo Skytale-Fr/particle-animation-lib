@@ -15,7 +15,7 @@ public class SimplePyramidPresetExecutor extends AAnimationPresetExecutor<Pyrami
     @Override
     protected void apply(PyramidBuilder pyramidBuilder, JavaPlugin plugin) {
         pyramidBuilder.setDistanceBetweenParticles(0.3);
-        pyramidBuilder.setDistanceToAnyBaseApex(2.0);
+        pyramidBuilder.setDistanceFromCenterToAnyBaseVertex(2.0);
         pyramidBuilder.setFromCenterToApex(new Vector(0, 4, 0));
         pyramidBuilder.setNbBaseApex(8);
         pyramidBuilder.setTicksDuration(200);

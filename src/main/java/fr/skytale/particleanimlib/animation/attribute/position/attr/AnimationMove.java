@@ -16,7 +16,13 @@ public class AnimationMove {
     // If the projectile should disappear (because the target is dead or left the world)
     private final boolean cancelled;
 
-    //Modifier ce constructeur et les méthodes statiques
+    /**
+     * Creates a movement of the animation
+     * @param afterMoveLocation the animation new position
+     * @param move the vector representing the move done to reach this position
+     * @param hasReachedTarget if the animation has reached its target
+     * @param cancelled if the animation should be cancelled
+     */
     protected AnimationMove(Location afterMoveLocation, Vector move, boolean hasReachedTarget, boolean cancelled) {
         this.afterMoveLocation = afterMoveLocation;
         this.move = move;
@@ -48,18 +54,30 @@ public class AnimationMove {
         return new AnimationMove(location, new Vector(0, 0, 0), false, false);
     }
 
+    /**
+     * @return the location reached by this move
+     */
     public Location getAfterMoveLocation() {
         return afterMoveLocation;
     }
 
+    /**
+     * @return the vector representing the move done to reach this position
+     */
     public Vector getMove() {
         return move;
     }
 
+    /**
+     * @return if this move will make the projectile reach the target
+     */
     public boolean hasReachedTarget() {
         return hasReachedTarget;
     }
 
+    /**
+     * @return if the projectile should disappear (because the target is dead or left the world)
+     */
     public boolean isCancelled() {
         return cancelled;
     }

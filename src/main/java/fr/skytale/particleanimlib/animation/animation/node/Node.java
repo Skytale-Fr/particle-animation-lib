@@ -1,4 +1,4 @@
-package fr.skytale.particleanimlib.animation.animation.nodes;
+package fr.skytale.particleanimlib.animation.animation.node;
 
 
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;

@@ -1,21 +1,27 @@
 package fr.skytale.particleanimlib.animation.attribute;
 
 import fr.skytale.particleanimlib.animation.animation.circle.preset.*;
+import fr.skytale.particleanimlib.animation.animation.circuitpulse2d.preset.CircuitPulse2DPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.epi.preset.SimpleEpiPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixSubAnimPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.helix.preset.PA208BatonEauPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.*;
+import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixSubAnimPolygonPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.image.preset.CountdownImagePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.image.preset.MagicCircleImagePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.image.preset.PigBoatBowImagePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.image.preset.SkytaleImagePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.init.ImagePresetInitializer;
 import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningSubAnimLightningPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningSubAnimSpherePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.line.preset.*;
-import fr.skytale.particleanimlib.animation.animation.nodes.preset.SimpleNodePresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.mandala.preset.*;
+import fr.skytale.particleanimlib.animation.animation.node.preset.SimpleNodePresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.obj.preset.*;
 import fr.skytale.particleanimlib.animation.animation.obj.preset.init.ObjPresetInitializer;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPresetExecutor;
@@ -106,15 +112,16 @@ public enum AnimationPreset {
     CIRCLE_THEN_WAVE(new CircleWavePresetExecutor()),
     CIRCLE_THEN_WAVE_REVERSED(new CircleWaveReversedPresetExecutor()),
     CIRCLE_WITH_INSIDE_COLLISIONS(new SimpleCircleWithInsideCollisionsPresetExecutor()),
+    CIRCLE_EXPLODING_LINES(new ExplodingLinesPresetExecutor()),
+    CIRCLE_EXPLODING_LINES_INVERTED(new ExplodingLinesInvertedPresetExecutor()),
+    HELICOPTER(new HelicopterPresetExecutor()),
+    HELICOPTER_WITH_COLLISIONS(new HelicopterWithCollisionsPresetExecutor()),
     CUBOID(new CuboidPresetExecutor()),
     CUBOID_ROTATING_RESIZING(new CuboidRotatingResizingPresetExecutor()),
     CUBOID_ROTATING_RESIZING_WITH_INNER_COLLISIONS(new CuboidRotatingResizingWithInsideCollisionsPresetExecutor()),
     CUBOID_WITH_INSIDE_COLLISIONS(new CuboidWithInsideCollisionsPresetExecutor()),
     EPI(new SimpleEpiPresetExecutor()),
-    CIRCLE_EXPLODING_LINES(new ExplodingLinesPresetExecutor()),
-    CIRCLE_EXPLODING_LINES_INVERTED(new ExplodingLinesInvertedPresetExecutor()),
-    HELICOPTER(new HelicopterPresetExecutor()),
-    HELICOPTER_WITH_COLLISIONS(new HelicopterWithCollisionsPresetExecutor()),
+    CIRCUIT_PULSE_2D(new CircuitPulse2DPresetExecutor()),
     IMAGE_COUNTDOWN(new CountdownImagePresetExecutor(), ImagePresetInitializer.class),
     IMAGE_MAGIC_CIRCLE(new MagicCircleImagePresetExecutor(), ImagePresetInitializer.class),
     IMAGE_PIG_BOAT_BOW(new PigBoatBowImagePresetExecutor(), ImagePresetInitializer.class),
@@ -127,6 +134,18 @@ public enum AnimationPreset {
     LINE_ROTATING_ALONG_Y(new LineRotationYPresetExecutor()),
     LINE_WITH_COLLISIONS(new SimpleLineWithCollisionPresetExecutor()),
     LINE_WITH_POLYGONS(new LineWithPolygonsPresetExecutor()),
+    MANDALA2D(new Mandala2DPresetExecutor()),
+    MANDALA2D_DIAG_LINES(new Mandala2DDiagLinesPresetExecutor()),
+    MANDALA2D_DIAG_LINES_DAVID_STAR(new Mandala2DDiagLinesDavidStarPresetExecutor()),
+    MANDALA2D_DIAG_LINES_DAVID_STAR_EVOLING(new Mandala2DDiagLinesDavidStarLogSpaceEvolvingPresetExecutor()),
+    MANDALA2D_DIAG_LINES_GEOM_SPACE(new Mandala2DDiagLinesGeomSpacePresetExecutor()),
+    MANDALA2D_DIAG_LINES_GEOM_SPACE_EVOLVING(new Mandala2DDiagLinesGeomSpaceEvolvingPresetExecutor()),
+    MANDALA2D_DIAG_LINES_LOG_SPACE(new Mandala2DDiagLinesLogSpacePresetExecutor()),
+    MANDALA2D_DIAG_LINES_LOG_SPACE_EVOLVING(new Mandala2DDiagLinesLogSpaceEvolvingPresetExecutor()),
+    MANDALA2D_CURVE_SLUZE_CONCHOID(new Mandala2DCurveSluzeConchoidPresetExecutor()),
+    MANDALA2D_CURVE(new Mandala2DCurvePresetExecutor()),
+    MANDALA2D_CURVE_EVOLVING(new Mandala2DCurveEvolvingPresetExecutor()),
+    MANDALA2D_PLAYER_MOUSE(new Mandala2DPlayerMousePresetExecutor()),
     NODE(new SimpleNodePresetExecutor()),
     OBJ_CROWN(new CrownPresetExecutor(), ObjPresetInitializer.class),
     OBJ_HAMMER(new HammerObjPresetExecutor(), ObjPresetInitializer.class),

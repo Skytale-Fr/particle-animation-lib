@@ -22,7 +22,7 @@ public class RainbowTextKGEverSinceNewYorkPresetExecutor extends AAnimationPrese
         textBuilder.setRotation(new Vector(0, 0, 1), new Vector(0, 1, 0));
         textBuilder.setTicksDuration(100);
         textBuilder.setShowPeriod(new Constant<>(4));
-        textBuilder.setString(new CallbackWithPreviousValueVariable<>("Skytale", (iterationCount, previousValue) -> {
+        textBuilder.setText(new CallbackWithPreviousValueVariable<>("Skytale", (iterationCount, previousValue) -> {
             if (iterationCount % 3 != 0) return previousValue;
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < TEXT_TO_DISPLAY.length(); i++) {
@@ -35,7 +35,7 @@ public class RainbowTextKGEverSinceNewYorkPresetExecutor extends AAnimationPrese
             return sb.toString();
         }));
 //        textBuilder.setString(new Constant<>(ChatColor.GREEN + "Sky" + ChatColor.RED + "tale"));
-        textBuilder.setFontSize(new Constant<>(10.0d));
+        textBuilder.setFontSize(10.0d);
         textBuilder.setFontFileName("KGEverSinceNewYork.ttf");
     }
 }

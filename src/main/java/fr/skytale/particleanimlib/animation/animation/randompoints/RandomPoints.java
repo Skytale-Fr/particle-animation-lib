@@ -5,6 +5,11 @@ import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 
 import java.util.List;
 
+//TODO:
+// - replace radius & nbPoints by IVariable<ParticlesToSpawn>
+// - Add a IVariable<IArea> boundingArea
+// - creates a RandomPointsInSphereSpawner class that extends CallbackVariable<ParticlesToSpawn>
+// - rename RandomPoints en RandomlyMovingPoints
 public class RandomPoints extends AAnimation {
 
     /**
