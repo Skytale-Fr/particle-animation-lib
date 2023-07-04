@@ -35,6 +35,11 @@ public class ParticleTemplate {
         );
     }
 
+    /**
+     * Builds a particle template
+     * @param type the type of the particle
+     * @param speed the speed of the particle movement
+     */
     public ParticleTemplate(ParticleEffect type, float speed) {
         this(
                 type,
@@ -45,6 +50,11 @@ public class ParticleTemplate {
         );
     }
 
+    /**
+     * Builds a particle template
+     * @param type the type of the particle
+     * @param additionalData the additional data of the particle
+     */
     public ParticleTemplate(ParticleEffect type, ParticleData additionalData) {
         this(
                 type,
