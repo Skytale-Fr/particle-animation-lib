@@ -8,6 +8,7 @@ import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotati
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.epi.preset.SimpleEpiPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.helix.preset.PA108DaguePoison2PresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.helix.preset.PA208BatonEauPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.image.preset.*;
 import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixSubAnimPolygonPresetExecutor;
@@ -41,6 +42,7 @@ import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
 import fr.skytale.particleanimlib.animation.animation.text.preset.*;
 import fr.skytale.particleanimlib.animation.animation.text.preset.init.TextPresetInitializer;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.PA107PortailApparitionPartie2PresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.PA108DaguePoison1PresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.RotatingTorusSolenoidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.TorusSolenoidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExecutor;
@@ -75,6 +77,8 @@ public enum AnimationPreset {
     PA_1_07_PORTAIL_APPARITION_PARTIE_1(new PA107PortailPartie1PresetExecutor()),
     PA_1_07_PORTAIL_APPARITION_PARTIE_2(new PA107PortailApparitionPartie2PresetExecutor()),
     PA_1_07_PORTAIL_APPARITION(new PA107PortailApparitionPresetExecutor()),
+    PA_1_08_DAGUE_POISON_1(new PA108DaguePoison1PresetExecutor()),
+    PA_1_08_DAGUE_POISON_2(new PA108DaguePoison2PresetExecutor()),
 
     PA_2_01_PILLIER_ENIGME_1(new PA201PillierEauEnigmeV1PresetExecutor()),
     PA_2_01_PILLIER_ENIGME_2(new PA201PillierEauEnigmeV2PresetExecutor()),
