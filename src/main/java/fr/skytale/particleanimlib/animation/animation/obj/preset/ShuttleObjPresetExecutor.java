@@ -21,6 +21,7 @@ public class ShuttleObjPresetExecutor extends AAnimationPresetExecutor<ObjBuilde
         objBuilder.setScale(3);
         objBuilder.setDistanceBetweenParticles(1);
         objBuilder.setMinAngleBetweenFaces(Math.PI / 100);
+        objBuilder.setMinFaceArea(0.001);
         objBuilder.setTicksDuration(400);
         objBuilder.setShowPeriod(new Constant<>(2));
     }

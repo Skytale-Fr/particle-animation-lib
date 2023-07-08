@@ -27,7 +27,7 @@ public class SphereSubAnimPolygonPropagatingUpPresetExecutor extends AAnimationP
         polygonBuilder.setShowPeriod(1);
         sphereBuilder.setRadius(10);
         sphereBuilder.setNbPoints(160);
-        sphereBuilder.setPropagation(Sphere.PropagationType.BOTTOM_TO_TOP, 0.3f, 0.15f);
+        sphereBuilder.setPropagation(Sphere.PropagationType.BOTTOM_TO_TOP, 0.3f, 0.05f);
         sphereBuilder.setPointDefinition(new SubAnimPointDefinition(polygonBuilder.getAnimation()));
         sphereBuilder.setSphereType(Sphere.Type.FULL);
         sphereBuilder.setTicksDuration(100);
