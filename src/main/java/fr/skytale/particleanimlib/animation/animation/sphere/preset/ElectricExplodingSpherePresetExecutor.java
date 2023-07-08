@@ -13,6 +13,7 @@ public class ElectricExplodingSpherePresetExecutor extends AAnimationPresetExecu
 
     @Override
     protected void apply(SphereBuilder sphereBuilder, JavaPlugin plugin) {
+        // see https://www.desmos.com/calculator/uozineavsu
         final double s = 9;
         final double gap = 0.1;
         final double p = 1.62;
@@ -22,6 +23,7 @@ public class ElectricExplodingSpherePresetExecutor extends AAnimationPresetExecu
             double t = x * s;
             return (Math.exp(x * Math.sin(t) / (t * gap)) - 1 + x * p) / n;
         }));
+
         sphereBuilder.setNbPoints(80);
         sphereBuilder.setTicksDuration(120);
         sphereBuilder.setShowPeriod(2);
