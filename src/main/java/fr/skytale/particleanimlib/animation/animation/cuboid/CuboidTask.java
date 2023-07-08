@@ -126,7 +126,7 @@ public class CuboidTask extends AAnimationTask<Cuboid> {
 
             edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_SOUTH, CuboidCorner.LOWER_EAST_SOUTH));
             edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_SOUTH, CuboidCorner.LOWER_EAST_NORTH));
-            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_NORTH, CuboidCorner.LOWER_EAST_NORTH));
+            edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_EAST_NORTH, CuboidCorner.LOWER_WEST_NORTH));
             edgeSet.add(new CuboidEdge(CuboidCorner.LOWER_WEST_NORTH, CuboidCorner.LOWER_WEST_SOUTH));
 
             edgeSet.add(new CuboidEdge(CuboidCorner.UPPER_WEST_SOUTH, CuboidCorner.UPPER_EAST_SOUTH));
