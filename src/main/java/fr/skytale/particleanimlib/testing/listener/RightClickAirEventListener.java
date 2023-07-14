@@ -5,10 +5,12 @@ import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimation
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.util.Vector;
 
 import java.util.Objects;
 
@@ -33,10 +35,14 @@ public class RightClickAirEventListener implements Listener {
             event.setCancelled(true);
             activateAntiSpam();
         } else if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+
+            final Location location = Objects.requireNonNull(event.getClickedBlock()).getLocation();
+            location.add(new Vector(0.5, 1, 0.5));
+
             particleAnimLibTest.buildAndShowAnimation(
                     event.getPlayer(),
                     new LocatedAnimationPosition(
-                            new Constant<>(Objects.requireNonNull(event.getClickedBlock()).getLocation())
+                            new Constant<>(location)
                     ));
             event.setCancelled(true);
             activateAntiSpam();

@@ -13,10 +13,19 @@ public class ElectricExplodingSpherePresetExecutor extends AAnimationPresetExecu
 
     @Override
     protected void apply(SphereBuilder sphereBuilder, JavaPlugin plugin) {
-        sphereBuilder.setRadius(new CallbackVariable<>(iterationCount -> Math.sin(iterationCount / 2.0 + 2.0) / 4.0 +
-                                                                         iterationCount / 20.0 + 0.15));
+        // see https://www.desmos.com/calculator/uozineavsu
+        final double s = 9;
+        final double gap = 0.1;
+        final double p = 1.62;
+        final double n = 1.5;
+        sphereBuilder.setRadius(new CallbackVariable<>(iterationCount -> {
+            double x = iterationCount * 0.05;
+            double t = x * s;
+            return (Math.exp(x * Math.sin(t) / (t * gap)) - 1 + x * p) / n;
+        }));
+
         sphereBuilder.setNbPoints(80);
-        sphereBuilder.setTicksDuration(100);
-        sphereBuilder.setShowPeriod(5);
+        sphereBuilder.setTicksDuration(120);
+        sphereBuilder.setShowPeriod(2);
     }
 }

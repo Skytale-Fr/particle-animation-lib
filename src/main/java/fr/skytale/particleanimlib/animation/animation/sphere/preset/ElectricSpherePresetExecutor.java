@@ -24,6 +24,7 @@ public class ElectricSpherePresetExecutor extends AAnimationPresetExecutor<Spher
                 iterationCount % 3 == 0 ? 20 : (iterationCount % 3 == 1 ? 30 : 40)));
 //        sphereBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, 1, 0.01f, new Vector(0,0,0), Color.WHITE));
         sphereBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.END_ROD, 1, 0.03f, new Vector(0, 0, 0), (ParticleData) null));
+        sphereBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.END_ROD));
         sphereBuilder.setTicksDuration(100);
         sphereBuilder.setShowPeriod(4);
     }
