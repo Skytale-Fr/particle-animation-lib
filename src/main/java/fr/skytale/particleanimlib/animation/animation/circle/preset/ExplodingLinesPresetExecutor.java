@@ -4,6 +4,7 @@ import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.animation.line.Line;
 import fr.skytale.particleanimlib.animation.animation.line.LineBuilder;
 import fr.skytale.particleanimlib.animation.attribute.Orientation;
+import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.CallbackPointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationConfig;
@@ -15,6 +16,10 @@ import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvol
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
+import xyz.xenondevs.particle.ParticleEffect;
+import xyz.xenondevs.particle.data.color.DustColorTransitionData;
+
+import java.awt.*;
 
 public class ExplodingLinesPresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -41,6 +46,7 @@ public class ExplodingLinesPresetExecutor extends AAnimationPresetExecutor<Circl
                             1.0));
                     lineBuilder.setPoint1OnPosition();
                     lineBuilder.setFromPositionToPoint2(new Constant<>(fromAnimCenterToPoint), new DoublePeriodicallyEvolvingVariable(1d, 0.1, 1));
+                    lineBuilder.setPointDefinition((new ParticleTemplate(ParticleEffect.DUST_COLOR_TRANSITION,new DustColorTransitionData(64, 190, 37, 255,255,255,1))));
                     lineBuilder.getAnimation().show().setParentTask(task);
                 }
         ));

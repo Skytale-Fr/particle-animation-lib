@@ -1,7 +1,10 @@
 package fr.skytale.particleanimlib.animation.animation.torussolenoid.preset;
 
+import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.TorusSolenoidBuilder;
+import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.DirectedLocationAnimationPosition;
+import fr.skytale.particleanimlib.animation.attribute.position.animationposition.LocatedAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.LocatedRelativeAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.*;
@@ -42,7 +45,19 @@ public class PA108DaguePoison1PresetExecutor extends AAnimationPresetExecutor<To
                 )
         );
 
-        torusSolenoidBuilder.setTicksDuration(20*6);
+        torusSolenoidBuilder.setTicksDuration(1);
         torusSolenoidBuilder.setShowPeriod(1);
+
+
+        CircleBuilder explodingLinesCircleBuilder = new CircleBuilder();
+        explodingLinesCircleBuilder.setJavaPlugin(plugin);
+        explodingLinesCircleBuilder.setPosition(
+                new LocatedAnimationPosition(
+                        torusSolenoidBuilder.getOriginLocation()
+                )
+        );
+        explodingLinesCircleBuilder.applyPreset(AnimationPreset.CIRCLE_EXPLODING_LINES, plugin);
+
+        torusSolenoidBuilder.setAnimationEndedCallback(task -> explodingLinesCircleBuilder.getAnimation().show());
     }
 }
