@@ -12,7 +12,7 @@ public class RandomPointsBuilder extends AAnimationBuilder<RandomPoints, RandomP
         animation.setNbPoints(20);
         animation.setRadius(10);
         animation.setDirectionChangePeriod(new Constant<>(60));
-        animation.setSpeed(new Constant<>(0.1f));
+        animation.setSpeed(new Constant<>(0.1d));
         animation.setTicksDuration(300);
     }
 
@@ -71,7 +71,7 @@ public class RandomPointsBuilder extends AAnimationBuilder<RandomPoints, RandomP
      * Set the speed of the points
      * @param speed the speed of the points
      */
-    public void setSpeed(IVariable<Float> speed) {
+    public void setSpeed(IVariable<Double> speed) {
         animation.setSpeed(speed);
         checkSpeed();
     }
@@ -80,7 +80,7 @@ public class RandomPointsBuilder extends AAnimationBuilder<RandomPoints, RandomP
      * Set the speed of the points
      * @param speed the speed of the points
      */
-    public void setSpeed(float speed) {
+    public void setSpeed(Double speed) {
         setSpeed(new Constant<>(speed));
     }
 

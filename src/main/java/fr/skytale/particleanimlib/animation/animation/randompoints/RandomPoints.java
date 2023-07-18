@@ -30,7 +30,7 @@ public class RandomPoints extends AAnimation {
     /**
      * The points move speed
      */
-    private IVariable<Float> speed;
+    private IVariable<Double> speed;
 
     public RandomPoints() {
     }
@@ -80,11 +80,11 @@ public class RandomPoints extends AAnimation {
         this.directionChangePeriod = directionChangePeriod;
     }
 
-    public IVariable<Float> getSpeed() {
+    public IVariable<Double> getSpeed() {
         return speed;
     }
 
-    public void setSpeed(IVariable<Float> speed) {
+    public void setSpeed(IVariable<Double> speed) {
         this.speed = speed;
     }
 }
