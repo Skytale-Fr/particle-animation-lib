@@ -13,7 +13,7 @@ public class RandomPointsPresetExecutor extends AAnimationPresetExecutor<RandomP
         randomPointsBuilder.setNbPoints(20);
         randomPointsBuilder.setRadius(5);
         randomPointsBuilder.setDirectionChangePeriod(new Constant<>(20));
-        randomPointsBuilder.setSpeed(new Constant<>(0.1f));
+        randomPointsBuilder.setSpeed(new Constant<>(0.1d));
         randomPointsBuilder.setTicksDuration(20*10);
     }
 }

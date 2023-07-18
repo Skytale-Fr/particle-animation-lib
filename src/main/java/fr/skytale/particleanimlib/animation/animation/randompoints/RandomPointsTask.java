@@ -27,7 +27,7 @@ public class RandomPointsTask extends AAnimationTask<RandomPoints> {
     private Integer directionChangePeriod;
 
     @IVariableCurrentValue
-    private Float speed;
+    private Double speed;
 
     private boolean pointsSpawned = false;
 
@@ -84,11 +84,8 @@ public class RandomPointsTask extends AAnimationTask<RandomPoints> {
                 Vector nextRelativePosition = randomPointData.relativePosition.clone().add(randomPointData.nextDirection.clone().multiply(speed));
                 double dotProduct = previousRelativePosition.dot(nextRelativePosition);
 
-                //If the particle changes direction relatively to the center of the animation while not supposed to
-                if (directionChangePeriod == 0 && dotProduct < 0) {
-                    iterator.remove(); // Remove the current element from the collection
-                }
-                else {
+                //Move only if particle does not change direction relatively to the center of the animation
+                if (directionChangePeriod != 0 || dotProduct >= 0) {
                     randomPointData.relativePosition = nextRelativePosition;
                 }
             }
