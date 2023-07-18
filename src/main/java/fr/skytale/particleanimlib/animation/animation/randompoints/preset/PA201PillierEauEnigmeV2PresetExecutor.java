@@ -19,7 +19,7 @@ public class PA201PillierEauEnigmeV2PresetExecutor extends AAnimationPresetExecu
         randomPointsBuilder.setNbPoints(150);
         randomPointsBuilder.setRadius(50);
         randomPointsBuilder.setDirectionChangePeriod(new Constant<>(10));
-        randomPointsBuilder.setSpeed(new Constant<>(0.2f));
+        randomPointsBuilder.setSpeed(new Constant<>(0.2d));
         randomPointsBuilder.setTicksDuration(20 * 30);
         randomPointsBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.DOLPHIN, 1, 0f, new Vector(0, 0, 0), (ParticleData) null));
     }

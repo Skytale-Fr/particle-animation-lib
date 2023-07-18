@@ -20,7 +20,7 @@ public class PA207PillierEauActivationV2PresetExecutor extends AAnimationPresetE
         //Partie 2
         randomPointsBuilder.applyPreset(AnimationPreset.PA_2_01_PILLIER_ENIGME_2, plugin);
         randomPointsBuilder.setDirectionChangePeriod(new Constant<>(0));
-        randomPointsBuilder.setSpeed(new Constant<>(0.025f));
+        randomPointsBuilder.setSpeed(new Constant<>(0.025d));
         RandomPoints p2 = randomPointsBuilder.getAnimation();
 
         //Partie 1
