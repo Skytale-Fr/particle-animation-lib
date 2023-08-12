@@ -28,10 +28,10 @@ public class PA107PortailApparitionPresetExecutor extends AAnimationPresetExecut
     @Override
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
 
-        //TODO a supprimer, que pr le test
-        Location location = ((AAnimationPosition) (circleBuilder.getPosition())).toIVariableLocation().getCurrentValue(0);
-        World monde = location.getWorld();
-        circleBuilder.setPosition(new LocatedAnimationPosition(new Location(monde, -96.5, -52, -17.5)));
+//        //TODO a supprimer, que pr le test
+//        Location location = ((AAnimationPosition) (circleBuilder.getPosition())).toIVariableLocation().getCurrentValue(0);
+//        World monde = location.getWorld();
+//        circleBuilder.setPosition(new LocatedAnimationPosition(new Location(monde, -96.5, -52, -17.5)));
 
         circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.FOOTSTEP));
         circleBuilder.setRadius(0.1);
