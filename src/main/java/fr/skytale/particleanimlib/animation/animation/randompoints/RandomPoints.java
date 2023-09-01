@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.randompoints;
 
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 
@@ -76,12 +77,20 @@ public class RandomPoints extends AAnimation {
         return directionChangePeriod;
     }
 
+    public void setDirectionChangePeriod(Integer directionChangePeriod) {
+        setDirectionChangePeriod(new Constant<>(directionChangePeriod));
+    }
+
     public void setDirectionChangePeriod(IVariable<Integer> directionChangePeriod) {
         this.directionChangePeriod = directionChangePeriod;
     }
 
     public IVariable<Double> getSpeed() {
         return speed;
+    }
+
+    public void setSpeed(Double speed) {
+        setSpeed(new Constant<>(speed));
     }
 
     public void setSpeed(IVariable<Double> speed) {

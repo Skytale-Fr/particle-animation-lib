@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.parabola;
 
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.util.Vector;
@@ -35,12 +36,20 @@ public class Parabola extends AAnimation {
         return direction;
     }
 
+    public void setDirection(Vector direction) {
+        setDirection(new Constant<>(direction));
+    }
+
     public void setDirection(IVariable<Vector> direction) {
         this.direction = direction;
     }
 
     public IVariable<Double> getSpeed() {
         return speed;
+    }
+
+    public void setSpeed(Double speed) {
+        setSpeed(new Constant<>(speed));
     }
 
     public void setSpeed(IVariable<Double> speed) {
@@ -51,6 +60,10 @@ public class Parabola extends AAnimation {
         return gravity;
     }
 
+    public void setGravity(Vector gravity) {
+        setGravity(new Constant<>(gravity));
+    }
+
     public void setGravity(IVariable<Vector> gravity) {
         this.gravity = gravity;
     }
@@ -59,12 +72,20 @@ public class Parabola extends AAnimation {
         return bulletLifetime;
     }
 
+    public void setBulletLifetime(Integer bulletLifetime) {
+        setBulletLifetime(new Constant<>(bulletLifetime));
+    }
+
     public void setBulletLifetime(IVariable<Integer> bulletLifetime) {
         this.bulletLifetime = bulletLifetime;
     }
 
     public IVariable<Integer> getBulletShootPeriod() {
         return bulletShootPeriod;
+    }
+
+    public void setBulletShootPeriod(Integer bulletShootPeriod) {
+        setBulletShootPeriod(new Constant<>(bulletShootPeriod));
     }
 
     public void setBulletShootPeriod(IVariable<Integer> bulletShootPeriod) {

@@ -5,6 +5,7 @@ import fr.skytale.particleanimlib.animation.attribute.AnimationStopCondition;
 import fr.skytale.particleanimlib.animation.attribute.PARotation;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.position.parent.IPosition;
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import fr.skytale.particleanimlib.animation.collision.handler.CollisionHandler;
@@ -65,6 +66,10 @@ public abstract class AAnimation implements Cloneable {
 
     public IVariable<Integer> getShowPeriod() {
         return showPeriod;
+    }
+
+    public void setShowPeriod(Integer showPeriod) {
+        setShowPeriod(new Constant<>(showPeriod));
     }
 
     public void setShowPeriod(IVariable<Integer> showPeriod) {

@@ -8,13 +8,13 @@ public class SphereBuilder extends ARoundAnimationBuilder<Sphere, SphereTask> {
 
     public SphereBuilder() {
         super();
-        animation.setRadius(new Constant<>(2.0));
-        animation.setNbPoints(new Constant<>(80));
+        animation.setRadius(2.0);
+        animation.setNbPoints(80);
         animation.setType(Sphere.Type.FULL);
-        animation.setShowPeriod(new Constant<>(1));
-        animation.setPropagationType(null);
-        animation.setPercentShownWhilePropagate(new Constant<>(0.3f));
-        animation.setPercentStepWhilePropagate(new Constant<>(0.1f));
+        animation.setShowPeriod(1);
+        animation.setPropagationType(Sphere.PropagationType.TOP_TO_BOTTOM);
+        animation.setPercentShownWhilePropagate(0.3f);
+        animation.setPercentStepWhilePropagate(0.1f);
         animation.setTicksDuration(60);
     }
 

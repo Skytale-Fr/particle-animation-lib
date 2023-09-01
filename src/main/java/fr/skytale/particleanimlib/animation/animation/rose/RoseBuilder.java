@@ -16,12 +16,12 @@ public class RoseBuilder extends AAnimationBuilder<Rose, RoseTask> {
 
     public RoseBuilder() {
         super();
-        animation.setRadius(new Constant<>(3.0));
-        animation.setRoseModifierNumerator(new Constant<>(3d));
-        animation.setRoseModifierDenominator(new Constant<>(2));
-        animation.setShowPeriod(new Constant<>(1));
+        animation.setRadius(3.0);
+        animation.setNbPoints(20);
+        animation.setRoseModifierNumerator(3d);
+        animation.setRoseModifierDenominator(2);
+        animation.setShowPeriod(1);
         animation.setTicksDuration(60);
-        setNbPoints(new Constant<>(20));
     }
 
     @Override

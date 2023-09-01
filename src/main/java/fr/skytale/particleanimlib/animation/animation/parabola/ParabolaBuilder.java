@@ -16,11 +16,11 @@ public class ParabolaBuilder extends AAnimationBuilder<Parabola, ParabolaTask> {
 
     public ParabolaBuilder() {
         super();
-        animation.setDirection(new Constant<>(new Vector(1, 1, 0)));
-        animation.setSpeed(new Constant<>((double) 1));
-        animation.setBulletLifetime(new Constant<>(60));
-        animation.setBulletShootPeriod(new Constant<>(1));
-        animation.setGravity(new Constant<>(new Vector(0, -9.81 / Math.pow(20, 2), 0)));
+        animation.setDirection(new Vector(1, 1, 0));
+        animation.setSpeed((double) 1);
+        animation.setBulletLifetime(60);
+        animation.setBulletShootPeriod(1);
+        animation.setGravity(new Vector(0, -9.81 / Math.pow(20, 2), 0));
     }
 
     @Override
@@ -42,6 +42,7 @@ public class ParabolaBuilder extends AAnimationBuilder<Parabola, ParabolaTask> {
 
     /**
      * Set the direction of each projectile
+     *
      * @param direction the direction of each projectile
      */
     public void setDirection(Vector direction) {
@@ -50,6 +51,7 @@ public class ParabolaBuilder extends AAnimationBuilder<Parabola, ParabolaTask> {
 
     /**
      * Set the direction of each projectile
+     *
      * @param direction the direction of each projectile
      */
     public void setDirection(IVariable<Vector> direction) {
@@ -59,6 +61,7 @@ public class ParabolaBuilder extends AAnimationBuilder<Parabola, ParabolaTask> {
 
     /**
      * Set the speed of each projectile
+     *
      * @param speed the speed of each projectile
      */
     public void setSpeed(IVariable<Double> speed) {
@@ -68,6 +71,7 @@ public class ParabolaBuilder extends AAnimationBuilder<Parabola, ParabolaTask> {
 
     /**
      * Set the speed of each projectile
+     *
      * @param speed the speed of each projectile
      */
     public void setSpeed(double speed) {
@@ -76,6 +80,7 @@ public class ParabolaBuilder extends AAnimationBuilder<Parabola, ParabolaTask> {
 
     /**
      * Set the gravity applied to each projectile
+     *
      * @param gravity the gravity applied to each projectile
      */
     public void setGravity(IVariable<Vector> gravity) {
@@ -85,6 +90,7 @@ public class ParabolaBuilder extends AAnimationBuilder<Parabola, ParabolaTask> {
 
     /**
      * Set the gravity applied to each projectile
+     *
      * @param gravity the gravity applied to each projectile
      */
     public void setGravity(Vector gravity) {
@@ -93,6 +99,7 @@ public class ParabolaBuilder extends AAnimationBuilder<Parabola, ParabolaTask> {
 
     /**
      * Set the lifetime of each projectile in ticks
+     *
      * @param bulletLifetime the lifetime of each projectile in ticks
      */
     public void setBulletLifetime(int bulletLifetime) {
@@ -101,6 +108,7 @@ public class ParabolaBuilder extends AAnimationBuilder<Parabola, ParabolaTask> {
 
     /**
      * Set the lifetime of each projectile in ticks
+     *
      * @param bulletLifetime the lifetime of each projectile in ticks
      */
     public void setBulletLifetime(IVariable<Integer> bulletLifetime) {
@@ -110,6 +118,7 @@ public class ParabolaBuilder extends AAnimationBuilder<Parabola, ParabolaTask> {
 
     /**
      * Set the period between each projectile shoot in ticks
+     *
      * @param bulletShootPeriod the period between each projectile shoot in ticks
      */
     public void setBulletShootPeriod(int bulletShootPeriod) {
@@ -118,6 +127,7 @@ public class ParabolaBuilder extends AAnimationBuilder<Parabola, ParabolaTask> {
 
     /**
      * Set the period between each projectile shoot in ticks
+     *
      * @param bulletShootPeriod the period between each projectile shoot in ticks
      */
     public void setBulletShootPeriod(IVariable<Integer> bulletShootPeriod) {

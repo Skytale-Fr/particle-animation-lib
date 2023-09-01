@@ -24,12 +24,12 @@ public class NodeBuilder extends AAnimationBuilder<Node, NodeTask> {
 
     public NodeBuilder() {
         super();
-        animation.setRadius(new Constant<>(3.0));
-        animation.setNodeModifierNumerator(new Constant<>(3d));
-        animation.setNodeModifierDenominator(new Constant<>(2));
-        animation.setShowPeriod(new Constant<>(1));
+        animation.setRadius(3.0);
+        animation.setNodeModifierNumerator(3d);
+        animation.setNodeModifierDenominator(2);
+        animation.setShowPeriod(1);
         animation.setTicksDuration(60);
-        setNbPoints(new Constant<>(20));
+        animation.setNbPoints(20);
     }
 
     @Override

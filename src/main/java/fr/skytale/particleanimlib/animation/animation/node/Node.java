@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.node;
 
 
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 
@@ -36,6 +37,10 @@ public class Node extends AAnimation {
         return radius;
     }
 
+    public void setRadius(Double radius) {
+        setRadius(new Constant<>(radius));
+    }
+
     public void setRadius(IVariable<Double> radius) {
         this.radius = radius;
     }
@@ -52,6 +57,10 @@ public class Node extends AAnimation {
         return nodeModifierNumerator;
     }
 
+    public void setNodeModifierNumerator(Double nodeModifierNumerator) {
+        setNodeModifierNumerator(new Constant<>(nodeModifierNumerator));
+    }
+
     public void setNodeModifierNumerator(IVariable<Double> nodeModifierNumerator) {
         this.nodeModifierNumerator = nodeModifierNumerator;
     }
@@ -60,12 +69,20 @@ public class Node extends AAnimation {
         return nodeModifierDenominator;
     }
 
+    public void setNodeModifierDenominator(Integer nodeModifierDenominator) {
+        setNodeModifierDenominator(new Constant<>(nodeModifierDenominator));
+    }
+
     public void setNodeModifierDenominator(IVariable<Integer> nodeModifierDenominator) {
         this.nodeModifierDenominator = nodeModifierDenominator;
     }
 
     public IVariable<Integer> getNbPoints() {
         return nbPoints;
+    }
+
+    public void setNbPoints(Integer nbPoints) {
+        setNbPoints(new Constant<>(nbPoints));
     }
 
     public void setNbPoints(IVariable<Integer> nbPoints) {

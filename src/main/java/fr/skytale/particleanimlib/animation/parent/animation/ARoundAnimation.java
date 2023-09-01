@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.parent.animation;
 
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 
 public abstract class ARoundAnimation extends AAnimation {
@@ -12,12 +13,20 @@ public abstract class ARoundAnimation extends AAnimation {
         return radius;
     }
 
+    public void setRadius(Double radius) {
+        setRadius(new Constant<>(radius));
+    }
+
     public void setRadius(IVariable<Double> radius) {
         this.radius = radius;
     }
 
     public IVariable<Integer> getNbPoints() {
         return nbPoints;
+    }
+
+    public void setNbPoints(Integer nbPoints) {
+        setNbPoints(new Constant<>(nbPoints));
     }
 
     public void setNbPoints(IVariable<Integer> nbPoints) {

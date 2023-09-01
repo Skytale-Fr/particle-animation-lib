@@ -21,8 +21,8 @@ public class LineBuilder extends AAnimationBuilder<Line, LineTask> {
     public LineBuilder() {
         super();
         // Default values
-        animation.setShowPeriod(new Constant<>(2));
-        setNbPoints(10);
+        animation.setShowPeriod(2);
+        animation.setNbPoints(10);
         setFromPositionToPoint2(new Vector(1, 0, 0), 3d);
         animation.setTicksDuration(60);
     }

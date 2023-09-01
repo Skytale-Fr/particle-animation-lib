@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.polygon;
 
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 
@@ -31,6 +32,10 @@ public class Polygon extends AAnimation {
         return nbVertices;
     }
 
+    public void setNbVertices(Integer nbVertices) {
+        setNbVertices(new Constant<>(nbVertices));
+    }
+
     public void setNbVertices(IVariable<Integer> nbVertices) {
         this.nbVertices = nbVertices;
     }
@@ -39,12 +44,20 @@ public class Polygon extends AAnimation {
         return distanceBetweenPoints;
     }
 
+    public void setDistanceBetweenPoints(Double distanceBetweenPoints) {
+        setDistanceBetweenPoints(new Constant<>(distanceBetweenPoints));
+    }
+
     public void setDistanceBetweenPoints(IVariable<Double> distanceBetweenPoints) {
         this.distanceBetweenPoints = distanceBetweenPoints;
     }
 
     public IVariable<Double> getDistanceFromCenterToVertices() {
         return distanceFromCenterToVertices;
+    }
+
+    public void setDistanceFromCenterToVertices(Double distanceFromCenterToVertices) {
+        setDistanceFromCenterToVertices(new Constant<>(distanceFromCenterToVertices));
     }
 
     public void setDistanceFromCenterToVertices(IVariable<Double> distanceFromCenterToVertices) {

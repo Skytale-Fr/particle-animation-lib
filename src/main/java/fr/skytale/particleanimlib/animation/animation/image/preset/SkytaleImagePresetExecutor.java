@@ -19,6 +19,6 @@ public class SkytaleImagePresetExecutor extends AAnimationPresetExecutor<ImageBu
                 new Vector(0, 1, 0), Math.PI / 20f);
         imageBuilder.setImageFileName("skytale.png");
         imageBuilder.setTicksDuration(40);
-        imageBuilder.setShowPeriod(new Constant<>(2));
+        imageBuilder.setShowPeriod(2);
     }
 }

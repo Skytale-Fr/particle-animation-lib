@@ -15,9 +15,9 @@ public class SimpleLinePresetExecutor extends AAnimationPresetExecutor<LineBuild
     @Override
     protected void apply(LineBuilder lineBuilder, JavaPlugin plugin) {
         lineBuilder.setPoint1OnPosition();
-        lineBuilder.setFromPositionToPoint2(new Constant<>(new Vector(1, 0, 0)), new Constant<>(10d));
+        lineBuilder.setFromPositionToPoint2(new Vector(1, 0, 0), 10d);
         lineBuilder.setTicksDuration(100);
         lineBuilder.setShowPeriod(new Constant<>(1));
-        lineBuilder.setNbPoints(new Constant<>(50));
+        lineBuilder.setNbPoints(50);
     }
 }

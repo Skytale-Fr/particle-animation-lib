@@ -16,8 +16,8 @@ public class CuboidPresetExecutor extends AAnimationPresetExecutor<CuboidBuilder
     protected void apply(CuboidBuilder cuboidBuilder, JavaPlugin plugin) {
         cuboidBuilder.setFromLocationToFirstCorner(new Vector(-4, -4, -4));
         cuboidBuilder.setFromLocationToSecondCorner(new Vector(4, 4, 4));
-        cuboidBuilder.setDistanceBetweenPoints(new Constant<>(0.4));
+        cuboidBuilder.setDistanceBetweenPoints(0.4);
         cuboidBuilder.setTicksDuration(100);
-        cuboidBuilder.setShowPeriod(new Constant<>(3));
+        cuboidBuilder.setShowPeriod(3);
     }
 }

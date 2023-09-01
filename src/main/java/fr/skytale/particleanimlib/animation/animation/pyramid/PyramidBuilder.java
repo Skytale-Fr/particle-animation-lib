@@ -9,12 +9,12 @@ public class PyramidBuilder extends AAnimationBuilder<Pyramid, PyramidTask> {
 
     public PyramidBuilder() {
         super();
-        animation.setDistanceBetweenParticles(new Constant<>(0.3));
-        animation.setShowPeriod(new Constant<>(0));
+        animation.setShowPeriod(0);
         animation.setTicksDuration(60);
-        animation.setNbBaseApex(new Constant<>(3));
-        animation.setFromCenterToApex(new Constant<>(new Vector(0, 5, 0)));
-        animation.setDistanceFromCenterToAnyBaseVertex(new Constant<>(3.0));
+        animation.setDistanceBetweenParticles(0.3);
+        animation.setNbBaseApex(3);
+        animation.setFromCenterToApex(new Vector(0, 5, 0));
+        animation.setDistanceFromCenterToAnyBaseVertex(3.0);
     }
 
     @Override

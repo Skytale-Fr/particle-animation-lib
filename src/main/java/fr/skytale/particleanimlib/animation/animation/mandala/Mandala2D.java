@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.mandala;
 
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
@@ -24,15 +25,23 @@ public class Mandala2D extends AAnimation {
         return points;
     }
 
+    public void setPoints(List<Vector2D> points) {
+        setPoints(new Constant<>(points));
+    }
+
     public void setPoints(IVariable<List<Vector2D>> points) {
         this.points = points;
     }
 
-    public IVariable<Integer> getNbCircleSections() {
+    public IVariable<Integer> getNbCircleSection() {
         return nbCircleSections;
     }
 
-    public void setNbCircleSections(IVariable<Integer> nbCircleSections) {
+    public void setNbCircleSection(Integer nbCircleSections) {
+        setNbCircleSection(new Constant<>(nbCircleSections));
+    }
+
+    public void setNbCircleSection(IVariable<Integer> nbCircleSections) {
         this.nbCircleSections = nbCircleSections;
     }
 

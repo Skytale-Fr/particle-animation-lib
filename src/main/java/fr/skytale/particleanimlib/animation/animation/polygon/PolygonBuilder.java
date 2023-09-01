@@ -1,11 +1,8 @@
 package fr.skytale.particleanimlib.animation.animation.polygon;
 
-import fr.skytale.particleanimlib.animation.attribute.Orientation;
-import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
-import org.bukkit.util.Vector;
 
 public class PolygonBuilder extends AAnimationBuilder<Polygon, PolygonTask> {
 
@@ -14,10 +11,10 @@ public class PolygonBuilder extends AAnimationBuilder<Polygon, PolygonTask> {
 
     public PolygonBuilder() {
         super();
-        animation.setDistanceFromCenterToVertices(new Constant<>(4.0));
-        animation.setDistanceBetweenPoints(new Constant<>(0.3));
-        animation.setNbVertices(new Constant<>(8));
-        animation.setShowPeriod(new Constant<>(1));
+        animation.setDistanceFromCenterToVertices(4.0);
+        animation.setDistanceBetweenPoints(0.3);
+        animation.setNbVertices(8);
+        animation.setShowPeriod(1);
         animation.setTicksDuration(60);
     }
 
@@ -39,6 +36,7 @@ public class PolygonBuilder extends AAnimationBuilder<Polygon, PolygonTask> {
 
     /**
      * Set the number of vertices of the polygon
+     *
      * @param nbVertices the number of vertices
      */
     public void setNbVertices(IVariable<Integer> nbVertices) {
@@ -49,6 +47,7 @@ public class PolygonBuilder extends AAnimationBuilder<Polygon, PolygonTask> {
 
     /**
      * Set the number of vertices of the polygon
+     *
      * @param nbVertices the number of vertices
      */
     public void setNbVertices(int nbVertices) {
@@ -57,6 +56,7 @@ public class PolygonBuilder extends AAnimationBuilder<Polygon, PolygonTask> {
 
     /**
      * Set the distance between each point of the polygon in the polygon edges
+     *
      * @param distanceBetweenPoints the distance between each point
      */
     public void setDistanceBetweenPoints(IVariable<Double> distanceBetweenPoints) {
@@ -66,6 +66,7 @@ public class PolygonBuilder extends AAnimationBuilder<Polygon, PolygonTask> {
 
     /**
      * Set the distance between each point of the polygon in the polygon edges
+     *
      * @param distanceBetweenPoints the distance between each point
      */
     public void setDistanceBetweenPoints(double distanceBetweenPoints) {
@@ -74,6 +75,7 @@ public class PolygonBuilder extends AAnimationBuilder<Polygon, PolygonTask> {
 
     /**
      * Set the distance between the animation position and the vertices of the polygon
+     *
      * @param distanceFromCenterToVertices the distance between the animation position and the vertices of the polygon
      */
     public void setDistanceFromCenterToVertices(IVariable<Double> distanceFromCenterToVertices) {
@@ -83,6 +85,7 @@ public class PolygonBuilder extends AAnimationBuilder<Polygon, PolygonTask> {
 
     /**
      * Set the distance between the animation position and the vertices of the polygon
+     *
      * @param distanceFromCenterToVertices the distance between the animation position and the vertices of the polygon
      */
     public void setDistanceFromCenterToVertices(double distanceFromCenterToVertices) {

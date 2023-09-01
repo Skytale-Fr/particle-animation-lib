@@ -1,6 +1,5 @@
 package fr.skytale.particleanimlib.animation.animation.randompoints;
 
-import fr.skytale.particleanimlib.animation.animation.circle.Circle;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
@@ -12,7 +11,7 @@ public class RandomPointsBuilder extends AAnimationBuilder<RandomPoints, RandomP
         animation.setNbPoints(20);
         animation.setRadius(10);
         animation.setDirectionChangePeriod(new Constant<>(60));
-        animation.setSpeed(new Constant<>(0.1d));
+        animation.setSpeed(0.1d);
         animation.setTicksDuration(300);
     }
 
@@ -34,6 +33,7 @@ public class RandomPointsBuilder extends AAnimationBuilder<RandomPoints, RandomP
 
     /**
      * Set the number of points that will spawn
+     *
      * @param nbPoints the number of points that will spawn
      */
     public void setNbPoints(int nbPoints) {
@@ -43,6 +43,7 @@ public class RandomPointsBuilder extends AAnimationBuilder<RandomPoints, RandomP
 
     /**
      * Set the radius of the sphere where the points will spawn
+     *
      * @param radius the radius of the sphere where the points will spawn
      */
     public void setRadius(float radius) {
@@ -52,6 +53,7 @@ public class RandomPointsBuilder extends AAnimationBuilder<RandomPoints, RandomP
 
     /**
      * Set the period of time in ticks between each direction change of the points
+     *
      * @param directionChangePeriod the period of time in ticks between each direction change of the points
      */
     public void setDirectionChangePeriod(IVariable<Integer> directionChangePeriod) {
@@ -61,6 +63,7 @@ public class RandomPointsBuilder extends AAnimationBuilder<RandomPoints, RandomP
 
     /**
      * Set the period of time in ticks between each direction change of the points
+     *
      * @param directionChangePeriod the period of time in ticks between each direction change of the points
      */
     public void setDirectionChangePeriod(int directionChangePeriod) {
@@ -69,6 +72,7 @@ public class RandomPointsBuilder extends AAnimationBuilder<RandomPoints, RandomP
 
     /**
      * Set the speed of the points
+     *
      * @param speed the speed of the points
      */
     public void setSpeed(IVariable<Double> speed) {
@@ -78,6 +82,7 @@ public class RandomPointsBuilder extends AAnimationBuilder<RandomPoints, RandomP
 
     /**
      * Set the speed of the points
+     *
      * @param speed the speed of the points
      */
     public void setSpeed(Double speed) {

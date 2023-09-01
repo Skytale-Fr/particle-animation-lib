@@ -13,7 +13,7 @@ public class Mandala2DBuilder extends AAnimationBuilder<Mandala2D, Mandala2DTask
 
     public Mandala2DBuilder() {
         super();
-        setPoints(
+        animation.setPoints(
                 Arrays.asList(
                         new Vector2D(0, 1),
                         new Vector2D(0, 2),
@@ -22,9 +22,7 @@ public class Mandala2DBuilder extends AAnimationBuilder<Mandala2D, Mandala2DTask
                         new Vector2D(0, 5)
                 )
         );
-        /**/
-        setNbCircleSection(8);
-
+        animation.setNbCircleSection(8);
     }
 
     @Override
@@ -35,7 +33,7 @@ public class Mandala2DBuilder extends AAnimationBuilder<Mandala2D, Mandala2DTask
     @Override
     public Mandala2D getAnimation() {
         checkNotNull(animation.getPoints(), "points should not be null");
-        checkPositive(animation.getNbCircleSections(), "nbCircleSectionPairs should be positive", false);
+        checkPositive(animation.getNbCircleSection(), "nbCircleSectionPairs should be positive", false);
         return super.getAnimation();
     }
 
@@ -57,11 +55,12 @@ public class Mandala2DBuilder extends AAnimationBuilder<Mandala2D, Mandala2DTask
      */
     public void setNbCircleSection(IVariable<Integer> nbCircleSectionPairs) {
         checkPositive(nbCircleSectionPairs, "nbCircleSectionPairs should be positive", false);
-        animation.setNbCircleSections(nbCircleSectionPairs);
+        animation.setNbCircleSection(nbCircleSectionPairs);
     }
 
     /**
      * Defines the points to show (and that will be shown nbCircleSectionPairs times).
+     *
      * @param points the points to show
      */
     public void setPoints(List<Vector2D> points) {
@@ -83,6 +82,7 @@ public class Mandala2DBuilder extends AAnimationBuilder<Mandala2D, Mandala2DTask
 
     /**
      * Defines the points to show (and that will be shown nbCircleSectionPairs times).
+     *
      * @param curve2DGenerator every data needed to generate the points
      */
     public void setPoints(CurvePointsGenerator<?, Vector2D> curve2DGenerator) {

@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.line;
 
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.util.Vector;
@@ -32,6 +33,10 @@ public class Line extends AAnimation {
 
     public IVariable<Integer> getNbPoints() {
         return nbPoints;
+    }
+
+    public void setNbPoints(Integer nbPoints) {
+        setNbPoints(new Constant<>(nbPoints));
     }
 
     public void setNbPoints(IVariable<Integer> nbPoints) {

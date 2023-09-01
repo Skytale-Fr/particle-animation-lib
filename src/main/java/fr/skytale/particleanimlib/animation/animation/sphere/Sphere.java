@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.animation.animation.sphere;
 
 
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.ARoundAnimation;
 
@@ -34,12 +35,20 @@ public class Sphere extends ARoundAnimation {
         return percentShownWhilePropagate;
     }
 
+    public void setPercentShownWhilePropagate(Float percentShownWhilePropagate) {
+        setPercentShownWhilePropagate(new Constant<>(percentShownWhilePropagate));
+    }
+
     public void setPercentShownWhilePropagate(IVariable<Float> percentShownWhilePropagate) {
         this.percentShownWhilePropagate = percentShownWhilePropagate;
     }
 
     public IVariable<Float> getPercentStepWhilePropagate() {
         return percentStepWhilePropagate;
+    }
+
+    public void setPercentStepWhilePropagate(Float percentStepWhilePropagate) {
+        setPercentStepWhilePropagate(new Constant<>(percentStepWhilePropagate));
     }
 
     public void setPercentStepWhilePropagate(IVariable<Float> percentStepWhilePropagate) {

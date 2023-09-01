@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.pyramid;
 
+import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import org.bukkit.util.Vector;
@@ -34,12 +35,20 @@ public class Pyramid extends AAnimation {
 
     /***********GETTERS & SETTERS***********/
 
+    public void setFromCenterToApex(Vector fromCenterToApex) {
+        setFromCenterToApex(new Constant<>(fromCenterToApex));
+    }
+
     public void setFromCenterToApex(IVariable<Vector> fromCenterToApex) {
         this.fromCenterToApex = fromCenterToApex;
     }
 
     public IVariable<Double> getDistanceFromBaseCenterToAnyBaseVertex() {
         return distanceFromBaseCenterToAnyBaseVertex;
+    }
+
+    public void setDistanceFromCenterToAnyBaseVertex(Double distanceFromCenterToAnyBaseVertex) {
+
     }
 
     public void setDistanceFromCenterToAnyBaseVertex(IVariable<Double> distanceFromCenterToAnyBaseVertex) {
@@ -50,12 +59,20 @@ public class Pyramid extends AAnimation {
         return nbBaseApex;
     }
 
+    public void setNbBaseApex(Integer nbBaseApex) {
+        setNbBaseApex(new Constant<>(nbBaseApex));
+    }
+
     public void setNbBaseApex(IVariable<Integer> nbBaseApex) {
         this.nbBaseApex = nbBaseApex;
     }
 
     public IVariable<Double> getDistanceBetweenParticles() {
         return distanceBetweenParticles;
+    }
+
+    public void setDistanceBetweenParticles(Double distanceBetweenParticles) {
+        setDistanceBetweenParticles(new Constant<>(distanceBetweenParticles));
     }
 
     public void setDistanceBetweenParticles(IVariable<Double> distanceBetweenParticles) {
