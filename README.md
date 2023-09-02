@@ -12,4 +12,4 @@ Create pull requests to contribute to this project or contact us directly on [di
 Use the [issue tracker](https://gitlab.com/skytale_/skytale-mc/libraries/particleanimlib/-/issues) to report bugs or request features.
 
 ## License
-TODO
+**GPL-3** see [here](LICENSE.txt)

@@ -13,10 +13,11 @@ buildscript {
 plugins {
     id 'com.github.johnrengelman.shadow'
     id 'java'
+    id 'maven-publish'
 }
 
 group = 'fr.skytale'
-version = '5.2.0'
+version = '5.3.0'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
@@ -26,7 +27,7 @@ compileJava {
 }
 allprojects {
     repositories {
-        maven { url 'https://repository.lasers-enigma.eu:443/r' }
+        maven { url 'https://repository.skytale.fr/artifactory/private' }
     }
 }
 repositories {
@@ -42,7 +43,7 @@ repositories {
         }
     }
 
-    maven { url 'https://oss.sonatype.org/content/groups/public/' }
+    maven { url 'https://oss.sonatype.org/content/groups/private/' }
 }
 
 dependencies {
@@ -77,6 +78,11 @@ compileJava {
     dependsOn updateReadmeVersion
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 task myJavadocs(type: Javadoc) {
     source = sourceSets.main.allJava
 }
@@ -100,46 +106,55 @@ shadowJar {
     archiveBaseName.set('particleanimlib')
     archiveClassifier.set('')
 }
-
-apply plugin: 'com.jfrog.artifactory'
-apply plugin: 'java'
-apply plugin: 'maven-publish'
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-}
+//
+//apply plugin: 'com.jfrog.artifactory'
+//apply plugin: 'java'
+//apply plugin: 'maven-publish'
+//
+//publishing {
+//    publications {
+//        mavenJava(MavenPublication) {
+//            from components.java
+//        }
+//    }
+//}
 
 if (project.hasProperty('artifactory_user')) {
-    apply plugin: 'com.jfrog.artifactory'
-    apply plugin: 'java'
-    apply plugin: 'maven-publish'
     apply plugin: 'com.github.johnrengelman.shadow'
     publishing {
         publications {
             shadow(MavenPublication) { publication ->
                 project.shadow.component(publication)
+                artifacts = [ shadowJar, javadocJar, sourcesJar ]
+                pom {
+                    name.set("Particle animation lib")
+                    description.set("Minecraft particle animation library")
+                    url.set("https://gitlab.com/skytale_/skytale-mc/libraries/particleanimlib")
+                    licenses {
+                        license {
+                            name.set("GNU GENERAL PUBLIC LICENSE, Version 3")
+                            url.set("https://www.gnu.org/licenses/gpl-3.0.html")
+                        }
+                    }
+                    developers {
+                        developer {
+                            id.set("bZx")
+                            name.set("Benjamin Boulaud")
+                            email.set("ben.nbld@gmail.com")
+                        }
+                    }
+                }
             }
         }
-    }
 
-    artifactory {
-        contextUrl = 'https://repository.lasers-enigma.eu:443/'
-        publish {
-            repository {
-                repoKey = 'r' // The Artifactory repository key to publish to
-                username = "${artifactory_user}" // The publisher user name
-                password = "${artifactory_password}" // The publisher password
-            }
-            defaults {
-                // Reference to Gradle publications defined in the build script.
-                // This is how we tell the Artifactory Plugin which artifacts should be
-                // published to Artifactory.
-                publications('shadow')
-                publishArtifacts = true
+        repositories {
+            maven {
+                name = "Skytale"
+                url = "https://repository.skytale.fr/artifactory/private"
+                credentials {
+                    username = "${artifactory_user}"
+                    password = "${artifactory_password}"
+                }
             }
         }
     }
