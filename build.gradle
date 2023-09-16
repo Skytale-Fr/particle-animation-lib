@@ -27,7 +27,7 @@ compileJava {
 }
 allprojects {
     repositories {
-        maven { url 'https://repository.skytale.fr/artifactory/private' }
+        maven { url 'https://repository.skytale.fr/artifactory/public' }
     }
 }
 repositories {
@@ -150,7 +150,7 @@ if (project.hasProperty('artifactory_user')) {
         repositories {
             maven {
                 name = "Skytale"
-                url = "https://repository.skytale.fr/artifactory/private"
+                url = "https://repository.skytale.fr/artifactory/public"
                 credentials {
                     username = "${artifactory_user}"
                     password = "${artifactory_password}"
