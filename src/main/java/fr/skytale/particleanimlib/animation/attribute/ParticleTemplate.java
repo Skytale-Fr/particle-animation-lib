@@ -36,6 +36,36 @@ public class ParticleTemplate {
     }
 
     /**
+     * Builds a particle template
+     * @param type the type of the particle
+     * @param speed the speed of the particle movement
+     */
+    public ParticleTemplate(ParticleEffect type, float speed) {
+        this(
+                type,
+                1,
+                speed,
+                new Vector(0, 0, 0),
+                (ParticleData) null
+        );
+    }
+
+    /**
+     * Builds a particle template
+     * @param type the type of the particle
+     * @param additionalData the additional data of the particle
+     */
+    public ParticleTemplate(ParticleEffect type, ParticleData additionalData) {
+        this(
+                type,
+                1,
+                1,
+                new Vector(0, 0, 0),
+                additionalData
+        );
+    }
+
+    /**
      * Builds a particle template for a particle supporting colors
      * @param type the type of the particle
      * @param color the color of the particle

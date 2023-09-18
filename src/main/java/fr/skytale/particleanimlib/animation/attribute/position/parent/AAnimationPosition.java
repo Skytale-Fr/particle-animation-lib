@@ -2,7 +2,9 @@ package fr.skytale.particleanimlib.animation.attribute.position.parent;
 
 import fr.skytale.particleanimlib.animation.attribute.position.attr.AnimationMove;
 import fr.skytale.particleanimlib.animation.attribute.position.attr.PositionType;
+import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
+import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.ParametrizedCallbackWithPreviousValue;
 import org.bukkit.Location;
 
@@ -43,5 +45,9 @@ public abstract class AAnimationPosition extends CallbackWithPreviousValueVariab
     @Override
     public final PositionType getType() {
         return PositionType.NORMAL;
+    }
+
+    public IVariable<Location> toIVariableLocation() {
+        return new CallbackVariable<>(iterationCount -> this.getCurrentValue(iterationCount).getAfterMoveLocation());
     }
 }
