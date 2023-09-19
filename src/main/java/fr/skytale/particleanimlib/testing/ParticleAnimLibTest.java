@@ -26,7 +26,8 @@ public class ParticleAnimLibTest {
 
     public static final AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.PA_1_08_DAGUE_POISON_1;
     public static final TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
-    public static final boolean DEFAULT_SHOW_ON_CLICK = false;
+//    public static final boolean DEFAULT_SHOW_ON_CLICK = false;
+    public static boolean DEFAULT_SHOW_ON_CLICK = false;
 
     private static ParticleAnimLibTest instance;
 
@@ -83,7 +84,9 @@ public class ParticleAnimLibTest {
 
     public void buildAndShowAnimation(Player player, AAnimationPosition position) {
         AnimationLibPlayerData playerData = getPlayerData(player);
-        if (!playerData.isShowAnimationOnClick()) return;
+        if (!ParticleAnimLibTest.DEFAULT_SHOW_ON_CLICK)
+        //if (!playerData.isShowAnimationOnClick())
+            return;
         AnimationSampleManager.getInstance().initBuilder(player, position, plugin, playerData.getAnimationType()).getAnimation().show();
     }
 
@@ -134,5 +137,9 @@ public class ParticleAnimLibTest {
         final TrailTask newTrailTask = TrailSampleManager.getInstance().getTrailTask(playerData.getTrailSampleName(), player);
         newTrailTask.addPlayer(player.getUniqueId());
         player.sendMessage("Activating trail " + playerData.getTrailSampleName());
+    }
+
+    public static void setDefaultShowAnimOnClick(boolean showAnimOnClick) {
+        DEFAULT_SHOW_ON_CLICK = showAnimOnClick;
     }
 }

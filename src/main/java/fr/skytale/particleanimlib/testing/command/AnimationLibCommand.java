@@ -37,9 +37,10 @@ public class AnimationLibCommand implements CommandExecutor {
             // ---- EVENT TOGGLE ----
 
             else if (args.length == 1 && args[0].equals("toggle")) {
-                boolean isShowAnimationOnClick = this.particleAnimLibTest.getPlayerData(player).isShowAnimationOnClick();
-                this.particleAnimLibTest.setShowAnimOnClick(player, !isShowAnimationOnClick);
-                if (isShowAnimationOnClick) {
+//                boolean isShowAnimationOnClick = this.particleAnimLibTest.getPlayerData(player).isShowAnimationOnClick();
+//                this.particleAnimLibTest.setShowAnimOnClick(player, !isShowAnimationOnClick);
+                ParticleAnimLibTest.setDefaultShowAnimOnClick(!ParticleAnimLibTest.DEFAULT_SHOW_ON_CLICK);
+                if (ParticleAnimLibTest.DEFAULT_SHOW_ON_CLICK) {
                     player.sendMessage("Display animation on click disabled");
                 } else {
                     player.sendMessage("Display animation on click enabled. Simply left click in the air or on a block.");
