@@ -27,17 +27,11 @@ public class PA107PortailApparitionPresetExecutor extends AAnimationPresetExecut
 
     @Override
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
-
-//        //TODO a supprimer, que pr le test
-//        Location location = ((AAnimationPosition) (circleBuilder.getPosition())).toIVariableLocation().getCurrentValue(0);
-//        World monde = location.getWorld();
-//        circleBuilder.setPosition(new LocatedAnimationPosition(new Location(monde, -96.5, -52, -17.5)));
-
         circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.FOOTSTEP));
         circleBuilder.setRadius(0.1);
         circleBuilder.setNbPoints(1);
 
-        /******Third parts****/
+        /******Third part****/
         TorusSolenoidBuilder torusSolenoidBuilder = new TorusSolenoidBuilder();
         torusSolenoidBuilder.setPosition(circleBuilder.getPosition());
         torusSolenoidBuilder.setJavaPlugin(plugin);
@@ -45,12 +39,14 @@ public class PA107PortailApparitionPresetExecutor extends AAnimationPresetExecut
         torusSolenoidBuilder.applyPreset(AnimationPreset.PA_1_07_PORTAIL_APPARITION_PARTIE_2, plugin);
         TorusSolenoid p3 = torusSolenoidBuilder.getAnimation();
 
-        /****Second parts****/
+        /****Second part****/
         //2.3
         torusSolenoidBuilder.applyPreset(AnimationPreset.PA_1_07_PORTAIL_APPARITION_PARTIE_2, plugin);
-        torusSolenoidBuilder.setNbPoints(40);
+        torusSolenoidBuilder.setNbPoints(20);
+//        torusSolenoidBuilder.setNbPoints(40);
         torusSolenoidBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, new Color(246, 255, 0)));
-        torusSolenoidBuilder.setTorusRadius(new CallbackVariable<>(iterationCount -> Math.cos(iterationCount / 10d) / 2 + 4));
+        torusSolenoidBuilder.setTorusRadius(new CallbackVariable<>(iterationCount -> Math.cos(iterationCount / 10d) / 2 + 2));
+//        torusSolenoidBuilder.setTorusRadius(new CallbackVariable<>(iterationCount -> Math.cos(iterationCount / 10d) / 2 + 2));
         torusSolenoidBuilder.setTicksDuration(20 * 18);
         TorusSolenoid p2_3 = torusSolenoidBuilder.getAnimation();
 
@@ -65,7 +61,7 @@ public class PA107PortailApparitionPresetExecutor extends AAnimationPresetExecut
         circleBuilder.setAnimationEndedCallback(task -> {
             p2_2.show();
             p2_3.show();
-            p3.show();
+            //p3.show();
         });
         Circle startP22P23 = circleBuilder.getAnimation();
 
@@ -81,7 +77,7 @@ public class PA107PortailApparitionPresetExecutor extends AAnimationPresetExecut
         });
         Circle startP2 = circleBuilder.getAnimation();
 
-        /***Partie 1***/
+        /***Firt part***/
         // p1
         SphereBuilder p1Builder = new SphereBuilder();
         p1Builder.setPosition(circleBuilder.getPosition());

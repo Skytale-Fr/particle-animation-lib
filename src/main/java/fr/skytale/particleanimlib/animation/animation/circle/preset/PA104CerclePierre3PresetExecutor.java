@@ -22,7 +22,8 @@ public class PA104CerclePierre3PresetExecutor extends AAnimationPresetExecutor<C
 
     @Override
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
-        double radius = 10d;
+        double radius = 6d;
+//        double radius = 10d;
         circleBuilder.setTicksDuration(20*20);
 
 

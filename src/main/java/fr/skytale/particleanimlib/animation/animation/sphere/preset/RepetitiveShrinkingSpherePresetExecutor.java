@@ -19,8 +19,10 @@ public class RepetitiveShrinkingSpherePresetExecutor extends AAnimationPresetExe
 
     @Override
     protected void apply(SphereBuilder sphereBuilder, JavaPlugin plugin) {
-        double startRadius = 20d;
-        double endRadius = 4d;
+        double startRadius = 4d;
+        double endRadius = 2d;
+//        double startRadius = 20d;
+//        double endRadius = 4d;
         int tickDuration = 20 * 10;
 
         SphereBuilder originalAnimationBuilder = new SphereBuilder();
