@@ -20,9 +20,9 @@ import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
 import xyz.xenondevs.particle.data.ParticleData;
 
-public class PA104CerclePierre2PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
+public class PA103CerclePierre2PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
-    public PA104CerclePierre2PresetExecutor() {
+    public PA103CerclePierre2PresetExecutor() {
         super(CircleBuilder.class);
     }
 

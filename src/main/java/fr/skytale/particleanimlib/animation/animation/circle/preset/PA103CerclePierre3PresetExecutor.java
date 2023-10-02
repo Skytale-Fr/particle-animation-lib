@@ -14,27 +14,27 @@ import xyz.xenondevs.particle.data.color.DustColorTransitionData;
 
 import java.awt.*;
 
-public class PA104CerclePierre3PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
+public class PA103CerclePierre3PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
-    public PA104CerclePierre3PresetExecutor() {
+    public PA103CerclePierre3PresetExecutor() {
         super(CircleBuilder.class);
     }
 
     @Override
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
         double radius = 6d;
-        circleBuilder.setTicksDuration(Integer.MAX_VALUE); //
+        circleBuilder.setTicksDuration(Integer.MAX_VALUE);
 
         //Inner circle
-        circleBuilder.setRadius(radius/2);
+        circleBuilder.setRadius(radius / 2);
         circleBuilder.setNbPoints((int) radius, true);
         circleBuilder.setPointDefinition(
                 new ParticleTemplate(
                         ParticleEffect.DUST_COLOR_TRANSITION,
                         1,
                         1f,
-                        new Vector(radius/4,0.2,radius/4),
-                        new DustColorTransitionData(Color.MAGENTA, Color.WHITE,1f)
+                        new Vector(radius / 4, 0.2, radius / 4),
+                        new DustColorTransitionData(Color.MAGENTA, Color.WHITE, 1f)
                 )
         );
         Circle innerCircle = circleBuilder.getAnimation();
@@ -42,16 +42,16 @@ public class PA104CerclePierre3PresetExecutor extends AAnimationPresetExecutor<C
         //Outer circle
         circleBuilder.setRadius(radius);
         circleBuilder.setNbPoints(80, true);
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.DRAGON_BREATH,0.005f));
+        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.DRAGON_BREATH, 0.005f));
         circleBuilder.setRotation(
-                new Vector(0,1,0),
-                Math.PI/100
+                new Vector(0, 1, 0),
+                Math.PI / 100
         );
         AAnimationPosition position = (AAnimationPosition) circleBuilder.getPosition();
         circleBuilder.setPosition(
                 new LocatedRelativeAnimationPosition(
                         position.toIVariableLocation(),
-                        new CallbackVariable<>(iterationCount -> new Vector(0, Math.sin(iterationCount/2d) +1, 0))
+                        new CallbackVariable<>(iterationCount -> new Vector(0, Math.sin(iterationCount / 2d) + 1, 0))
                 )
         );
         circleBuilder.setShowPeriod(2);

@@ -9,9 +9,9 @@ import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
 import xyz.xenondevs.particle.data.ParticleData;
 
-public class PA107PortailApparitionPartie2PresetExecutor extends AAnimationPresetExecutor<TorusSolenoidBuilder> {
+public class TorusSolenoid2PresetExecutor extends AAnimationPresetExecutor<TorusSolenoidBuilder> {
 
-    public PA107PortailApparitionPartie2PresetExecutor() {
+    public TorusSolenoid2PresetExecutor() {
         super(TorusSolenoidBuilder.class);
     }
 
@@ -19,7 +19,6 @@ public class PA107PortailApparitionPartie2PresetExecutor extends AAnimationPrese
     protected void apply(TorusSolenoidBuilder torusSolenoidBuilder, JavaPlugin plugin) {
 
         double endRadius = 2d;
-//        double endRadius = 4d;
         int tickDuration = 20 * 20;
 
         torusSolenoidBuilder.setRotation(
@@ -28,14 +27,14 @@ public class PA107PortailApparitionPartie2PresetExecutor extends AAnimationPrese
                 new Vector(1, 0, 0),
                 Math.PI / 192);
 
-        torusSolenoidBuilder.setNbPoints((int) (endRadius*5));
-        
+        torusSolenoidBuilder.setNbPoints((int) (endRadius * 5));
+
         torusSolenoidBuilder.setTorusRadius(new CallbackVariable<>(iterationCount -> Math.cos(iterationCount / 10d) / 4 + endRadius));
 
         torusSolenoidBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.END_ROD, 1, 0.025f, new Vector(0, 0, 0), (ParticleData) null));
         torusSolenoidBuilder.setTicksDuration(tickDuration);
 
-        torusSolenoidBuilder.setSolenoidRadius(endRadius/4);
+        torusSolenoidBuilder.setSolenoidRadius(endRadius / 4);
         torusSolenoidBuilder.setTorusSolenoidModifierNumerator(9);
     }
 }

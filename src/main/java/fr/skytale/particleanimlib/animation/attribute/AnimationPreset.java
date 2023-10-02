@@ -26,7 +26,7 @@ import fr.skytale.particleanimlib.animation.animation.parabola.preset.ParabolaPr
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizedDirectionParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.parabola.preset.RandomizedSpeedAndDirectionParabolaPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.GrowingPolygonPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.polygon.preset.PA104CerclePierre1PresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.polygon.preset.PA103CerclePierre1PresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.RotatingPolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.polygon.preset.SimplePolygonPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.pyramid.preset.GrowingPyramid2PresetExecutor;
@@ -38,7 +38,7 @@ import fr.skytale.particleanimlib.animation.animation.rose.preset.SimpleRosePres
 import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
 import fr.skytale.particleanimlib.animation.animation.text.preset.*;
 import fr.skytale.particleanimlib.animation.animation.text.preset.init.TextPresetInitializer;
-import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.PA107PortailApparitionPartie2PresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.TorusSolenoid2PresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.RotatingTorusSolenoidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.TorusSolenoidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExecutor;
@@ -64,14 +64,12 @@ public enum AnimationPreset {
     PA_1_01_MAGIE_FUMEE_3_1(new PA101MagieFumee31PresetExecutor()),
     PA_1_01_MAGIE_FUMEE_3_2(new PA101MagieFumee32PresetExecutor()),
     PA_1_02_GRANGE(new PA102GrangePresetExecutor()),
-    PA_1_03_CERCLE_PIERRE_1(new PA104CerclePierre1PresetExecutor()),
-    PA_1_03_CERCLE_PIERRE_2(new PA104CerclePierre2PresetExecutor()),
-    PA_1_03_CERCLE_PIERRE_3(new PA104CerclePierre3PresetExecutor()),
+    PA_1_03_CERCLE_PIERRE_1(new PA103CerclePierre1PresetExecutor()),
+    PA_1_03_CERCLE_PIERRE_2(new PA103CerclePierre2PresetExecutor()),
+    PA_1_03_CERCLE_PIERRE_3(new PA103CerclePierre3PresetExecutor()),
     PA_1_05_ARBRE(new PA105ArbePresetExecutor()),
     PA_1_06_DISPARITION_TIMBLIN_1(new PA106DisparitionTimblin1PresetExecutor()),
     PA_1_06_DISPARITION_TIMBLIN_2(new PA106DisparitionTimblin2PresetExecutor()),
-    PA_1_07_PORTAIL_APPARITION_PARTIE_1(new PA107PortailPartie1PresetExecutor()),
-    PA_1_07_PORTAIL_APPARITION_PARTIE_2(new PA107PortailApparitionPartie2PresetExecutor()),
     PA_1_07_PORTAIL_APPARITION(new PA107PortailApparitionPresetExecutor()),
     PA_1_08_DAGUE_POISON_1(new PA108DaguePoison2PresetExecutor()),
 
@@ -171,7 +169,6 @@ public enum AnimationPreset {
     SPHERE_PLASMA(new SpherePlasmaPresetExecutor()),
     SPHERE_PROPAGATION_BOTTOM_TO_TOP(new PropagatingUpSpherePresetExecutor()),
     SPHERE_PROPAGATION_TOP_TO_BOTTOM(new PropagatingDownSpherePresetExecutor()),
-    SPHERE_SHRINKING_REPETITIVE(new RepetitiveShrinkingSpherePresetExecutor()),
     SPHERE_SUB_ANIM_POLYGON(new SphereSubAnimPolygonPresetExecutor()),
     SPHERE_SUB_ANIM_POLYGON_PROPAGATION(new SphereSubAnimPolygonPropagatingUpPresetExecutor()),
     SPHERE_SUB_ANIM_POLYGON2(new SphereSubAnimPolygon2PresetExecutor()),
@@ -188,6 +185,7 @@ public enum AnimationPreset {
     TEXT_KGEVERSINCENEWYORK_ROTATING(new RotatingTextKGEverSinceNewYorkPresetExecutor(), TextPresetInitializer.class),
     TEXT_MINECRAFT(new SimpleTextMinecraftPresetExecutor(), TextPresetInitializer.class),
     TORUS_SOLENOID(new TorusSolenoidPresetExecutor()),
+    TORUS_SOLENOID_2(new TorusSolenoid2PresetExecutor()),
     TORUS_SOLENOID_ROTATING(new RotatingTorusSolenoidPresetExecutor()),
     WAVE(new WavePresetExecutor());
 

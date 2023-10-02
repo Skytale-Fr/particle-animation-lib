@@ -14,9 +14,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import xyz.xenondevs.particle.ParticleEffect;
 
-public class PA104CerclePierre1PresetExecutor extends AAnimationPresetExecutor<PolygonBuilder> {
+public class PA103CerclePierre1PresetExecutor extends AAnimationPresetExecutor<PolygonBuilder> {
 
-    public PA104CerclePierre1PresetExecutor() {
+    public PA103CerclePierre1PresetExecutor() {
         super(PolygonBuilder.class);
     }
 
