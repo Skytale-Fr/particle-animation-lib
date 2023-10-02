@@ -62,6 +62,10 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     /* ******** GETTERS *********/
 
+    public final T getAnimation() {
+        return animation;
+    }
+
     public final int getIterationCount() {
         return iterationCount;
     }
@@ -207,7 +211,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
                (
                        iterationCount > 0 &&
                        this.animation.getStopCondition() != null &&
-                       this.animation.getStopCondition().canStop(this)
+                       this.animation.getStopCondition().canStop((AAnimationTask<?>) this)
                );
     }
 

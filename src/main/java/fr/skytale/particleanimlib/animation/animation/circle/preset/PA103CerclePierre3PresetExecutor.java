@@ -23,25 +23,21 @@ public class PA104CerclePierre3PresetExecutor extends AAnimationPresetExecutor<C
     @Override
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
         double radius = 6d;
-//        double radius = 10d;
-        circleBuilder.setTicksDuration(20*20);
-
+        circleBuilder.setTicksDuration(Integer.MAX_VALUE); //
 
         //Inner circle
-        //CircleBuilder innerCircler = new CircleBuilder();
-        //circleBuilder.setJavaPlugin(plugin);
-        //circleBuilder.setPosition(circleBuilder.getPosition());
         circleBuilder.setRadius(radius/2);
         circleBuilder.setNbPoints((int) radius, true);
         circleBuilder.setPointDefinition(
                 new ParticleTemplate(
-                        //ParticleEffect.CRIMSON_SPORE,1,0.01f,new Vector(radius/4,0,radius/4), (ParticleData) null
-                        ParticleEffect.DUST_COLOR_TRANSITION,1,1f,new Vector(radius/4,0.2,radius/4),new DustColorTransitionData(Color.MAGENTA, Color.WHITE,1f)
+                        ParticleEffect.DUST_COLOR_TRANSITION,
+                        1,
+                        1f,
+                        new Vector(radius/4,0.2,radius/4),
+                        new DustColorTransitionData(Color.MAGENTA, Color.WHITE,1f)
                 )
         );
-        //CRIMSON_SPORE
         Circle innerCircle = circleBuilder.getAnimation();
-
 
         //Outer circle
         circleBuilder.setRadius(radius);
@@ -61,9 +57,13 @@ public class PA104CerclePierre3PresetExecutor extends AAnimationPresetExecutor<C
         circleBuilder.setShowPeriod(2);
         Circle outerCircle = circleBuilder.getAnimation();
 
+        //Combinating
         circleBuilder.setTicksDuration(1);
         circleBuilder.setAnimationEndedCallback(animationEnding -> {
+            outerCircle.setStopCondition(circleBuilder.getAnimation().getStopCondition());
             outerCircle.show();
+
+            outerCircle.setStopCondition(circleBuilder.getAnimation().getStopCondition());
             innerCircle.show();
         });
     }

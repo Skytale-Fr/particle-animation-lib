@@ -35,7 +35,7 @@ public class CircuitPulse3DBuilder extends AAnimationBuilder<CircuitPulse3D, Cir
         setFadeColorInTrail(true);
         setDirectionChangeProbability(0.1);
         setTicksDuration(20 * 5);
-        setStopCondition(animationTask -> animationTask.getNbParticleAlive() == 0, false);
+        setStopCondition(animationTask -> ((CircuitPulse3DTask)animationTask).getNbParticleAlive() == 0, false);
     }
 
     @Override

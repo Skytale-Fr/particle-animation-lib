@@ -45,6 +45,9 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
                         new Color(RANDOM.nextInt(256), RANDOM.nextInt(256), RANDOM.nextInt(256))
                 )
         );
+        setStopCondition(
+                task -> { return false; }
+        );
     }
 
     // --------------------- CHECK SYSTEM ---------------------
@@ -626,7 +629,7 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
      * The animation will therefore stop if the duration is exceeded or if the stop condition is met.
      * @param stopCondition the stop condition
      */
-    public void setStopCondition(AnimationStopCondition<K> stopCondition) {
+    public void setStopCondition(AnimationStopCondition stopCondition) {
         this.setStopCondition(stopCondition, false);
     }
 
@@ -638,7 +641,7 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
      * @param stopCondition the stop condition
      * @param infiniteTickDuration true to avoid the stop of the animation according to its duration
      */
-    public void setStopCondition(AnimationStopCondition<K> stopCondition, boolean infiniteTickDuration) {
+    public void setStopCondition(AnimationStopCondition stopCondition, boolean infiniteTickDuration) {
         animation.setStopCondition(stopCondition, infiniteTickDuration);
     }
 

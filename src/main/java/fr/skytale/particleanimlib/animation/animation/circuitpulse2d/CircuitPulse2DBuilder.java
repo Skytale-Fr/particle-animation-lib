@@ -35,7 +35,7 @@ public class CircuitPulse2DBuilder extends AAnimationBuilder<CircuitPulse2D, Cir
         setFadeColorInTrail(true);
         setDirectionChangeProbability(0.1);
         setTicksDuration(500);
-        setStopCondition(animationTask -> animationTask.getNbParticleAlive() == 0, false);
+        setStopCondition(animationTask -> ((CircuitPulse2DTask)animationTask).getNbParticleAlive() == 0, false);
     }
 
     @Override
