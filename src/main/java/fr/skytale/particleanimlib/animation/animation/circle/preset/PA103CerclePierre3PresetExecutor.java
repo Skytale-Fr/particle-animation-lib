@@ -63,7 +63,7 @@ public class PA103CerclePierre3PresetExecutor extends AAnimationPresetExecutor<C
             outerCircle.setStopCondition(circleBuilder.getAnimation().getStopCondition());
             outerCircle.show();
 
-            outerCircle.setStopCondition(circleBuilder.getAnimation().getStopCondition());
+            innerCircle.setStopCondition(circleBuilder.getAnimation().getStopCondition());
             innerCircle.show();
         });
     }
