@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class AnimationLibTabCompleter implements TabCompleter {
 
-    public static final List<String> FIRST_PARAMS = Arrays.asList("toggle", "showall", "type", "trail");
+    public static final List<String> FIRST_PARAMS = Arrays.asList("toggle", "showall", "type", "trail", "stopall");
 
     ParticleAnimLibTest particleAnimLibTest;
 

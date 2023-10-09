@@ -4,6 +4,8 @@ import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.RelativeToEntityAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
+import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import fr.skytale.particleanimlib.testing.attribute.AnimationLibPlayerData;
 import fr.skytale.particleanimlib.testing.command.AnimationLibCommand;
 import fr.skytale.particleanimlib.testing.command.AnimationLibTabCompleter;
@@ -17,10 +19,7 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class ParticleAnimLibTest {
 
@@ -35,9 +34,12 @@ public class ParticleAnimLibTest {
 
     private final Map<UUID, AnimationLibPlayerData> playersData;
 
+    private static List<AAnimationTask> animationTasks;
+
     private ParticleAnimLibTest(JavaPlugin plugin, PluginCommand command) {
         this.plugin = plugin;
         this.playersData = new HashMap<>();
+        this.animationTasks = new ArrayList<>();
         Bukkit.getPluginManager().registerEvents(new RightClickAirEventListener(this), plugin);
         if (command != null) {
             command.setExecutor(new AnimationLibCommand(this));
@@ -141,5 +143,17 @@ public class ParticleAnimLibTest {
 
     public static void setDefaultShowAnimOnClick(boolean showAnimOnClick) {
         DEFAULT_SHOW_ON_CLICK = showAnimOnClick;
+    }
+
+    public static void addAnimationTask(AAnimationTask animationTask) {
+        animationTasks.add(animationTask);
+    }
+
+    public void clearAnimationTasks() {
+        animationTasks.clear();
+    }
+
+    public List<AAnimationTask> getAnimationTasks() {
+        return animationTasks;
     }
 }

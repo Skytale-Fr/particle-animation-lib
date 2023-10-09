@@ -13,15 +13,13 @@ import fr.skytale.particleanimlib.animation.attribute.taskfieldtracking.Animatio
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.collision.processor.CollisionTestType;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
+import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
@@ -58,6 +56,8 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         this.iterationCount = 0;
         this.trackedFieldsData = new HashSet<>();
         buildAnnotationData();
+
+        ParticleAnimLibTest.addAnimationTask(this);
     }
 
     /* ******** GETTERS *********/

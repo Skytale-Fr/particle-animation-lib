@@ -1,5 +1,6 @@
 package fr.skytale.particleanimlib.testing.command;
 
+import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -7,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -91,7 +93,19 @@ public class AnimationLibCommand implements CommandExecutor {
                 }
             }
 
-            player.sendMessage("Usage: /" + label + " [<type | showall | toggle | trail> [type/player]]");
+            // ---- STOP ALL ----
+            else if (args.length == 1 && args[0].equals("stopall")) {
+
+                List<AAnimationTask> animationTasks = particleAnimLibTest.getAnimationTasks();
+                for (AAnimationTask animationTask : animationTasks) {
+                    animationTask.stopAnimation(false);
+                }
+                particleAnimLibTest.clearAnimationTasks();
+
+                return true;
+            }
+
+            player.sendMessage("Usage: /" + label + " [<type | showall | toggle | trail> [type/player]] | stopall");
             return true;
         } catch (Exception e) {
             player.sendMessage(e.getMessage());
