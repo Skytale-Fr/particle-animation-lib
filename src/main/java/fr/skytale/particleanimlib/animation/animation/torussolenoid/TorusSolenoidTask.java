@@ -47,11 +47,17 @@ public class TorusSolenoidTask extends AAnimationTask<TorusSolenoid> {
         for (double theta = 0; theta <= maxTheta; theta += stepTheta) {
 
             final double cosTorusModifierTheta = Math.cos(torusModifier * theta);
+            final double sinTorusModifierTheta = Math.sin(torusModifier * theta);
             double x = (torusRadius + solenoidRadius * cosTorusModifierTheta) * Math.cos(theta);
             double y = (torusRadius + solenoidRadius * cosTorusModifierTheta) * Math.sin(theta);
-            double z = solenoidRadius * Math.sin(torusModifier * theta);
+            double z = solenoidRadius * sinTorusModifierTheta;
 
-            animationPointsData.add(new AnimationPointData(new Vector(x, y, z)));
+            // Orienting the torus solenoid in 3D using U, V, and W vectors
+            double newX = U.getX() * x + V.getX() * y + W.getX() * z;
+            double newY = U.getY() * x + V.getY() * y + W.getY() * z;
+            double newZ = U.getZ() * x + V.getZ() * y + W.getZ() * z;
+
+            animationPointsData.add(new AnimationPointData(new Vector(newX, newY, newZ)));
         }
 
         return animationPointsData;
