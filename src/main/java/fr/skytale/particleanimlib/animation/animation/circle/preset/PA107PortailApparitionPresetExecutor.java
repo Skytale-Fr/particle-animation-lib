@@ -47,9 +47,11 @@ public class PA107PortailApparitionPresetExecutor extends AAnimationPresetExecut
         // Secondary toruses
         circleBuilder.setTicksDuration(20 * 2);
         circleBuilder.setAnimationEndedCallback(task -> {
+            secondaryTorusAsh.setRotation(circleBuilder.getAnimation().getRotation());
             secondaryTorusAsh.setStopCondition(circleBuilder.getAnimation().getStopCondition());
             secondaryTorusAsh.show();
 
+            secondaryTorusRedstone.setRotation(circleBuilder.getAnimation().getRotation());
             secondaryTorusRedstone.setStopCondition(circleBuilder.getAnimation().getStopCondition());
             secondaryTorusRedstone.show();
         });
@@ -66,9 +68,11 @@ public class PA107PortailApparitionPresetExecutor extends AAnimationPresetExecut
         circleBuilder.setAnimationEndedCallback(task -> {
             AnimationStopCondition stopCondition = circleBuilder.getAnimation().getStopCondition();
 
+            firstTorus.setRotation(circleBuilder.getAnimation().getRotation());
             firstTorus.setStopCondition(stopCondition);
             firstTorus.show();
 
+            secondaryTorusAsh.setRotation(circleBuilder.getAnimation().getRotation());
             startSecondaryToruses.setStopCondition(stopCondition);
             startSecondaryToruses.show();
         });
