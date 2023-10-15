@@ -58,6 +58,7 @@ dependencies {
     implementation project(':ttfparser')
 }
 
+/* Useless since the version is not in the readme anymore.
 tasks.register("updateReadmeVersion") {
     description = "Updates the version number into the README.md file."
     doFirst {
@@ -75,6 +76,7 @@ tasks.register("updateReadmeVersion") {
 compileJava {
     dependsOn updateReadmeVersion
 }
+ */
 
 java {
     withSourcesJar()
