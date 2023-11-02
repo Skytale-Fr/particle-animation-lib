@@ -12,9 +12,6 @@ public class SphereBuilder extends ARoundAnimationBuilder<Sphere, SphereTask> {
         animation.setNbPoints(80);
         animation.setType(Sphere.Type.FULL);
         animation.setShowPeriod(1);
-        animation.setPropagationType(Sphere.PropagationType.TOP_TO_BOTTOM);
-        animation.setPercentShownWhilePropagate(0.3f);
-        animation.setPercentStepWhilePropagate(0.1f);
         animation.setTicksDuration(60);
     }
 

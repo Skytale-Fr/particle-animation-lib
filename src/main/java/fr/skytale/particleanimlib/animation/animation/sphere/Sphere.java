@@ -66,7 +66,10 @@ public class Sphere extends ARoundAnimation {
     @Override
     public Sphere clone() {
         Sphere obj = (Sphere) super.clone();
-        obj.percentShownWhilePropagate = percentShownWhilePropagate.copy();
+        if(propagationType != null) {
+            obj.percentShownWhilePropagate = percentShownWhilePropagate.copy();
+            obj.percentStepWhilePropagate = percentStepWhilePropagate.copy();
+        }
         return obj;
     }
 
