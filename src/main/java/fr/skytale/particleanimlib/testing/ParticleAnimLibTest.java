@@ -25,7 +25,6 @@ public class ParticleAnimLibTest {
 
     public static final AnimationPreset DEFAULT_ANIMATION_TYPE = AnimationPreset.PA_1_08_DAGUE_POISON_1;
     public static final TrailPreset DEFAULT_TRAIL_TYPE = TrailPreset.CIRCLE_MOVING_UP;
-//    public static final boolean DEFAULT_SHOW_ON_CLICK = false;
     public static boolean DEFAULT_SHOW_ON_CLICK = false;
 
     private static ParticleAnimLibTest instance;

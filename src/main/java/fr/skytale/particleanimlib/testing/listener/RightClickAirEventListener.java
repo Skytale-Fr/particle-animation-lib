@@ -32,8 +32,10 @@ public class RightClickAirEventListener implements Listener {
         }
         if (event.getAction() == Action.LEFT_CLICK_AIR) {
             particleAnimLibTest.buildAndShowAnimation(event.getPlayer());
-            event.setCancelled(true);
-            activateAntiSpam();
+            if(ParticleAnimLibTest.DEFAULT_SHOW_ON_CLICK) {
+                event.setCancelled(true);
+                activateAntiSpam();
+            }
         } else if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
 
             final Location location = Objects.requireNonNull(event.getClickedBlock()).getLocation();
@@ -44,8 +46,10 @@ public class RightClickAirEventListener implements Listener {
                     new LocatedAnimationPosition(
                             new Constant<>(location)
                     ));
-            event.setCancelled(true);
-            activateAntiSpam();
+            if(ParticleAnimLibTest.DEFAULT_SHOW_ON_CLICK) {
+                event.setCancelled(true);
+                activateAntiSpam();
+            }
         }
     }
 
