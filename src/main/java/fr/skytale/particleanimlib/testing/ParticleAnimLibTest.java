@@ -145,7 +145,8 @@ public class ParticleAnimLibTest {
     }
 
     public static void addAnimationTask(AAnimationTask animationTask) {
-        animationTasks.add(animationTask);
+        if(animationTasks != null)
+            animationTasks.add(animationTask);
     }
 
     public void clearAnimationTasks() {
