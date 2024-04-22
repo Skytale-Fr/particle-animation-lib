@@ -6,11 +6,11 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
 
-import java.awt.*;
 
 public class LineHandsOfClockPresetExecutor extends AAnimationPresetExecutor<LineBuilder> {
 
@@ -24,7 +24,7 @@ public class LineHandsOfClockPresetExecutor extends AAnimationPresetExecutor<Lin
         //Hour hand
         lineBuilder1.setPoint1OnPosition();
         lineBuilder1.setFromPositionToPoint2(new Constant<>(new Vector(1, 0, 0)), new Constant<>(2d));
-        lineBuilder1.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, new Color(184, 115, 51)));
+        lineBuilder1.setPointDefinition(new ParticleTemplate(Particle.REDSTONE, Color.fromRGB(184, 115, 51)));
         lineBuilder1.setTicksDuration(60 * 20);
         lineBuilder1.setShowPeriod(new Constant<>(2));
         lineBuilder1.setNbPoints(new Constant<>(20));

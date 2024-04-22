@@ -10,9 +10,9 @@ import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousVa
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
 
 public class ExplodingLinesInvertedPresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -30,7 +30,7 @@ public class ExplodingLinesInvertedPresetExecutor extends AAnimationPresetExecut
         lineBuilder.setTicksDuration(40);
         lineBuilder.setShowPeriod(new Constant<>(2));
         lineBuilder.setNbPoints(new Constant<>(5));
-        lineBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.SPELL_WITCH));
+        lineBuilder.setPointDefinition(new ParticleTemplate(Particle.SPELL_WITCH));
 
         circleBuilder.setPointDefinition(new CallbackPointDefinition(
                 (pointLocation, animation, task, fromAnimCenterToPoint, fromPreviousToCurrentAnimBaseLocation) -> {

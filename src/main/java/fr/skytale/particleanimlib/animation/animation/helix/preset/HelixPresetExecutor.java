@@ -5,12 +5,11 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.DirectedLocationAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.IntegerPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.data.color.RegularColor;
 
-import java.awt.*;
 
 public class HelixPresetExecutor extends AAnimationPresetExecutor<HelixBuilder> {
 
@@ -26,7 +25,7 @@ public class HelixPresetExecutor extends AAnimationPresetExecutor<HelixBuilder> 
         helixBuilder.setHelixAngle(Math.PI / 24);
         helixBuilder.setNbTrailingCentralPoint(3);
         helixBuilder.setNbTrailingHelixPoint(8);
-        helixBuilder.setCentralPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, 1, 1, new Vector(0, 0, 0), new RegularColor(new Color(255, 0, 0))));
+        helixBuilder.setCentralPointDefinition(new ParticleTemplate(Particle.REDSTONE, 1, 1, new Vector(0, 0, 0), Color.fromRGB(255, 0, 0)));
         helixBuilder.setTicksDuration(200);
         helixBuilder.setShowPeriod(2);
     }

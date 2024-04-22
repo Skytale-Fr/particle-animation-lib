@@ -1,14 +1,12 @@
 package fr.skytale.particleanimlib.trail.preset.circle;
 
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
-import fr.skytale.particleanimlib.animation.attribute.PARotation;
 import fr.skytale.particleanimlib.animation.attribute.position.attr.StaticTrailMoveConfiguration;
 import fr.skytale.particleanimlib.animation.attribute.position.trailposition.StaticTrailPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.trail.TrailBuilder;
 import fr.skytale.particleanimlib.trail.parent.ATrailPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
 
 import java.time.Duration;
 

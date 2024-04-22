@@ -2,10 +2,9 @@ package fr.skytale.particleanimlib.animation.attribute;
 
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
+import org.bukkit.Color;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.data.color.RegularColor;
 
-import java.awt.*;
 import java.util.function.Function;
 
 public class AnimationPointData {
@@ -31,7 +30,7 @@ public class AnimationPointData {
         return aPointDefinition -> {
             if (aPointDefinition instanceof ParticlePointDefinition) {
                 final ParticlePointDefinition clonedPointDefinition = (ParticlePointDefinition) aPointDefinition.copy();
-                clonedPointDefinition.getParticleTemplate().setAdditionalData(new RegularColor(color));
+                clonedPointDefinition.getParticleTemplate().color(color);
                 return clonedPointDefinition;
             }
             return aPointDefinition;

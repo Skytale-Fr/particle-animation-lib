@@ -38,8 +38,8 @@ import fr.skytale.particleanimlib.animation.animation.rose.preset.SimpleRosePres
 import fr.skytale.particleanimlib.animation.animation.sphere.preset.*;
 import fr.skytale.particleanimlib.animation.animation.text.preset.*;
 import fr.skytale.particleanimlib.animation.animation.text.preset.init.TextPresetInitializer;
-import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.TorusSolenoid2PresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.RotatingTorusSolenoidPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.TorusSolenoid2PresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.torussolenoid.preset.TorusSolenoidPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.wave.preset.WavePresetExecutor;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;

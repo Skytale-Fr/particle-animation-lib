@@ -3,14 +3,13 @@ package fr.skytale.particleanimlib.animation.animation.lightning.preset;
 import fr.skytale.particleanimlib.animation.animation.lightning.LightningBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.LocatedAnimationPosition;
-import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
 
-import java.awt.*;
 
 public class LightningPresetExecutor extends AAnimationPresetExecutor<LightningBuilder> {
 
@@ -25,7 +24,7 @@ public class LightningPresetExecutor extends AAnimationPresetExecutor<LightningB
         final Location lightningOrigin = targetLocation.clone();
         lightningOrigin.add(new Vector(0, 70, 0));
         lightningBuilder.setPosition(new LocatedAnimationPosition(lightningOrigin));
-        lightningBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, new Color(255, 0, 0)));
+        lightningBuilder.setPointDefinition(new ParticleTemplate(Particle.REDSTONE, Color.fromRGB(255, 0, 0)));
         lightningBuilder.setDispersionAngle(Math.PI / 25);
         lightningBuilder.setDistanceBetweenPoints(1);
         lightningBuilder.setMaxDistanceBetweenLightningAngles(7);

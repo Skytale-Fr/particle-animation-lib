@@ -5,17 +5,13 @@ import fr.skytale.particleanimlib.animation.animation.sphere.Sphere;
 import fr.skytale.particleanimlib.animation.animation.sphere.SphereBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.CallbackPointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationConfig;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationModifier;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.DirectedLocationAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.xenondevs.particle.ParticleEffect;
-
-import java.awt.*;
 
 public class SpherePlasmaPresetExecutor extends AAnimationPresetExecutor<SphereBuilder> {
 
@@ -31,7 +27,7 @@ public class SpherePlasmaPresetExecutor extends AAnimationPresetExecutor<SphereB
         lineBuilder.setTicksDuration(60);
         lineBuilder.setShowPeriod(new Constant<>(1));
         lineBuilder.setNbPoints(new Constant<>(50));
-        lineBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, new Color(255, 170, 0)));
+        lineBuilder.setPointDefinition(new ParticleTemplate(Particle.REDSTONE, Color.fromRGB(255, 170, 0)));
 
         sphereBuilder.setRadius(1);
         sphereBuilder.setNbPoints(32);

@@ -8,15 +8,15 @@ import java.util.Collection;
 
 public class CustomPlayers extends AViewers {
 
-    private Collection<? extends Player> viewers;
+    private Collection<Player> viewers;
 
-    public CustomPlayers(Collection<? extends Player> viewers) {
+    public CustomPlayers(Collection<Player> viewers) {
         super(Type.CUSTOM_PLAYERS);
         this.viewers = viewers;
     }
 
     @Override
-    public Collection<? extends Player> getPlayers(Location pointLocation) {
+    public Collection<Player> getPlayers(Location pointLocation) {
         return viewers;
     }
 

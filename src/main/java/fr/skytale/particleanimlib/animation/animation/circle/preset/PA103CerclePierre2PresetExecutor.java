@@ -2,23 +2,14 @@ package fr.skytale.particleanimlib.animation.animation.circle.preset;
 
 import fr.skytale.particleanimlib.animation.animation.circle.Circle;
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
-import fr.skytale.particleanimlib.animation.animation.polygon.Polygon;
-import fr.skytale.particleanimlib.animation.animation.wave.Wave;
-import fr.skytale.particleanimlib.animation.animation.wave.WaveBuilder;
-import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.position.animationposition.LocatedAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.LocatedRelativeAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
-import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
-import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
-import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.data.ParticleData;
 
 public class PA103CerclePierre2PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -40,7 +31,7 @@ public class PA103CerclePierre2PresetExecutor extends AAnimationPresetExecutor<C
         circleBuilder.setNbPoints((int) radius, true);
         circleBuilder.setPointDefinition(
                 new ParticleTemplate(
-                        ParticleEffect.DRAGON_BREATH,1,0.01f,new Vector(radius/4,0,radius/4), (ParticleData) null
+                        Particle.DRAGON_BREATH,1,0.01f,new Vector(radius/4,0,radius/4)
                 )
         );
         Circle innerCircle = circleBuilder.getAnimation();
@@ -49,7 +40,7 @@ public class PA103CerclePierre2PresetExecutor extends AAnimationPresetExecutor<C
         //Outer circle
         circleBuilder.setRadius(radius);
         circleBuilder.setNbPoints(80, true);
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.DRAGON_BREATH,0.005f));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.DRAGON_BREATH,0.005f));
         circleBuilder.setRotation(
                 new Vector(0,1,0),
                 Math.PI/100

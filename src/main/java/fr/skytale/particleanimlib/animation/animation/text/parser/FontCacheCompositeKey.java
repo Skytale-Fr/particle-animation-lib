@@ -1,6 +1,5 @@
 package fr.skytale.particleanimlib.animation.animation.text.parser;
 
-import fr.skytale.particleanimlib.animation.animation.obj.Obj;
 import fr.skytale.particleanimlib.animation.animation.text.Text;
 import org.bukkit.plugin.java.JavaPlugin;
 

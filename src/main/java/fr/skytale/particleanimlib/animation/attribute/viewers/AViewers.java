@@ -14,7 +14,7 @@ public abstract class AViewers implements Cloneable {
         this.type = type;
     }
 
-    public static AViewers fromCustomPlayers(Collection<? extends Player> viewers) {
+    public static AViewers fromCustomPlayers(Collection<Player> viewers) {
         return new CustomPlayers(viewers);
     }
 
@@ -26,15 +26,11 @@ public abstract class AViewers implements Cloneable {
         return new PredicateMatchingPlayers(biPredicate);
     }
 
-    public static AViewers fromWorldPlayers() {
-        return new WorldPlayers();
-    }
-
     public Type getType() {
         return type;
     }
 
-    public abstract Collection<? extends Player> getPlayers(Location pointLocation);
+    public abstract Collection<Player> getPlayers(Location pointLocation);
 
     @Override
     public AViewers clone() {
@@ -49,8 +45,9 @@ public abstract class AViewers implements Cloneable {
     }
 
     public static enum Type {
-        WORLD_PLAYERS,
         NEARBY_PLAYERS,
+
+        NEARBY_ALIVE_PLAYERS,
         PREDICATE_MATCHING_PLAYERS,
         CUSTOM_PLAYERS;
     }

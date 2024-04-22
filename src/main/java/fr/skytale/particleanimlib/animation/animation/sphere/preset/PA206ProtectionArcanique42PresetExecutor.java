@@ -4,10 +4,9 @@ import fr.skytale.particleanimlib.animation.animation.sphere.Sphere;
 import fr.skytale.particleanimlib.animation.animation.sphere.SphereBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.xenondevs.particle.ParticleEffect;
-
-import java.awt.*;
 
 public class PA206ProtectionArcanique42PresetExecutor extends AAnimationPresetExecutor<SphereBuilder> {
 
@@ -18,7 +17,7 @@ public class PA206ProtectionArcanique42PresetExecutor extends AAnimationPresetEx
     @Override
     protected void apply(SphereBuilder sphereBuilder, JavaPlugin plugin) {
         //General params
-        sphereBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, Color.WHITE));
+        sphereBuilder.setPointDefinition(new ParticleTemplate(Particle.REDSTONE, Color.WHITE));
         sphereBuilder.setSphereType(Sphere.Type.HALF_TOP);
         sphereBuilder.setNbPoints(800);
         sphereBuilder.setRadius(8);

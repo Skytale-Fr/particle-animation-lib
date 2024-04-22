@@ -4,10 +4,9 @@ import fr.skytale.particleanimlib.animation.animation.torussolenoid.TorusSolenoi
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.data.ParticleData;
 
 public class TorusSolenoid2PresetExecutor extends AAnimationPresetExecutor<TorusSolenoidBuilder> {
 
@@ -31,7 +30,7 @@ public class TorusSolenoid2PresetExecutor extends AAnimationPresetExecutor<Torus
 
         torusSolenoidBuilder.setTorusRadius(new CallbackVariable<>(iterationCount -> Math.cos(iterationCount / 10d) / 4 + endRadius));
 
-        torusSolenoidBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.END_ROD, 1, 0.025f, new Vector(0, 0, 0), (ParticleData) null));
+        torusSolenoidBuilder.setPointDefinition(new ParticleTemplate(Particle.END_ROD, 1, 0.025f, new Vector(0, 0, 0)));
         torusSolenoidBuilder.setTicksDuration(tickDuration);
 
         torusSolenoidBuilder.setSolenoidRadius(endRadius / 4);

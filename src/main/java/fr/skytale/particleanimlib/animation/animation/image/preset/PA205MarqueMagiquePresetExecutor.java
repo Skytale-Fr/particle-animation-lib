@@ -1,6 +1,5 @@
 package fr.skytale.particleanimlib.animation.animation.image.preset;
 
-import fr.skytale.particleanimlib.animation.animation.circle.Circle;
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.animation.image.Image;
 import fr.skytale.particleanimlib.animation.animation.image.ImageBuilder;
@@ -8,10 +7,9 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.data.ParticleData;
 
 import java.util.function.Function;
 
@@ -37,7 +35,7 @@ public class PA205MarqueMagiquePresetExecutor extends AAnimationPresetExecutor<I
         magicBuilder.setPosition(imageBuilder.getPosition());
         magicBuilder.setRadius(0.1);
         magicBuilder.setNbPoints(1);
-        magicBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.SPELL_WITCH, 1, 0.1f, new Vector(1,1,1), (ParticleData) null));
+        magicBuilder.setPointDefinition(new ParticleTemplate(Particle.SPELL_WITCH, 1, 0.1f, new Vector(1,1,1)));
         magicBuilder.setTicksDuration(durationTicks*2);
 
         //Image

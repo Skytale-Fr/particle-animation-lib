@@ -3,12 +3,10 @@ package fr.skytale.particleanimlib.animation.animation.circle.preset;
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.data.ParticleData;
-
-import java.awt.*;
 
 public class PA105ArbePresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -25,7 +23,7 @@ public class PA105ArbePresetExecutor extends AAnimationPresetExecutor<CircleBuil
         explosionBuilder.setNbPoints(5, true);
         explosionBuilder.setRadius(3);
         explosionBuilder.setTicksDuration(10);
-        explosionBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.EXPLOSION_NORMAL, 2, 0.2f, new Vector(5, 5, 5), (ParticleData) null));
+        explosionBuilder.setPointDefinition(new ParticleTemplate(Particle.EXPLOSION_NORMAL, 2, 0.2f, new Vector(5, 5, 5)));
 
         //Dust
         CircleBuilder dustBuilder = new CircleBuilder();
@@ -34,7 +32,7 @@ public class PA105ArbePresetExecutor extends AAnimationPresetExecutor<CircleBuil
         dustBuilder.setNbPoints(5, true);
         dustBuilder.setRadius(3);
         dustBuilder.setTicksDuration(10);
-        dustBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.DUST_COLOR_TRANSITION, 2, 0.5f, new Vector(5, 5, 5), Color.WHITE));
+        dustBuilder.setPointDefinition(new ParticleTemplate(Particle.DUST_COLOR_TRANSITION, 2, 0.5f, new Vector(5, 5, 5), Color.WHITE));
 
         CircleBuilder ashBuilder = new CircleBuilder();
         ashBuilder.setJavaPlugin(plugin);
@@ -42,12 +40,12 @@ public class PA105ArbePresetExecutor extends AAnimationPresetExecutor<CircleBuil
         ashBuilder.setNbPoints(5, true);
         ashBuilder.setRadius(3);
         ashBuilder.setTicksDuration(10);
-        ashBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.FALLING_SPORE_BLOSSOM, 3, 0f, new Vector(5, 5, 5), (ParticleData) null));
+        ashBuilder.setPointDefinition(new ParticleTemplate(Particle.FALLING_SPORE_BLOSSOM, 3, 0f, new Vector(5, 5, 5)));
 
         circleBuilder.setTicksDuration(1);
         circleBuilder.setRadius(1);
         circleBuilder.setNbPoints(1);
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.SPORE_BLOSSOM_AIR));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.SPORE_BLOSSOM_AIR));
         circleBuilder.setAnimationEndedCallback(animationEnding -> {
             explosionBuilder.getAnimation().show();
             dustBuilder.getAnimation().show();

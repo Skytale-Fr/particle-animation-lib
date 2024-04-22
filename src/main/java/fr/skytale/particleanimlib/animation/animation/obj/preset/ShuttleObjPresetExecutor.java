@@ -2,7 +2,6 @@ package fr.skytale.particleanimlib.animation.animation.obj.preset;
 
 import fr.skytale.particleanimlib.animation.animation.obj.ObjBuilder;
 import fr.skytale.particleanimlib.animation.attribute.Orientation;
-import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;

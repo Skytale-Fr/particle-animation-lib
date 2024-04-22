@@ -5,11 +5,11 @@ import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -51,7 +51,7 @@ public class Image extends AAnimation {
 
             for (int x = 0; x < width; ++x) {
                 for (int y = 0; y < height; ++y) {
-                    Color pixelColor = new Color(bufferedImage.getRGB(x, y), true);
+                    java.awt.Color pixelColor = new java.awt.Color(bufferedImage.getRGB(x, y), true);
 
                     //we do not consider transparent pixels
                     if (pixelColor.getAlpha() == 0) continue;
@@ -60,7 +60,7 @@ public class Image extends AAnimation {
                     Vector toPixelVector = AAnimationTask.U.clone().multiply(x)
                             .add(AAnimationTask.V.clone().multiply(y))
                             .subtract(center);
-                    imagePixels.put(toPixelVector, pixelColor);
+                    imagePixels.put(toPixelVector, Color.fromRGB(pixelColor.getRGB()));
                 }
             }
             return imagePixels;

@@ -1,24 +1,15 @@
 package fr.skytale.particleanimlib.animation.animation.sphere.preset;
 
-import fr.skytale.particleanimlib.animation.animation.polygon.PolygonBuilder;
 import fr.skytale.particleanimlib.animation.animation.sphere.Sphere;
 import fr.skytale.particleanimlib.animation.animation.sphere.SphereBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPointDefinition;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationConfig;
-import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationModifier;
-import fr.skytale.particleanimlib.animation.attribute.position.animationposition.LocatedAnimationPosition;
-import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.IntegerPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
 
-import java.awt.*;
 
 public class PA206ProtectionArcanique4PresetExecutor extends AAnimationPresetExecutor<SphereBuilder> {
 
@@ -34,7 +25,7 @@ public class PA206ProtectionArcanique4PresetExecutor extends AAnimationPresetExe
 //        sphereBuilder.setPosition(new LocatedAnimationPosition(new Location(monde,-66.5,-52,-17.5)));
 
         //General params
-        sphereBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, Color.WHITE));
+        sphereBuilder.setPointDefinition(new ParticleTemplate(Particle.REDSTONE, Color.WHITE));
         sphereBuilder.setSphereType(Sphere.Type.HALF_TOP);
         sphereBuilder.setNbPoints(400);
         sphereBuilder.setRadius(8);

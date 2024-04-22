@@ -7,12 +7,12 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class NearbyPlayers extends AViewers {
+public class NearbyAlivePlayers extends AViewers {
 
     private final double maxDistance;
 
-    public NearbyPlayers(double maxDistance) {
-        super(Type.NEARBY_PLAYERS);
+    public NearbyAlivePlayers(double maxDistance) {
+        super(Type.NEARBY_ALIVE_PLAYERS);
         this.maxDistance = maxDistance;
     }
 
@@ -20,12 +20,12 @@ public class NearbyPlayers extends AViewers {
     public Collection<Player> getPlayers(Location pointLocation) {
         return Objects.requireNonNull(pointLocation.getWorld()).getPlayers()
                 .stream()
-                .filter(player -> player.getLocation().distance(pointLocation) <= this.maxDistance)
+                .filter(player -> !player.isDead() && player.getLocation().distance(pointLocation) <= this.maxDistance)
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public NearbyPlayers clone() {
-        return (NearbyPlayers) super.clone();
+    public NearbyAlivePlayers clone() {
+        return (NearbyAlivePlayers) super.clone();
     }
 }

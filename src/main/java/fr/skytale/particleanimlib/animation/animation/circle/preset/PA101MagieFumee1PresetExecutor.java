@@ -4,10 +4,9 @@ import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.data.ParticleData;
 
 public class PA101MagieFumee1PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -28,7 +27,7 @@ public class PA101MagieFumee1PresetExecutor extends AAnimationPresetExecutor<Cir
         magie.setNbPoints(3);
         magie.setShowPeriod(20);
         magie.setTicksDuration(20);
-        magie.setPointDefinition(new ParticleTemplate(ParticleEffect.SPELL_WITCH, 100, 0.1f, new Vector(2, 2, 2), (ParticleData) null));
+        magie.setPointDefinition(new ParticleTemplate(Particle.SPELL_WITCH, 100, 0.1f, new Vector(2, 2, 2)));
         /*
         COMPOSTER
         CRIT_MAGIC
@@ -42,7 +41,7 @@ public class PA101MagieFumee1PresetExecutor extends AAnimationPresetExecutor<Cir
         circleBuilder.setRadius(1);
         circleBuilder.setTicksDuration(1);
         circleBuilder.setShowPeriod(0);
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.EXPLOSION_NORMAL));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.EXPLOSION_NORMAL));
         circleBuilder.setAnimationEndedCallback(animationEnding -> {
             fumee.getAnimation().show();
             magie.getAnimation().show();

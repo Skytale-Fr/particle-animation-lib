@@ -7,11 +7,11 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
 
-import java.awt.*;
 
 public class HammerObjPresetExecutor extends AAnimationPresetExecutor<ObjBuilder> {
 
@@ -35,7 +35,7 @@ public class HammerObjPresetExecutor extends AAnimationPresetExecutor<ObjBuilder
             return rotation;
         }));
 
-        objBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, new Color(255, 170, 0)));
+        objBuilder.setPointDefinition(new ParticleTemplate(Particle.REDSTONE, Color.fromRGB(255, 170, 0)));
         objBuilder.setTicksDuration(200);
         objBuilder.setShowPeriod(new Constant<>(2));
     }

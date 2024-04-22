@@ -5,11 +5,11 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.DirectedLocationAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
 
-import java.awt.*;
 
 public class DoubleHelixMovingUpDown2PresetExecutor extends AAnimationPresetExecutor<HelixBuilder> {
 
@@ -50,7 +50,7 @@ public class DoubleHelixMovingUpDown2PresetExecutor extends AAnimationPresetExec
         );
 
         helixBuilder.setNbHelix(2);
-        helixBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, Color.BLACK));
+        helixBuilder.setPointDefinition(new ParticleTemplate(Particle.REDSTONE, Color.BLACK));
 
         helixBuilder.setTicksDuration(20 * 20 + 18);
     }

@@ -4,8 +4,8 @@ import fr.skytale.particleanimlib.animation.animation.randompoints.RandomPointsB
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.xenondevs.particle.ParticleEffect;
 
 public class PA201PillierEauEnigmeV1PresetExecutor extends AAnimationPresetExecutor<RandomPointsBuilder> {
     public PA201PillierEauEnigmeV1PresetExecutor() {
@@ -19,7 +19,7 @@ public class PA201PillierEauEnigmeV1PresetExecutor extends AAnimationPresetExecu
         randomPointsBuilder.setDirectionChangePeriod(new Constant<>(10));
         randomPointsBuilder.setSpeed(new Constant<>(0.3d));
         randomPointsBuilder.setTicksDuration(Integer.MAX_VALUE);
-        randomPointsBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.SOUL_FIRE_FLAME, 0.01f));
+        randomPointsBuilder.setPointDefinition(new ParticleTemplate(Particle.SOUL_FIRE_FLAME, 0.01f));
         randomPointsBuilder.setShowPeriod(2);
     }
 }

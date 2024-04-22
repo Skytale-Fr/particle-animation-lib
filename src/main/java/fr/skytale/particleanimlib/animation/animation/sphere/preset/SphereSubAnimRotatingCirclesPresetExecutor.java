@@ -9,10 +9,9 @@ import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAn
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationModifier;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.data.ParticleData;
 
 public class SphereSubAnimRotatingCirclesPresetExecutor extends AAnimationPresetExecutor<SphereBuilder> {
 
@@ -27,7 +26,7 @@ public class SphereSubAnimRotatingCirclesPresetExecutor extends AAnimationPreset
         circleBuilder.setRadius(2);
         circleBuilder.setRotation(new Vector(0,1,0), Math.PI/120);
         circleBuilder.setShowPeriod(new Constant<>(1));
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.ELECTRIC_SPARK, 1, 0, new Vector(0,0,0), (ParticleData) null));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.ELECTRIC_SPARK, 1, 0, new Vector(0,0,0)));
         circleBuilder.setPosition(sphereBuilder.getPosition());
         circleBuilder.setJavaPlugin(sphereBuilder.getJavaPlugin());
 

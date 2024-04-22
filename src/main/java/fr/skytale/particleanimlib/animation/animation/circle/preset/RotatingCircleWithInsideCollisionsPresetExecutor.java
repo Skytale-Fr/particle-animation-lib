@@ -7,22 +7,17 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import fr.skytale.particleanimlib.animation.collision.CollisionBuilder;
 import fr.skytale.particleanimlib.animation.collision.action.EntityCollisionActionCallbackPresets;
-import fr.skytale.particleanimlib.animation.collision.processor.check.EntityCollisionCheckPreset;
 import fr.skytale.particleanimlib.animation.collision.precheck.PotentialEntityTargetFilters;
 import fr.skytale.particleanimlib.animation.collision.processor.SimpleCollisionProcessor;
 import fr.skytale.particleanimlib.animation.collision.processor.check.EntityCollisionCheckPresets;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.xenondevs.particle.ParticleEffect;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class RotatingCircleWithInsideCollisionsPresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -50,7 +45,7 @@ public class RotatingCircleWithInsideCollisionsPresetExecutor extends AAnimation
                         circleBuilder,
                         EntityCollisionCheckPresets.TARGET_CENTER_INSIDE_CIRCLE,
                         EntityCollisionActionCallbackPresets.displayParticle(
-                                new ParticleTemplate(ParticleEffect.EXPLOSION_HUGE),
+                                new ParticleTemplate(Particle.EXPLOSION_HUGE),
                                 AViewers.fromNearbyPlayers(50),
                                 1
                         )

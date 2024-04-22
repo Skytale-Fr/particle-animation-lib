@@ -1,12 +1,9 @@
 package fr.skytale.particleanimlib.animation.animation.circle;
 
-import fr.skytale.particleanimlib.animation.attribute.Orientation;
-import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.ARoundAnimationBuilder;
-import org.bukkit.util.Vector;
 
 public class CircleBuilder extends ARoundAnimationBuilder<Circle, CircleTask> {
 

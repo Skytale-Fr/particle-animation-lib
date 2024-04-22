@@ -14,13 +14,13 @@ import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import fr.skytale.particleanimlib.animation.collision.handler.CollisionHandler;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
+import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
 
-import java.awt.*;
 import java.util.Collection;
 import java.util.Random;
 import java.util.function.BiPredicate;
@@ -41,8 +41,8 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
         setRotation(PARotation.DEFAULT_ROTATION);
         setPointDefinition(
                 new ParticleTemplate(
-                        ParticleEffect.REDSTONE,
-                        new Color(RANDOM.nextInt(256), RANDOM.nextInt(256), RANDOM.nextInt(256))
+                        Particle.REDSTONE,
+                        Color.fromBGR(RANDOM.nextInt(256), RANDOM.nextInt(256), RANDOM.nextInt(256))
                 )
         );
         setStopCondition(
@@ -619,7 +619,7 @@ public abstract class AAnimationBuilder<T extends AAnimation, K extends AAnimati
      * Defines who can see the animation according to a collection of players
      * @param viewers the collection of players that will see the animation
      */
-    public void setViewers(Collection<? extends Player> viewers) {
+    public void setViewers(Collection<Player> viewers) {
         checkNotNull(viewers, VIEWERS_SHOULD_NOT_BE_NULL);
         animation.setViewers(AViewers.fromCustomPlayers(viewers));
     }

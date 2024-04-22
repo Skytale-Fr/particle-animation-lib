@@ -8,11 +8,10 @@ import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePo
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.spawner.attribute.ParticlesToSpawn;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.data.color.RegularColor;
 
-import java.awt.*;
-import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -144,45 +143,50 @@ public class CircuitPulseMovingPoint {
         List<AnimationPointData> pointsData = new ArrayList<>();
         if (isInside) {
             pointsData.add(new AnimationPointData(
-                    new Vector(location.getX(), location.getY(), location.getZ()),
+                    new Vector(location.getX(), 0, location.getY()),
                     givenPointDefinition -> pointDefinition
             ));
         }
         boolean fadeOutColor = false;
+        // fade out color in trail if possible
         if (fadeColorInTrail && pointDefinition instanceof ParticlePointDefinition) {
             ParticleTemplate particleTemplate = ((ParticlePointDefinition) pointDefinition).getParticleTemplate();
-            if (particleTemplate.getAdditionalData() instanceof RegularColor) {
-                //compute fade out color
-                RegularColor particleColor = (RegularColor) particleTemplate.getAdditionalData();
-                final Color color = new Color(particleColor.getRed(), particleColor.getGreen(), particleColor.getBlue());
-                float[] hsbColor = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), new float[3]);
-                float initialBrightness = hsbColor[2];
+            if (particleTemplate.data() != null) {
+                if (particleTemplate.data() instanceof Particle.DustOptions dustOptions) {
+                    //compute fade out color
+                    final Color color = dustOptions.getColor();
+                    float[] hsbColor = java.awt.Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), new float[3]);
+                    float initialBrightness = hsbColor[2];
 
-                for (int i = 0; i < trailLocations.size(); ++i) {
-                    //reduce color brightness when going away from the point inside its trail
-                    float brightness = initialBrightness * (1 - ((float) i / trailLocations.size()));
-                    Color currentTrailParticleColor = Color.getHSBColor(hsbColor[0], hsbColor[1], brightness);
+                    for (int i = 0; i < trailLocations.size(); ++i) {
+                        //reduce color brightness when going away from the point inside its trail
+                        float brightness = initialBrightness * (1 - ((float) i / trailLocations.size()));
+                        java.awt.Color currentTrailParticleColor = java.awt.Color.getHSBColor(hsbColor[0], hsbColor[1], brightness);
 
-                    ParticleTemplate fadingColorParticleTemplate = new ParticleTemplate(particleTemplate);
-                    fadingColorParticleTemplate.setAdditionalData(new RegularColor(currentTrailParticleColor.getRed(), currentTrailParticleColor.getGreen(), currentTrailParticleColor.getBlue()));
+                        ParticleTemplate fadingColorParticleTemplate = new ParticleTemplate(particleTemplate);
+                        fadingColorParticleTemplate.data(new Particle.DustOptions(
+                                Color.fromRGB(currentTrailParticleColor.getRGB()),
+                                dustOptions.getSize()
+                        ));
 
-                    pointsData.add(new AnimationPointData(
-                            new Vector(trailLocations.get(i).getX(), trailLocations.get(i).getY(), trailLocations.get(i).getZ()),
-                            givenPointDefinition -> new ParticlePointDefinition(fadingColorParticleTemplate)
-                    ));
+                        pointsData.add(new AnimationPointData(
+                                new Vector(trailLocations.get(i).getX(), 0, trailLocations.get(i).getY()),
+                                givenPointDefinition -> new ParticlePointDefinition(fadingColorParticleTemplate)
+                        ));
+                    }
+                    fadeOutColor = true;
                 }
-                fadeOutColor = true;
             }
         }
         if (!fadeOutColor) {
             pointsData.addAll(trailLocations.stream()
                     .map(trailLocation ->
                             new AnimationPointData(
-                                    new Vector(trailLocation.getX(), trailLocation.getY(), trailLocation.getZ()),
+                                    new Vector(trailLocation.getX(), 0, trailLocation.getY()),
                                     givenPointDefinition -> pointDefinition
                             )
                     )
-                    .collect(Collectors.toList()));
+                    .toList());
         }
         return pointsData;
     }

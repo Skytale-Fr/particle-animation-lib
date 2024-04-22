@@ -5,7 +5,10 @@ import fr.skytale.particleanimlib.trail.TrailTask;
 import fr.skytale.particleanimlib.trail.attribute.TrailPreset;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TrailSampleManager {
