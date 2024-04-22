@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.trail.preset.circle;
 
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
-import fr.skytale.particleanimlib.animation.attribute.position.trailposition.TargetingEntityTrailPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.trailposition.TargetingLocationTrailPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.trail.TrailBuilder;

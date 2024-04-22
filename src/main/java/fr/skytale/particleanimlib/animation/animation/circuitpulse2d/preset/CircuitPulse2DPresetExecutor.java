@@ -1,9 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.circuitpulse2d.preset;
 
-import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
-import fr.skytale.particleanimlib.animation.animation.circuitpulse2d.CircuitPulse2D;
 import fr.skytale.particleanimlib.animation.animation.circuitpulse2d.CircuitPulse2DBuilder;
-import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 

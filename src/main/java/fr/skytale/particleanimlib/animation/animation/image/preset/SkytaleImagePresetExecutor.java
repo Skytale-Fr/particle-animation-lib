@@ -1,7 +1,6 @@
 package fr.skytale.particleanimlib.animation.animation.image.preset;
 
 import fr.skytale.particleanimlib.animation.animation.image.ImageBuilder;
-import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;

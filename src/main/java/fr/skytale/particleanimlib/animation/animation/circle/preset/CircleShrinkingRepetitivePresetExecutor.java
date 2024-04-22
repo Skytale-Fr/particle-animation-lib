@@ -5,9 +5,9 @@ import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.DoublePeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
 
 public class CircleShrinkingRepetitivePresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -34,7 +34,10 @@ public class CircleShrinkingRepetitivePresetExecutor extends AAnimationPresetExe
         double radiusChangeValue = (endRadius - startRadius) / tickDuration;
         circleBuilder.setRadius(new DoublePeriodicallyEvolvingVariable(startRadius, radiusChangeValue));
 
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.END_ROD, 0.05f));
+        ParticleTemplate particleTemplate = new ParticleTemplate(Particle.END_ROD);
+        particleTemplate.extra(0.05f);
+
+        circleBuilder.setPointDefinition(particleTemplate);
         circleBuilder.setTicksDuration(tickDuration);
         Circle originalAnimation = circleBuilder.getAnimation();
 
@@ -42,12 +45,10 @@ public class CircleShrinkingRepetitivePresetExecutor extends AAnimationPresetExe
         circleBuilder.setRadius(0.1);
         circleBuilder.setNbPoints(1);
         circleBuilder.setTicksDuration(20 * 2);
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.FOOTSTEP));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.REDSTONE, 1, 0.8f, new Vector(0, 0, 0)));
 
         //3rd repetition
-        circleBuilder.setAnimationEndedCallback(task -> {
-            originalAnimation.show();
-        });
+        circleBuilder.setAnimationEndedCallback(task -> originalAnimation.show());
         Circle circle_3 = circleBuilder.getAnimation();
 
         //2nd repetition

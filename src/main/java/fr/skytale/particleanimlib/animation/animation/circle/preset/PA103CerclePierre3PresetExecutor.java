@@ -7,12 +7,11 @@ import fr.skytale.particleanimlib.animation.attribute.position.animationposition
 import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.data.color.DustColorTransitionData;
 
-import java.awt.*;
 
 public class PA103CerclePierre3PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -30,11 +29,11 @@ public class PA103CerclePierre3PresetExecutor extends AAnimationPresetExecutor<C
         circleBuilder.setNbPoints((int) radius, true);
         circleBuilder.setPointDefinition(
                 new ParticleTemplate(
-                        ParticleEffect.DUST_COLOR_TRANSITION,
+                        Particle.DUST_COLOR_TRANSITION,
                         1,
                         1f,
                         new Vector(radius / 4, 0.2, radius / 4),
-                        new DustColorTransitionData(Color.MAGENTA, Color.WHITE, 1f)
+                        new Particle.DustTransition(Color.FUCHSIA, Color.WHITE, 1f)
                 )
         );
         Circle innerCircle = circleBuilder.getAnimation();
@@ -42,7 +41,7 @@ public class PA103CerclePierre3PresetExecutor extends AAnimationPresetExecutor<C
         //Outer circle
         circleBuilder.setRadius(radius);
         circleBuilder.setNbPoints(80, true);
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.DRAGON_BREATH, 0.005f));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.DRAGON_BREATH, 0.005f));
         circleBuilder.setRotation(
                 new Vector(0, 1, 0),
                 Math.PI / 100

@@ -3,7 +3,6 @@ package fr.skytale.particleanimlib.animation.animation.mandala.preset;
 import fr.skytale.particleanimlib.animation.animation.mandala.Mandala2DBuilder;
 import fr.skytale.particleanimlib.animation.attribute.curve.CurvePointsGenerator;
 import fr.skytale.particleanimlib.animation.attribute.range.EvolvingRange;
-import fr.skytale.particleanimlib.animation.attribute.range.GeomSpaceRange;
 import fr.skytale.particleanimlib.animation.attribute.range.LogSpaceRange;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;

@@ -19,7 +19,10 @@ import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class AAnimationTask<T extends AAnimation> implements Runnable {

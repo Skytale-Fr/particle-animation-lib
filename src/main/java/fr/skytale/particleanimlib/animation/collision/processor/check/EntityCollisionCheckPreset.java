@@ -1,17 +1,8 @@
 package fr.skytale.particleanimlib.animation.collision.processor.check;
 
-import fr.skytale.particleanimlib.animation.animation.circle.CircleTask;
-import fr.skytale.particleanimlib.animation.animation.cuboid.CuboidTask;
-import fr.skytale.particleanimlib.animation.animation.sphere.SphereTask;
 import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
-import org.apache.commons.math3.geometry.Point;
-import org.apache.commons.math3.geometry.euclidean.threed.Euclidean3D;
-import org.apache.commons.math3.geometry.euclidean.threed.Plane;
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 /**

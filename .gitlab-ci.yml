@@ -44,6 +44,7 @@ Build:
   only:
     - master
     - tags
+    - v6
   artifacts:
     paths:
       - ./build/libs/*.jar
@@ -54,6 +55,7 @@ Build branch:
   except:
     - master
     - tags
+    - v6
   artifacts:
     paths:
       - ./build/libs/*.jar
@@ -64,6 +66,7 @@ Artifactory distribution:
   only:
     - master
     - tags
+    - v6
   script:
     - 'sed -i '':a;N;$!ba;s/\(artifactory_user = \)[^\n]*/\1''"${ARTIFACTORY_USER}"''/g'' gradle.properties'
     - 'sed -i '':a;N;$!ba;s/\(artifactory_password = \)[^\n]*/\1''"${ARTIFACTORY_PASSWORD}"''/g'' gradle.properties'

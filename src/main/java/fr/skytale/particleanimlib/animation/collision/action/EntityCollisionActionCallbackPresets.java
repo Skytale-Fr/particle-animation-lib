@@ -5,12 +5,6 @@ import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import xyz.xenondevs.particle.ParticleEffect;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class EntityCollisionActionCallbackPresets {
     //prevents instantiation
@@ -23,8 +17,8 @@ public class EntityCollisionActionCallbackPresets {
                     final LivingEntity livingEntity = (LivingEntity) target;
                     if (livingEntity.isDead() || !livingEntity.isValid()) return -1;
                     particleTemplate
-                            .getParticleBuilder(target.getLocation())
-                            .display(viewers.getPlayers(target.getLocation()));
+                            .location(target.getLocation())
+                            .receivers(viewers.getPlayers(target.getLocation()));
                     return ticksPeriodBetweenDisplay; // The particle can only be displayed every 10 ticks.
                 };
     }

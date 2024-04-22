@@ -12,6 +12,7 @@ import fr.skytale.ttfparser.tables.glyf.Glyf;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Color;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
@@ -101,7 +102,9 @@ public class TextTask extends AAnimationTask<Text> {
                 Vector vecV = TextTask.V.clone().multiply(position.getY());
                 Vector charPadding = vecU.add(vecV);
 
-                animationPointsData.addAll(getCharacterPoints(ttfCharacter, charPadding, component.getColor(), detailsLevel));
+                final java.awt.Color color = component.getColor().getColor();
+                final Color bukkitColor = Color.fromRGB(color.getRed(), color.getGreen(), color.getBlue());
+                animationPointsData.addAll(getCharacterPoints(ttfCharacter, charPadding, bukkitColor, detailsLevel));
 
                 characterIndex++;
             }
@@ -110,7 +113,7 @@ public class TextTask extends AAnimationTask<Text> {
     }
 
 
-    private List<AnimationPointData> getCharacterPoints(TTFCharacter character, Vector charPadding, ChatColor color, double detailsLevel) {
+    private List<AnimationPointData> getCharacterPoints(TTFCharacter character, Vector charPadding, Color color, double detailsLevel) {
         List<AnimationPointData> characterPointsData = new ArrayList<>();
         Glyf glyf = character.getGlyf();
         List<List<TTFPoint>> contours = glyf.getContours();
@@ -130,7 +133,7 @@ public class TextTask extends AAnimationTask<Text> {
         return characterPointsData;
     }
 
-    private List<AnimationPointData> fillLines(TTFPoint point1, TTFPoint point2, Vector charPadding, double padding, ChatColor color) {
+    private List<AnimationPointData> fillLines(TTFPoint point1, TTFPoint point2, Vector charPadding, double padding, Color color) {
         List<AnimationPointData> linePoints = new ArrayList<>();
 
         Vector vec1 = getVectorFromPoint(point1);
@@ -141,7 +144,7 @@ public class TextTask extends AAnimationTask<Text> {
         Vector endPoint = vec2.clone().add(charPadding);
 
         while (currentPoint.distance(endPoint) > padding) {
-            linePoints.add(new AnimationPointData(currentPoint, AnimationPointData.getPointModifierForColor(color.getColor())));
+            linePoints.add(new AnimationPointData(currentPoint, AnimationPointData.getPointModifierForColor(color)));
             currentPoint.add(move);
         }
         return linePoints;

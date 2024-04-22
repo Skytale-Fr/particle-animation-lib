@@ -41,7 +41,7 @@ public class SubAnimationCircleRotating2PresetExecutor extends AAnimationPresetE
         /*circleBuilder.setDirectorVectors(new Vector(1, 0, 0), new Vector(0, 0, 1));
         circleBuilder.setNbPoints(10, true);
         circleBuilder.setRadius(2);
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, new Color(255, 170, 0))));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.REDSTONE, Color.fromRGB(255, 170, 0))));
         circleBuilder.setTicksDuration(40);
         circleBuilder.setShowPeriod(new Constant<>(2));
         circleBuilder.setRotation(new Constant<>(new Vector(0, 1, 0)), new Constant<>(Math.PI / 10));

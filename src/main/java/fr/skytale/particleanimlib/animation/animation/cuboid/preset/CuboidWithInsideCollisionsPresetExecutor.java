@@ -7,17 +7,15 @@ import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import fr.skytale.particleanimlib.animation.collision.CollisionBuilder;
 import fr.skytale.particleanimlib.animation.collision.action.EntityCollisionActionCallbackPresets;
-import fr.skytale.particleanimlib.animation.collision.processor.check.EntityCollisionCheckPreset;
 import fr.skytale.particleanimlib.animation.collision.processor.SimpleCollisionProcessor;
 import fr.skytale.particleanimlib.animation.collision.processor.check.EntityCollisionCheckPresets;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.Objects;
 
@@ -49,7 +47,7 @@ public class CuboidWithInsideCollisionsPresetExecutor extends AAnimationPresetEx
                 cuboidBuilder,
                 EntityCollisionCheckPresets.EXACT_BOUNDING_BOX_INSIDE_CUBOID,
                 EntityCollisionActionCallbackPresets.displayParticle(
-                        new ParticleTemplate(ParticleEffect.EXPLOSION_HUGE),
+                        new ParticleTemplate(Particle.EXPLOSION_HUGE),
                         AViewers.fromNearbyPlayers(50),
                         1
                 )

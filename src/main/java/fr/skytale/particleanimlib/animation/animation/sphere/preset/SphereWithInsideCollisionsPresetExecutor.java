@@ -7,16 +7,14 @@ import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.viewers.AViewers;
 import fr.skytale.particleanimlib.animation.collision.CollisionBuilder;
 import fr.skytale.particleanimlib.animation.collision.action.EntityCollisionActionCallbackPresets;
-import fr.skytale.particleanimlib.animation.collision.processor.check.EntityCollisionCheckPreset;
 import fr.skytale.particleanimlib.animation.collision.processor.SimpleCollisionProcessor;
 import fr.skytale.particleanimlib.animation.collision.processor.check.EntityCollisionCheckPresets;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.xenondevs.particle.ParticleEffect;
 
 import java.util.Objects;
 
@@ -48,7 +46,7 @@ public class SphereWithInsideCollisionsPresetExecutor extends AAnimationPresetEx
                 sphereBuilder,
                 EntityCollisionCheckPresets.TARGET_CENTER_INSIDE_SPHERE,
                 EntityCollisionActionCallbackPresets.displayParticle(
-                        new ParticleTemplate(ParticleEffect.EXPLOSION_HUGE),
+                        new ParticleTemplate(Particle.EXPLOSION_HUGE),
                         AViewers.fromNearbyPlayers(50),
                         1
                 )

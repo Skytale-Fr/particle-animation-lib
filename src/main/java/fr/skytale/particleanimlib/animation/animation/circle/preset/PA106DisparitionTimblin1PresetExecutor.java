@@ -8,10 +8,9 @@ import fr.skytale.particleanimlib.animation.attribute.position.animationposition
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.VectorPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.data.ParticleData;
 
 public class PA106DisparitionTimblin1PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -24,7 +23,7 @@ public class PA106DisparitionTimblin1PresetExecutor extends AAnimationPresetExec
 
         circleBuilder.setNbPoints(5, true);
         circleBuilder.setTicksDuration(5);
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.EXPLOSION_NORMAL, 1, 0f, new Vector(0, 0, 0), (ParticleData) null));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.EXPLOSION_NORMAL, 1, 0f, new Vector(0, 0, 0)));
         circleBuilder.setRotation(
                 new Vector(1, 0, 0),
                 new Vector(0, 0, 1),

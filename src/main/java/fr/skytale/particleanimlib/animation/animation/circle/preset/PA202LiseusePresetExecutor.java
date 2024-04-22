@@ -4,9 +4,9 @@ import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
 
 public class PA202LiseusePresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -26,6 +26,6 @@ public class PA202LiseusePresetExecutor extends AAnimationPresetExecutor<CircleB
         circleBuilder.setRadius(4);
         circleBuilder.setTicksDuration(20*10);
         circleBuilder.setShowPeriod(2);
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.END_ROD, 0.05f));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.END_ROD, 0.05f));
     }
 }

@@ -8,10 +8,10 @@ import fr.skytale.particleanimlib.animation.attribute.pointdefinition.SubAnimPoi
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationConfig;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.attr.SubAnimOrientationModifier;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.xenondevs.particle.ParticleEffect;
 
-import java.awt.*;
 
 public class PA206ProtectionArcanique2PresetExecutor extends AAnimationPresetExecutor<SphereBuilder> {
 
@@ -29,7 +29,7 @@ public class PA206ProtectionArcanique2PresetExecutor extends AAnimationPresetExe
         polygonBuilder.setDistanceFromCenterToVertices(1); //HERE
         polygonBuilder.setTicksDuration(1);
         polygonBuilder.setShowPeriod(1);
-        polygonBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, Color.WHITE)); //HERE
+        polygonBuilder.setPointDefinition(new ParticleTemplate(Particle.REDSTONE, Color.WHITE)); //HERE
 
         sphereBuilder.setRadius(8);
         sphereBuilder.setNbPoints(90); //HERE

@@ -6,9 +6,9 @@ import fr.skytale.particleanimlib.animation.attribute.position.animationposition
 import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
 
 public class MovingPointCirclePresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -29,6 +29,6 @@ public class MovingPointCirclePresetExecutor extends AAnimationPresetExecutor<Ci
         circleBuilder.setRadius(1);
         circleBuilder.setRotation(new Vector(0, 1, 0), Math.PI / 60);
         circleBuilder.setTicksDuration(20 * 10);
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.END_ROD, 0.01f));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.END_ROD, 0.01f));
     }
 }

@@ -9,10 +9,9 @@ import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackWithPreviousValueVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.data.ParticleData;
 
 public class CircleWaveReversedPresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -32,7 +31,7 @@ public class CircleWaveReversedPresetExecutor extends AAnimationPresetExecutor<C
                 return previousValue + Math.sin(halfCircleDuration - (iterationCount % halfCircleDuration)) +
                        (5 / halfCircleDuration);
         }));
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.FIREWORKS_SPARK, 1, 0f, new Vector(0,0,0), (ParticleData) null));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.FIREWORKS_SPARK, 1, 0f, new Vector(0,0,0)));
         circleBuilder.setTicksDuration(halfCircleDuration * 2);
         circleBuilder.setShowPeriod(2);
         Location animationLoc = circleBuilder.getOriginLocation();
@@ -50,7 +49,7 @@ public class CircleWaveReversedPresetExecutor extends AAnimationPresetExecutor<C
         WaveBuilder waveBuilder = new WaveBuilder();
         waveBuilder.setJavaPlugin(plugin);
         waveBuilder.setPosition(new LocatedAnimationPosition(animationLoc.clone()));
-        waveBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.FIREWORKS_SPARK, 1, 0f, new Vector(0,0,0), (ParticleData) null));
+        waveBuilder.setPointDefinition(new ParticleTemplate(Particle.FIREWORKS_SPARK, 1, 0f, new Vector(0,0,0)));
         waveBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 1, 0));
         waveBuilder.setTicksDuration(40);
         waveBuilder.setShowPeriod(2);

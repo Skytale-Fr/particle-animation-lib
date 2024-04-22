@@ -8,10 +8,9 @@ import fr.skytale.particleanimlib.animation.attribute.position.animationposition
 import fr.skytale.particleanimlib.animation.attribute.var.CallbackVariable;
 import fr.skytale.particleanimlib.animation.attribute.var.VectorPeriodicallyEvolvingVariable;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.data.ParticleData;
 
 public class PA106DisparitionTimblin2PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -31,13 +30,13 @@ public class PA106DisparitionTimblin2PresetExecutor extends AAnimationPresetExec
                 Math.PI / 6);
 
 
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.EXPLOSION_NORMAL, 1, 0f, new Vector(0, 0, 0), (ParticleData) null));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.EXPLOSION_NORMAL, 1, 0f, new Vector(0, 0, 0)));
         circleBuilder.setPosition(new LocatedAnimationPosition(circleBuilder.getOriginLocation()));
         circleBuilder.setRadius(new CallbackVariable<>(iterationCount -> Math.exp(iterationCount / 4d)));
         Circle bottomAnim = circleBuilder.getAnimation();
 
 
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.EXPLOSION_NORMAL, 1, 0f, new Vector(0, 0, 0), (ParticleData) null));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.EXPLOSION_NORMAL, 1, 0f, new Vector(0, 0, 0)));
         circleBuilder.setRadius(1);
         circleBuilder.setPosition(new LocatedRelativeAnimationPosition(
                 circleBuilder.getOriginLocation(),
@@ -45,13 +44,13 @@ public class PA106DisparitionTimblin2PresetExecutor extends AAnimationPresetExec
         ));
         Circle topAnim = circleBuilder.getAnimation();
 
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.FLASH));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.FLASH));
         circleBuilder.setRadius(0.1);
         circleBuilder.setNbPoints(1);
         circleBuilder.setTicksDuration(2);
         Circle flash = circleBuilder.getAnimation();
 
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.EXPLOSION_NORMAL, 0f));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.EXPLOSION_NORMAL, 0f));
         circleBuilder.setAnimationEndedCallback(animationEnding -> {
             bottomAnim.show();
             topAnim.show();

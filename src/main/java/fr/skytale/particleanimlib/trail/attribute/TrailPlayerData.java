@@ -1,8 +1,5 @@
 package fr.skytale.particleanimlib.trail.attribute;
 
-import org.bukkit.Location;
-
-import java.time.Instant;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;

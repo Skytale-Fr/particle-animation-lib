@@ -3,10 +3,9 @@ package fr.skytale.particleanimlib.animation.animation.circle.preset;
 import fr.skytale.particleanimlib.animation.animation.circle.CircleBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-import xyz.xenondevs.particle.data.ParticleData;
 
 public class PA101MagieFumee32PresetExecutor extends AAnimationPresetExecutor<CircleBuilder> {
 
@@ -24,7 +23,7 @@ public class PA101MagieFumee32PresetExecutor extends AAnimationPresetExecutor<Ci
         fumeeSubAnimExplosion.setNbPoints(1);
         fumeeSubAnimExplosion.setShowPeriod(20);
         fumeeSubAnimExplosion.setTicksDuration(20);
-        fumeeSubAnimExplosion.setPointDefinition(new ParticleTemplate(ParticleEffect.EXPLOSION_NORMAL, 200, 0.01f, new Vector(2, 2, 2), (ParticleData) null));
+        fumeeSubAnimExplosion.setPointDefinition(new ParticleTemplate(Particle.EXPLOSION_NORMAL, 200, 0.01f, new Vector(2, 2, 2)));
 
         CircleBuilder fumeeSubAnimDragonBreath = new CircleBuilder();
         fumeeSubAnimDragonBreath.setPosition(circleBuilder.getPosition());
@@ -33,7 +32,7 @@ public class PA101MagieFumee32PresetExecutor extends AAnimationPresetExecutor<Ci
         fumeeSubAnimDragonBreath.setNbPoints(3);
 //        fumeeSubAnimDragonBreath.setShowPeriod(15);
         fumeeSubAnimDragonBreath.setTicksDuration(20 + 5);
-        fumeeSubAnimDragonBreath.setPointDefinition(new ParticleTemplate(ParticleEffect.DRAGON_BREATH, 10, 0.05f, new Vector(2, 2, 2), (ParticleData) null));
+        fumeeSubAnimDragonBreath.setPointDefinition(new ParticleTemplate(Particle.DRAGON_BREATH, 10, 0.05f, new Vector(2, 2, 2)));
 
         CircleBuilder fumee = new CircleBuilder();
         fumee.setPosition(circleBuilder.getPosition());
@@ -42,7 +41,7 @@ public class PA101MagieFumee32PresetExecutor extends AAnimationPresetExecutor<Ci
         fumee.setRadius(1);
         fumee.setTicksDuration(1);
         fumee.setShowPeriod(0);
-        fumee.setPointDefinition(new ParticleTemplate(ParticleEffect.EXPLOSION_NORMAL));
+        fumee.setPointDefinition(new ParticleTemplate(Particle.EXPLOSION_NORMAL));
         fumee.setAnimationEndedCallback(animationEnding -> {
             fumeeSubAnimExplosion.getAnimation().show();
             fumeeSubAnimDragonBreath.getAnimation().show();
@@ -56,7 +55,7 @@ public class PA101MagieFumee32PresetExecutor extends AAnimationPresetExecutor<Ci
         magie.setNbPoints(3);
 //        magie.setShowPeriod(15);
         magie.setTicksDuration(20 + 5);
-        magie.setPointDefinition(new ParticleTemplate(ParticleEffect.SPELL_WITCH, 10, 0.1f, new Vector(2, 2, 2), (ParticleData) null));
+        magie.setPointDefinition(new ParticleTemplate(Particle.SPELL_WITCH, 10, 0.1f, new Vector(2, 2, 2)));
         /*
         COMPOSTER
         CRIT_MAGIC
@@ -70,7 +69,7 @@ public class PA101MagieFumee32PresetExecutor extends AAnimationPresetExecutor<Ci
         circleBuilder.setRadius(1);
         circleBuilder.setTicksDuration(1);
         circleBuilder.setShowPeriod(0);
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.EXPLOSION_NORMAL));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.EXPLOSION_NORMAL));
         circleBuilder.setAnimationEndedCallback(animationEnding -> {
             fumee.getAnimation().show();
             magie.getAnimation().show();

@@ -3,7 +3,6 @@ package fr.skytale.particleanimlib.trail.attribute;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-import java.time.Instant;
 import java.time.LocalTime;
 
 public class TrailPlayerLocationData {

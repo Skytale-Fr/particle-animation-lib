@@ -3,9 +3,9 @@ package fr.skytale.particleanimlib.trail.attribute;
 import fr.skytale.particleanimlib.animation.parent.preset.APresetInitializer;
 import fr.skytale.particleanimlib.trail.TrailBuilder;
 import fr.skytale.particleanimlib.trail.parent.ATrailPresetExecutor;
-import fr.skytale.particleanimlib.trail.preset.circle.*;
-import fr.skytale.particleanimlib.trail.preset.CuboidTrailPresetExecutor;
 import fr.skytale.particleanimlib.trail.preset.CirclePotionTrailPresetExecutor;
+import fr.skytale.particleanimlib.trail.preset.CuboidTrailPresetExecutor;
+import fr.skytale.particleanimlib.trail.preset.circle.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Locale;

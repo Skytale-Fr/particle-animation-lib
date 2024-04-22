@@ -6,9 +6,9 @@ import fr.skytale.particleanimlib.animation.attribute.position.trailposition.Sta
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.trail.TrailBuilder;
 import fr.skytale.particleanimlib.trail.parent.ATrailPresetExecutor;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
 
 import java.time.Duration;
 
@@ -33,7 +33,7 @@ public class CircleCloudTrailPresetExecutor extends ATrailPresetExecutor {
                 null
         ));
         circleBuilder.setRotation(new Vector(1, 0, 0), new Vector(0, 0, 1));
-        circleBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.CLOUD));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.CLOUD));
         circleBuilder.setTicksDuration(1);
         circleBuilder.setShowPeriod(new Constant<>(2));
         circleBuilder.setJavaPlugin(plugin);

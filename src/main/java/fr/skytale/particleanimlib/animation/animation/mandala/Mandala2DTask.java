@@ -3,8 +3,6 @@ package fr.skytale.particleanimlib.animation.animation.mandala;
 import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
 import fr.skytale.particleanimlib.animation.attribute.RotatableVector;
 import fr.skytale.particleanimlib.animation.attribute.annotation.IVariableCurrentValue;
-import fr.skytale.particleanimlib.animation.attribute.range.IRange;
-import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.bukkit.util.Vector;

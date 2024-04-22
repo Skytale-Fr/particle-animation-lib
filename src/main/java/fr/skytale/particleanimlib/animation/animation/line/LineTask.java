@@ -4,7 +4,6 @@ import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
 import fr.skytale.particleanimlib.animation.attribute.annotation.IVariableCurrentValue;
 import fr.skytale.particleanimlib.animation.parent.task.AAnimationTask;
 import fr.skytale.particleanimlib.animation.parent.task.AnimationTaskUtils;
-import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.util.List;

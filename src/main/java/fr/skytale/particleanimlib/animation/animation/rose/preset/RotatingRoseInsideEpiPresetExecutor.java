@@ -7,11 +7,10 @@ import fr.skytale.particleanimlib.animation.animation.rose.RoseBuilder;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.parent.preset.AAnimationPresetExecutor;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
-
-import java.awt.*;
 
 
 public class RotatingRoseInsideEpiPresetExecutor extends AAnimationPresetExecutor<RoseBuilder> {
@@ -31,7 +30,7 @@ public class RotatingRoseInsideEpiPresetExecutor extends AAnimationPresetExecuto
         roseBuilder1.setRoseModifierNumerator(3d);
         roseBuilder1.setRoseModifierDenominator(4);
         roseBuilder1.setTicksDuration(20 * 10);
-        roseBuilder1.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, new Color(255, 0, 0)));
+        roseBuilder1.setPointDefinition(new ParticleTemplate(Particle.REDSTONE, Color.fromRGB(255, 0, 0)));
         roseBuilder1.setShowPeriod(new Constant<>(3));
         roseBuilder1.setJavaPlugin(plugin);
         roseBuilder1.setPosition(roseBuilder.getPosition());
@@ -47,7 +46,7 @@ public class RotatingRoseInsideEpiPresetExecutor extends AAnimationPresetExecuto
         epiBuilder.setEpiModifierNumerator(2d);
         epiBuilder.setEpiModifierDenominator(5);
         epiBuilder.setTicksDuration(20 * 10);
-        epiBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, new Color(255, 0, 0)));
+        epiBuilder.setPointDefinition(new ParticleTemplate(Particle.REDSTONE, Color.fromRGB(255, 0, 0)));
         epiBuilder.setShowPeriod(new Constant<>(3));
         epiBuilder.setJavaPlugin(plugin);
         epiBuilder.setPosition(roseBuilder.getPosition());
@@ -58,7 +57,7 @@ public class RotatingRoseInsideEpiPresetExecutor extends AAnimationPresetExecuto
         roseBuilder.setNbPoints(1);
         roseBuilder.setRadius(0.1d);
         roseBuilder.setTicksDuration(1);
-        roseBuilder.setPointDefinition(new ParticleTemplate(ParticleEffect.REDSTONE, new Color(255, 0, 0)));
+        roseBuilder.setPointDefinition(new ParticleTemplate(Particle.REDSTONE, Color.fromRGB(255, 0, 0)));
         roseBuilder.addAnimationEndedCallback(result -> {
             rose.show();
             epi.show();

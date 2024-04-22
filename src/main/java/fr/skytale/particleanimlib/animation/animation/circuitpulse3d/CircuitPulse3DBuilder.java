@@ -9,10 +9,10 @@ import fr.skytale.particleanimlib.animation.attribute.spawner.parent.ISpawner;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
 import fr.skytale.particleanimlib.animation.attribute.var.parent.IVariable;
 import fr.skytale.particleanimlib.animation.parent.builder.AAnimationBuilder;
+import org.bukkit.Color;
+import org.bukkit.Particle;
 import org.bukkit.util.Vector;
-import xyz.xenondevs.particle.ParticleEffect;
 
-import java.awt.*;
 
 public class CircuitPulse3DBuilder extends AAnimationBuilder<CircuitPulse3D, CircuitPulse3DTask> {
 
@@ -28,8 +28,8 @@ public class CircuitPulse3DBuilder extends AAnimationBuilder<CircuitPulse3D, Cir
                 new Constant<>(40),
                 new Constant<>(15 + RANDOM.nextInt(30)),
                 new Constant<>(new ParticlePointDefinition(new ParticleTemplate(
-                        ParticleEffect.REDSTONE,
-                        new Color(RANDOM.nextInt(256), RANDOM.nextInt(256), RANDOM.nextInt(256))
+                        Particle.REDSTONE,
+                        Color.fromRGB(RANDOM.nextInt(256), RANDOM.nextInt(256), RANDOM.nextInt(256))
                 )))
         ));
         setFadeColorInTrail(true);
