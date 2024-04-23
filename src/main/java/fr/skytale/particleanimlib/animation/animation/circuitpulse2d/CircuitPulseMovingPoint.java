@@ -151,7 +151,7 @@ public class CircuitPulseMovingPoint {
 
                         ParticleTemplate fadingColorParticleTemplate = new ParticleTemplate(particleTemplate);
                         fadingColorParticleTemplate.data(new Particle.DustOptions(
-                                Color.fromRGB(currentTrailParticleColor.getRGB()),
+                                Color.fromRGB(currentTrailParticleColor.getRed(), currentTrailParticleColor.getGreen(), currentTrailParticleColor.getBlue()),
                                 dustOptions.getSize()
                         ));
 
