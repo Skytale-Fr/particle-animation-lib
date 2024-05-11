@@ -1,6 +1,7 @@
 package fr.skytale.particleanimlib.testing;
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationPreset;
+import fr.skytale.particleanimlib.animation.attribute.position.animationposition.OnEntityAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.animationposition.RelativeToEntityAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.position.parent.AAnimationPosition;
 import fr.skytale.particleanimlib.animation.attribute.var.Constant;
@@ -76,10 +77,8 @@ public class ParticleAnimLibTest {
     public void buildAndShowAnimation(Player player) {
         buildAndShowAnimation(
                 player,
-                new RelativeToEntityAnimationPosition(
-                        player,
-                        new Constant<>(player.getEyeLocation().toVector().subtract(player.getLocation().toVector()))
-                ));
+                new OnEntityAnimationPosition(new Constant<>(player))
+        );
     }
 
     public void buildAndShowAnimation(Player player, AAnimationPosition position) {

@@ -17,7 +17,7 @@ plugins {
 }
 
 group = 'fr.skytale'
-version = '6.0.1'
+version = '6.0.2'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -99,7 +99,7 @@ sourceSets.main.resources {
 
 // Rename generated jar
 shadowJar {
-    archiveBaseName.set('particleanimlib')
+    archiveBaseName.set('particle-animation-lib')
     archiveClassifier.set('')
 }
 //
