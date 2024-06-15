@@ -18,13 +18,7 @@ public class PA002Brume1PresetExecutor extends AAnimationPresetExecutor<CircleBu
         circleBuilder.setRadius(0.1);
         circleBuilder.setNbPoints(1);
         circleBuilder.setShowPeriod(5);
-        circleBuilder.setTicksDuration(5*20);
+        circleBuilder.setTicksDuration(5 * 20);
         circleBuilder.setPointDefinition(new ParticleTemplate(Particle.CLOUD, 150, 0.01f, new Vector(5, 5, 5)));
-        /*
-        CAMPFIRE_COSY_SMOKE
-        CAMPFIRE_SIGNAL_SMOKE
-        CLOUD / EXPLOSION_NORMAL
-        SMOKE_LARGE / SMOKE_NORMAL (CLOUD noir)
-         */
     }
 }

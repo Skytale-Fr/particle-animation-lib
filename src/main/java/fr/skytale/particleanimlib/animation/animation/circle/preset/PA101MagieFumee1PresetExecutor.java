@@ -28,15 +28,6 @@ public class PA101MagieFumee1PresetExecutor extends AAnimationPresetExecutor<Cir
         magie.setShowPeriod(20);
         magie.setTicksDuration(20);
         magie.setPointDefinition(new ParticleTemplate(Particle.SPELL_WITCH, 100, 0.1f, new Vector(2, 2, 2)));
-        /*
-        COMPOSTER
-        CRIT_MAGIC
-        END_ROD
-        FIREWORKS_SPARK
-        GLOW
-        SPELL_WITCH -
-        WAX_ON
-         */
         circleBuilder.setNbPoints(1, true);
         circleBuilder.setRadius(1);
         circleBuilder.setTicksDuration(1);
