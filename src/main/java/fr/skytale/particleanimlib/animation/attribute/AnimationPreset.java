@@ -55,22 +55,36 @@ public enum AnimationPreset {
     PA_0_02_BRUME2(new PA002Brume2PresetExecutor()),
     PA_0_03_BRUME_EPAISSE1(new PA003BrumeEpaisse1PresetExecutor()),
     PA_0_03_BRUME_EPAISSE2(new PA003BrumeEpaisse2PresetExecutor()),
+
+    PA_0_04_RITA_LONG_PART_1(new PA004RitaLongPartie1PresetExecutor()),
+    PA_0_04_RITA_LONG_PART_2(new PA004RitaLongPartie2PresetExecutor()),
+    PA_0_04_RITA_LONG_PART_3(new PA004RitaLongPartie3PresetExecutor()),
     PA_0_04_RITA_LONG(new PA004RitaLongPresetExecutor()),
+
+    PA_0_04_RITA_COURT_PART_1(new PA004RitaCourtPartie1PresetExecutor()),
+    PA_0_04_RITA_COURT_PART_2(new PA004RitaCourtPartie2PresetExecutor()),
     PA_0_04_RITA_COURT(new PA004RitaCourtPresetExecutor()),
+
     PA_0_05_FIL_OR(new PA005FilOrPresetExecutor()),
 
     PA_1_01_MAGIE_FUMEE_1(new PA101MagieFumee1PresetExecutor()),
     PA_1_01_MAGIE_FUMEE_3_0(new PA101MagieFumee3PresetExecutor()),
     PA_1_01_MAGIE_FUMEE_3_1(new PA101MagieFumee31PresetExecutor()),
     PA_1_01_MAGIE_FUMEE_3_2(new PA101MagieFumee32PresetExecutor()),
+
     PA_1_02_GRANGE(new PA102GrangePresetExecutor()),
+
     PA_1_03_CERCLE_PIERRE_1(new PA103CerclePierre1PresetExecutor()),
     PA_1_03_CERCLE_PIERRE_2(new PA103CerclePierre2PresetExecutor()),
     PA_1_03_CERCLE_PIERRE_3(new PA103CerclePierre3PresetExecutor()),
+
     PA_1_05_ARBRE(new PA105ArbePresetExecutor()),
+
     PA_1_06_DISPARITION_TIMBLIN_1(new PA106DisparitionTimblin1PresetExecutor()),
     PA_1_06_DISPARITION_TIMBLIN_2(new PA106DisparitionTimblin2PresetExecutor()),
+
     PA_1_07_PORTAIL_APPARITION(new PA107PortailApparitionPresetExecutor()),
+
     PA_1_08_DAGUE_POISON_1(new PA108DaguePoison2PresetExecutor()),
 
     PA_2_01_PILLIER_ENIGME_1(new PA201PillierEauEnigmeV1PresetExecutor()),
@@ -185,7 +199,7 @@ public enum AnimationPreset {
     TEXT_KGEVERSINCENEWYORK_ROTATING(new RotatingTextKGEverSinceNewYorkPresetExecutor(), TextPresetInitializer.class),
     TEXT_MINECRAFT(new SimpleTextMinecraftPresetExecutor(), TextPresetInitializer.class),
     TORUS_SOLENOID(new TorusSolenoidPresetExecutor()),
-    TORUS_SOLENOID_2(new TorusSolenoid2PresetExecutor()),
+    PA_1_07_PORTAIL_APPARITION_PART_1(new TorusSolenoid2PresetExecutor()),
     TORUS_SOLENOID_ROTATING(new RotatingTorusSolenoidPresetExecutor()),
     WAVE(new WavePresetExecutor());
 

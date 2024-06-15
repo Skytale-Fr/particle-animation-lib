@@ -17,13 +17,6 @@ public class PA004RitaCourtPresetExecutor extends AAnimationPresetExecutor<Spher
 
     @Override
     protected void apply(SphereBuilder sphereBuilder, JavaPlugin plugin) {
-
-//        //TODO a supprimer, que pr le test
-//        Location location = ((AAnimationPosition)(sphereBuilder.getPosition())).toIVariableLocation().getCurrentValue(0);
-//        World monde = location.getWorld();
-//        sphereBuilder.setPosition(new LocatedAnimationPosition(new Location(monde,-66.5,-52,-17.5)));
-
-        double startRadius = 15;
         double middleRadius = 4;
 
         //End of animation
