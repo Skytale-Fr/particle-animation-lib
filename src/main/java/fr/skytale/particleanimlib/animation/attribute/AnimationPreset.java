@@ -8,10 +8,7 @@ import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotati
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidRotatingResizingWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.cuboid.preset.CuboidWithInsideCollisionsPresetExecutor;
 import fr.skytale.particleanimlib.animation.animation.epi.preset.SimpleEpiPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.helix.preset.HelixSubAnimPolygonPresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.helix.preset.PA108DaguePoison2PresetExecutor;
-import fr.skytale.particleanimlib.animation.animation.helix.preset.PA208BatonEauPresetExecutor;
+import fr.skytale.particleanimlib.animation.animation.helix.preset.*;
 import fr.skytale.particleanimlib.animation.animation.image.preset.*;
 import fr.skytale.particleanimlib.animation.animation.image.preset.init.ImagePresetInitializer;
 import fr.skytale.particleanimlib.animation.animation.lightning.preset.LightningPresetExecutor;
@@ -89,14 +86,19 @@ public enum AnimationPreset {
 
     PA_2_01_PILLIER_ENIGME_1(new PA201PillierEauEnigmeV1PresetExecutor()),
     PA_2_01_PILLIER_ENIGME_2(new PA201PillierEauEnigmeV2PresetExecutor()),
+
     PA_2_02_RITA_LISEUSE(new PA202LiseusePresetExecutor()),
+
     PA_2_03_ATTAQUE_CHARGE_1(new PA203Attaque1ChargePresetExecutor()),
     PA_2_03_ATTAQUE_CHARGE_2(new PA203Attaque2ChargePresetExecutor()),
     PA_2_03_ATTAQUE_CHARGE_3(new PA203Attaque3ChargePresetExecutor()),
     PA_2_03_ATTAQUE_CHARGE_4(new PA203Attaque4ChargePresetExecutor()),
+
     PA_2_04_ATTAQUE_CORPS_SOL_1(new PA204AttaqueCorpsSol1PresetExecutor()),
     PA_2_04_ATTAQUE_CORPS_SOL_2(new PA204AttaqueCorpsSol2PresetExecutor()),
+
     PA_2_05_MARQUE_MAGIQUE(new PA205MarqueMagiquePresetExecutor()),
+
     PA_2_06_PROTECTION_ARCANIQUE_1(new PA206ProtectionArcanique1PresetExecutor()),
     PA_2_06_PROTECTION_ARCANIQUE_2(new PA206ProtectionArcanique2PresetExecutor()),
     PA_2_06_PROTECTION_ARCANIQUE_3(new PA206ProtectionArcanique3PresetExecutor()),
@@ -199,7 +201,7 @@ public enum AnimationPreset {
     TEXT_KGEVERSINCENEWYORK_ROTATING(new RotatingTextKGEverSinceNewYorkPresetExecutor(), TextPresetInitializer.class),
     TEXT_MINECRAFT(new SimpleTextMinecraftPresetExecutor(), TextPresetInitializer.class),
     TORUS_SOLENOID(new TorusSolenoidPresetExecutor()),
-    PA_1_07_PORTAIL_APPARITION_PART_1(new TorusSolenoid2PresetExecutor()),
+    TORUS_SOLENOID_2(new TorusSolenoid2PresetExecutor()),
     TORUS_SOLENOID_ROTATING(new RotatingTorusSolenoidPresetExecutor()),
     WAVE(new WavePresetExecutor());
 

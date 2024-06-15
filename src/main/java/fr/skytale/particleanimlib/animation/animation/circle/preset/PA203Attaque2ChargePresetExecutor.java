@@ -32,7 +32,7 @@ public class PA203Attaque2ChargePresetExecutor extends AAnimationPresetExecutor<
         growingMovingCircleBuilder1.setPosition(
                 new LocatedRelativeAnimationPosition(
                         position.toIVariableLocation().copy(),
-                        new VectorPeriodicallyEvolvingVariable(new Vector(0,-2,0), new Vector(0,0.4,0))
+                        new VectorPeriodicallyEvolvingVariable(new Vector(0, -2, 0), new Vector(0, 0.4, 0))
                 )
         );
         growingMovingCircleBuilder1.setRadius(new DoublePeriodicallyEvolvingVariable(0.5, 0.05));
@@ -48,7 +48,7 @@ public class PA203Attaque2ChargePresetExecutor extends AAnimationPresetExecutor<
         growingMovingCircleBuilder2.setPosition(
                 new LocatedRelativeAnimationPosition(
                         position.toIVariableLocation().copy(),
-                        new VectorPeriodicallyEvolvingVariable(new Vector(0,-2,0), new Vector(0,0.4,0))
+                        new VectorPeriodicallyEvolvingVariable(new Vector(0, -2, 0), new Vector(0, 0.4, 0))
                 )
         );
         growingMovingCircleBuilder2.setRadius(new DoublePeriodicallyEvolvingVariable(0.5, 0.05));
@@ -60,8 +60,8 @@ public class PA203Attaque2ChargePresetExecutor extends AAnimationPresetExecutor<
         turningPointsCircleBuilder.setPosition(circleBuilder.getPosition());
         turningPointsCircleBuilder.setJavaPlugin(plugin);
         turningPointsCircleBuilder.setNbPoints(4);
-        turningPointsCircleBuilder.setRotation(new Vector(0,1,0), Math.PI/3);
-        turningPointsCircleBuilder.setTicksDuration(20 * 1);
+        turningPointsCircleBuilder.setRotation(new Vector(0, 1, 0), Math.PI / 3);
+        turningPointsCircleBuilder.setTicksDuration(20);
         turningPointsCircleBuilder.setPointDefinition(new ParticleTemplate(Particle.COMPOSTER, 0.01f));
         turningPointsCircleBuilder.setRadius(1.5);
 

@@ -20,18 +20,15 @@ public class PA103CerclePierre2PresetExecutor extends AAnimationPresetExecutor<C
     @Override
     protected void apply(CircleBuilder circleBuilder, JavaPlugin plugin) {
         double radius = 10d;
-        circleBuilder.setTicksDuration(20*20);
+        circleBuilder.setTicksDuration(20 * 20);
 
 
         //Inner circle
-        //CircleBuilder innerCircler = new CircleBuilder();
-        //circleBuilder.setJavaPlugin(plugin);
-        //circleBuilder.setPosition(circleBuilder.getPosition());
-        circleBuilder.setRadius(radius/2);
+        circleBuilder.setRadius(radius / 2);
         circleBuilder.setNbPoints((int) radius, true);
         circleBuilder.setPointDefinition(
                 new ParticleTemplate(
-                        Particle.DRAGON_BREATH,1,0.01f,new Vector(radius/4,0,radius/4)
+                        Particle.DRAGON_BREATH, 1, 0.01f, new Vector(radius / 4, 0, radius / 4)
                 )
         );
         Circle innerCircle = circleBuilder.getAnimation();
@@ -40,16 +37,16 @@ public class PA103CerclePierre2PresetExecutor extends AAnimationPresetExecutor<C
         //Outer circle
         circleBuilder.setRadius(radius);
         circleBuilder.setNbPoints(80, true);
-        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.DRAGON_BREATH,0.005f));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.DRAGON_BREATH, 0.005f));
         circleBuilder.setRotation(
-                new Vector(0,1,0),
-                Math.PI/100
+                new Vector(0, 1, 0),
+                Math.PI / 100
         );
         AAnimationPosition position = (AAnimationPosition) circleBuilder.getPosition();
         circleBuilder.setPosition(
                 new LocatedRelativeAnimationPosition(
                         position.toIVariableLocation(),
-                        new CallbackVariable<>(iterationCount -> new Vector(0, Math.sin(iterationCount/2d) +1, 0))
+                        new CallbackVariable<>(iterationCount -> new Vector(0, Math.sin(iterationCount / 2d) + 1, 0))
                 )
         );
         circleBuilder.setShowPeriod(2);

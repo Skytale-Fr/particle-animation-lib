@@ -44,7 +44,7 @@ public class PA107PortailApparitionPresetExecutor extends AAnimationPresetExecut
         torusSolenoidBuilder.setPointDefinition(new ParticleTemplate(Particle.WHITE_ASH, 1f));
         TorusSolenoid secondaryTorusAsh = torusSolenoidBuilder.getAnimation();
 
-        // Secondary toruses
+        // Secondary toruses - launched 2 sec after the main torus
         circleBuilder.setTicksDuration(20 * 2);
         circleBuilder.setAnimationEndedCallback(task -> {
             secondaryTorusAsh.setRotation(circleBuilder.getAnimation().getRotation());

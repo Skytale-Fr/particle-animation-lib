@@ -31,7 +31,7 @@ public class PA108DaguePoison2PresetExecutor extends AAnimationPresetExecutor<He
         sparklesSphereBuilder.setJavaPlugin(plugin);
         sparklesSphereBuilder.setPosition(helixBuilder.getPosition());
         sparklesSphereBuilder.setSphereType(Sphere.Type.FULL);
-        sparklesSphereBuilder.setTicksDuration(20 * 1);
+        sparklesSphereBuilder.setTicksDuration(20);
         sparklesSphereBuilder.setShowPeriod(0);
         sparklesSphereBuilder.setRotation(new Vector(0, 1, 0), Math.PI / 24);
         sparklesSphereBuilder.setPointDefinition(new ParticleTemplate(Particle.END_ROD, 1, 0.8f, new Vector(0.3, 0.3, 0.3)));

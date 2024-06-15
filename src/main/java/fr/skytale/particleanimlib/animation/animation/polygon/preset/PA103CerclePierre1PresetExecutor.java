@@ -25,11 +25,11 @@ public class PA103CerclePierre1PresetExecutor extends AAnimationPresetExecutor<P
         AnimationPreset.POLYGON.apply(polygonBuilder, plugin);
         polygonBuilder.setNbVertices(5);
         polygonBuilder.setDistanceFromCenterToVertices(radius);
-        polygonBuilder.setPointDefinition(new ParticleTemplate(Particle.DRAGON_BREATH,0.005f));
-        polygonBuilder.setTicksDuration(20*10);
+        polygonBuilder.setPointDefinition(new ParticleTemplate(Particle.DRAGON_BREATH, 0.005f));
+        polygonBuilder.setTicksDuration(20 * 10);
         polygonBuilder.setRotation(
-                new Vector(0,1,0),
-                Math.PI/100
+                new Vector(0, 1, 0),
+                Math.PI / 100
         );
         polygonBuilder.setShowPeriod(10);
         Polygon outerPolygon = polygonBuilder.getAnimation();
@@ -38,9 +38,9 @@ public class PA103CerclePierre1PresetExecutor extends AAnimationPresetExecutor<P
         CircleBuilder circleBuilder = new CircleBuilder();
         circleBuilder.setJavaPlugin(plugin);
         circleBuilder.setPosition(polygonBuilder.getPosition());
-        circleBuilder.setRadius(new CallbackVariable<>(iterationCount -> (radius/2)*Math.cos(iterationCount/10d)+(radius/2)));
-        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.DRAGON_BREATH,0.01f));
-        circleBuilder.setTicksDuration(20*10);
+        circleBuilder.setRadius(new CallbackVariable<>(iterationCount -> (radius / 2) * Math.cos(iterationCount / 10d) + (radius / 2)));
+        circleBuilder.setPointDefinition(new ParticleTemplate(Particle.DRAGON_BREATH, 0.01f));
+        circleBuilder.setTicksDuration(20 * 10);
         Circle circle = circleBuilder.getAnimation();
 
         polygonBuilder.setTicksDuration(1);
