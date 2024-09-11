@@ -82,7 +82,7 @@ public enum AnimationPreset {
 
     PA_1_07_PORTAIL_APPARITION(new PA107PortailApparitionPresetExecutor()),
 
-    PA_1_08_DAGUE_POISON_1(new PA108DaguePoison2PresetExecutor()),
+    PA_1_08_DAGUE_POISON_1(new PA108DaguePoison1PresetExecutor()),
 
     PA_2_01_PILLIER_ENIGME_1(new PA201PillierEauEnigmeV1PresetExecutor()),
     PA_2_01_PILLIER_ENIGME_2(new PA201PillierEauEnigmeV2PresetExecutor()),
