@@ -105,8 +105,10 @@ public enum AnimationPreset {
     PA_2_06_PROTECTION_ARCANIQUE_4(new PA206ProtectionArcanique4PresetExecutor()),
     PA_2_06_PROTECTION_ARCANIQUE_4_1(new PA206ProtectionArcanique41PresetExecutor()),
     PA_2_06_PROTECTION_ARCANIQUE_4_2(new PA206ProtectionArcanique42PresetExecutor()),
+
     PA_2_07_PILLIER_ACTIVATION_1(new PA207PillierEauActivationV1PresetExecutor()),
     PA_2_07_PILLIER_ACTIVATION_2(new PA207PillierEauActivationV2PresetExecutor()),
+
     PA_2_08_BATON_EAU_1(new PA208BatonEauPresetExecutor()),
 
     //ATOM(new AtomPresetExecutor()),

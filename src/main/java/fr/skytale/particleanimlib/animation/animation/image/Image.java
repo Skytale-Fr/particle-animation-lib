@@ -60,7 +60,7 @@ public class Image extends AAnimation {
                     Vector toPixelVector = AAnimationTask.U.clone().multiply(x)
                             .add(AAnimationTask.V.clone().multiply(y))
                             .subtract(center);
-                    imagePixels.put(toPixelVector, Color.fromRGB(pixelColor.getRGB()));
+                    imagePixels.put(toPixelVector, Color.fromRGB(pixelColor.getRed(), pixelColor.getGreen(), pixelColor.getBlue()));
                 }
             }
             return imagePixels;
