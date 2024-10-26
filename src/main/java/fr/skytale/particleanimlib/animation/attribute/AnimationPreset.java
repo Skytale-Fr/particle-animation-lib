@@ -162,6 +162,7 @@ public enum AnimationPreset {
     MANDALA2D_CURVE(new Mandala2DCurvePresetExecutor()),
     MANDALA2D_CURVE_EVOLVING(new Mandala2DCurveEvolvingPresetExecutor()),
     MANDALA2D_PLAYER_MOUSE(new Mandala2DPlayerMousePresetExecutor()),
+    MANDALA2D_SYMMETRY_PLAYER_MOUSE(new Mandala2DSymmetryPlayerMousePresetExecutor()),
     NODE(new SimpleNodePresetExecutor()),
     OBJ_CROWN(new CrownPresetExecutor(), ObjPresetInitializer.class),
     OBJ_HAMMER(new HammerObjPresetExecutor(), ObjPresetInitializer.class),

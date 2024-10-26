@@ -13,6 +13,8 @@ public class Mandala2D extends AAnimation {
 
     private IVariable<Integer> nbCircleSections;
 
+    private IVariable<Boolean> axialSymmetryToHalf;
+
     public Mandala2D() {
     }
 
@@ -45,11 +47,24 @@ public class Mandala2D extends AAnimation {
         this.nbCircleSections = nbCircleSections;
     }
 
+    public IVariable<Boolean> getAxialSymmetryToHalf() {
+        return axialSymmetryToHalf;
+    }
+
+    public void setAxialSymmetryToHalf(IVariable<Boolean> axialSymmetryToHalf) {
+        this.axialSymmetryToHalf = axialSymmetryToHalf;
+    }
+
+    public void setAxialSymmetryToHalf(boolean axialSymmetryToHalf) {
+        setAxialSymmetryToHalf(new Constant<>(axialSymmetryToHalf));
+    }
+
     @Override
     public Mandala2D clone() {
         Mandala2D obj = (Mandala2D) super.clone();
         obj.nbCircleSections = nbCircleSections.copy();
         obj.points = points.copy();
+        obj.axialSymmetryToHalf = axialSymmetryToHalf.copy();
         return obj;
     }
 }

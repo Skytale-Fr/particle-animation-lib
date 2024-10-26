@@ -23,6 +23,7 @@ public class Mandala2DBuilder extends AAnimationBuilder<Mandala2D, Mandala2DTask
                 )
         );
         animation.setNbCircleSection(8);
+        animation.setAxialSymmetryToHalf(false);
     }
 
     @Override
@@ -87,5 +88,24 @@ public class Mandala2DBuilder extends AAnimationBuilder<Mandala2D, Mandala2DTask
      */
     public void setPoints(CurvePointsGenerator<?, Vector2D> curve2DGenerator) {
         animation.setPoints(curve2DGenerator);
+    }
+
+    /**
+     * Defines if half of the mandala points are symmetric to the other half.
+     *
+     * @param axialSymmetryToHalf true if the half of the mandala points are symmetric to the other half
+     */
+    public void setAxialSymmetryToHalf(boolean axialSymmetryToHalf) {
+        animation.setAxialSymmetryToHalf(axialSymmetryToHalf);
+    }
+
+    /**
+     * Defines if half of the mandala points are symmetric to the other half.
+     *
+     * @param axialSymmetryToHalf true if the half of the mandala points are symmetric to the other half
+     */
+    public void setAxialSymmetryToHalf(IVariable<Boolean> axialSymmetryToHalf) {
+        checkNotNull(axialSymmetryToHalf, "axialSymmetryToHalf should not be null");
+        animation.setAxialSymmetryToHalf(axialSymmetryToHalf);
     }
 }
