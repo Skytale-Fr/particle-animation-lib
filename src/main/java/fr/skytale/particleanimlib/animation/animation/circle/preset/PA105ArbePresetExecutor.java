@@ -32,7 +32,7 @@ public class PA105ArbePresetExecutor extends AAnimationPresetExecutor<CircleBuil
         dustBuilder.setNbPoints(5, true);
         dustBuilder.setRadius(3);
         dustBuilder.setTicksDuration(10);
-        dustBuilder.setPointDefinition(new ParticleTemplate(Particle.DUST_COLOR_TRANSITION, 2, 0.5f, new Vector(5, 5, 5), Color.WHITE));
+        dustBuilder.setPointDefinition(new ParticleTemplate(Particle.DUST_COLOR_TRANSITION, 2, 0.5f, new Vector(5, 5, 5), new Particle.DustTransition(Color.WHITE, Color.WHITE, 1)));
 
         CircleBuilder ashBuilder = new CircleBuilder();
         ashBuilder.setJavaPlugin(plugin);

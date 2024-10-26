@@ -33,7 +33,7 @@ public class PA102GrangePresetExecutor extends AAnimationPresetExecutor<CircleBu
         dustBuilder.setNbPoints(5, true);
         dustBuilder.setRadius(3);
         dustBuilder.setTicksDuration(10);
-        dustBuilder.setPointDefinition(new ParticleTemplate(Particle.DUST_COLOR_TRANSITION, 2, 1f, new Vector(5, 5, 5), Color.WHITE));
+        dustBuilder.setPointDefinition(new ParticleTemplate(Particle.DUST_COLOR_TRANSITION, 2, 1f, new Vector(5, 5, 5), new Particle.DustTransition(Color.WHITE, Color.WHITE, 1)));
 
         CircleBuilder ashBuilder = new CircleBuilder();
         ashBuilder.setJavaPlugin(plugin);
