@@ -16,13 +16,11 @@ import fr.skytale.particleanimlib.animation.parent.animation.AAnimation;
 import fr.skytale.particleanimlib.testing.ParticleAnimLibTest;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
@@ -38,6 +36,7 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
     protected int iterationCount;
     protected int currentShowPeriod;
     protected AnimationMove currentIterationMove;
+    protected Collection<Player> viewers;
     // Animation points management
     protected Set<AAnimationTaskTrackedField<?, ?>> trackedFieldsData;
     protected ForceUpdatePointsConfiguration forceUpdatePointsConfiguration;
@@ -97,7 +96,9 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         return taskId != null;
     }
 
-    public final Vector getCurrentU() { return currentU; }
+    public final Vector getCurrentU() {
+        return currentU;
+    }
 
     public final Vector getCurrentV() {
         return currentV;
@@ -105,6 +106,10 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     public final Vector getCurrentW() {
         return currentW;
+    }
+
+    public final Collection<Player> getViewers() {
+        return viewers;
     }
 
     /* ******** SETTER *********/
@@ -123,6 +128,9 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         final boolean isIterationShown = currentShowPeriod == 0 || iterationCount % currentShowPeriod == 0;
         //Compute the move (including the new animation location)
         currentIterationMove = position.getCurrentValue(iterationCount);
+
+        //Compute viewers
+        viewers = animation.getViewers().getPlayers(currentIterationMove.getAfterMoveLocation());
 
         // If a stop condition has been set, we need to check this condition
         // and stop the animation if true is returned.
@@ -209,12 +217,12 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
 
     protected boolean shouldStop() {
         return getCurrentIterationMove().isCancelled() ||
-               hasDurationEnded() ||
-               (
-                       iterationCount > 0 &&
-                       this.animation.getStopCondition() != null &&
-                       this.animation.getStopCondition().canStop((AAnimationTask<?>) this)
-               );
+                hasDurationEnded() ||
+                (
+                        iterationCount > 0 &&
+                                this.animation.getStopCondition() != null &&
+                                this.animation.getStopCondition().canStop((AAnimationTask<?>) this)
+                );
     }
 
     /* ******** OTHER PROTECTED METHODS *********/
@@ -250,33 +258,36 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
             boolean currentValueChanged = tackedFieldData.checkIfChangedAndUpdate(getCurrentIterationBaseLocation(), iterationCount);
 
             if (currentValueChanged
-                && (
-                        this.forceUpdatePointsConfiguration == null ||
-                        this.forceUpdatePointsConfiguration.ifIVariableCurrentValueFieldsChanges()
-                )
-                && tackedFieldData.updatePointsIfChange()) {
+                    && (
+                    this.forceUpdatePointsConfiguration == null ||
+                            this.forceUpdatePointsConfiguration.ifIVariableCurrentValueFieldsChanges()
+            )
+                    && tackedFieldData.updatePointsIfChange()) {
                 shouldRecomputePoints = true;
             }
         }
 
         return
-                // If a IVariable value changed and has been defined, through its annotation, to update points on change.
-                shouldRecomputePoints ||
+                //if no body will see the animation
+                !viewers.isEmpty() && (
+                        // If a IVariable value changed and has been defined, through its annotation, to update points on change.
+                        shouldRecomputePoints ||
 
-                // If this is the first iteration
-                animationPoints == null ||
+                                // If this is the first iteration
+                                animationPoints == null ||
 
-                // If the AnimationTask has been defined to always update point through its annotation
-                (this.forceUpdatePointsConfiguration != null && this.forceUpdatePointsConfiguration.alwaysUpdate()) ||
+                                // If the AnimationTask has been defined to always update point through its annotation
+                                (this.forceUpdatePointsConfiguration != null && this.forceUpdatePointsConfiguration.alwaysUpdate()) ||
 
-                // If the shouldUpdatePoint method should be called (according to annotation)
-                // and if the result of this method is true
-                (
-                        (
-                                this.forceUpdatePointsConfiguration == null ||
-                                this.forceUpdatePointsConfiguration.ifShouldUpdatePointsMethod()
-                        ) &&
-                        shouldUpdatePoints()
+                                // If the shouldUpdatePoint method should be called (according to annotation)
+                                // and if the result of this method is true
+                                (
+                                        (
+                                                this.forceUpdatePointsConfiguration == null ||
+                                                        this.forceUpdatePointsConfiguration.ifShouldUpdatePointsMethod()
+                                        ) &&
+                                                shouldUpdatePoints()
+                                )
                 );
     }
 
@@ -288,11 +299,11 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
                         new Location(
                                 getCurrentIterationBaseLocation().getWorld(),
                                 getCurrentIterationBaseLocation().getX() +
-                                animationPointData.getFromCenterToPoint().getX(),
+                                        animationPointData.getFromCenterToPoint().getX(),
                                 getCurrentIterationBaseLocation().getY() +
-                                animationPointData.getFromCenterToPoint().getY(),
+                                        animationPointData.getFromCenterToPoint().getY(),
                                 getCurrentIterationBaseLocation().getZ() +
-                                animationPointData.getFromCenterToPoint().getZ()
+                                        animationPointData.getFromCenterToPoint().getZ()
                         )));
 
     }
@@ -345,9 +356,9 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
                         } else {
                             throw new IllegalStateException(
                                     "The field " + taskField.getName() + " of the AAnimationTask " +
-                                    this.getClass().getSimpleName() + " references a field " + animFieldName +
-                                    " of the AAnimation " + animation.getClass().getSimpleName() +
-                                    ". This relation is not allowed because the AAnimation field is not an IVariable or an IVariableLocated.");
+                                            this.getClass().getSimpleName() + " references a field " + animFieldName +
+                                            " of the AAnimation " + animation.getClass().getSimpleName() +
+                                            ". This relation is not allowed because the AAnimation field is not an IVariable or an IVariableLocated.");
                         }
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
@@ -357,10 +368,10 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
             //If the field does not exist in the AAnimation class
             if (!foundCorrespondingAnimField) {
                 throw new IllegalStateException("The field " + taskField.getName() + " of the AAnimationTask " +
-                                                this.getClass().getSimpleName() + " references a field " +
-                                                animFieldName + " of the AAnimation " +
-                                                animation.getClass().getSimpleName() +
-                                                ". This relation is not allowed because the AAnimation field does not exist.");
+                        this.getClass().getSimpleName() + " references a field " +
+                        animFieldName + " of the AAnimation " +
+                        animation.getClass().getSimpleName() +
+                        ". This relation is not allowed because the AAnimation field does not exist.");
             }
         }
     }

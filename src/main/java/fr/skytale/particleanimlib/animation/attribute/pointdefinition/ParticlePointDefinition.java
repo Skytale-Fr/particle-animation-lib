@@ -50,7 +50,7 @@ public class ParticlePointDefinition implements APointDefinition {
     @Override
     public void show(Location pointLocation, AAnimation animation, AAnimationTask<?> task, Vector fromAnimCenterToPoint, Vector fromPreviousToCurrentAnimBaseLocation) {
         particleTemplate
-                .receivers(animation.getViewers().getPlayers(pointLocation))
+                .receivers(task.getViewers())
                 .location(pointLocation)
                 .spawn();
     }
