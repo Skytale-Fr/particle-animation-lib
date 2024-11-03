@@ -3,6 +3,7 @@ package fr.skytale.particleanimlib.animation.animation.circuitpulse3d;
 import fr.skytale.particleanimlib.animation.attribute.ParticleTemplate;
 import fr.skytale.particleanimlib.animation.attribute.area.IArea;
 import fr.skytale.particleanimlib.animation.attribute.area.Prism;
+import fr.skytale.particleanimlib.animation.attribute.area.Sphere;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.spawner.SimpleSpawner;
 import fr.skytale.particleanimlib.animation.attribute.spawner.parent.ISpawner;
@@ -21,7 +22,7 @@ public class CircuitPulse3DBuilder extends AAnimationBuilder<CircuitPulse3D, Cir
         setShowPeriod(1);
         setSpeed(0.25);
         setTrailSize(4);
-        setBoundaryArea(new Prism(RANDOM.nextInt(3) + 3, 8));
+        setBoundaryArea(new Sphere(6));
         setMaxAngleBetweenDirectionAndOriginDirection(Math.PI / 4);
         setSpawner(new SimpleSpawner(
                 new Constant<>(new Vector(0, 0, 0)),

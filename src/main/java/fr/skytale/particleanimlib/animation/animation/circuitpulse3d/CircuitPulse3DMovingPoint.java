@@ -1,4 +1,4 @@
-package fr.skytale.particleanimlib.animation.animation.circuitpulse2d;
+package fr.skytale.particleanimlib.animation.animation.circuitpulse3d;
 
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
@@ -7,7 +7,7 @@ import fr.skytale.particleanimlib.animation.attribute.area.IArea;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.spawner.attribute.ParticlesToSpawn;
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.util.Vector;
@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * This class is used to animate a circuit pulse 2D animation.
+ * This class is used to animate a circuit pulse 3D animation.
  * It represents a moving point (that has its own trail)
  *
- * @see CircuitPulse2D
+ * @see CircuitPulse3D
  */
-public class CircuitPulseMovingPoint {
+public class CircuitPulse3DMovingPoint {
 
     protected static final int NB_POSSIBLE_DIRECTION = 8;
     protected static final double BRACE_ANGLE = Math.PI * 2 / NB_POSSIBLE_DIRECTION;
@@ -30,16 +30,20 @@ public class CircuitPulseMovingPoint {
 
     private final double speed;
     private final APointDefinition pointDefinition;
-    private Vector2D location;
-    private double originDirectionAngle;
-    private double directionAngle;
-    private LinkedList<Vector2D> trailLocations = new LinkedList<>();
+    private Vector3D location;
+    private final double horizontalOriginDirectionAngle;
+    private final double verticalOriginDirectionAngle;
+    private double horizontalDirectionAngle;
+    private double verticalDirectionAngle;
+    private LinkedList<Vector3D> trailLocations = new LinkedList<>();
     private boolean isInside = true;
 
-    public CircuitPulseMovingPoint(Vector2D location, double directionAngle, double speed, APointDefinition pointDefinition) {
-        this.originDirectionAngle = directionAngle;
+    public CircuitPulse3DMovingPoint(Vector3D location, double horizontalDirectionAngle, double verticalDirectionAngle, double speed, APointDefinition pointDefinition) {
+        this.horizontalOriginDirectionAngle = horizontalDirectionAngle;
+        this.verticalOriginDirectionAngle = verticalDirectionAngle;
         this.location = location;
-        this.directionAngle = directionAngle;
+        this.horizontalDirectionAngle = horizontalDirectionAngle;
+        this.verticalDirectionAngle = verticalDirectionAngle;
         this.speed = speed;
         this.pointDefinition = pointDefinition;
     }
@@ -49,26 +53,28 @@ public class CircuitPulseMovingPoint {
      *
      * @param particlesToSpawn The spawner
      * @param speed            The speed of the particles
-     * @param pointDefinition  The point definition
      * @return The collection of CircuitPulseMovingPoint
      */
-    public static Collection<CircuitPulseMovingPoint> build(ParticlesToSpawn particlesToSpawn, Double speed, APointDefinition pointDefinition) {
+    public static Collection<CircuitPulse3DMovingPoint> build(ParticlesToSpawn particlesToSpawn, Double speed) {
         return particlesToSpawn.stream()
                 .flatMap(particleToSpawn -> {
-                    final Stream.Builder<CircuitPulseMovingPoint> builder = Stream.builder();
+                    final Stream.Builder<CircuitPulse3DMovingPoint> builder = Stream.builder();
                     for (int i = 0; i < particleToSpawn.getNbParticleToSpawn(); ++i) {
-                        int angleFactor = RANDOM.nextInt(NB_POSSIBLE_DIRECTION);
-                        builder.add(new CircuitPulseMovingPoint(
-                                new Vector2D(particleToSpawn.getSpawnLocation().getX(), particleToSpawn.getSpawnLocation().getY()),
-                                angleFactor * BRACE_ANGLE,
+                        int horizontalAngleFactor = RANDOM.nextInt(NB_POSSIBLE_DIRECTION);
+                        int verticalAngleFactor = RANDOM.nextInt(NB_POSSIBLE_DIRECTION);
+                        builder.add(new CircuitPulse3DMovingPoint(
+                                new Vector3D(particleToSpawn.getSpawnLocation().getX(), particleToSpawn.getSpawnLocation().getY(), particleToSpawn.getSpawnLocation().getZ()),
+                                horizontalAngleFactor * BRACE_ANGLE,
+                                verticalAngleFactor * BRACE_ANGLE,
                                 speed,
-                                pointDefinition
+                                particleToSpawn.getPointDefinition()
                         ));
                     }
                     return builder.build();
                 })
                 .collect(Collectors.toList());
     }
+
 
     public void update(IArea boundaryArea, int trailSize, Double directionChangeProbability, Double maxAngleBetweenDirectionAndOriginDirection) {
         updateDirection(directionChangeProbability, maxAngleBetweenDirectionAndOriginDirection);
@@ -84,14 +90,22 @@ public class CircuitPulseMovingPoint {
         if (isInside) {
             double directionChangeRandom = RANDOM.nextDouble();
             if (directionChangeRandom <= directionChangeProbability) {
-                double newAngle;
-                if (directionChangeRandom <= directionChangeProbability / 2) {
-                    newAngle = normalizeAngle(directionAngle + BRACE_ANGLE);
+                double newHorizontalAngle = horizontalDirectionAngle;
+                double newVerticalAngle = verticalDirectionAngle;
+                if (directionChangeRandom <= directionChangeProbability / 4) {
+                    newHorizontalAngle = normalizeAngle(horizontalDirectionAngle + BRACE_ANGLE);
+                } else if (directionChangeRandom <= directionChangeProbability / 2) {
+                    newVerticalAngle = normalizeAngle(verticalDirectionAngle + BRACE_ANGLE);
+                } else if (directionChangeRandom <= directionChangeProbability * 3 / 4) {
+                    newHorizontalAngle = normalizeAngle(horizontalDirectionAngle - BRACE_ANGLE);
                 } else {
-                    newAngle = normalizeAngle(directionAngle - BRACE_ANGLE);
+                    newVerticalAngle = normalizeAngle(verticalDirectionAngle - BRACE_ANGLE);
                 }
-                if (Math.abs(this.originDirectionAngle - this.directionAngle) <= maxAngleBetweenDirectionAndOriginDirection) {
-                    directionAngle = newAngle;
+                if (Math.abs(this.horizontalOriginDirectionAngle - this.horizontalDirectionAngle) <= maxAngleBetweenDirectionAndOriginDirection) {
+                     horizontalDirectionAngle = newHorizontalAngle;
+                }
+                if (Math.abs(this.verticalOriginDirectionAngle - this.verticalDirectionAngle) <= maxAngleBetweenDirectionAndOriginDirection) {
+                    verticalDirectionAngle = newVerticalAngle;
                 }
             }
         }
@@ -114,29 +128,30 @@ public class CircuitPulseMovingPoint {
         }
     }
 
-    public Vector2D getAfterMoveLocation() {
-        return new Vector2D(
-                location.getX() + (Math.cos(directionAngle) * speed),
-                location.getY() + (Math.sin(directionAngle) * speed)
+    public Vector3D getAfterMoveLocation() {
+        return new Vector3D(
+                location.getX() + (Math.cos(verticalDirectionAngle) * Math.cos(horizontalDirectionAngle) * speed),
+                location.getY() + (Math.sin(verticalDirectionAngle) * speed),
+                location.getZ() + (Math.cos(verticalDirectionAngle) * Math.sin(horizontalDirectionAngle) * speed)
         );
     }
 
     private void checkParticleIsInside(IArea boundaryArea) {
-        isInside = boundaryArea.isInside(new Vector(location.getX(), 0, location.getY()));
+        isInside = boundaryArea.isInside(new Vector(location.getX(), location.getY(), location.getZ()));
     }
 
     public List<AnimationPointData> getDisplay(boolean fadeColorInTrail) {
         List<AnimationPointData> pointsData = new ArrayList<>();
         if (isInside) {
             pointsData.add(new AnimationPointData(
-                    new Vector(location.getX(), 0, location.getY()),
+                    new Vector(location.getX(), location.getY(), location.getY()),
                     givenPointDefinition -> pointDefinition
             ));
         }
         boolean fadeOutColor = false;
         // fade out color in trail if possible
-        if (fadeColorInTrail && pointDefinition instanceof ParticlePointDefinition) {
-            ParticleTemplate particleTemplate = ((ParticlePointDefinition) pointDefinition).getParticleTemplate();
+        if (fadeColorInTrail && pointDefinition instanceof ParticlePointDefinition particlePointDefinition) {
+            ParticleTemplate particleTemplate = particlePointDefinition.getParticleTemplate();
             if (particleTemplate.data() != null) {
                 if (particleTemplate.data() instanceof Particle.DustOptions dustOptions) {
                     //compute fade out color
@@ -155,8 +170,9 @@ public class CircuitPulseMovingPoint {
                                 dustOptions.getSize()
                         ));
 
+                        final Vector3D trailLocation = trailLocations.get(i);
                         pointsData.add(new AnimationPointData(
-                                new Vector(trailLocations.get(i).getX(), 0, trailLocations.get(i).getY()),
+                                new Vector(trailLocation.getX(), trailLocation.getY(), trailLocation.getY()),
                                 givenPointDefinition -> new ParticlePointDefinition(fadingColorParticleTemplate)
                         ));
                     }
@@ -168,7 +184,7 @@ public class CircuitPulseMovingPoint {
             pointsData.addAll(trailLocations.stream()
                     .map(trailLocation ->
                             new AnimationPointData(
-                                    new Vector(trailLocation.getX(), 0, trailLocation.getY()),
+                                    new Vector(trailLocation.getX(), trailLocation.getY(), trailLocation.getY()),
                                     givenPointDefinition -> pointDefinition
                             )
                     )

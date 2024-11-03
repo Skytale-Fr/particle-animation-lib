@@ -121,7 +121,6 @@ public abstract class AAnimationTask<T extends AAnimation> implements Runnable {
         currentShowPeriod = animation.getShowPeriod().getCurrentValue(iterationCount);
 
         final boolean isIterationShown = currentShowPeriod == 0 || iterationCount % currentShowPeriod == 0;
-
         //Compute the move (including the new animation location)
         currentIterationMove = position.getCurrentValue(iterationCount);
 

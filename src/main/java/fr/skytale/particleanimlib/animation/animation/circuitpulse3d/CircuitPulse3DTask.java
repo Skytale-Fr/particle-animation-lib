@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @ForceUpdatePointsConfiguration(alwaysUpdate = true)
 public class CircuitPulse3DTask extends AAnimationTask<CircuitPulse3D> {
 
-    List<CircuitPulseMovingPoint> circuitPulseMovingPoints = new ArrayList<>();
+    List<CircuitPulse3DMovingPoint> circuitPulse3DMovingPoints = new ArrayList<>();
 
     @IVariableCurrentValue
     private Double speed;
@@ -43,7 +43,7 @@ public class CircuitPulse3DTask extends AAnimationTask<CircuitPulse3D> {
     }
 
     public int getNbParticleAlive() {
-        return circuitPulseMovingPoints.size();
+        return circuitPulse3DMovingPoints.size();
     }
 
     @Override
@@ -55,24 +55,24 @@ public class CircuitPulse3DTask extends AAnimationTask<CircuitPulse3D> {
     }
 
     private void updateParticles() {
-        circuitPulseMovingPoints.forEach(circuitPulseMovingPoint ->
-                circuitPulseMovingPoint.update(boundaryArea, trailSize, directionChangeProbability, maxAngleBetweenDirectionAndOriginDirection)
+        circuitPulse3DMovingPoints.forEach(circuitPulse3DMovingPoint ->
+                circuitPulse3DMovingPoint.update(boundaryArea, trailSize, directionChangeProbability, maxAngleBetweenDirectionAndOriginDirection)
         );
     }
 
     private void removeDeadParticles() {
-        circuitPulseMovingPoints.removeIf(CircuitPulseMovingPoint::isDead);
+        circuitPulse3DMovingPoints.removeIf(CircuitPulse3DMovingPoint::isDead);
     }
 
     protected void spawnNewParticles() {
-        circuitPulseMovingPoints.addAll(
-                CircuitPulseMovingPoint.build(spawner, speed, animation.getPointDefinition())
+        circuitPulse3DMovingPoints.addAll(
+                CircuitPulse3DMovingPoint.build(spawner, speed)
         );
     }
 
     private List<AnimationPointData> getParticlesToDisplay() {
-        return circuitPulseMovingPoints.stream()
-                .flatMap(circuitPulseMovingPoint -> circuitPulseMovingPoint.getDisplay(fadeColorInTrail).stream())
+        return circuitPulse3DMovingPoints.stream()
+                .flatMap(circuitPulse3DMovingPoint -> circuitPulse3DMovingPoint.getDisplay(fadeColorInTrail).stream())
                 .collect(Collectors.toList());
     }
 
