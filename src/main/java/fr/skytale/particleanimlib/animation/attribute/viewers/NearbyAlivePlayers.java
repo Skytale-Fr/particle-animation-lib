@@ -17,10 +17,10 @@ public class NearbyAlivePlayers extends AViewers {
     }
 
     @Override
-    public Collection<Player> getPlayers(Location pointLocation) {
-        return Objects.requireNonNull(pointLocation.getWorld()).getPlayers()
+    public Collection<Player> getPlayers(Location animationPosition) {
+        return Objects.requireNonNull(animationPosition.getWorld()).getPlayers()
                 .stream()
-                .filter(player -> !player.isDead() && player.getLocation().distance(pointLocation) <= this.maxDistance)
+                .filter(player -> !player.isDead() && player.getLocation().distance(animationPosition) <= this.maxDistance)
                 .collect(Collectors.toSet());
     }
 

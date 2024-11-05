@@ -19,9 +19,9 @@ public class PredicateMatchingPlayers extends AViewers {
 
 
     @Override
-    public Collection<Player> getPlayers(Location pointLocation) {
+    public Collection<Player> getPlayers(Location animationPosition) {
         return Bukkit.getOnlinePlayers().stream()
-                .filter(p -> biPredicate.test(p, pointLocation) && p.getWorld().equals(pointLocation.getWorld()))
+                .filter(p -> biPredicate.test(p, animationPosition) && p.getWorld().equals(animationPosition.getWorld()))
                 .collect(Collectors.toSet());
     }
 

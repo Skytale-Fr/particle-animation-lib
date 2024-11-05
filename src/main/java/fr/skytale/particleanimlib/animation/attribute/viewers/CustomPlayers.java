@@ -16,7 +16,7 @@ public class CustomPlayers extends AViewers {
     }
 
     @Override
-    public Collection<Player> getPlayers(Location pointLocation) {
+    public Collection<Player> getPlayers(Location animationPosition) {
         return viewers;
     }
 

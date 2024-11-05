@@ -1,4 +1,4 @@
-package fr.skytale.particleanimlib.animation.animation.circuitpulse3d;
+package fr.skytale.particleanimlib.animation.animation.circuitpulse2d;
 
 
 import fr.skytale.particleanimlib.animation.attribute.AnimationPointData;
@@ -7,7 +7,7 @@ import fr.skytale.particleanimlib.animation.attribute.area.IArea;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.ParticlePointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.pointdefinition.parent.APointDefinition;
 import fr.skytale.particleanimlib.animation.attribute.spawner.attribute.ParticlesToSpawn;
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.util.Vector;
@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * This class is used to animate a circuit pulse 3D animation.
+ * This class is used to animate a circuit pulse 2D animation.
  * It represents a moving point (that has its own trail)
  *
- * @see CircuitPulse3D
+ * @see CircuitPulse2D
  */
-public class CircuitPulseMovingPoint {
+public class CircuitPulse2DMovingPoint {
 
     protected static final int NB_POSSIBLE_DIRECTION = 8;
     protected static final double BRACE_ANGLE = Math.PI * 2 / NB_POSSIBLE_DIRECTION;
@@ -30,20 +30,16 @@ public class CircuitPulseMovingPoint {
 
     private final double speed;
     private final APointDefinition pointDefinition;
-    private Vector3D location;
-    private final double horizontalOriginDirectionAngle;
-    private final double verticalOriginDirectionAngle;
-    private double horizontalDirectionAngle;
-    private double verticalDirectionAngle;
-    private LinkedList<Vector3D> trailLocations = new LinkedList<>();
+    private Vector2D location;
+    private final double originDirectionAngle;
+    private double directionAngle;
+    private LinkedList<Vector2D> trailLocations = new LinkedList<>();
     private boolean isInside = true;
 
-    public CircuitPulseMovingPoint(Vector3D location, double horizontalDirectionAngle, double verticalDirectionAngle, double speed, APointDefinition pointDefinition) {
-        this.horizontalOriginDirectionAngle = horizontalDirectionAngle;
-        this.verticalOriginDirectionAngle = verticalDirectionAngle;
+    public CircuitPulse2DMovingPoint(Vector2D location, double directionAngle, double speed, APointDefinition pointDefinition) {
+        this.originDirectionAngle = directionAngle;
         this.location = location;
-        this.horizontalDirectionAngle = horizontalDirectionAngle;
-        this.verticalDirectionAngle = verticalDirectionAngle;
+        this.directionAngle = directionAngle;
         this.speed = speed;
         this.pointDefinition = pointDefinition;
     }
@@ -53,29 +49,25 @@ public class CircuitPulseMovingPoint {
      *
      * @param particlesToSpawn The spawner
      * @param speed            The speed of the particles
-     * @param pointDefinition  The point definition
      * @return The collection of CircuitPulseMovingPoint
      */
-    public static Collection<CircuitPulseMovingPoint> build(ParticlesToSpawn particlesToSpawn, Double speed, APointDefinition pointDefinition) {
+    public static Collection<CircuitPulse2DMovingPoint> build(ParticlesToSpawn particlesToSpawn, Double speed) {
         return particlesToSpawn.stream()
                 .flatMap(particleToSpawn -> {
-                    final Stream.Builder<CircuitPulseMovingPoint> builder = Stream.builder();
+                    final Stream.Builder<CircuitPulse2DMovingPoint> builder = Stream.builder();
                     for (int i = 0; i < particleToSpawn.getNbParticleToSpawn(); ++i) {
-                        int horizontalAngleFactor = RANDOM.nextInt(NB_POSSIBLE_DIRECTION);
-                        int verticalAngleFactor = RANDOM.nextInt(NB_POSSIBLE_DIRECTION);
-                        builder.add(new CircuitPulseMovingPoint(
-                                new Vector3D(particleToSpawn.getSpawnLocation().getX(), particleToSpawn.getSpawnLocation().getY(), particleToSpawn.getSpawnLocation().getZ()),
-                                horizontalAngleFactor * BRACE_ANGLE,
-                                verticalAngleFactor * BRACE_ANGLE,
+                        int angleFactor = RANDOM.nextInt(NB_POSSIBLE_DIRECTION);
+                        builder.add(new CircuitPulse2DMovingPoint(
+                                new Vector2D(particleToSpawn.getSpawnLocation().getX(), particleToSpawn.getSpawnLocation().getY()),
+                                angleFactor * BRACE_ANGLE,
                                 speed,
-                                pointDefinition
+                                particleToSpawn.getPointDefinition()
                         ));
                     }
                     return builder.build();
                 })
                 .collect(Collectors.toList());
     }
-
 
     public void update(IArea boundaryArea, int trailSize, Double directionChangeProbability, Double maxAngleBetweenDirectionAndOriginDirection) {
         updateDirection(directionChangeProbability, maxAngleBetweenDirectionAndOriginDirection);
@@ -91,20 +83,14 @@ public class CircuitPulseMovingPoint {
         if (isInside) {
             double directionChangeRandom = RANDOM.nextDouble();
             if (directionChangeRandom <= directionChangeProbability) {
-                double newHorizontalAngle;
-                double newVerticalAngle;
+                double newAngle;
                 if (directionChangeRandom <= directionChangeProbability / 2) {
-                    newHorizontalAngle = normalizeAngle(horizontalDirectionAngle + BRACE_ANGLE);
-                    newVerticalAngle = normalizeAngle(verticalDirectionAngle + BRACE_ANGLE);
+                    newAngle = normalizeAngle(directionAngle + BRACE_ANGLE);
                 } else {
-                    newHorizontalAngle = normalizeAngle(horizontalDirectionAngle - BRACE_ANGLE);
-                    newVerticalAngle = normalizeAngle(verticalDirectionAngle - BRACE_ANGLE);
+                    newAngle = normalizeAngle(directionAngle - BRACE_ANGLE);
                 }
-                if (Math.abs(this.horizontalOriginDirectionAngle - this.horizontalDirectionAngle) <= maxAngleBetweenDirectionAndOriginDirection) {
-                    horizontalDirectionAngle = newHorizontalAngle;
-                }
-                if (Math.abs(this.verticalOriginDirectionAngle - this.verticalDirectionAngle) <= maxAngleBetweenDirectionAndOriginDirection) {
-                    verticalDirectionAngle = newVerticalAngle;
+                if (Math.abs(this.originDirectionAngle - this.directionAngle) <= maxAngleBetweenDirectionAndOriginDirection) {
+                    directionAngle = newAngle;
                 }
             }
         }
@@ -127,16 +113,15 @@ public class CircuitPulseMovingPoint {
         }
     }
 
-    public Vector3D getAfterMoveLocation() {
-        return new Vector3D(
-                location.getX() + (Math.sin(verticalDirectionAngle) * Math.cos(horizontalDirectionAngle) * speed),
-                location.getY() + (Math.sin(verticalDirectionAngle) * Math.sin(horizontalDirectionAngle) * speed),
-                location.getZ() + (Math.cos(verticalDirectionAngle) * speed)
+    public Vector2D getAfterMoveLocation() {
+        return new Vector2D(
+                location.getX() + (Math.cos(directionAngle) * speed),
+                location.getY() + (Math.sin(directionAngle) * speed)
         );
     }
 
     private void checkParticleIsInside(IArea boundaryArea) {
-        isInside = boundaryArea.isInside(new Vector(location.getX(), location.getY(), location.getZ()));
+        isInside = boundaryArea.isInside(new Vector(location.getX(), 0, location.getY()));
     }
 
     public List<AnimationPointData> getDisplay(boolean fadeColorInTrail) {
